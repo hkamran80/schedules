@@ -2,13 +2,14 @@
 Period Times (Online)
 Contributors:
 	:: H. Kamran [@hkamran80] (author)
-Version: 1.0.0
-Last Updated: 2019-08-22, @hkamran80
+Version: 1.1.1
+Last Updated: 2019-09-01, @hkamran80
 """
 
 from flask import Flask, render_template, request, redirect
 import period_calculator
 import pt_extensions
+import sys
 
 
 app = Flask(__name__)
@@ -93,9 +94,12 @@ def timecalc():
 	return str(pt_extensions.calculate_time(str(time1), str(time2)))
 
 if __name__ == "__main__":
-	schools = {"auhsd-ahs": "Acalanes High School"}
+	if len(sys.argv) > 1 and sys.argv[1] == "ci":
+		print("Successful execution....")
+	else:
+		schools = {"auhsd-ahs": "Acalanes High School"}
 
-	# Repl.it - 8080, Heroku - 3000
-	app_port = 3000
+		# Repl.it - 8080, Heroku - 3000
+		app_port = 8080
 
-	app.run(host="0.0.0.0", port=app_port, debug=True)
+		app.run(host="0.0.0.0", port=app_port, debug=True)
