@@ -107,10 +107,14 @@
 		</main>
 		
 		<script>
-			Snackbar.show({
-				text: "Schedules has moved! Welcome to the new site. Please bookmark it.",
-				showAction: false
-			});
+			if (get_cookie("snackbar") == "true") {
+				Snackbar.show({
+					text: "Schedules has moved! Welcome to the new site. Please bookmark it.",
+					showAction: false
+				});
+				set_cookie("snackbar", "true", 365);
+			}
+			console.log(document.cookie);
 		</script>
 		{% else %}
 			{% if get_time_date %}
@@ -166,5 +170,29 @@
 				</script>
 			{% endif %}
 		{% endif %}
+		<script>
+			function set_cookie(cookie_name, cookie_value, expiration_days) {
+				var d = new Date();
+				d.setTime(d.getTime() + (expiration_days*24*60*60*1000));
+				var expires = "expires=" + d.toUTCString();
+				document.cookie = cookie_name + "=" + cookie_value + ";" + expires + ";path=/";
+			}
+			
+			function get_cookie(cookie_name) {
+				var name = cookie_name + "=";
+				var decoded_cookie = decodeURIComponent(document.cookie);
+				var ca = decoded_cookie.split(";");
+				for (var i = 0; i < ca.length; i++) {
+					var c = ca[i];
+					while (c.charAt(0) == " ") {
+						c = c.substring(1);
+					}
+					if (c.indexOf(name) == 0) {
+						return c.substring(name.length, c.length);
+					}
+				}
+				return "";
+			}
+		</script>
 	</body>
 </html>
