@@ -96,6 +96,6 @@ if __name__ == "__main__":
 	schools = {"auhsd-ahs": "Acalanes High School"}
 
   # Repl.it - 8080, Heroku - 3000
-  app_port = 8080
+  app_port = 3000
 
 	app.run(host="0.0.0.0", port=app_port, debug=True)
