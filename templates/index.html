@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Schedules</title>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<link rel="shortcut icon" type="image/png" href="/static/img/pt_favicon.png"/>
+
+		<link rel="stylesheet" href="/static/css/center.css">
+		<link rel="stylesheet" href="https://w3schools.com/w3css/4/w3.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap">
+
+		<style>
+			body, h3, h4, h5, select, option, header, main, div, span {
+				font-family: 'Source Sans Pro', sans-serif;
+			}
+
+			body, select {
+				background-color: #736F72;
+				color: #ffffff;
+			}
+
+			.ut-pc-darkblue {
+				background-color: #13323C;
+				color: #FFFFFF;
+			}
+
+			select#school_name {
+				padding: 6px;
+			}
+
+			main#period_info {
+				padding: 12px;
+				text-align: center;
+				background-color: #BCD4DE;
+				color: #000000;
+			}
+
+			.w3-card-4 {
+				width: 75%;
+			}
+
+			@media screen and (max-width: 600px) {
+				header#school_info {
+					padding: 12px 16px;
+					text-align: center;
+				}
+
+				h4.w3-row {
+					text-align: center;
+				}
+				h4.w3-row div.w3-half {
+					display: block;
+				}
+
+			}
+
+			@media screen and (min-width: 601px) {
+				header#school_info {
+					padding: 6px 16px;
+				}
+				header#school_info div.ut-pc-right {
+					float: right!important;
+				}
+
+				span.seperator {
+					padding: 0 5px;
+				}
+
+				span#refresh {
+					padding: 0 0;
+				}
+				span#refresh:hover {
+					background-color: #cccccc;
+				}
+			}
+		</style>
+		<style>
+			.color-auhsd-ahs {
+				background-color: #1a468f;
+				color: #ffffff;
+			}
+		</style>
+	</head>
+	<body>
+		<header class="w3-container ut-pc-darkblue">
+			<h3>Schedules</h3>
+		</header>
+		{% if not school_valid %}
+		<main id="school_login" class="ut-pt-center">
+			<div id="selection" class="ut-pt-centerbox w3-card-4">
+				<main style="padding:12px;text-align:center;">
+					<select id="school_name" name="school_name" class="w3-input" onchange="window.location.href='/school?schoolid='+this.value;">
+						<option value="" selected disabled>Select a school...</option>
+						{% for school in schools %}
+							<option value="{{ school }}">{{ schools[school] }}</option>
+						{% endfor %}
+					</select>
+				</main>
+			</div>
+		</main>
+		{% else %}
+			{% if get_time_date %}
+				<script>
+					var d = new Date();
+					var days = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
+					window.location.href = "/school?schoolid={{ schoolid }}&day=" + days[d.getDay()-1] + "&time=" + d.getHours().toString() + "-" + d.getMinutes().toString();
+				</script>
+			{% else %}
+				<main id="school_times" class="ut-pt-center">
+					<div id="times" class="ut-pt-centerbox w3-card-4">
+						<header id="school_info" class="{% if schoolcolor %}color-{{ schoolcolor }}{% else %}w3-blue-gray{% endif %}">
+							<h4>
+								{{ schoolname }}
+								<div class="w3-right">
+									{{ day }} {{ time }} <span class="seperator">|</span> <span onclick="refresh()" id="refresh">Refresh</span>
+								</div>
+							</h4>
+						</header>
+						<main id="period_info" class="ut-pt-centerbox">
+							<h4 class="w3-row">
+								{% if time_data != "No Time" or time_diff != "NT" %}
+									<div class="w3-half">
+										{% if "Pass" in period or "Out" in period or "Brun" in period or "Lun" in period %}
+											{{ period }}
+										{% else %}
+											{{ period[0] }}<sup>{{ period[1:3] }}</sup> {{ period[4:] }}
+										{% endif %}
+									</div>
+									<div class="w3-half">
+										{% if raw %}
+											{{ time_diff }} // {{ time_data }} // {{ time_diff_raw }}
+										{% else %}
+											{{ time_diff }}
+										{% endif %}
+									</div>
+								{% else %}
+									{{ period }}
+								{% endif %}
+							</h4>
+						</main>
+					</div>
+				</main>
+
+				<script>
+					function refresh() {
+						var d = new Date();
+						var days = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
+						window.location.href = "/school?schoolid={{ schoolid }}&day=" + days[d.getDay()-1] + "&time=" + d.getHours().toString() + "-" + d.getMinutes().toString();
+					}
+
+					setInterval(refresh, 60000);
+				</script>
+			{% endif %}
+		{% endif %}
+	</body>
+</html>
