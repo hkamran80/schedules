@@ -83,13 +83,17 @@
 				color: #ffffff;
 			}
 		</style>
+		
+		<!-- Snackbar -->
+		<link rel="stylesheet" href="/static/css/snackbar.min.css">
+		<script src="/static/css/snackbar.min.js"></script>
 	</head>
 	<body>
 		<header class="w3-container ut-pc-darkblue">
 			<h3>Schedules</h3>
 		</header>
 		{% if not school_valid %}
-		<main id="school_login" class="ut-pt-center">
+		<main id="school_login" class="ut-pt-center" onload="show_redirect_snackbar()">
 			<div id="selection" class="ut-pt-centerbox w3-card-4">
 				<main style="padding:12px;text-align:center;">
 					<select id="school_name" name="school_name" class="w3-input" onchange="window.location.href='/school?schoolid='+this.value;">
@@ -101,6 +105,15 @@
 				</main>
 			</div>
 		</main>
+		
+		<script>
+			function show_redirect_snackbar() {
+				Snackbar.show({
+					text: "Schedules has moved! Welcome to the new site. Please bookmark it.",
+					showAction: false
+				});
+			}
+		</script>
 		{% else %}
 			{% if get_time_date %}
 				<script>
