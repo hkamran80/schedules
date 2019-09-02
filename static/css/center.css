@@ -1,0 +1,22 @@
+main.ut-pt-center {
+	height: 78vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+div#ut-pt-centerbox {
+	width: 50vw;
+}
+
+div#ut-pt-centerbox main {
+	padding: 12px;
+}
+
+div#ut-pt-centerbox main button {
+	width: 100%;
+}
+
+.ut-container12 {
+	padding: 12px;
+}
