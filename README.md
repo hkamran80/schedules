@@ -1,2 +1,2 @@
-# Schedules ![Build Status](https://travis-ci.com/hkamran80/schedules.svg?token=vQyhAxdpxTKNpiFgexoS&branch=master)
+# Schedules ![Build Status](https://img.shields.io/travis/com/hkamran80/schedules?style=for-the-badge)
 The app of all schedules
