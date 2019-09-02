@@ -2,7 +2,7 @@
 Period Times (Online)
 Contributors:
 	:: H. Kamran [@hkamran80] (author)
-Version: 1.1.1
+Version: 1.1.2
 Last Updated: 2019-09-01, @hkamran80
 """
 
@@ -10,6 +10,7 @@ from flask import Flask, render_template, request, redirect
 import period_calculator
 import pt_extensions
 import sys
+import os
 
 
 app = Flask(__name__)
@@ -100,6 +101,6 @@ if __name__ == "__main__":
 		schools = {"auhsd-ahs": "Acalanes High School"}
 
 		# Repl.it - 8080, Heroku - 3000
-		app_port = 8080
+		app_port = 3000
 
-		app.run(host="0.0.0.0", port=app_port, debug=True)
+		app.run(host="0.0.0.0", port=os.environ["PORT"] or app_port, debug=True)
