@@ -131,14 +131,18 @@
 		</main>
 		
 		<script>
-			if ((!(document.cookie) || get_cookie("snackbar") == "false") {
+			/*if ((!(document.cookie) || get_cookie("snackbar") == "false") {
 				Snackbar.show({
 					text: "Schedules has moved! Welcome to the new site. Please bookmark it.",
 					showAction: false
 				});
 				set_cookie("snackbar", "true", 365);
 			}
-			console.log(document.cookie);
+			console.log(document.cookie);*/
+			Snackbar.show({
+				text: "Schedules has moved! Welcome to the new site. Please bookmark it.",
+				showAction: false
+			});
 		</script>
 		{% else %}
 			{% if get_time_date %}
