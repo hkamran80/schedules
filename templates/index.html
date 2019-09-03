@@ -131,7 +131,7 @@
 		</main>
 		
 		<script>
-			if (get_cookie("snackbar") == "false") {
+			if ((!(document.cookie) || get_cookie("snackbar") == "false") {
 				Snackbar.show({
 					text: "Schedules has moved! Welcome to the new site. Please bookmark it.",
 					showAction: false
