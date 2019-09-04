@@ -166,7 +166,7 @@
 							<h4 class="w3-row">
 								{% if time_data != "No Time" or time_diff != "NT" %}
 									<div class="w3-half">
-										{% if "Pass" in period or "Out" in period or "Brun" in period or "Lun" in period %}
+										{% if "Pass" in period or "Out" in period or "Brun" in period or "Lun" in period or "Acad" in period %}
 											{{ period }}
 										{% else %}
 											{{ period[0] }}<sup>{{ period[1:3] }}</sup> {{ period[4:] }}
