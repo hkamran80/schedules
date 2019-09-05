@@ -4,7 +4,7 @@ The app of all schedules
 ## Changelog
 * Version 1.1.4 (2019-09-04):
   * Add the `apple-touch-icon` meta attributes
-   * Spoiler Alert: It doesn't work (tested on an iPhone 7+ running iOS 12)
+    * Spoiler Alert: It doesn't work (tested on an iPhone 7+ running iOS 12)
 * Version 1.1.3 (2019-09-03):
   * Temporary fix for [issue #2](https://github.com/hkamran80/schedules/issues/2)
   * Add this changelog to the `README.md`
