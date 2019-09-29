@@ -1,9 +1,9 @@
 """
-AUHSD Period Calculator
+Period Time Calculator
 Contributors:
 	:: H. Kamran [@hkamran80] (author)
-Version: 1.0.0
-Last Updated: 2019-08-16, @hkamran80
+Version: 1.0.1
+Last Updated: 2019-09-28, @hkamran80
 """
 
 import time
@@ -79,12 +79,15 @@ def pt_check(expected_value, variable_to_check):
 		return True
 
 def get_current_period(school: str, current_day: str, current_time: int):
-	days_period_times = list(times[school][current_day].values())
-	for pt in days_period_times:
-		if pt[1] > current_time > pt[0]:
-			return list(times[school][current_day].keys())[days_period_times.index(pt)], pt
-	
-	return "Out of School", "No Time"
+	try:
+		days_period_times = list(times[school][current_day].values())
+		for pt in days_period_times:
+			if pt[1] > current_time > pt[0]:
+				return list(times[school][current_day].keys())[days_period_times.index(pt)], pt
+
+		return "Out of School", "No Time"
+	except KeyError:
+		return "Out of School", "No Time"
 
 if __name__ == "__main__":
 	current_day = time.strftime("%a").upper()
