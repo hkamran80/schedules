@@ -24,9 +24,8 @@ def school():
 	_id = request.args.get("schoolid") or None
 	return redirect(urL_for("schedule", schedule_id=_id))
 
-@app.route("/schedule/<scheduleid>", methods=["GET"])
-def schedule():
-	schedule_id = scheduleid
+@app.route("/schedule/<schedule_id>", methods=["GET"])
+def schedule(schedule_id):
 	if request.method == "GET":
 		#schoolid = request.args.get("schoolid") or None
 		schoolname = schedules[schedule_id]
