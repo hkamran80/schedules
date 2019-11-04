@@ -99,7 +99,7 @@ def timecalc():
 	return str(pt_extensions.calculate_time(str(time1), str(time2)))
 
 if __name__ == "__main__":
-	if len(sys.argv) > 1 and sys.argv[1] == "ci":
+	if len(sys.argv) > 1 and sys.argv[1] == "--ci":
 		print("Successful execution....")
 	else:
 		schedules = {"auhsd-ahs": "Acalanes High School"}
