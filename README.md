@@ -10,6 +10,8 @@ The app of all schedules
   * Created new endpoint (`/schedule/<schedule_id/`) to replace `/school?schoolid=...`
   * Removed snackbar, `snackbar.min.js`, and `snackbar.min.css` from `index.html`
   * Added temporary redirect to `/schedule` if someone visits `/school`
+  * Created new file `runtime.txt` for Heroku, which declares the **exact** Python version to use
+    * 1.1.5 is using Python 3.7.5 (`python-3.7.5`)
   * Preparation for Version 1.2.0 (estimated release: late December 2019)
 * Version 1.1.4 (2019-09-04):
   * Add the `apple-touch-icon` meta attributes
