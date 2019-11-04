@@ -6,10 +6,6 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		
-		<link rel="apple-touch-icon" sizes="76x76" href="apple-touch-icon.png">
-		<meta name="apple-mobile-web-app-title" content="Schedules">
-		<meta name="apple-mobile-web-app-capable" content="yes">
-		
 		<link rel="shortcut icon" type="image/png" href="/static/img/schedules-logo.png"/>
 
 		<link rel="stylesheet" href="/static/css/center.css">
@@ -124,10 +120,10 @@
 		<main id="school_login" class="ut-pt-center">
 			<div id="selection" class="ut-pt-centerbox w3-card-4">
 				<main style="padding:12px;text-align:center;">
-					<select id="school_name" name="school_name" class="w3-input" onchange="window.location.href='/school?schoolid='+this.value;">
-						<option value="" selected disabled>Select a school...</option>
-						{% for school in schools %}
-							<option value="{{ school }}">{{ schools[school] }}</option>
+					<select id="schedule_name" name="school_name" class="w3-input" onchange="window.location.href='/schedule/'+this.value;">
+						<option value="" selected disabled>Select a schedule...</option>
+						{% for schedule in schedules %}
+							<option value="{{ school }}">{{ schedules[schedule] }}</option>
 						{% endfor %}
 					</select>
 				</main>
