@@ -130,7 +130,7 @@
 				<script>
 					var d = new Date();
 					var days = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
-					window.location.href = "/schedule/{{ schedule_id }}&day=" + days[d.getDay()-1] + "&time=" + d.getHours().toString() + "-" + d.getMinutes().toString();
+					window.location.href = "/schedule/{{ schedule_id }}?day=" + days[d.getDay()-1] + "&time=" + d.getHours().toString() + "-" + d.getMinutes().toString();
 				</script>
 			{% else %}
 				<main id="schedule_times" class="ut-pt-center">
@@ -172,7 +172,7 @@
 					function refresh() {
 						var d = new Date();
 						var days = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
-						window.location.href = "/schedule/{{ schedule_id }}&day=" + days[d.getDay()-1] + "&time=" + d.getHours().toString() + "-" + d.getMinutes().toString();
+						window.location.href = "/schedule/{{ schedule_id }}?day=" + days[d.getDay()-1] + "&time=" + d.getHours().toString() + "-" + d.getMinutes().toString();
 					}
 
 					setInterval(refresh, 60000);
