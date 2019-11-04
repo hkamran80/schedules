@@ -6,7 +6,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		
-		<link rel="shortcut icon" type="image/png" href="/static/img/schedules-logo.png"/>
+		<link rel="shortcut icon" type="image/png" href="/static/img/schedules-logo.png" />
 
 		<link rel="stylesheet" href="/static/css/center.css">
 		<link rel="stylesheet" href="https://w3schools.com/w3css/4/w3.css">
@@ -27,7 +27,7 @@
 				color: #FFFFFF;
 			}
 
-			select#school_name {
+			select#schedule_name {
 				padding: 6px;
 			}
 
@@ -83,10 +83,6 @@
 				color: #ffffff;
 			}
 		</style>
-		
-		<!-- Snackbar -->
-		<link rel="stylesheet" href="/static/css/snackbar.min.css">
-		<script src="/static/js/snackbar.min.js"></script>
 	</head>
 	<body>
 		<script>
@@ -116,47 +112,32 @@
 		<header class="w3-container ut-pc-darkblue">
 			<h3>Schedules</h3>
 		</header>
-		{% if not school_valid %}
-		<main id="school_login" class="ut-pt-center">
+		{% if not schedule_valid %}
+		<main id="schedule_login" class="ut-pt-center">
 			<div id="selection" class="ut-pt-centerbox w3-card-4">
 				<main style="padding:12px;text-align:center;">
-					<select id="schedule_name" name="school_name" class="w3-input" onchange="window.location.href='/schedule/'+this.value;">
+					<select id="schedule_name" name="schedule_name" class="w3-input" onchange="window.location.href='/schedule/'+this.value;">
 						<option value="" selected disabled>Select a schedule...</option>
 						{% for schedule in schedules %}
-							<option value="{{ school }}">{{ schedules[schedule] }}</option>
+							<option value="{{ schedule }}">{{ schedules[schedule] }}</option>
 						{% endfor %}
 					</select>
 				</main>
 			</div>
 		</main>
-		
-		<script>
-			/*if ((!(document.cookie) || get_cookie("snackbar") == "false") {
-				Snackbar.show({
-					text: "Schedules has moved! Welcome to the new site. Please bookmark it.",
-					showAction: false
-				});
-				set_cookie("snackbar", "true", 365);
-			}
-			console.log(document.cookie);*/
-			Snackbar.show({
-				text: "Schedules has moved! Welcome to the new site. Please bookmark it.",
-				showAction: false
-			});
-		</script>
 		{% else %}
 			{% if get_time_date %}
 				<script>
 					var d = new Date();
 					var days = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
-					window.location.href = "/school?schoolid={{ schoolid }}&day=" + days[d.getDay()-1] + "&time=" + d.getHours().toString() + "-" + d.getMinutes().toString();
+					window.location.href = "/schedule/{{ schedule_id }}&day=" + days[d.getDay()-1] + "&time=" + d.getHours().toString() + "-" + d.getMinutes().toString();
 				</script>
 			{% else %}
-				<main id="school_times" class="ut-pt-center">
+				<main id="schedule_times" class="ut-pt-center">
 					<div id="times" class="ut-pt-centerbox w3-card-4">
-						<header id="school_info" class="{% if schoolcolor %}color-{{ schoolcolor }}{% else %}w3-blue-gray{% endif %}">
+						<header id="schedule_info" class="{% if schedule_color %}color-{{ schedule_color }}{% else %}w3-blue-gray{% endif %}">
 							<h4>
-								{{ schoolname }}
+								{{ schedule_name }}
 								<div class="w3-right">
 									{{ day }} {{ time }} <span class="seperator">|</span> <span onclick="refresh()" id="refresh">Refresh</span>
 								</div>
@@ -191,7 +172,7 @@
 					function refresh() {
 						var d = new Date();
 						var days = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
-						window.location.href = "/school?schoolid={{ schoolid }}&day=" + days[d.getDay()-1] + "&time=" + d.getHours().toString() + "-" + d.getMinutes().toString();
+						window.location.href = "/schedule/{{ schedule_id }}&day=" + days[d.getDay()-1] + "&time=" + d.getHours().toString() + "-" + d.getMinutes().toString();
 					}
 
 					setInterval(refresh, 60000);
