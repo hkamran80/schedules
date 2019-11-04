@@ -1,9 +1,9 @@
 """
-Period Times (Online)
+Schedules
 Contributors:
 	:: H. Kamran [@hkamran80] (author)
-Version: 1.1.2
-Last Updated: 2019-09-01, @hkamran80
+Version: 1.1.4
+Last Updated: 2019-11-04, @hkamran80
 """
 
 from flask import Flask, render_template, request, redirect
@@ -21,6 +21,10 @@ def index():
 	if request.method == "GET":
 		return render_template("index.html", school_valid=False, schools=schools)
 
+@app.route("/school", methods=["GET"])
+def school():
+	return redirect(urL_for("schedule"))
+	
 @app.route("/school", methods=["GET"])
 def school_times():
 	if request.method == "GET":
