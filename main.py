@@ -22,8 +22,8 @@ def index():
 @app.route("/school", methods=["GET"])
 def school():
 	_id = request.args.get("schoolid") or None
-	return redirect(urL_for("schedule", schedule_id=_id)
-	
+	return redirect(urL_for("schedule", schedule_id=_id))
+
 @app.route("/schedule/<scheduleid>", methods=["GET"])
 def schedule():
 	schedule_id = scheduleid
