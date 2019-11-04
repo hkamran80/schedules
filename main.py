@@ -2,7 +2,7 @@
 Schedules
 Contributors:
 	:: H. Kamran [@hkamran80] (author)
-Version: 1.1.4
+Version: 1.1.5
 Last Updated: 2019-11-04, @hkamran80
 """
 
@@ -12,26 +12,24 @@ import pt_extensions
 import sys
 import os
 
-
 app = Flask(__name__)
-
 
 @app.route("/", methods=["GET"])
 def index():
 	if request.method == "GET":
-		return render_template("index.html", school_valid=False, schools=schools)
+		return render_template("index.html", schedule_valid=False, schedules=schedules)
 
 @app.route("/school", methods=["GET"])
 def school():
-	return redirect(urL_for("schedule"))
+	return redirect(urL_for("schedule", schedule_id=request.args.get("schoolid") or None)
 	
-@app.route("/school", methods=["GET"])
-def school_times():
+@app.route("/schedule/<schedule_id>", methods=["GET"])
+def schedule():
 	if request.method == "GET":
-		schoolid = request.args.get("schoolid") or None
-		schoolname = schools[schoolid]
+		#schoolid = request.args.get("schoolid") or None
+		schoolname = schedules[schedule_id]
 
-		if not schoolid:
+		if not schedule_id:
 			return redirect("/")
 
 		days = {"MON": "Monday", "TUE": "Tuesday", "WED": "Wednesday", "THU": "Thursday", "FRI": "Friday", "SAT": "Saturday", "SUN": "Sunday"}
@@ -50,7 +48,7 @@ def school_times():
 			hours, minutes = [int(t) for t in string_time.split("-")]
 			time = int(pt_extensions.zero_time(hours) + pt_extensions.zero_time(minutes))
 
-			period, time_data = period_calculator.get_current_period(schoolid, day, time)
+			period, time_data = period_calculator.get_current_period(schedule_id, day, time)
 			print(period, "//", time_data)
 
 			if time_data == "No Time":
@@ -87,9 +85,9 @@ def school_times():
 
 			print(hours, "//", minutes)
 
-			return render_template("index.html", school_valid=True, schools=schools, schoolid=schoolid, schoolname=schoolname, schoolcolor=schoolid, period=period, day=full_day, time=f"{hours}:{minutes}", get_time_date=False, time_data=time_data, time_diff_raw=time_difference, time_diff=compiled_time_diff, raw=mode)
+			return render_template("index.html", schedule_valid=True, schedules=schedules, schedule_id=schedule_id, schedule_name=schoolname, schedule_color=schedule_id, period=period, day=full_day, time=f"{hours}:{minutes}", get_time_date=False, time_data=time_data, time_diff_raw=time_difference, time_diff=compiled_time_diff, raw=mode)
 		else:
-			return render_template("index.html", school_valid=True, schoolid=schoolid, schoolname=schoolname, get_time_date=True)
+			return render_template("index.html", schedule_valid=True, schedule_id=schedule_id, schoolname=schoolname, get_time_date=True)
 
 @app.route("/timecalc", methods=["GET"])
 def timecalc():
@@ -99,10 +97,10 @@ def timecalc():
 	return str(pt_extensions.calculate_time(str(time1), str(time2)))
 
 if __name__ == "__main__":
-	if len(sys.argv) > 1 and sys.argv[1] == "ci":
+	if len(sys.argv) > 1 and sys.argv[1] == "--ci":
 		print("Successful execution....")
 	else:
-		schools = {"auhsd-ahs": "Acalanes High School"}
+		schedules = {"auhsd-ahs": "Acalanes High School"}
 
 		# Repl.it - 8080, Heroku - 3000
 		app_port = 3000
