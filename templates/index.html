@@ -150,7 +150,7 @@
             </main>
 
             <script>
-                var raw_json = '{{ raw_schedule_json }}',
+                var raw_json = '{{ raw_schedule_json|safe }}',
                     times = JSON.parse(raw_json),
                     d = new Date();
 
