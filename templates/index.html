@@ -266,10 +266,10 @@
                         
                         var time_difference = calculate_time(current_time, scheduled_end),
                             compiled_time_diff;
-                        if (time_difference[0] != 0) {
-                            compiled_time_diff = time_difference[0] + "h" + time_difference[1] + "m";
+                        if (time_difference[0] == 0) {
+			    compiled_time_diff = time_difference[1] + "m";
                         } else {
-                            compiled_time_diff = time_difference[1] + "m";
+                            compiled_time_diff = time_difference[0] + "h" + time_difference[1] + "m";                            
                         }
                     } else {
                         var time_difference = "NT",
