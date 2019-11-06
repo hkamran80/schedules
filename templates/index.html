@@ -172,10 +172,11 @@
 
                 function get_current_period() {
                     if (typeof times[schedule_id][current_day] != undefined) {
-                        var days_schedule = times[schedule_id][current_day];
+                        var days_schedule = times[schedule_id][current_day],
+			    current_time_fd = Number(generate_four_digit_time());
                         for (_period in days_schedule) {
                             period = days_schedule[_period]
-                            if (period[1] > current_time < period[0]) {
+                            if (period[1] > current_time_fd && current_time_fd > period[0]) {
                                 return [times[schedule_id][current_day][period], period]
                             }
                         }
@@ -197,6 +198,9 @@
                         return tz_str;
                     }
                 }
+		function generate_four_digit_time() {
+			return [zero_time(current_time_split.split("-")[0]), zero_time(current_time_split.split("-")[1])].join("");
+		}
                 function calculate_time(st_time, ed_time) {
                     var start_time = st_time.toString(),
                         end_time = ed_time.toString();
