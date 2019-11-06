@@ -11,6 +11,7 @@ The app of all schedules
   * Don't spam the browser's history by reloading every minute
     * Instead, use the new client-side JS to dynamically reload the *code* (not the page!) every second!
   * Fix bug shown in [issue #6](https://github.com/hkamran80/schedules/issues/6)
+  * Removed `/timecalc` endpoint
   * Create new BETA site [schedulesapp-beta.herokuapp.com](https://schedulesapp-beta.herokuapp.com/)
 * Version 1.1.5 (2019-11-04):
   * Remove the `apple-touch-icon` meta attributes (didn't work when implemented) from `index.html`
