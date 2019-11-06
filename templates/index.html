@@ -256,7 +256,7 @@
 
                     if (period_data != "No Time Available") {
                         var scheduled_end;
-                        if (period_data[1].toString().substring(0, 2).length == 3) {
+                        if (period_data[1].toString().length == 3) {
                             var str_pd_1 = period_data[1].toString();
                             scheduled_end = str_pd_1.substring(0, 1) + "-" + str_pd_1.substring(1, str_pd_1.length);
                         } else {
