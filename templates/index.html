@@ -250,7 +250,7 @@
                         period_data_name = current_period[0],
                         period_data = current_period[1];
 
-                    if (period_data[1] != "No Time Available") {
+                    if (period_data != "No Time Available") {
                         var scheduled_end;
                         if (range(24, startAt=1).indexOf(period_data[1].toString().substring(0, 2)) == -1) {
                             var str_pd_1 = period_data[1].toString();
