@@ -132,7 +132,7 @@
                         <h4>
                             {{ schedule_name }}
                             <div class="w3-right">
-                                <span id="date"></span> <span id="time"></span> <span class="seperator">|</span> <span onclick="refresh()" id="refresh">Refresh</span>
+                                <span id="date"></span> <span id="time"></span> <span class="seperator">|</span>
                             </div>
                         </h4>
                     </header>
@@ -290,6 +290,8 @@
                     date.innerText = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][d.getDay()];
                     time.innerText = current_time_split.replace("-", ":");
                 }
+		    
+		var one_second_loop = setInterval(update_period, 1000);
             </script>
 		{% endif %}
 	</body>
