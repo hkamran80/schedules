@@ -198,8 +198,8 @@
                         return tz_str;
                     }
                 }
-		function generate_four_digit_time() {
-			return [zero_time(current_time_split.split("-")[0]), zero_time(current_time_split.split("-")[1])].join("");
+		function generate_four_digit_time(join_character="") {
+			return [zero_time(current_time_split.split("-")[0]), zero_time(current_time_split.split("-")[1])].join(join_character);
 		}
                 function calculate_time(st_time, ed_time) {
                     var start_time = st_time.toString(),
@@ -264,7 +264,7 @@
                             scheduled_end = str_pd_1.substring(0, 2) + "-" + str_pd_1.substring(2, str_pd_1.length);
                         }
                         
-                        var time_difference = calculate_time(current_time, scheduled_end),
+			var time_difference = calculate_time(generate_four_digit_time(join_character="-"), scheduled_end),
                             compiled_time_diff;
                         if (time_difference[0] == 0) {
 			    compiled_time_diff = time_difference[1] + "m";
