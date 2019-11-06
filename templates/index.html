@@ -272,23 +272,13 @@
                             compiled_time_diff = "";
                     }
 
-                    var hours, minutes;
-                    if (current_time_split.split("-")[0].length == 1) {
-                        hours = "0" + current_time_split.split("-")[0].toString();
-                    } else {
-                        hours = current_time_split.split("-")[0].toString();
-                    }
-                    
-                    if (current_time_split.split("-")[1].length == 1) {
-                        minutes = "0" + current_time_split.split("-")[1].toString();
-                    } else {
-                        minutes = current_time_split.split("-")[1].toString();
-                    }
+                    var hours = zero_time(current_time_split.split("-")[0]),
+			minutes = zero_time(current_time_split.split("-")[1]);
 
                     period_name.innerText = period_data_name;
                     period_time_remaining.innerText = compiled_time_diff;
                     date.innerText = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][d.getDay()];
-                    time.innerText = current_time_split.replace("-", ":");
+                    time.innerText = hours + ":" + minutes;
                 }
 		    
 		var one_second_loop = setInterval(update_period, 1000);
