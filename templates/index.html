@@ -175,7 +175,7 @@
                         var days_schedule = times[schedule_id][current_day];
                         for (_period in days_schedule) {
                             period = days_schedule[_period]
-                            if (period[1] > current_time > period[0]) {
+                            if (period[1] > current_time < period[0]) {
                                 return [times[schedule_id][current_day][period], period]
                             }
                         }
