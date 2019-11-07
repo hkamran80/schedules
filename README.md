@@ -21,7 +21,7 @@ The app of all schedules
   * Added temporary redirect to `/schedule` if someone visits `/school`
   * Created new file `runtime.txt` for Heroku, which declares the **exact** Python version to use
     * 1.1.5 is using Python 3.7.5 (`python-3.7.5`)
-  * Preparation for Version ~~1.2.0~~ 2.0.0 (estimated release: ~~late December 2019~~ November 6, 2019)
+  * Preparation for Version ~~1.2.0~~ 2.0.0 (estimated release: ~~late December 2019~~ November 7, 2019)
 * Version 1.1.4 (2019-09-04):
   * Add the `apple-touch-icon` meta attributes
     * Spoiler Alert: It doesn't work (tested on an iPhone 7+ running iOS 12)
