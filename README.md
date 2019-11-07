@@ -12,7 +12,7 @@ The app of all schedules
     * Instead, use the new client-side JS to dynamically reload the *code* (not the page!) every second!
   * Fix bug shown in [issue #6](https://github.com/hkamran80/schedules/issues/6)
   * Removed `/timecalc` endpoint
-  * Create new BETA site [schedulesapp-beta.herokuapp.com](https://schedulesapp-beta.herokuapp.com/)
+  * Create new **beta** site [schedulesapp-beta.herokuapp.com](https://schedulesapp-beta.herokuapp.com/)
 * Version 1.1.5 (2019-11-04):
   * Remove the `apple-touch-icon` meta attributes (didn't work when implemented) from `index.html`
   * Rename all instances of `school` to `schedule` in both `index.html` and `main.py`
