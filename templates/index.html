@@ -82,33 +82,13 @@
 				background-color: #1a468f;
 				color: #ffffff;
 			}
+			.color-average-work-day {
+				background-color: #188f24;
+				color: #ffffff;
+			}
 		</style>
 	</head>
 	<body>
-		<script>
-			function set_cookie(cookie_name, cookie_value, expiration_days) {
-				var d = new Date();
-				d.setTime(d.getTime() + (expiration_days*24*60*60*1000));
-				var expires = "expires=" + d.toUTCString();
-				document.cookie = cookie_name + "=" + cookie_value + ";" + expires + ";path=/";
-			}
-			
-			function get_cookie(cookie_name) {
-				var name = cookie_name + "=";
-				var decoded_cookie = decodeURIComponent(document.cookie);
-				var ca = decoded_cookie.split(";");
-				for (var i = 0; i < ca.length; i++) {
-					var c = ca[i];
-					while (c.charAt(0) == " ") {
-						c = c.substring(1);
-					}
-					if (c.indexOf(name) == 0) {
-						return c.substring(name.length, c.length);
-					}
-				}
-				return "";
-			}
-		</script>
 		<header class="w3-container ut-pc-darkblue">
 			<h3>Schedules</h3>
 		</header>
@@ -126,58 +106,165 @@
 			</div>
 		</main>
 		{% else %}
-			{% if get_time_date %}
-				<script>
-					var d = new Date();
-					var days = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
-					window.location.href = "/schedule/{{ schedule_id }}?day=" + days[d.getDay()-1] + "&time=" + d.getHours().toString() + "-" + d.getMinutes().toString();
-				</script>
-			{% else %}
-				<main id="schedule_times" class="ut-pt-center">
-					<div id="times" class="ut-pt-centerbox w3-card-4">
-						<header id="schedule_info" class="{% if schedule_color %}color-{{ schedule_color }}{% else %}w3-blue-gray{% endif %}">
-							<h4>
-								{{ schedule_name }}
-								<div class="w3-right">
-									{{ day }} {{ time }} <span class="seperator">|</span> <span onclick="refresh()" id="refresh">Refresh</span>
-								</div>
-							</h4>
-						</header>
-						<main id="period_info" class="ut-pt-centerbox">
-							<h4 class="w3-row">
-								{% if time_data != "No Time" or time_diff != "NT" %}
-									<div class="w3-half">
-										{% if "Pass" in period or "Out" in period or "Brun" in period or "Lun" in period or "Acad" in period %}
-											{{ period }}
-										{% else %}
-											{{ period[0] }}<sup>{{ period[1:3] }}</sup> {{ period[4:] }}
-										{% endif %}
-									</div>
-									<div class="w3-half">
-										{% if raw %}
-											{{ time_diff }} // {{ time_data }} // {{ time_diff_raw }}
-										{% else %}
-											{{ time_diff }}
-										{% endif %}
-									</div>
-								{% else %}
-									{{ period }}
-								{% endif %}
-							</h4>
-						</main>
-					</div>
-				</main>
+            <main id="schedule_times" class="ut-pt-center">
+                <div id="times" class="ut-pt-centerbox w3-card-4">
+                    <header id="schedule_info" class="{% if schedule_color %}color-{{ schedule_color }}{% else %}w3-blue-gray{% endif %}">
+                        <h4>
+                            {{ schedule_name }}
+                            <div class="w3-right">
+                                <span id="date"></span> <span id="time"></span>
+                            </div>
+                        </h4>
+                    </header>
+                    <main id="period_info" class="ut-pt-centerbox">
+                        <h4 class="w3-row">
+                            <div class="w3-half">
+                                <span id="period_name"></span>
+                            </div>
+                            <div class="w3-half">
+                                <span id="period_time_remaining"></span>
+                            </div>
+                        </h4>
+                    </main>
+                </div>
+            </main>
 
-				<script>
-					function refresh() {
-						var d = new Date();
-						var days = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
-						window.location.href = "/schedule/{{ schedule_id }}?day=" + days[d.getDay()-1] + "&time=" + d.getHours().toString() + "-" + d.getMinutes().toString();
-					}
+            <script>
+                var raw_json = '{{ raw_schedule_json|safe }}',
+                    times = JSON.parse(raw_json),
+                    d = new Date();
 
-					setInterval(refresh, 60000);
-				</script>
-			{% endif %}
+                const schedule_id = "{{ schedule_id }}";
+
+                var current_day = d.toLocaleDateString("en-us", { weekday: 'short' }).toUpperCase(),
+                    current_time = d.getHours().toString() + d.getMinutes().toString(),
+                    current_time_split = d.getHours().toString() + "-" + d.getMinutes().toString();
+                
+                function update_current_date() {
+                    d = new Date();
+			
+                    current_day = d.toLocaleDateString("en-us", { weekday: 'short' }).toUpperCase();
+                    current_time = d.getHours().toString() + d.getMinutes().toString();
+                    current_time_split = d.getHours().toString() + "-" + d.getMinutes().toString();
+                }
+
+                function get_current_period() {
+                    if (typeof times[schedule_id][current_day] != undefined) {
+                        var days_schedule = times[schedule_id][current_day],
+			    current_time_fd = Number(generate_four_digit_time());
+                        for (_period in days_schedule) {
+                            period = days_schedule[_period]
+                            if (period[1] > current_time_fd && current_time_fd > period[0]) {
+                                return [_period, period]
+                            }
+                        }
+                        return ["Out of Schedule", "No Time Available"]
+                    }
+                    return ["Out of Schedule", "No Time Available"]
+                }
+                
+                function range(size, startAt=0) {
+                    return [...Array(size).keys()].map(i => i + startAt);
+                }
+                function zero_time(time_zero) {
+                    var tz = Number(time_zero),
+                        tz_str = time_zero.toString();
+
+                    if (tz < 10) {
+                        return "0" + tz_str;
+                    } else {
+                        return tz_str;
+                    }
+                }
+		function generate_four_digit_time(join_character="") {
+			return [zero_time(current_time_split.split("-")[0]), zero_time(current_time_split.split("-")[1])].join(join_character);
+		}
+                function calculate_time(st_time, ed_time) {
+                    var start_time = st_time.toString(),
+                        end_time = ed_time.toString();
+
+                    if (start_time.indexOf("-") != -1) {
+                        var _st = start_time.split("-"),
+                            st_hr = Number(_st[0]),
+                            st_min = Number(_st[1]);
+                    } else if (start_time.indexOf(":") != -1) {
+                        var _st = start_time.split(":"),
+                            st_hr = Number(_st[0]),
+                            st_min = Number(_st[1]);
+                    } else {
+                        var st_hr = Number(start_time.substring(0, 2)),
+                            st_min = Number(start_time.substring(2, start_time.length));
+                    }
+
+                    if (end_time.indexOf("-") != -1) {
+                        var _ed = end_time.split("-"),
+                            ed_hr = Number(_ed[0]),
+                            ed_min = Number(_ed[1]);
+                    } else if (end_time.indexOf(":") != -1) {
+                        var _ed = end_time.split(":"),
+                            ed_hr = Number(_ed[0]),
+                            ed_min = Number(_ed[1]);
+                    } else {
+                        var ed_hr = Number(end_time.substring(0, 2)),
+                            ed_min = Number(end_time.substring(2, end_time.length));
+                    }
+
+                    var hour_difference = ed_hr - st_hr,
+                        minute_difference = ed_min - st_min;
+
+                    if (minute_difference < 0) {
+                        hour_difference -= 1
+                        minute_difference += 60
+                    }
+
+                    return [hour_difference, minute_difference]
+                }
+
+                function update_period() {
+                    update_current_date();
+
+                    const period_name = document.getElementById("period_name"),
+                          period_time_remaining = document.getElementById("period_time_remaining"),
+                          date = document.getElementById("date"),
+                          time = document.getElementById("time");
+
+                    var current_period = get_current_period(),
+                        period_data_name = current_period[0],
+                        period_data = current_period[1];
+
+                    if (period_data != "No Time Available") {
+                        var scheduled_end;
+                        if (period_data[1].toString().length == 3) {
+                            var str_pd_1 = period_data[1].toString();
+                            scheduled_end = str_pd_1.substring(0, 1) + "-" + str_pd_1.substring(1, str_pd_1.length);
+                        } else {
+                            var str_pd_1 = period_data[1].toString();
+                            scheduled_end = str_pd_1.substring(0, 2) + "-" + str_pd_1.substring(2, str_pd_1.length);
+                        }
+                        
+			var time_difference = calculate_time(generate_four_digit_time(join_character="-"), scheduled_end),
+                            compiled_time_diff;
+                        if (time_difference[0] == 0) {
+			    compiled_time_diff = time_difference[1] + "m";
+                        } else {
+                            compiled_time_diff = time_difference[0] + "h" + time_difference[1] + "m";                            
+                        }
+                    } else {
+                        var time_difference = "NT",
+                            compiled_time_diff = "";
+                    }
+
+                    var hours = zero_time(current_time_split.split("-")[0]),
+			minutes = zero_time(current_time_split.split("-")[1]);
+
+                    period_name.innerText = period_data_name;
+                    period_time_remaining.innerText = compiled_time_diff;
+                    date.innerText = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][d.getDay()];
+                    time.innerText = hours + ":" + minutes;
+                }
+		    
+		var one_second_loop = setInterval(update_period, 1000);
+            </script>
 		{% endif %}
 	</body>
 </html>
