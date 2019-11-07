@@ -175,7 +175,7 @@
                         for (_period in days_schedule) {
                             period = days_schedule[_period]
                             if (period[1] > current_time_fd && current_time_fd > period[0]) {
-                                return [times[schedule_id][current_day][period], period]
+                                return [_period, period]
                             }
                         }
                         return ["Out of Schedule", "No Time Available"]
