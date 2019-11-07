@@ -156,18 +156,16 @@
 
                 const schedule_id = "{{ schedule_id }}";
 
-                var _minutes = d.getMinutes(),
-                    current_day = d.toLocaleDateString("en-us", { weekday: 'short' }).toUpperCase(),
-                    current_time = d.getHours().toString() + _minutes,
-                    current_time_split = d.getHours().toString() + "-" + _minutes;
+                var current_day = d.toLocaleDateString("en-us", { weekday: 'short' }).toUpperCase(),
+                    current_time = d.getHours().toString() + d.getMinutes().toString(),
+                    current_time_split = d.getHours().toString() + "-" + d.getMinutes().toString();
                 
                 function update_current_date() {
                     d = new Date();
-                    _minutes = d.getMinutes()+1;
-
+			
                     current_day = d.toLocaleDateString("en-us", { weekday: 'short' }).toUpperCase();
-                    current_time = d.getHours().toString() + _minutes;
-                    current_time_split = d.getHours().toString() + "-" + _minutes;
+                    current_time = d.getHours().toString() + d.getMinutes().toString();
+                    current_time_split = d.getHours().toString() + "-" + d.getMinutes().toString();
                 }
 
                 function get_current_period() {
