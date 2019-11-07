@@ -44,7 +44,10 @@ if __name__ == "__main__":
 	if len(sys.argv) > 1 and sys.argv[1] == "--ci":
 		print("Successful execution....")
 	else:
-		schedules = {"auhsd-ahs": "Acalanes High School"}
+		schedules = {
+			"auhsd-ahs": "Acalanes High School",
+			"average-work-day": "Average Work Day"
+		}
 
 		# Repl.it - 8080, Heroku - 3000
 		app_port = 3000
