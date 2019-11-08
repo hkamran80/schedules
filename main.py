@@ -46,6 +46,7 @@ if __name__ == "__main__":
 	else:
 		schedules = {
 			"auhsd-ahs": "Acalanes High School",
+			"auhsd-chs": "Campolindo High School",
 			"average-work-day": "Average Work Day"
 		}
 
