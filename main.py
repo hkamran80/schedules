@@ -7,7 +7,7 @@ Last Updated: 2019-11-05, @hkamran80
 """
 
 from flask import Flask, render_template, request, redirect, url_for
-import period_calculator
+import times
 import json
 import sys
 import os
@@ -38,7 +38,7 @@ def schedule(schedule_id):
 		    mode = None
 
 		#return render_template("index.html", schedule_valid=True, schedules=schedules, schedule_id=schedule_id, schedule_name=schedule_name, schedule_color=schedule_id, period=period, day=full_day, time=f"{hours}:{minutes}", get_time_date=False, time_data=time_data, time_diff_raw=time_difference, time_diff=compiled_time_diff, raw=mode)
-		return render_template("index.html", schedule_valid=True, schedule_id=schedule_id, schedule_name=schedule_name, schedule_color=schedule_id, raw_schedule_json=json.dumps(period_calculator.times))
+		return render_template("index.html", schedule_valid=True, schedule_id=schedule_id, schedule_name=schedule_name, schedule_color=schedule_id, raw_schedule_json=json.dumps(times.times))
 
 if __name__ == "__main__":
 	if len(sys.argv) > 1 and sys.argv[1] == "--ci":
@@ -46,6 +46,7 @@ if __name__ == "__main__":
 	else:
 		schedules = {
 			"auhsd-ahs": "Acalanes High School",
+			"auhsd-chs": "Campolindo High School",
 			"average-work-day": "Average Work Day"
 		}
 
