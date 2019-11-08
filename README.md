@@ -7,7 +7,7 @@ The app for all schedules
 ## [Feature Requests](https://github.com/hkamran80/schedules/issues?q=is%3Aissue+is%3Aopen+label%3A%22Feature+Request%22)
 
 ## Changelog
-* Version 2.0.0 (2019-11-??):
+* Version 2.0.0 (2019-11-07):
   * Move **all** calculation code client-side
   * Remove the seperator and the "Refresh" button
   * Remove the `?day=XXX&time=XX-XX` and replace it with client-side JavaScript
