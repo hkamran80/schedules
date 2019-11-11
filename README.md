@@ -1,8 +1,8 @@
 # [Schedules](https://schedulesapp.herokuapp.com/)
-The app for all schedules
-
 ![Build Status](https://img.shields.io/travis/com/hkamran80/schedules?style=for-the-badge)
 ![Version](https://img.shields.io/badge/version-2.0.1-green?style=for-the-badge)
+
+The app for all schedules
 
 ## [Feature Requests](https://github.com/hkamran80/schedules/issues?q=is%3Aissue+is%3Aopen+label%3A%22Feature+Request%22)
 
