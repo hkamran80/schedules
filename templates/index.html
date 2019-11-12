@@ -154,7 +154,7 @@
 			    current_time_fd = Number(generate_four_digit_time());
                         for (_period in days_schedule) {
                             period = days_schedule[_period]
-                            if (period[1] > current_time_fd && current_time_fd > period[0]) {
+                            if (period[1] >= current_time_fd && current_time_fd >= period[0]) {
                                 return [_period, period]
                             }
                         }
