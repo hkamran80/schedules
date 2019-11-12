@@ -1,0 +1,29 @@
+{
+  "1.1.5": {
+    "release_date": "2019-11-04",
+    "changelog": [
+      "Remove the <code>apple-touch-icon</code> meta attributes (didn't work when implemented) from <code>index.html</code>",
+      "Rename all instances of <code>school to <code>schedule in both <code>index.html and <code>main.py"
+    ]
+  },
+  "1.1.4": {
+    "release_date": "2019-09-04",
+    "changelog": [
+      "Add the <code>apple-touch-icon</code> meta attributes <ul><li>Spoiler Alert: It doesn't work (tested on an iPhone 7+ running iOS 12)
+</li></ul>"
+    ]
+  },
+  "1.1.3": {
+    "release_date": "2019-09-03",
+    "changelog": [
+      "Temporary fix for <a href='https://github.com/hkamran80/schedules/issues/2' target='_blank'>issue #2</a>",
+      "Add this changelog to the `README.md`"
+    ]
+  },
+  "1.1.2": {
+    "release_date": "2019-09-02",
+    "changelog": [
+      "Add the snackbar"
+    ]
+  }
+}
