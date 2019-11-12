@@ -12,6 +12,8 @@ The app for all schedules
     * `snackbar*`
     * `period_calculator.py`
     * `pt_extensions.py`
+  * Add `apple-touch-icon` meta attributes back
+  * Add new icons (`favicon.ico`, `apple-touch-icon-*.png`) in the `/static/img/` folder
 * Version 2.0.0 (2019-11-07):
   * Move **all** calculation code client-side
   * Remove the seperator and the "Refresh" button
