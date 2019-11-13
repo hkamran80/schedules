@@ -1,16 +1,24 @@
 {
+	"2.0.1": {
+		"release_date": "2019-11-11",
+		"changelog": [
+			"Removed unnecessary files <ul><li><code>snackbar*</code></li><li><code>period_calculator.py</code></li><li><code>pt_extensions.py</code></li></ul>",
+			"Add <code>apple-touch-icon</code> meta attributes back",
+			"Add new icons (<code>favicon.ico</code>, <code>apple-touch-icon-*.png</code>) in the <code>/static/img/</code> folder"
+		]
+	},
 	"2.0.0": {
 		"release_date": "2019-11-07",
 		"changelog": [
 			"Move <b>all</b> calculation code client-side",
-      "Remove the seperator and the \"Refresh\" button",
-      "Remove the <code>?day=XXX&time=XX-XX</code> and replace it with client-side JavaScript",
-      "Don't spam the browser's history by reloading every minute<ul><li>Instead, use the new client-side JS to dynamically reload the <i>code</i> (not the page!) every second!</li></ul>",
-		  "Fix bug shown in <a href='https://github.com/hkamran80/schedules/issues/6' target='_blank'>issue #6</a>",
-      "Removed <code>/timecalc</code> endpoint",
-      "Remove the JavaScript functions: <code>get_cookie()</code> and <code>set_cookie()</code>",
-      "Create new <b>beta</b> site <a href='https://schedulesapp-beta.herokuapp.com/' target='_blank'>schedulesapp-beta.herokuapp.com</a>"
-    ]
+			"Remove the seperator and the \"Refresh\" button",
+			"Remove the <code>?day=XXX&time=XX-XX</code> and replace it with client-side JavaScript",
+			"Don't spam the browser's history by reloading every minute<ul><li>Instead, use the new client-side JS to dynamically reload the <i>code</i> (not the page!) every second!</li></ul>",
+			"Fix bug shown in <a href='https://github.com/hkamran80/schedules/issues/6' target='_blank'>issue #6</a>",
+			"Removed <code>/timecalc</code> endpoint",
+			"Remove the JavaScript functions: <code>get_cookie()</code> and <code>set_cookie()</code>",
+			"Create new <b>beta</b> site <a href='https://schedulesapp-beta.herokuapp.com/' target='_blank'>schedulesapp-beta.herokuapp.com</a>"
+		]
 	},
 	"1.1.5": {
 		"release_date": "2019-11-04",
