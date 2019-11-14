@@ -37,7 +37,6 @@ def schedule(schedule_id):
 		else:
 		    mode = None
 
-		#return render_template("index.html", schedule_valid=True, schedules=schedules, schedule_id=schedule_id, schedule_name=schedule_name, schedule_color=schedule_id, period=period, day=full_day, time=f"{hours}:{minutes}", get_time_date=False, time_data=time_data, time_diff_raw=time_difference, time_diff=compiled_time_diff, raw=mode)
 		return render_template("index.html", schedule_valid=True, schedule_id=schedule_id, schedule_name=schedule_name, schedule_color=schedule_id, raw_schedule_json=json.dumps(times.times))
 
 if __name__ == "__main__":
