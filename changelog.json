@@ -1,4 +1,11 @@
 {
+	"2.0.2": {
+		"release_date": "2019-11-14",
+		"changelog": [
+			"Added changelog to Schedules (<a href='https://schedulesapp.herokuapp.com/changelog' target='_blank'><code>/changelog</code></a>)",
+			"Created <code>changelog.json</code>"
+		]
+	}
 	"2.0.1": {
 		"release_date": "2019-11-11",
 		"changelog": [
