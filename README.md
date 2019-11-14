@@ -7,6 +7,9 @@ The app for all schedules
 ## [Feature Requests](https://github.com/hkamran80/schedules/issues?q=is%3Aissue+is%3Aopen+label%3A%22Feature+Request%22)
 
 ## Changelog
+* Version 2.0.2 (2019-11-14):
+  * Added changelog to Schedules ([`/changelog`](https://schedulesapp.herokuapp.com/changelog))
+  * Created `changelog.json`
 * Version 2.0.1 (2019-11-11):
   * Removed unnecessary files
     * `snackbar*`

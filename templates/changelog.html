@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Schedules | Changelog</title>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<link rel="shortcut icon" type="image/x-icon" href="/static/img/favicon.ico" />
+		<link rel="apple-touch-icon" href="/static/img/apple-touch-icon.png" />
+		<link rel="apple-touch-icon" sizes="57x57" href="/static/img/apple-touch-icon-57x57.png" />
+		<link rel="apple-touch-icon" sizes="72x72" href="/static/img/apple-touch-icon-72x72.png" />
+		<link rel="apple-touch-icon" sizes="76x76" href="/static/img/apple-touch-icon-76x76.png" />
+		<link rel="apple-touch-icon" sizes="114x114" href="/static/img/apple-touch-icon-114x114.png" />
+		<link rel="apple-touch-icon" sizes="120x120" href="/static/img/apple-touch-icon-120x120.png" />
+		<link rel="apple-touch-icon" sizes="144x144" href="/static/img/apple-touch-icon-144x144.png" />
+		<link rel="apple-touch-icon" sizes="152x152" href="/static/img/apple-touch-icon-152x152.png" />
+		<link rel="apple-touch-icon" sizes="180x180" href="/static/img/apple-touch-icon-180x180.png" />
+
+		<link rel="stylesheet" href="/static/css/center.css">
+		<link rel="stylesheet" href="https://w3schools.com/w3css/4/w3.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap">
+
+		<style>
+			body, h3, h4, h5, select, option, header, main, div, span {
+				font-family: 'Source Sans Pro', sans-serif;
+			}
+
+            code {
+                background-color: rgba(236, 236, 236, 0.3);
+                color: #ff0000;
+                padding: 1px 8px;
+            }
+
+			body, select {
+				background-color: #736F72;
+				color: #ffffff;
+			}
+
+			.ut-pc-darkblue {
+				background-color: #13323C;
+				color: #FFFFFF;
+			}
+
+            select#version_changelog {
+				padding: 6px;
+			}
+
+			main#changelog {
+				padding: 12px;
+				background-color: #BCD4DE;
+				color: #000000;
+                
+                height: 30vh;
+                overflow-y: scroll;
+			}
+
+			.w3-card-4 {
+				width: 75%;
+			}
+		</style>
+	</head>
+	<body>
+		<header class="w3-container ut-pc-darkblue">
+			<h3>Schedules</h3>
+		</header>
+
+		<main id="changelog_container" class="ut-pt-center">
+			<div id="vc_container" class="ut-pt-centerbox w3-card-4">
+				<main style="padding:12px;text-align:center;">
+					<select id="version_changelog" name="version_changelog" class="w3-input" onchange="show_changelog(this.value);">
+						<option value="all" selected>All versions</option>
+						{% for version in versions %}
+							<option value="{{ version }}">{{ version }}</option>
+						{% endfor %}
+					</select>
+				</main>
+                
+                <main id="changelog">
+                    {% for version in changelog %}
+                        <div id="changelog-{{ version }}" class="changelog-version">
+                            <header class="w3-container ut-pc-darkblue">
+                                <h3>
+                                    {{ version }}
+                                    <span class="w3-right">
+                                        {{ changelog[version]["release_date"] }}
+                                    </span>
+                                </h3>
+                            </header>
+                            <main class="w3-container">
+                                <ul>
+                                    {% for update in changelog[version]["changelog"] %}
+                                        <li>{{ update|safe }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </main>
+                        </div>
+                    {% endfor %}
+                </main>
+            </div>
+		</main>
+
+        <script>
+            function show_changelog(version_number) {
+                var changelog_versions = document.getElementsByClassName("changelog-version");
+                if (version_number == "all") {
+                    for (var i = 0; i < changelog_versions.length; i++) {
+                        changelog_versions[i].style.display = "block";
+                    }
+                } else {
+                    for (var i = 0; i < changelog_versions.length; i++) {
+                        changelog_versions[i].style.display = "none";
+                    }
+                    
+                    document.getElementById("changelog-" + version_number).style.display = "block";
+                }
+            }
+        </script>
+	</body>
+</html>
