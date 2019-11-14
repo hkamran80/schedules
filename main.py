@@ -39,6 +39,10 @@ def schedule(schedule_id):
 
 		return render_template("index.html", schedule_valid=True, schedule_id=schedule_id, schedule_name=schedule_name, schedule_color=schedule_id, raw_schedule_json=json.dumps(times.times))
 
+@app.route("/changelog", methods=["GET"])
+def view_changelog():
+    return render_template("changelog.html", versions=list(changelog.keys()), changelog=changelog)
+
 if __name__ == "__main__":
 	if len(sys.argv) > 1 and sys.argv[1] == "--ci":
 		print("Successful execution....")
@@ -48,6 +52,8 @@ if __name__ == "__main__":
 			"auhsd-chs": "Campolindo High School",
 			"average-work-day": "Average Work Day"
 		}
+		
+		changelog = json.loads(open("changelog.json").read())
 
 		# Repl.it - 8080, Heroku - 3000
 		app_port = 3000
