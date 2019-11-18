@@ -3,7 +3,7 @@ Schedules
 Contributors:
 	:: H. Kamran [@hkamran80] (author)
 Version: 2.0.3
-Last Updated: 2019-11-05, @hkamran80
+Last Updated: 2019-11-18, @hkamran80
 """
 
 from flask import Flask, render_template, request, redirect, url_for
@@ -27,8 +27,12 @@ def school():
 @app.route("/schedule/<schedule_id>", methods=["GET"])
 def schedule(schedule_id):
 	if request.method == "GET":
-		if schedule_id in ["ca-auhsd-ca", "ca-auhsd-chs", "average-work-day"]:
-			schedule_id = "-".join(schedule_id.split("-")[1:])
+		if schedule_id == "auhsd-ahs":
+			schedule_id = "ca-auhsd-ahs"
+		elif schedule_id == "auhsd-chs":
+			schedule_id = "ca-auhsd-chs"
+		elif schedule_id == "average-work-day":
+			schedule_id = "un-average-workday"
 			
 		schedule_name = schedules[schedule_id]
 
@@ -53,7 +57,7 @@ if __name__ == "__main__":
 		schedules = {
 			"ca-auhsd-ahs": "Acalanes High School",
 			"ca-auhsd-chs": "Campolindo High School",
-			"un-average-work-day": "Average Work Day"
+			"un-average-workday": "Average Work Day"
 		}
 		
 		changelog = json.loads(open("changelog.json").read())
