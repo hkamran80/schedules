@@ -3,7 +3,8 @@
 		"release_date": "2019-11-18",
 		"changelog": [
 			"Update ID system",
-			"Update <code>average-work-day</code> to <code>un-average-workday</code>"
+			"Update <code>average-work-day</code> to <code>un-average-workday</code>",
+			"Update <code>schedule-colors.css</code> to <code>index.html</code>"
 		]
 	},
 	"2.0.2": {
