@@ -1,5 +1,5 @@
 times = {
-	"auhsd-ahs": {
+	"ca-auhsd-ahs": {
 		"MON": {
 			"1st Period": (835, 920),
 			"Passing: 1/2": (920, 925),
@@ -62,7 +62,7 @@ times = {
 			"6th Period": (1335, 1505)
 		}
 	},
-    "auhsd-chs": {
+    "ca-auhsd-chs": {
       "MON": {
         "1st Period": (835, 920),
         "Passing: 1/2": (920, 925),
@@ -125,7 +125,7 @@ times = {
         "6th Period": (1335, 1505)
       }
     },
-    "average-work-day": {
+    "un-average-work-day": {
       "MON": {
           "Work": (900, 1700)
       },
