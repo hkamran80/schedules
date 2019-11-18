@@ -10,6 +10,7 @@ The app for all schedules
 * Version 2.0.3 (2019-11-18):
   * Update ID system
   * Update `average-work-day` to `un-average-workday`
+  * Update `schedules-colors.css` and `index.html`
 * Version 2.0.2 (2019-11-14):
   * Added changelog to Schedules ([`/changelog`](https://schedulesapp.herokuapp.com/changelog))
   * Created `changelog.json`
