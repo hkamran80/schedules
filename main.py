@@ -7,7 +7,6 @@ Last Updated: 2019-11-18, @hkamran80
 """
 
 from flask import Flask, render_template, request, redirect, url_for
-import times
 import json
 import sys
 import os
@@ -44,7 +43,7 @@ def schedule(schedule_id):
 		else:
 		    mode = None
 
-		return render_template("index.html", schedule_valid=True, schedule_id=schedule_id, schedule_name=schedule_name, schedule_color=schedule_id, raw_schedule_json=json.dumps(times.times))
+		return render_template("index.html", schedule_valid=True, schedule_id=schedule_id, schedule_name=schedule_name, schedule_color=schedule_id, raw_schedule_json=open("times.json").read())
 
 @app.route("/changelog", methods=["GET"])
 def view_changelog():
