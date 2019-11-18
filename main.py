@@ -28,11 +28,11 @@ def school():
 def schedule(schedule_id):
 	if request.method == "GET":
 		if schedule_id == "auhsd-ahs":
-			schedule_id = "ca-auhsd-ahs"
+			return redirect(url_for("schedule", schedule_id="ca-auhsd-ahs"))
 		elif schedule_id == "auhsd-chs":
-			schedule_id = "ca-auhsd-chs"
+			return redirect(url_for("schedule", schedule_id="ca-auhsd-chs"))
 		elif schedule_id == "average-work-day":
-			schedule_id = "un-average-workday"
+			return redirect(url_for("schedule", schedule_id="un-average-workday"))
 			
 		schedule_name = schedules[schedule_id]
 
