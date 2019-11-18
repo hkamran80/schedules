@@ -2,7 +2,7 @@
 Schedules
 Contributors:
 	:: H. Kamran [@hkamran80] (author)
-Version: 2.0.0
+Version: 2.0.3
 Last Updated: 2019-11-05, @hkamran80
 """
 
@@ -27,6 +27,9 @@ def school():
 @app.route("/schedule/<schedule_id>", methods=["GET"])
 def schedule(schedule_id):
 	if request.method == "GET":
+		if schedule_id in ["ca-auhsd-ca", "ca-auhsd-chs", "average-work-day"]:
+			schedule_id = "-".join(schedule_id.split("-")[1:])
+			
 		schedule_name = schedules[schedule_id]
 
 		if not schedule_id:
@@ -48,9 +51,9 @@ if __name__ == "__main__":
 		print("Successful execution....")
 	else:
 		schedules = {
-			"auhsd-ahs": "Acalanes High School",
-			"auhsd-chs": "Campolindo High School",
-			"average-work-day": "Average Work Day"
+			"ca-auhsd-ahs": "Acalanes High School",
+			"ca-auhsd-chs": "Campolindo High School",
+			"un-average-work-day": "Average Work Day"
 		}
 		
 		changelog = json.loads(open("changelog.json").read())
@@ -58,4 +61,4 @@ if __name__ == "__main__":
 		# Repl.it - 8080, Heroku - 3000
 		app_port = 3000
 
-		app.run(host="0.0.0.0", port=os.environ["PORT"] or app_port, debug=True)
+		app.run(host="0.0.0.0", port=os.environ["PORT"] or app_port)
