@@ -125,7 +125,7 @@ times = {
         "6th Period": (1335, 1505)
       }
     },
-    "un-average-work-day": {
+    "un-average-workday": {
       "MON": {
           "Work": (900, 1700)
       },
