@@ -28,7 +28,7 @@
 				font-family: 'Source Sans Pro', sans-serif;
 			}
 
-			body, select {
+			body, select#schedule_name {
 				background-color: #736F72;
 				color: #ffffff;
 			}
@@ -109,7 +109,7 @@
                 <div id="times" class="ut-pt-centerbox w3-card-4">
                     <header id="schedule_info" class="{% if schedule_color %}color--{{ schedule_color }}{% else %}w3-blue-gray{% endif %}">
                         <h4>
-                            <select id="schedule_selection" onchange="window.location.href='/schedule/'+this.value">
+                            <select id="schedule_selection" class="w3-input" onchange="window.location.href='/schedule/'+this.value">
 				    {% for schedule in schedules %}
 				    	{% if schedule == schedule_id %}
 						<option value="{{ schedule }}" selected>{{ schedules[schedule] }}</option>
