@@ -3,7 +3,9 @@
 		"release_date": "2019-11-19",
 		"changelog": [
 			"Add schedule selection dropdown to schedule page",
-			"Force HTTPS"
+			"Force HTTPS",
+			"Remove legacy support for the ID system",
+			"The <code>/school</code> endpoint has been removed"
 		]
 	},
 	"2.0.3": {
