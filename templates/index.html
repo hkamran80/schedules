@@ -109,7 +109,14 @@
                 <div id="times" class="ut-pt-centerbox w3-card-4">
                     <header id="schedule_info" class="{% if schedule_color %}color--{{ schedule_color }}{% else %}w3-blue-gray{% endif %}">
                         <h4>
-                            {{ schedule_name }}
+                            <select id="schedule_selection" onchange="window.location.href='/schedule/'+this.value">
+				    {% for schedule in schedules %}
+				    	{% if schedule == schedule_id %}
+						<option value="{{ id }}" selected>{{ schedule_name }}</option>
+				    	{% else %}
+						<option value="{{ schedule }}">{{ schedules[schedule] }}</option>
+				        {% endif %}
+				    {% endfor %}
                             <div class="w3-right">
                                 <span id="date"></span> <span id="time"></span>
                             </div>
