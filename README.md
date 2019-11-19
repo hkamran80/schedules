@@ -9,6 +9,7 @@ The app for all schedules
 ## Changelog
 * Version 2.0.4 (2019-11-19):
   * Add schedule selection dropdown to schedule page
+  * Force HTTPS
 * Version 2.0.3 (2019-11-18):
   * Update ID system
   * Update `average-work-day` to `un-average-workday`
