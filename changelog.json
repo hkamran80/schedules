@@ -1,4 +1,10 @@
 {
+	"2.0.4": {
+		"release_date": "2019-11-19",
+		"changelog": [
+			"Add schedule selection dropdown to schedule page"
+		]
+	},
 	"2.0.3": {
 		"release_date": "2019-11-18",
 		"changelog": [
