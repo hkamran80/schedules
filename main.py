@@ -65,4 +65,4 @@ if __name__ == "__main__":
 		# Repl.it - 8080, Heroku - 3000
 		app_port = 3000
 
-		app.run(host="0.0.0.0", port=os.environ["PORT"] or app_port)
+		app.run(host="0.0.0.0", port=os.environ["PORT"] or app_port, debug=os.environ["FLASK_DEBUG_MODE"])
