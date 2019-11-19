@@ -7,6 +7,8 @@ The app for all schedules
 ## [Feature Requests](https://github.com/hkamran80/schedules/issues?q=is%3Aissue+is%3Aopen+label%3A%22Feature+Request%22)
 
 ## Changelog
+* Version 2.0.4 (2019-11-19):
+  * Add schedule selection dropdown to schedule page
 * Version 2.0.3 (2019-11-18):
   * Update ID system
   * Update `average-work-day` to `un-average-workday`
