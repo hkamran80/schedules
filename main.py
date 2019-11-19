@@ -44,7 +44,7 @@ def schedule(schedule_id):
 		else:
 		    mode = None
 
-		return render_template("index.html", schedule_valid=True, schedule_id=schedule_id, schedule_name=schedule_name, schedule_color=schedule_id, raw_schedule_json=open("times.json").read())
+		return render_template("index.html", schedule_valid=True, schedule_id=schedule_id, schedule_name=schedule_name, schedule_color=schedule_id, raw_schedule_json=json.dumps(times.times))
 
 @app.route("/changelog", methods=["GET"])
 def view_changelog():
@@ -65,4 +65,4 @@ if __name__ == "__main__":
 		# Repl.it - 8080, Heroku - 3000
 		app_port = 3000
 
-		app.run(host="0.0.0.0", port=os.environ["PORT"] or app_port, debug=os.environ["FLASK_DEBUG_MODE"])
+		app.run(host="0.0.0.0", port=os.environ["PORT"] or app_port, debug=True)
