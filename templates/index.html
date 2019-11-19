@@ -28,7 +28,7 @@
 				font-family: 'Source Sans Pro', sans-serif;
 			}
 
-			body, select {
+			body, select#schedule_name {
 				background-color: #736F72;
 				color: #ffffff;
 			}
@@ -47,6 +47,11 @@
 				text-align: center;
 				background-color: #BCD4DE;
 				color: #000000;
+			}
+			
+			select#schedule_selection {
+				width: 25%;
+				display: inline;
 			}
 
 			.w3-card-4 {
@@ -109,8 +114,16 @@
                 <div id="times" class="ut-pt-centerbox w3-card-4">
                     <header id="schedule_info" class="{% if schedule_color %}color--{{ schedule_color }}{% else %}w3-blue-gray{% endif %}">
                         <h4>
-                            {{ schedule_name }}
-                            <div class="w3-right">
+                            <select id="schedule_selection" class="w3-input {% if schedule_color %}color--{{ schedule_color }}{% else %}w3-blue-gray{% endif %}" onchange="window.location.href='/schedule/'+this.value">
+				    {% for schedule in schedules %}
+				    	{% if schedule == schedule_id %}
+						<option value="{{ schedule }}" selected>{{ schedules[schedule] }}</option>
+				    	{% else %}
+						<option value="{{ schedule }}">{{ schedules[schedule] }}</option>
+				        {% endif %}
+				    {% endfor %}
+			    </select>
+                            <div id="schedule_datetime" class="w3-right">
                                 <span id="date"></span> <span id="time"></span>
                             </div>
                         </h4>

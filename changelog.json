@@ -1,4 +1,13 @@
 {
+	"2.0.4": {
+		"release_date": "2019-11-19",
+		"changelog": [
+			"Add schedule selection dropdown to schedule page",
+			"Force HTTPS",
+			"Remove legacy support for the ID system",
+			"The <code>/school</code> endpoint has been removed"
+		]
+	},
 	"2.0.3": {
 		"release_date": "2019-11-18",
 		"changelog": [
