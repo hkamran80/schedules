@@ -112,11 +112,12 @@
                             <select id="schedule_selection" onchange="window.location.href='/schedule/'+this.value">
 				    {% for schedule in schedules %}
 				    	{% if schedule == schedule_id %}
-						<option value="{{ id }}" selected>{{ schedule_name }}</option>
+						<option value="{{ schedule }}" selected>{{ schedules[schedule] }}</option>
 				    	{% else %}
 						<option value="{{ schedule }}">{{ schedules[schedule] }}</option>
 				        {% endif %}
 				    {% endfor %}
+			    </select>
                             <div class="w3-right">
                                 <span id="date"></span> <span id="time"></span>
                             </div>
