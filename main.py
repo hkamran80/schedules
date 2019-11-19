@@ -12,39 +12,41 @@ import json
 import sys
 import os
 
+def force_https(protocol: str, url: str):
+	if protocol.lower() == "http":
+		return False, url.replace("http", "https")
+	else:
+		return True, None
+
 app = Flask(__name__)
 
 @app.route("/", methods=["GET"])
 def index():
-	if request.method == "GET":
-		return render_template("index.html", schedule_valid=False, schedules=schedules)
-
-@app.route("/school", methods=["GET"])
-def school():
-	_id = request.args.get("schoolid") or None
-	return redirect(url_for("schedule", schedule_id=_id))
+	f_https = force_https(request.headers["X-Forwarded-Proto"], request.url)
+	if f_https[0]:
+		if request.method == "GET":
+			return render_template("index.html", schedule_valid=False, schedules=schedules)
+	else:
+		return redirect(f_https[1])
 
 @app.route("/schedule/<schedule_id>", methods=["GET"])
 def schedule(schedule_id):
-	if request.method == "GET":
-		if schedule_id == "auhsd-ahs":
-			return redirect(url_for("schedule", schedule_id="ca-auhsd-ahs"))
-		elif schedule_id == "auhsd-chs":
-			return redirect(url_for("schedule", schedule_id="ca-auhsd-chs"))
-		elif schedule_id == "average-work-day":
-			return redirect(url_for("schedule", schedule_id="un-average-workday"))
-			
-		schedule_name = schedules[schedule_id]
+	f_https = force_https(request.headers["X-Forwarded-Proto"], request.url)
+	if f_https[0]:
+		if request.method == "GET":			
+			schedule_name = schedules[schedule_id]
 
-		if not schedule_id:
-			return redirect("/")
+			if not schedule_id:
+				return redirect("/")
 
-		if request.args.get("mode") == "dev":
-		    mode = "dev"
-		else:
-		    mode = None
+			if request.args.get("mode") == "dev":
+			    mode = "dev"
+			else:
+			    mode = None
 
-		return render_template("index.html", schedule_valid=True, schedule_id=schedule_id, schedule_name=schedule_name, schedules=schedules, schedule_color=schedule_id, raw_schedule_json=json.dumps(times.times))
+			return render_template("index.html", schedule_valid=True, schedule_id=schedule_id, schedule_name=schedule_name, schedules=schedules, schedule_color=schedule_id, raw_schedule_json=json.dumps(times.times))
+	else:
+		return redirect(f_https[1])
 
 @app.route("/changelog", methods=["GET"])
 def view_changelog():
