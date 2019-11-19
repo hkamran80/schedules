@@ -44,7 +44,7 @@ def schedule(schedule_id):
 		else:
 		    mode = None
 
-		return render_template("index.html", schedule_valid=True, schedule_id=schedule_id, schedule_name=schedule_name, schedule_color=schedule_id, raw_schedule_json=json.dumps(times.times))
+		return render_template("index.html", schedule_valid=True, schedule_id=schedule_id, schedule_name=schedule_name, schedules=schedules, schedule_color=schedule_id, raw_schedule_json=json.dumps(times.times))
 
 @app.route("/changelog", methods=["GET"])
 def view_changelog():
