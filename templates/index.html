@@ -317,11 +317,11 @@
 			if (!("Notification" in window)) {
 				alert("This browser does not support system notifications");
 			} else if (Notification.permission === "granted") {
-				var notification = new Notification(title_text, { body: body_text });
+				var notification = new Notification(title_text, { body: body_text, icon: "/static/img/apple-touch-icon.png" });
 			} else if (Notification.permission !== 'denied') {
 				Notification.requestPermission(function (permission) {
 					if (permission === "granted") {
-						var notification = new Notification(title_text, { body: body_text });
+						var notification = new Notification(title_text, { body: body_text, icon: "/static/img/apple-touch-icon.png" });
 					}
 				});
 			}
