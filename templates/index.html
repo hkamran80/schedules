@@ -286,12 +286,28 @@
 				show_notification(period_data_name, "One minute");
 			}
                 }
-		function show_notification(period_name="Unknown Period", time_remaining="XX minutes") {
+		function show_notification_old(period_name="Unknown Period", time_remaining="XX minutes") {
 			if (window.Notification && Notification.permission !== "denied") {
 				Notification.requestPermission(function(status) {  // status is "granted", if accepted by user
 					var n = new Notification("Schedules - " + period_data_name, { 
 						body: time_remaining + " left"
 					}); 
+				});
+			}
+		}
+		function show_notification(period_name="Unknown Period", time_remaining="XX minutes") {
+			var title_text = "Schedules - " + period_name,
+			    body_text = time_remaining + " left";
+			
+			if (!("Notification" in window)) {
+				alert("This browser does not support system notifications");
+			} else if (Notification.permission === "granted") {
+				var notification = new Notification(title_text, { body: body_text });
+			} else if (Notification.permission !== 'denied') {
+				Notification.requestPermission(function (permission) {
+					if (permission === "granted") {
+						var notification = new Notification(title_text, { body: body_text });
+					}
 				});
 			}
 		}
