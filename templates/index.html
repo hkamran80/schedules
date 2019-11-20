@@ -148,6 +148,7 @@
                     d = new Date();
 		    
 		var period_name_old = "",
+		    period_different = false,
 	            fifteen_minute_notification = false,
 		    ten_minute_notification = false,
 		    five_minute_notification = false,
@@ -250,6 +251,11 @@
                     var current_period = get_current_period(),
                         period_data_name = current_period[0],
                         period_data = current_period[1];
+			
+	            if (period_data_name != period_name_old) {
+			    period_different = true;
+		    }
+		    period_name_old = period_data_name;
 
                     if (period_data != "No Time Available") {
                         var scheduled_end;
@@ -277,12 +283,12 @@
 			minutes = zero_time(current_time_split.split("-")[1]);
 
                     period_name.innerText = period_data_name;
-		    /*if (period_name_old != period_data_name) {
+		    if (period_different) {
 		    	    fifteen_minute_notification = false;
 			    ten_minute_notification = false;
 			    five_minute_notification = false;
 			    one_minute_notification = false;
-		    }*/
+		    }
                     period_time_remaining.innerText = compiled_time_diff;
                     date.innerText = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][d.getDay()];
                     time.innerText = hours + ":" + minutes;
