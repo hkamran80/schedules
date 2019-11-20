@@ -145,6 +145,13 @@
                 var raw_json = '{{ raw_schedule_json|safe }}',
                     times = JSON.parse(raw_json),
                     d = new Date();
+		    
+		var period_name_old = "",
+		    period_different = false,
+	            fifteen_minute_notification = false,
+		    ten_minute_notification = false,
+		    five_minute_notification = false,
+		    one_minute_notification = false;
 
                 const schedule_id = "{{ schedule_id }}";
 
@@ -243,6 +250,13 @@
                     var current_period = get_current_period(),
                         period_data_name = current_period[0],
                         period_data = current_period[1];
+			
+	            if (period_data_name != period_name_old) {
+			    period_different = true;
+		    } else {
+		    	period_different = false;
+		    }
+		    period_name_old = period_data_name;
 
                     if (period_data != "No Time Available") {
                         var scheduled_end;
@@ -270,11 +284,48 @@
 			minutes = zero_time(current_time_split.split("-")[1]);
 
                     period_name.innerText = period_data_name;
+		    if (period_different == true) {
+			    period_different = false;
+		    	    fifteen_minute_notification = false;
+			    ten_minute_notification = false;
+			    five_minute_notification = false;
+			    one_minute_notification = false;
+		    }
                     period_time_remaining.innerText = compiled_time_diff;
                     date.innerText = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][d.getDay()];
                     time.innerText = hours + ":" + minutes;
+					
+			var minutes_left = Number(time_difference[1]);
+			if (minutes_left == 15 && !fifteen_minute_notification) {
+				show_notification(period_data_name, "Fifteen minutes");
+				fifteen_minute_notification = true;
+			} else if (minutes_left == 10 && !ten_minute_notification) {
+				show_notification(period_data_name, "Ten minutes");
+				ten_minute_notification = true;
+			} else if (minutes_left == 5 && !five_minute_notification) {
+				show_notification(period_data_name, "Five minutes");
+				five_minute_notification = true;
+			} else if (minutes_left == 1 && !one_minute_notification) {
+				show_notification(period_data_name, "One minute");
+				one_minute_notification = true;
+			}
                 }
-		    
+		function show_notification(period_name="Unknown Period", time_remaining="XX minutes") {
+			var title_text = "Schedules - " + period_name,
+			    body_text = time_remaining + " left";
+			
+			if (!("Notification" in window)) {
+				alert("This browser does not support system notifications");
+			} else if (Notification.permission === "granted") {
+				var notification = new Notification(title_text, { body: body_text });
+			} else if (Notification.permission !== 'denied') {
+				Notification.requestPermission(function (permission) {
+					if (permission === "granted") {
+						var notification = new Notification(title_text, { body: body_text });
+					}
+				});
+			}
+		}
 		var one_second_loop = setInterval(update_period, 1000);
             </script>
 		{% endif %}
