@@ -254,6 +254,8 @@
 			
 	            if (period_data_name != period_name_old) {
 			    period_different = true;
+		    } else {
+		    	period_different = false;
 		    }
 		    period_name_old = period_data_name;
 
@@ -284,6 +286,7 @@
 
                     period_name.innerText = period_data_name;
 		    if (period_different == true) {
+			    period_different = false;
 		    	    fifteen_minute_notification = false;
 			    ten_minute_notification = false;
 			    five_minute_notification = false;
