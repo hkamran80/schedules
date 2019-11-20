@@ -1,4 +1,11 @@
 {
+	"2.0.5": {
+		"release_date": "2019-11-20",
+		"changelog": [
+			"Add notification support",
+  			"Prevent notifications from running when the hour is not equal to zero"
+		]
+	},
 	"2.0.4": {
 		"release_date": "2019-11-19",
 		"changelog": [
