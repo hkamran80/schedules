@@ -1,12 +1,15 @@
 # [Schedules](https://schedulesapp.herokuapp.com/)
 ![Build Status](https://img.shields.io/travis/com/hkamran80/schedules?style=for-the-badge)
-![Version](https://img.shields.io/badge/version-2.0.4-green?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-2.0.5-green?style=for-the-badge)
 
 The app for all schedules
 
 ## [Feature Requests](https://github.com/hkamran80/schedules/issues?q=is%3Aissue+is%3Aopen+label%3A%22Feature+Request%22)
 
 ## Changelog
+* Version 2.0.5 (2019-11-20):
+  * Add notification support
+  * Prevent notifications from running when the hour is not equal to zero
 * Version 2.0.4 (2019-11-19):
   * Add schedule selection dropdown to schedule page
   * Force HTTPS
