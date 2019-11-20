@@ -277,12 +277,12 @@
 			minutes = zero_time(current_time_split.split("-")[1]);
 
                     period_name.innerText = period_data_name;
-		    if (period_name_old != period_data_name) {
+		    /*if (period_name_old != period_data_name) {
 		    	    fifteen_minute_notification = false;
 			    ten_minute_notification = false;
 			    five_minute_notification = false;
 			    one_minute_notification = false;
-		    }
+		    }*/
                     period_time_remaining.innerText = compiled_time_diff;
                     date.innerText = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][d.getDay()];
                     time.innerText = hours + ":" + minutes;
