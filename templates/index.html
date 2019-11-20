@@ -142,7 +142,6 @@
                 </div>
             </main>
 
-	    <script src="/static/js/notify.js"></script>
             <script>
                 var raw_json = '{{ raw_schedule_json|safe }}',
                     times = JSON.parse(raw_json),
@@ -276,80 +275,26 @@
                     date.innerText = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][d.getDay()];
                     time.innerText = hours + ":" + minutes;
 					
-		var minutes_left = Number(time_difference[1]);
-		if (minutes_left == 15) {
-			if (!Notify.needsPermission) {
-				doNotification();
-			} else if (Notify.isSupported()) {
-				Notify.requestPermission(onPermissionGranted, onPermissionDenied);
+			var minutes_left = Number(time_difference[1]);
+			if (minutes_left == 15) {
+				show_notification(period_data_name, "Fifteen minutes");
+			} else if (minutes_left == 10) {
+				show_notification(period_data_name, "Ten minutes");
+			} else if (minutes_left == 5) {
+				show_notification(period_data_name, "Five minutes");
+			} else if (minutes_left == 1) {
+				show_notification(period_data_name, "One minute");
 			}
-
-			var fifteen_minute_notification = new Notify("Schedules - " + period_data_name, {
-				body: "Fifteen minutes left",
-				notifyShow: onNotifyShow
-			});
-		} else if (minutes_left == 10) {
-			if (!Notify.needsPermission) {
-				doNotification();
-			} else if (Notify.isSupported()) {
-				Notify.requestPermission(onPermissionGranted, onPermissionDenied);
-			}
-
-			var ten_minute_notification = new Notify("Schedules - " + period_data_name, {
-				body: "Ten minutes left",
-				notifyShow: onNotifyShow
-			});
-		} else if (minutes_left == 5) {
-			if (!Notify.needsPermission) {
-				doNotification();
-			} else if (Notify.isSupported()) {
-				Notify.requestPermission(onPermissionGranted, onPermissionDenied);
-			}
-
-			var five_minute_notification = new Notify("Schedules - " + period_data_name, {
-				body: "Five minutes left",
-				notifyShow: onNotifyShow
-			});
-		} else if (minutes_left == 10) {
-			if (!Notify.needsPermission) {
-				doNotification();
-			} else if (Notify.isSupported()) {
-				Notify.requestPermission(onPermissionGranted, onPermissionDenied);
-			}
-
-			var one_minute_notification = new Notify("Schedules - " + period_data_name, {
-				body: "One minute left",
-				notifyShow: onNotifyShow
-			});
-		}
                 }
-		function show_notification() {
-			if (!Notify.needsPermission) {
-				doNotification();
-			} else {
-				Notify.requestPermission(onPermissionGranted, onPermissionDenied);
+		function show_notification(period_name="Unknown Period", time_remaining="XX minutes") {
+			if (window.Notification && Notification.permission !== "denied") {
+				Notification.requestPermission(function(status) {  // status is "granted", if accepted by user
+					var n = new Notification("Schedules - " + period_data_name, { 
+						body: time_remaining + " left"
+					}); 
+				});
 			}
 		}
-		    function doNotification(period_name="Unknown Period", time_remaining="XX minutes") {
-		    	var notification_period_tr = new Notify("Schedules - " + period_name, {
-				body: time_remaining + " left",
-				notifyShow: onNotifyShow
-			});
-		    }
-				
-				function onPermissionGranted() {
-					console.log('Permission has been granted by the user');
-					doNotification();
-				}
-
-				function onPermissionDenied() {
-					console.warn('Permission has been denied by the user');
-				}
-				
-				function onNotifyShow() {
-					console.log("Showing notification....");
-				}
-		    
 		var one_second_loop = setInterval(update_period, 1000);
             </script>
 		{% endif %}
