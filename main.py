@@ -60,8 +60,7 @@ if __name__ == "__main__":
 	else:
 		schedules = {
 			"ca-auhsd-ahs": "Acalanes High School",
-			"ca-auhsd-chs": "Campolindo High School",
-			"un-average-workday": "Average Work Day"
+			"ca-auhsd-chs": "Campolindo High School"
 		}
 		
 		changelog = json.loads(open("changelog.json").read())
