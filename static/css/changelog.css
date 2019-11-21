@@ -1,0 +1,16 @@
+select#version_changelog {
+  padding: 6px;
+}
+main#changelog {
+  padding: 12px;
+  background-color: #BCD4DE;
+  color: #000000;
+
+  height: 30vh;
+  overflow-y: scroll;
+}
+code {
+  background-color: rgba(115, 111, 114, 0.6);
+  color: #ffffff;
+  padding: 1px 8px;
+}
