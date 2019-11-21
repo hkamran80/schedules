@@ -200,7 +200,8 @@
                             var str_pd_1 = period_data[1].toString();
                             scheduled_end = str_pd_1.substring(0, 2) + "-" + str_pd_1.substring(2, str_pd_1.length);
                         }
-                        
+                        console.log(scheduled_end);
+			    
 			var time_difference = calculate_time(generate_four_digit_time(join_character="-"), scheduled_end),
                             compiled_time_diff;
                         if (time_difference[0] == 0) {
@@ -212,6 +213,7 @@
                         var time_difference = "NT",
                             compiled_time_diff = "";
                     }
+			console.log(compiled_time_diff);
 
                     var hours = zero_time(current_time_split.split("-")[0]),
 			minutes = zero_time(current_time_split.split("-")[1]),
