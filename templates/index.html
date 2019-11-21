@@ -114,10 +114,13 @@
                 function get_current_period() {
                     if (typeof times[schedule_id][current_day] != undefined) {
                         var days_schedule = times[schedule_id][current_day],
-			    current_time_fd = Number(generate_four_digit_time());
+			    current_time_fd = Number(generate_four_digit_time().substring(0, 4));
                         for (_period in days_schedule) {
-                            period = days_schedule[_period]
-                            if (period[1] >= current_time_fd && current_time_fd >= period[0]) {
+                            period = days_schedule[_period];
+			    var period_start = [period[0].split("-")[0], period[0].split("-")[1]].join(""),
+				period_end = [period[1].split("-")[0], period[1].split("-")[1]].join("");
+				
+                            if (period_start >= current_time_fd && current_time_fd >= period_end) {
                                 return [_period, period]
                             }
                         }
