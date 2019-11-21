@@ -19,5 +19,4 @@ body, select#schedule_name, select#version_changelog {
 
 label, span#link-changelog--text, span#link-home--text {
   font-size: 0px;
-  display: none;
 }
