@@ -233,7 +233,7 @@
                     time.innerText = hours + ":" + minutes + ":" + seconds;
 			
 			if (window_focused != true) {
-				if (Number(time_difference[0]) == 0) {
+				if (Number(time_difference[0]) == 0 && Number(time_difference[2]) == 0) {
 					var minutes_left = Number(time_difference[1]);
 					if (minutes_left == 15 && !fifteen_minute_notification) {
 						show_notification(period_data_name, "Fifteen minutes");
