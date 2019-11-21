@@ -5,6 +5,7 @@
 
 		<meta charset="utf-8">
 		<meta name="theme-color" content="#13323C">
+		<meta name="description" content="The app for all schedules">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		
 		<link rel="shortcut icon" type="image/x-icon" href="/static/img/favicon.ico" />
@@ -17,49 +18,10 @@
 		<link rel="apple-touch-icon" sizes="144x144" href="/static/img/apple-touch-icon-144x144.png" />
 		<link rel="apple-touch-icon" sizes="152x152" href="/static/img/apple-touch-icon-152x152.png" />
 		<link rel="apple-touch-icon" sizes="180x180" href="/static/img/apple-touch-icon-180x180.png" />
-
+		
+		<link rel="stylesheet" href="/static/css/all.css">
 		<link rel="stylesheet" href="/static/css/center.css">
-		<link rel="stylesheet" href="https://w3schools.com/w3css/4/w3.css">
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap">
-
-		<style>
-			body, h3, h4, h5, select, option, header, main, div, span {
-				font-family: 'Source Sans Pro', sans-serif;
-			}
-
-            code {
-                background-color: rgba(236, 236, 236, 0.3);
-                color: #ff0000;
-                padding: 1px 8px;
-            }
-
-			body, select {
-				background-color: #736F72;
-				color: #ffffff;
-			}
-
-			.ut-pc-darkblue {
-				background-color: #13323C;
-				color: #FFFFFF;
-			}
-
-            select#version_changelog {
-				padding: 6px;
-			}
-
-			main#changelog {
-				padding: 12px;
-				background-color: #BCD4DE;
-				color: #000000;
-                
-                height: 30vh;
-                overflow-y: scroll;
-			}
-
-			.w3-card-4 {
-				width: 75%;
-			}
-		</style>
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	</head>
 	<body>
 		<header class="w3-container ut-pc-darkblue">
@@ -70,6 +32,7 @@
 						<svg style="width:30px;height:30px" viewBox="0 0 24 24">
 						    <path fill="#ffffff" d="M12 5.69L17 10.19V18H15V12H9V18H7V10.19L12 5.69M12 3L2 12H5V20H11V14H13V20H19V12H22L12 3Z" />
 						</svg>
+						<span id="link-home--text">Go to the homepage</span>
 					</a>
 				</div>
 			</h3>
@@ -84,6 +47,7 @@
 							<option value="{{ version }}">{{ version }}</option>
 						{% endfor %}
 					</select>
+					<label for="version_changelog">All versions</label>
 				</main>
                 
                 <main id="changelog">
@@ -126,5 +90,8 @@
                 }
             }
         </script>
+		
+		<link rel="stylesheet" href="/static/css/changelog.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap">
 	</body>
 </html>

@@ -1,0 +1,22 @@
+/* CSS used in all templates */
+* {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+body, select#schedule_name, select#version_changelog {
+  background-color: #736F72;
+  color: #ffffff;
+}
+
+.ut-pc-darkblue {
+  background-color: #13323C;
+  color: #FFFFFF;
+}
+
+.w3-card-4 {
+  width: 75%;
+}
+
+label, span#link-changelog--text, span#link-home--text {
+  font-size: 0px;
+}

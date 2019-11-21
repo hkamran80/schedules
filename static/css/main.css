@@ -1,0 +1,39 @@
+select#schedule_name {
+  padding: 6px;
+}
+
+main#period_info {
+  padding: 12px;
+  text-align: center;
+  background-color: #BCD4DE;
+  color: #000000;
+}
+
+select#schedule_selection {
+  width: 25%;
+  display: inline;
+}
+
+@media screen and (max-width: 600px) {
+  header#schedule_info {
+    padding: 12px 16px;
+    text-align: center;
+  }
+
+  h4.w3-row {
+    text-align: center;
+  }
+  h4.w3-row div.w3-half {
+    display: block;
+  }
+
+}
+
+@media screen and (min-width: 601px) {
+  header#schedule_info {
+    padding: 6px 16px;
+  }
+  header#schedule_info div.ut-pc-right {
+    float: right!important;
+  }
+}

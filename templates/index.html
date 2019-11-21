@@ -5,6 +5,7 @@
 
 		<meta charset="utf-8">
 		<meta name="theme-color" content="#13323C">
+		<meta name="description" content="The app for all schedules">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		
 		<link rel="shortcut icon" type="image/x-icon" href="/static/img/favicon.ico" />
@@ -18,72 +19,11 @@
 		<link rel="apple-touch-icon" sizes="152x152" href="/static/img/apple-touch-icon-152x152.png" />
 		<link rel="apple-touch-icon" sizes="180x180" href="/static/img/apple-touch-icon-180x180.png" />
 
+		<link rel="stylesheet" href="/static/css/all.css">
 		<link rel="stylesheet" href="/static/css/center.css">
-		<link rel="stylesheet" href="/static/css/schedule-colors.css">
-		<link rel="stylesheet" href="https://w3schools.com/w3css/4/w3.css">
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap">
-
-		<style>
-			body, h3, h4, h5, select, option, header, main, div, span {
-				font-family: 'Source Sans Pro', sans-serif;
-			}
-
-			body, select#schedule_name {
-				background-color: #736F72;
-				color: #ffffff;
-			}
-
-			.ut-pc-darkblue {
-				background-color: #13323C;
-				color: #FFFFFF;
-			}
-
-			select#schedule_name {
-				padding: 6px;
-			}
-
-			main#period_info {
-				padding: 12px;
-				text-align: center;
-				background-color: #BCD4DE;
-				color: #000000;
-			}
-			
-			select#schedule_selection {
-				width: 25%;
-				display: inline;
-			}
-
-			.w3-card-4 {
-				width: 75%;
-			}
-
-			@media screen and (max-width: 600px) {
-				header#schedule_info {
-					padding: 12px 16px;
-					text-align: center;
-				}
-
-				h4.w3-row {
-					text-align: center;
-				}
-				h4.w3-row div.w3-half {
-					display: block;
-				}
-
-			}
-
-			@media screen and (min-width: 601px) {
-				header#schedule_info {
-					padding: 6px 16px;
-				}
-				header#schedule_info div.ut-pc-right {
-					float: right!important;
-				}
-			}
-		</style>
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	</head>
-	<body>
+	<body>		
 		<header class="w3-container ut-pc-darkblue">
 			<h3>
 				Schedules
@@ -92,6 +32,7 @@
 						<svg style="width:30px;height:30px" viewBox="0 0 24 24">
 						    <path fill="#ffffff" d="M13.5,8H12V13L16.28,15.54L17,14.33L13.5,12.25V8M13,3A9,9 0 0,0 4,12H1L4.96,16.03L9,12H6A7,7 0 0,1 13,5A7,7 0 0,1 20,12A7,7 0 0,1 13,19C11.07,19 9.32,18.21 8.06,16.94L6.64,18.36C8.27,20 10.5,21 13,21A9,9 0 0,0 22,12A9,9 0 0,0 13,3" />
 						</svg>
+						<span id="link-changelog--text">Open Changelog</span>
 					</a>
 				</div>
 			</h3>
@@ -106,6 +47,7 @@
 							<option value="{{ schedule }}">{{ schedules[schedule] }}</option>
 						{% endfor %}
 					</select>
+					<label for="schedule_name">Select a schedule...</label>
 				</main>
 			</div>
 		</main>
@@ -123,6 +65,7 @@
 				        {% endif %}
 				    {% endfor %}
 			    </select>
+			<label for="schedule_selection">{{ schedules[schedule] }}</label>
                             <div id="schedule_datetime" class="w3-right">
                                 <span id="date"></span> <span id="time"></span>
                             </div>
@@ -331,5 +274,9 @@
 		var one_second_loop = setInterval(update_period, 1000);
             </script>
 		{% endif %}
+		
+		<link rel="stylesheet" href="/static/css/main.css">
+		<link rel="stylesheet" href="/static/css/schedule-colors.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap">
 	</body>
 </html>

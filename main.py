@@ -7,6 +7,7 @@ Last Updated: 2019-11-18, @hkamran80
 """
 
 from flask import Flask, render_template, request, redirect, url_for
+from flask_compress import Compress
 import times
 import json
 import sys
@@ -19,6 +20,7 @@ def force_https(protocol: str, url: str):
 		return True, None
 
 app = Flask(__name__)
+Compress(app)
 
 @app.route("/", methods=["GET"])
 def index():
