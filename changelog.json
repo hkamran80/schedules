@@ -3,7 +3,8 @@
 		"release_date": "2019-11-20",
 		"changelog": [
 			"Add notification support",
-  			"Prevent notifications from running when the hour is not equal to zero"
+  			"Prevent notifications from running when the hour is not equal to zero",
+			"Update a bunch of stuff (see <a href='https://github.com/hkamran80/schedules/pull/28' target='_blank' rel='noopener'>PR #28</a>) to improve the Lighthouse audit scores"
 		]
 	},
 	"2.0.4": {
