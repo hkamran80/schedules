@@ -37,7 +37,7 @@
 				color: #FFFFFF;
 			}
 
-			span#link-changelog--text {
+			label, span#link-changelog--text {
 				font-size: 0px;
 			}
 			
@@ -86,10 +86,7 @@
 			}
 		</style>
 	</head>
-	<body>
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap">
-		<link rel="stylesheet" href="/static/css/schedule-colors.css">
-		
+	<body>		
 		<header class="w3-container ut-pc-darkblue">
 			<h3>
 				Schedules
@@ -340,5 +337,8 @@
 		var one_second_loop = setInterval(update_period, 1000);
             </script>
 		{% endif %}
+		
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap">
+		<link rel="stylesheet" href="/static/css/schedule-colors.css">
 	</body>
 </html>
