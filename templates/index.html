@@ -91,6 +91,7 @@
 		    
 		var period_name_old = "",
 		    period_different = false,
+		    window_focused = true,
 	            fifteen_minute_notification = false,
 		    ten_minute_notification = false,
 		    five_minute_notification = false,
@@ -238,23 +239,25 @@
                     date.innerText = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][d.getDay()];
                     time.innerText = hours + ":" + minutes;
 			
-			if (Number(time_difference[0]) == 0) {
-				var minutes_left = Number(time_difference[1]);
-				if (minutes_left == 15 && !fifteen_minute_notification) {
-					show_notification(period_data_name, "Fifteen minutes");
-					fifteen_minute_notification = true;
-				} else if (minutes_left == 10 && !ten_minute_notification) {
-					show_notification(period_data_name, "Ten minutes");
-					ten_minute_notification = true;
-				} else if (minutes_left == 5 && !five_minute_notification) {
-					show_notification(period_data_name, "Five minutes");
-					five_minute_notification = true;
-				} else if (minutes_left == 1 && !one_minute_notification) {
-					show_notification(period_data_name, "One minute");
-					one_minute_notification = true;
+			if (window_focused != true) {
+				if (Number(time_difference[0]) == 0) {
+					var minutes_left = Number(time_difference[1]);
+					if (minutes_left == 15 && !fifteen_minute_notification) {
+						show_notification(period_data_name, "Fifteen minutes");
+						fifteen_minute_notification = true;
+					} else if (minutes_left == 10 && !ten_minute_notification) {
+						show_notification(period_data_name, "Ten minutes");
+						ten_minute_notification = true;
+					} else if (minutes_left == 5 && !five_minute_notification) {
+						show_notification(period_data_name, "Five minutes");
+						five_minute_notification = true;
+					} else if (minutes_left == 1 && !one_minute_notification) {
+						show_notification(period_data_name, "One minute");
+						one_minute_notification = true;
+					}
 				}
 			}
-                }
+		}
 		function show_notification(period_name="Unknown Period", time_remaining="XX minutes") {
 			var title_text = "Schedules - " + period_name,
 			    body_text = time_remaining + " left";
@@ -271,6 +274,9 @@
 				});
 			}
 		}
+		    
+		window.onblur = function() { window_focused = false; }
+		window.onfocus = function() { window_focused = true; }
 		var one_second_loop = setInterval(update_period, 1000);
             </script>
 		{% endif %}
