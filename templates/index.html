@@ -107,6 +107,7 @@
 							<option value="{{ schedule }}">{{ schedules[schedule] }}</option>
 						{% endfor %}
 					</select>
+					<label for="schedule_name">Select a schedule...</label>
 				</main>
 			</div>
 		</main>
@@ -124,6 +125,7 @@
 				        {% endif %}
 				    {% endfor %}
 			    </select>
+			<label for="schedule_selection">{{ schedules[schedule] }}</label>
                             <div id="schedule_datetime" class="w3-right">
                                 <span id="date"></span> <span id="time"></span>
                             </div>
