@@ -101,14 +101,14 @@
 
                 var current_day = d.toLocaleDateString("en-us", { weekday: 'short' }).toUpperCase(),
                     current_time = d.getHours().toString() + d.getMinutes().toString(),
-                    current_time_split = d.getHours().toString() + "-" + d.getMinutes().toString();
+                    current_time_split = d.getHours().toString() + "-" + d.getMinutes().toString() + "-" + d.getSeconds().toString();
                 
                 function update_current_date() {
                     d = new Date();
 			
                     current_day = d.toLocaleDateString("en-us", { weekday: 'short' }).toUpperCase();
                     current_time = d.getHours().toString() + d.getMinutes().toString();
-                    current_time_split = d.getHours().toString() + "-" + d.getMinutes().toString();
+                    current_time_split = d.getHours().toString() + "-" + d.getMinutes().toString() + "-" + d.getSeconds().toString();
                 }
 
                 function get_current_period() {
@@ -225,7 +225,8 @@
                     }
 
                     var hours = zero_time(current_time_split.split("-")[0]),
-			minutes = zero_time(current_time_split.split("-")[1]);
+			minutes = zero_time(current_time_split.split("-")[1]),
+			seconds = zero_time(current_time_split.split("-")[2]);
 
                     period_name.innerText = period_data_name;
 		    if (period_different == true) {
@@ -237,7 +238,7 @@
 		    }
                     period_time_remaining.innerText = compiled_time_diff;
                     date.innerText = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][d.getDay()];
-                    time.innerText = hours + ":" + minutes;
+                    time.innerText = hours + ":" + minutes + ":" seconds;
 			
 			if (window_focused != true) {
 				if (Number(time_difference[0]) == 0) {
