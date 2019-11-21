@@ -198,10 +198,10 @@
                         var scheduled_end;
                         if (period_data[1].toString().length == 3) {
                             var str_pd_1 = period_data[1].toString();
-                            scheduled_end = str_pd_1.substring(0, 1) + "-" + str_pd_1.substring(1, str_pd_1.length);
+                            scheduled_end = str_pd_1.substring(0, 1) + "-" + str_pd_1.substring(2, 4) + "-00";
                         } else {
                             var str_pd_1 = period_data[1].toString();
-                            scheduled_end = str_pd_1.substring(0, 2) + "-" + str_pd_1.substring(2, str_pd_1.length);
+                            scheduled_end = str_pd_1.substring(0, 2) + "-" + str_pd_1.substring(3, 5) + "-00";
                         }
 			    
 			var time_difference = calculate_time(generate_four_digit_time(join_character="-"), scheduled_end),
