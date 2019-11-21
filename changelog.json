@@ -26,7 +26,7 @@
 	"2.0.2": {
 		"release_date": "2019-11-14",
 		"changelog": [
-			"Added changelog to Schedules (<a href='https://schedulesapp.herokuapp.com/changelog' target='_blank'><code>/changelog</code></a>)",
+			"Added changelog to Schedules (<a href='https://schedulesapp.herokuapp.com/changelog' target='_blank' rel='noopener'><code>/changelog</code></a>)",
 			"Created <code>changelog.json</code>"
 		]
 	},
@@ -45,10 +45,10 @@
 			"Remove the seperator and the \"Refresh\" button",
 			"Remove the <code>?day=XXX&time=XX-XX</code> and replace it with client-side JavaScript",
 			"Don't spam the browser's history by reloading every minute<ul><li>Instead, use the new client-side JS to dynamically reload the <i>code</i> (not the page!) every second!</li></ul>",
-			"Fix bug shown in <a href='https://github.com/hkamran80/schedules/issues/6' target='_blank'>issue #6</a>",
+			"Fix bug shown in <a href='https://github.com/hkamran80/schedules/issues/6' target='_blank' rel='noopener'>issue #6</a>",
 			"Removed <code>/timecalc</code> endpoint",
 			"Remove the JavaScript functions: <code>get_cookie()</code> and <code>set_cookie()</code>",
-			"Create new <b>beta</b> site <a href='https://schedulesapp-beta.herokuapp.com/' target='_blank'>schedulesapp-beta.herokuapp.com</a>"
+			"Create new <b>beta</b> site <a href='https://schedulesapp-beta.herokuapp.com/' target='_blank' rel='noopener'>schedulesapp-beta.herokuapp.com</a>"
 		]
 	},
 	"1.1.5": {
@@ -72,7 +72,7 @@
 	"1.1.3": {
 		"release_date": "2019-09-03",
 		"changelog": [
-			"Temporary fix for <a href='https://github.com/hkamran80/schedules/issues/2' target='_blank'>issue #2</a>",
+			"Temporary fix for <a href='https://github.com/hkamran80/schedules/issues/2' target='_blank' rel='noopener'>issue #2</a>",
 			"Add this changelog to the `README.md`"
 		]
 	},
