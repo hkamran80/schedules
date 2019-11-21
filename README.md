@@ -10,6 +10,7 @@ The app for all schedules
 * Version 2.0.5 (2019-11-20):
   * Add notification support
   * Prevent notifications from running when the hour is not equal to zero
+  * Update a bunch of stuff (see [PR #28](https://github.com/hkamran80/schedules/pull/28)) to improve the Lighthouse audit scores
 * Version 2.0.4 (2019-11-19):
   * Add schedule selection dropdown to schedule page
   * Force HTTPS
