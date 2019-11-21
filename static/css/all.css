@@ -16,3 +16,8 @@ body, select#schedule_name, select#version_changelog {
 .w3-card-4 {
   width: 75%;
 }
+
+label, span#link-changelog--text, span#link-home--text {
+  font-size: 0px;
+  display: none;
+}
