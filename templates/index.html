@@ -97,7 +97,8 @@
 		    five_minute_notification = false,
 		    one_minute_notification = false;
 
-                const schedule_id = "{{ schedule_id }}";
+                const schedule_id = "{{ schedule_id }}",
+		      schedule_name = "{{ schedule_name }}";
 
                 var current_day = d.toLocaleDateString("en-us", { weekday: 'short' }).toUpperCase(),
                     current_time = d.getHours().toString() + d.getMinutes().toString(),
@@ -267,7 +268,7 @@
 			}
 		}
 		function show_notification(period_name="Unknown Period", time_remaining="XX minutes") {
-			var title_text = "Schedules - " + period_name,
+			var title_text = schedule_name + " - " + period_name,
 			    body_text = time_remaining + " left";
 			
 			if (!("Notification" in window)) {
