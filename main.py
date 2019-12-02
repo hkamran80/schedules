@@ -45,8 +45,13 @@ def schedule(schedule_id):
 			    mode = "dev"
 			else:
 			    mode = None
+			
+			if request.args.get("bypass_seconds"):
+				bypass_seconds = True
+			else:
+				bypass_seconds = False
 
-			return render_template("index.html", schedule_valid=True, schedule_id=schedule_id, schedule_name=schedule_name, schedules=schedules, schedule_color=schedule_id, raw_schedule_json=json.dumps(times.times))
+			return render_template("index.html", schedule_valid=True, schedule_id=schedule_id, schedule_name=schedule_name, schedules=schedules, schedule_color=schedule_id, raw_schedule_json=json.dumps(times.times), bypass_seconds=bypass_seconds)
 	else:
 		return redirect(f_https[1])
 
