@@ -46,7 +46,7 @@ def schedule(schedule_id):
 			else:
 			    mode = None
 			
-			if request.args.get("bypass_seconds"):
+			if request.args.get("bypass_seconds") == "true":
 				bypass_seconds = True
 			else:
 				bypass_seconds = False
