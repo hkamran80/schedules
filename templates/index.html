@@ -266,7 +266,7 @@
 					} else if (minutes_left == 1 && !one_minute_notification) {
 						show_notification(schedule_name, period_data_name, "One minute");
 						one_minute_notification = true;
-					} else if (minutes_left == 0 && seconds_left == 30 && !thirty_second_notification) {
+					} else if (Number(time_difference[1]) == 0 && seconds_left == 30 && !thirty_second_notification) {
 						show_notification(schedule_name, period_data_name, "Thirty seconds");
 						thirty_second_notification = true;
 					}
