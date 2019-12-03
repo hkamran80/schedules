@@ -208,15 +208,14 @@
 			var time_difference = calculate_time(generate_four_digit_time(join_character="-"), scheduled_end),
                             compiled_time_diff;
 			    
-			if (time_difference[0] == 0) {	    
+			if (time_difference[0] == 0) {
 				if (time_difference[1] == 0) {
 					compiled_time_diff = time_difference[2] + "s";
-			} else {
-				if (time_difference[1] > 2) {
-					compiled_time_diff = time_difference[1]+1 + "m";
 				} else {
 					compiled_time_diff = time_difference[1] + "m" + time_difference[2] + "s";
 				}
+			} else {
+				compiled_time_diff = time_difference[0] + "h" + time_difference[1] + "m" + time_difference[2] + "s";
 			}
 		    } else {
                         var time_difference = "NT",
