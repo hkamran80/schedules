@@ -242,32 +242,30 @@
                     date.innerText = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][d.getDay()];
                     time.innerText = hours + ":" + minutes + ":" + seconds;
 			
-			if (window_focused != true) {
-				if (Number(time_difference[0]) == 0) {
-					if (Number(time_difference[2]) == 0) {
-						var minutes_left = Number(time_difference[1]) + 1;
+			if (Number(time_difference[0]) == 0) {
+				if (Number(time_difference[2]) == 0) {
+					var minutes_left = Number(time_difference[1]) + 1;
 
-						if (minutes_left == 30 && !thirty_minute_notification) {
-							show_notification(schedule_name, period_data_name, "Thirty minutes");
-							thirty_minute_notification = true;
-						} else if (minutes_left == 15 && !fifteen_minute_notification) {
-							show_notification(schedule_name, period_data_name, "Fifteen minutes");
-							fifteen_minute_notification = true;
-						} else if (minutes_left == 10 && !ten_minute_notification) {
-							show_notification(schedule_name, period_data_name, "Ten minutes");
-							ten_minute_notification = true;
-						} else if (minutes_left == 5 && !five_minute_notification) {
-							show_notification(schedule_name, period_data_name, "Five minutes");
-							five_minute_notification = true;
-						} else if (minutes_left == 1 && !one_minute_notification) {
-							show_notification(schedule_name, period_data_name, "One minute");
-							one_minute_notification = true;
-						}
-					} else if (Number(time_difference[1]) == 0 && Number(time_difference[2]) == 30 && !thirty_second_notification) {
-						show_notification(schedule_name, period_data_name, "Thirty seconds");
-						thirty_second_notification = true;
+					if (minutes_left == 30 && !thirty_minute_notification) {
+						show_notification(schedule_name, period_data_name, "Thirty minutes");
+						thirty_minute_notification = true;
+					} else if (minutes_left == 15 && !fifteen_minute_notification) {
+						show_notification(schedule_name, period_data_name, "Fifteen minutes");
+						fifteen_minute_notification = true;
+					} else if (minutes_left == 10 && !ten_minute_notification) {
+						show_notification(schedule_name, period_data_name, "Ten minutes");
+						ten_minute_notification = true;
+					} else if (minutes_left == 5 && !five_minute_notification) {
+						show_notification(schedule_name, period_data_name, "Five minutes");
+						five_minute_notification = true;
+					} else if (minutes_left == 1 && !one_minute_notification) {
+						show_notification(schedule_name, period_data_name, "One minute");
+						one_minute_notification = true;
 					}
 				}
+			} else if (Number(time_difference[1]) == 0 && Number(time_difference[2]) == 30 && !thirty_second_notification) {
+				show_notification(schedule_name, period_data_name, "Thirty seconds");
+				thirty_second_notification = true;
 			}
 		}
 			 
