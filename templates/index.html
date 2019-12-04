@@ -261,10 +261,10 @@
 						show_notification(schedule_name, period_data_name, "One minute");
 						one_minute_notification = true;
 					}
+				} else if (Number(time_difference[1]) == 0 && Number(time_difference[2]) == 30 && !thirty_second_notification) {
+					show_notification(schedule_name, period_data_name, "Thirty seconds");
+					thirty_second_notification = true;
 				}
-			} else if (Number(time_difference[1]) == 0 && Number(time_difference[2]) == 30 && !thirty_second_notification) {
-				show_notification(schedule_name, period_data_name, "Thirty seconds");
-				thirty_second_notification = true;
 			}
 		}
 			 
