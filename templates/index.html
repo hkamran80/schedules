@@ -212,7 +212,11 @@
 				if (time_difference[1] == 0) {
 					compiled_time_diff = time_difference[2] + "s";
 				} else {
-					compiled_time_diff = time_difference[1] + "m" + time_difference[2] + "s";
+					if (time_difference[2] == 0) {
+						compiled_time_diff = time_difference[1] + "m";
+					} else {
+						compiled_time_diff = time_difference[1] + "m" + time_difference[2] + "s";
+					}
 				}
 			} else {
 				compiled_time_diff = time_difference[0] + "h" + time_difference[1] + "m" + time_difference[2] + "s";
@@ -236,6 +240,8 @@
 			    five_minute_notification = false;
 			    one_minute_notification = false;
 			    thirty_second_notification = false;
+			    
+			    show_notification(schedule_name, period_data_name, period_data_name + " has started!", "new_period");
 		    }
                     period_time_remaining.innerText = compiled_time_diff;
                     date.innerText = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][d.getDay()];
@@ -268,9 +274,13 @@
 			}
 		}
 			 
-		function show_notification(name="Schedules", period_name="Unknown Period", time_remaining="XX minutes") {
-			var title_text = name + " - " + period_name,
-			    body_text = time_remaining + " left";
+		function show_notification(name="Schedules", period_name="Unknown Period", notification_text="XX minutes", notification_type="time_remaining") {
+			var title_text = name + " - " + period_name;
+			if (notification_type == "time_remaining") {
+				var body_text = notification_text + " left";
+			} else {
+				var body_text = notification_text;
+			}
 			
 			if (!("Notification" in window)) {
 				alert("This browser does not support system notifications");
