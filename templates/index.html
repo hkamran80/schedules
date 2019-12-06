@@ -92,7 +92,8 @@
 		    period_different = false,
 		    window_focused = true;
 		    
-	        var thirty_minute_notification = false,
+	        var start_notification = false,
+		    thirty_minute_notification = false,
 		    fifteen_minute_notification = false,
 		    ten_minute_notification = false,
 		    five_minute_notification = false,
@@ -104,7 +105,8 @@
 
                 var current_day = d.toLocaleDateString("en-us", { weekday: 'short' }).toUpperCase(),
                     current_time = d.getHours().toString() + d.getMinutes().toString(),
-                    current_time_split = d.getHours().toString() + "-" + d.getMinutes().toString() + "-" + d.getSeconds().toString();
+                    current_time_split = d.getHours().toString() + "-" + d.getMinutes().toString() + "-" + d.getSeconds().toString(),
+		    current_time_full = d.getHours().toString() + d.getMinutes().toString() + d.getSeconds().toString();
                 
                 function update_current_date() {
                     d = new Date();
@@ -198,14 +200,10 @@
 		    period_name_old = period_data_name;
 
                     if (period_data != "No Time Available") {
-                        var scheduled_end;
-                        if (period_data[1].toString().length == 3) {
-                            var scheduled_end = period_data[1].toString();
-                        } else {
-                            var scheduled_end = period_data[1].toString();
-                        }
+			var scheduled_start = period_data[0].toString(),
+			    scheduled_end = period_data[1].toString();
 			    
-			var time_difference = calculate_time(generate_four_digit_time(join_character="-"), scheduled_end),
+			var time_difference = calculate_time(current_time_split, scheduled_end),
                             compiled_time_diff;
 			    
 			if (time_difference[0] == 0) {
@@ -234,14 +232,17 @@
 		    if (period_different == true) {
 			    period_different = false;
 			    
+			    if (!start_notification) {
+				    show_notification(schedule_name, period_data_name, period_data_name + " has started!", "new_period");
+			    }
+			    
+			    start_notification = false;
 		    	    thirty_minute_notification = false;
 			    fifteen_minute_notification = false;
 			    ten_minute_notification = false;
 			    five_minute_notification = false;
 			    one_minute_notification = false;
 			    thirty_second_notification = false;
-			    
-			    show_notification(schedule_name, period_data_name, period_data_name + " has started!", "new_period");
 		    }
                     period_time_remaining.innerText = compiled_time_diff;
                     date.innerText = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][d.getDay()];
