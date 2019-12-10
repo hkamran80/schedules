@@ -1,6 +1,6 @@
 # [Schedules](https://schedulesapp.herokuapp.com/)
 ![Build Status](https://img.shields.io/travis/com/hkamran80/schedules?style=for-the-badge)
-![Version](https://img.shields.io/badge/version-2.0.5-green?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-3.0.0-green?style=for-the-badge)
 
 The app for all schedules
 
