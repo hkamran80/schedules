@@ -65,7 +65,10 @@ def view_changelog():
 	return render_template("changelog.html", versions=list(changelog.keys()), changelog=changelog)
 
 if __name__ == "__main__":
-	# Repl.it - 8080, Heroku - use the environment variable "PORT"
-	app_port = 3000
+	if len(sys.argv) > 1 and sys.argv[1] == "--ci":
+		print("CI pass-through")
+	else:
+		# Repl.it - 8080, Heroku - use the environment variable "PORT"
+		app_port = 3000
 
-	app.run(host="0.0.0.0", port=os.environ["PORT"] or app_port, debug=True)
+		app.run(host="0.0.0.0", port=os.environ["PORT"] or app_port, debug=True)
