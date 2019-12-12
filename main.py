@@ -33,6 +33,8 @@ def index():
 
 @app.route("/schedule/<schedule_id>", methods=["GET"])
 def schedule(schedule_id):
+	global schedules
+	
 	f_https = force_https(request.headers["X-Forwarded-Proto"], request.url)
 	if f_https[0]:
 		if request.method == "GET":			
@@ -52,20 +54,19 @@ def schedule(schedule_id):
 
 @app.route("/changelog", methods=["GET"])
 def view_changelog():
-    return render_template("changelog.html", versions=list(changelog.keys()), changelog=changelog)
+	global changelog
+	
+	return render_template("changelog.html", versions=list(changelog.keys()), changelog=changelog)
 
 if __name__ == "__main__":
-	if len(sys.argv) > 1 and sys.argv[1] == "--ci":
-		print("Successful execution....")
-	else:
-		schedules = {
-			"ca-auhsd-ahs": "Acalanes High School",
-			"ca-auhsd-chs": "Campolindo High School"
-		}
-		
-		changelog = json.loads(open("changelog.json").read())
+	schedules = {
+		"ca-auhsd-ahs": "Acalanes High School",
+		"ca-auhsd-chs": "Campolindo High School"
+	}
 
-		# Repl.it - 8080, Heroku - 3000
-		app_port = 3000
+	changelog = json.loads(open("changelog.json").read())
 
-		app.run(host="0.0.0.0", port=os.environ["PORT"] or app_port, debug=True)
+	# Repl.it - 8080, Heroku - use the environment variable "PORT"
+	app_port = 3000
+
+	app.run(host="0.0.0.0", port=os.environ["PORT"] or app_port, debug=True)
