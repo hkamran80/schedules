@@ -32,11 +32,14 @@ def index():
 		return redirect(f_https[1])
 
 @app.route("/schedule/<schedule_id>", methods=["GET"])
-def schedule(schedule_id):
-	global schedules
-	
+def schedule(schedule_id):	
 	f_https = force_https(request.headers["X-Forwarded-Proto"], request.url)
 	if f_https[0]:
+		schedules = {
+			"ca-auhsd-ahs": "Acalanes High School",
+			"ca-auhsd-chs": "Campolindo High School"
+		}
+		
 		if request.method == "GET":			
 			schedule_name = schedules[schedule_id]
 
@@ -54,18 +57,11 @@ def schedule(schedule_id):
 
 @app.route("/changelog", methods=["GET"])
 def view_changelog():
-	global changelog
+	changelog = json.loads(open("changelog.json").read())
 	
 	return render_template("changelog.html", versions=list(changelog.keys()), changelog=changelog)
 
 if __name__ == "__main__":
-	schedules = {
-		"ca-auhsd-ahs": "Acalanes High School",
-		"ca-auhsd-chs": "Campolindo High School"
-	}
-
-	changelog = json.loads(open("changelog.json").read())
-
 	# Repl.it - 8080, Heroku - use the environment variable "PORT"
 	app_port = 3000
 
