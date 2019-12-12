@@ -26,6 +26,11 @@ Compress(app)
 def index():
 	f_https = force_https(request.headers["X-Forwarded-Proto"], request.url)
 	if f_https[0]:
+		schedules = {
+			"ca-auhsd-ahs": "Acalanes High School",
+			"ca-auhsd-chs": "Campolindo High School"
+		}
+		
 		if request.method == "GET":
 			return render_template("index.html", schedule_valid=False, schedules=schedules)
 	else:
