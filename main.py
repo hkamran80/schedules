@@ -40,18 +40,16 @@ def schedule(schedule_id):
 			"ca-auhsd-chs": "Campolindo High School"
 		}
 		
-		if request.method == "GET":			
-			schedule_name = schedules[schedule_id]
+		if request.method == "GET":
+			try:
+				schedule_name = schedules[schedule_id]
 
-			if not schedule_id:
-				return redirect("/")
+				if not schedule_id:
+					return redirect("/")
 
-			if request.args.get("mode") == "dev":
-			    mode = "dev"
-			else:
-			    mode = None
-
-			return render_template("index.html", schedule_valid=True, schedule_id=schedule_id, schedule_name=schedule_name, schedules=schedules, schedule_color=schedule_id, raw_schedule_json=json.dumps(times.times))
+				return render_template("index.html", schedule_valid=True, schedule_id=schedule_id, schedule_name=schedule_name, schedules=schedules, schedule_color=schedule_id, raw_schedule_json=json.dumps(times.times))
+			except KeyError:
+				return redirect(url_for("index"))
 	else:
 		return redirect(f_https[1])
 
