@@ -92,8 +92,7 @@
 		    period_different = false,
 		    window_focused = true;
 		    
-	        var start_notification = false,
-		    thirty_minute_notification = false,
+	        var thirty_minute_notification = false,
 		    fifteen_minute_notification = false,
 		    ten_minute_notification = false,
 		    five_minute_notification = false,
@@ -232,11 +231,6 @@
 		    if (period_different == true) {
 			    period_different = false;
 			    
-			    if (!start_notification) {
-				    show_notification(schedule_name, period_data_name, period_data_name + " has started!", "new_period");
-			    }
-			    
-			    start_notification = false;
 		    	    thirty_minute_notification = false;
 			    fifteen_minute_notification = false;
 			    ten_minute_notification = false;
