@@ -4,4 +4,6 @@ python:
     - "3.8"
 install:
     - pip install -r requirements.txt
+env:
+    - CODECOV_TOKEN="3282084f-c3d8-4982-96f1-d14f5f1f0c3c"
 script: python3 main.py --ci
