@@ -9,7 +9,7 @@ body {
   background-color: #121212;
   color: #ffffff;
 }
-select#schedule_name, select#version_changelog {
+div#selection, select#schedule_name, select#version_changelog {
   background-color: #404040;
   color: #ffffff;
 }
