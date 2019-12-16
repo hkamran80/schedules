@@ -10,7 +10,7 @@ body {
   color: #ffffff;
 }
 select#schedule_name, select#version_changelog {
-  background-color: #262626;
+  background-color: #404040;
   color: #ffffff;
 }
 
