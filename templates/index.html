@@ -60,7 +60,7 @@
 				    	{% if schedule == schedule_id %}
 						<option value="{{ schedule }}" selected>{{ schedules[schedule] }}</option>
 				    	{% else %}
-						<option value="{{ schedule }}">{{ schedules[schedule] }}</option>
+						<option value="{{ schedule }}" class="color--{{ schedule }}">{{ schedules[schedule] }}</option>
 				        {% endif %}
 				    {% endfor %}
 			    </select>
