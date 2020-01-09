@@ -7,18 +7,18 @@ The app for all schedules
 ## [Feature Requests](https://github.com/hkamran80/schedules/issues?q=is%3Aissue+is%3Aopen+label%3A%22Feature+Request%22)
 
 ## Changelog
-* Version 3.0.0 (NET Early 2020):
+* Version 3.0.0 (NET January 2020):
   * Add `hh:mm:ss` countdown
   * Change the schedule background to a dark gray, instead of the previous light blue
   * Add schedule colors to schedule selection on schedule pages (`/schedule/`)
   * Remove the `un-average-workday` (Average Work Day) schedule
   * GitHub Repository Updates
-    * Create milestones
+    * Create projects
       * [Version 3](https://github.com/hkamran80/schedules/projects/1)
       * [New Schedules](https://github.com/hkamran80/schedules/projects/4)
     * Improve issue templates
       * Add `New Schedule` template
-      * Re-work ``
+      * Refactor `Bug Report` and `Feature Request` templates
 * Version 2.0.5 (2019-11-20):
   * Add notification support
   * Prevent notifications from running when the hour is not equal to zero
