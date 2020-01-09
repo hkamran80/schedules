@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<title>Schedules | 404</title>
+
+		<meta charset="utf-8">
+		<meta name="theme-color" content="#13323C">
+		<meta name="description" content="The app for all schedules">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<link rel="shortcut icon" type="image/x-icon" href="/static/img/favicon.ico" />
+		<link rel="apple-touch-icon" href="/static/img/apple-touch-icon.png" />
+		<link rel="apple-touch-icon" sizes="57x57" href="/static/img/apple-touch-icon-57x57.png" />
+		<link rel="apple-touch-icon" sizes="72x72" href="/static/img/apple-touch-icon-72x72.png" />
+		<link rel="apple-touch-icon" sizes="76x76" href="/static/img/apple-touch-icon-76x76.png" />
+		<link rel="apple-touch-icon" sizes="114x114" href="/static/img/apple-touch-icon-114x114.png" />
+		<link rel="apple-touch-icon" sizes="120x120" href="/static/img/apple-touch-icon-120x120.png" />
+		<link rel="apple-touch-icon" sizes="144x144" href="/static/img/apple-touch-icon-144x144.png" />
+		<link rel="apple-touch-icon" sizes="152x152" href="/static/img/apple-touch-icon-152x152.png" />
+		<link rel="apple-touch-icon" sizes="180x180" href="/static/img/apple-touch-icon-180x180.png" />
+		
+		<link rel="stylesheet" href="/static/css/all.css">
+		<link rel="stylesheet" href="/static/css/center.css">
+	</head>
+	<body>
+		<header class="w3-container ut-pc-darkblue">
+			<h3>
+				Schedules
+				<div class="w3-right">
+					<a href="/">
+						<svg style="width:30px;height:30px" viewBox="0 0 24 24">
+						    <path fill="#ffffff" d="M12 5.69L17 10.19V18H15V12H9V18H7V10.19L12 5.69M12 3L2 12H5V20H11V14H13V20H19V12H22L12 3Z" />
+						</svg>
+						<span id="link-home--text">Go to the homepage</span>
+					</a>
+				</div>
+			</h3>
+		</header>
+
+		<main id="404_container" class="ut-pt-center">
+        <header id="404_header" class="w3-container w3-blue">
+        </header>
+        <main id="404_message">
+
+              </main>
+		</main>
+
+        <script>
+            function show_changelog(version_number) {
+                var changelog_versions = document.getElementsByClassName("changelog-version");
+                if (version_number == "all") {
+                    for (var i = 0; i < changelog_versions.length; i++) {
+                        changelog_versions[i].style.display = "block";
+                    }
+                } else {
+                    for (var i = 0; i < changelog_versions.length; i++) {
+                        changelog_versions[i].style.display = "none";
+                    }
+                    
+                    document.getElementById("changelog-" + version_number).style.display = "block";
+                }
+            }
+        </script>
+		
+		<link rel="stylesheet" href="/static/css/w3.css">
+		<link rel="stylesheet" href="/static/css/changelog.css">
+	</body>
+</html>
