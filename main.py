@@ -3,7 +3,7 @@ Schedules
 Contributors:
 	:: H. Kamran [@hkamran80] (author)
 Version: 2.0.3
-Last Updated: 2019-11-18, @hkamran80
+Last Updated: 2020-01-10, @hkamran80
 """
 
 from flask import Flask, render_template, request, redirect, url_for
@@ -63,6 +63,10 @@ def view_changelog():
 	changelog = json.loads(open("changelog.json").read())
 	
 	return render_template("changelog.html", versions=list(changelog.keys()), changelog=changelog)
+
+@app.route("/sch404", methods=["GET"])
+def tmp_sch_404():
+	return render_template("schedule_404.html")
 
 if __name__ == "__main__":
 	if len(sys.argv) > 1 and sys.argv[1] == "--ci":
