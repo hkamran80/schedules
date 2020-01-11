@@ -9,9 +9,12 @@ The app for all schedules
 ## Changelog
 * Version 3.0.0 (NET January 2020):
   * Add `hh:mm:ss` countdown
-  * Change the schedule background to a dark gray, instead of the previous light blue
-  * Add schedule colors to schedule selection on schedule pages (`/schedule/`)
+  * Change the schedule background to a dark gray, instead of the previous light-blue
+  * Add schedule colors to the schedule selection on schedule pages (`/schedule/`)
   * Remove the `un-average-workday` (Average Work Day) schedule
+  * Add more notifications
+    * Thirty second
+    * Thirty minute
   * GitHub Repository Updates
     * Create projects
       * [Version 3](https://github.com/hkamran80/schedules/projects/1)
@@ -19,6 +22,8 @@ The app for all schedules
     * Improve issue templates
       * Add `New Schedule` template
       * Refactor `Bug Report` and `Feature Request` templates
+    * New issue labels
+      * [`Architecture Improvement`](https://github.com/hkamran80/schedules/issues?utf8=✓&q=is%3Aissue+label%3A%22Architecture+Improvement%22)
 * Version 2.0.5 (2019-11-20):
   * Add notification support
   * Prevent notifications from running when the hour is not equal to zero
