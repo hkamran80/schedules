@@ -10,7 +10,7 @@ The app for all schedules
 * Version 3.0.0 (NET January 2020):
   * Add `hh:mm:ss` countdown
   * Add 404 pages:
-    * Unable to find schedule
+    * `Unable to find schedule`
   * Change the schedule background to a dark gray, instead of the previous light-blue
   * Add schedule colors to the schedule selection on schedule pages (`/schedule/`)
   * Remove the `un-average-workday` (Average Work Day) schedule
