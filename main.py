@@ -22,6 +22,11 @@ def force_https(protocol: str, url: str):
 app = Flask(__name__)
 Compress(app)
 
+@app.errorhandler(404)
+def page_not_found(error):
+	print(error)
+	return render_template("404.html")
+
 @app.route("/", methods=["GET"])
 def index():
 	f_https = force_https(request.headers["X-Forwarded-Proto"], request.url)
@@ -63,10 +68,6 @@ def view_changelog():
 	changelog = json.loads(open("changelog.json").read())
 	
 	return render_template("changelog.html", versions=list(changelog.keys()), changelog=changelog)
-
-@app.route("/sch404", methods=["GET"])
-def tmp_sch_404():
-	return render_template("404.html")
 
 if __name__ == "__main__":
 	if len(sys.argv) > 1 and sys.argv[1] == "--ci":
