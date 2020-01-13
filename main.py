@@ -2,8 +2,8 @@
 Schedules
 Contributors:
 	:: H. Kamran [@hkamran80] (author)
-Version: 2.0.3
-Last Updated: 2020-01-10, @hkamran80
+Version: 3.0.0
+Last Updated: 2020-01-13, @hkamran80
 """
 
 from flask import Flask, render_template, request, redirect, url_for
