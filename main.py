@@ -66,7 +66,7 @@ def view_changelog():
 
 @app.route("/sch404", methods=["GET"])
 def tmp_sch_404():
-	return render_template("schedule_404.html")
+	return render_template("404.html")
 
 if __name__ == "__main__":
 	if len(sys.argv) > 1 and sys.argv[1] == "--ci":
