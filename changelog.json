@@ -1,4 +1,13 @@
 {
+	"3.0.0": {
+		"release_date": "2020-01-13",
+		"changelog": [
+			"Add <code>hh:mm:ss</code> countdown",
+			"Add generic 404 page",
+			"Change the schedule background to a dark gray, instead of the previous light blue",
+			"Add schedule colors to the schedule selection on schedule pages (<code>/schedule/</code>)"
+		]
+	},
 	"2.0.5": {
 		"release_date": "2019-11-20",
 		"changelog": [
