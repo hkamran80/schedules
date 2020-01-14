@@ -25,30 +25,30 @@ The app for all schedules
       * Refactor `Bug Report` and `Feature Request` templates
     * New issue labels
       * [`Architecture Enhancement`](https://github.com/hkamran80/schedules/issues?utf8=✓&q=is%3Aissue+label%3A%22Architecture+Enhancement%22)
-* Version 2.0.5 (2019-11-20):
+* Version 2.0.5 (November 20, 2019):
   * Add notification support
   * Prevent notifications from running when the hour is not equal to zero
   * Update a bunch of stuff (see [PR #28](https://github.com/hkamran80/schedules/pull/28)) to improve the Lighthouse audit scores
-* Version 2.0.4 (2019-11-19):
+* Version 2.0.4 (November 19, 2019):
   * Add schedule selection dropdown to schedule page
   * Force HTTPS
   * Remove legacy support for the ID system
   * The `/school` endpoint has been removed
-* Version 2.0.3 (2019-11-18):
+* Version 2.0.3 (November 18, 2019):
   * Update ID system
   * Update `average-work-day` to `un-average-workday`
   * Update `schedules-colors.css` and `index.html`
-* Version 2.0.2 (2019-11-14):
+* Version 2.0.2 (November 14, 2019):
   * Added changelog to Schedules ([`/changelog`](https://schedulesapp.herokuapp.com/changelog))
   * Created `changelog.json`
-* Version 2.0.1 (2019-11-11):
+* Version 2.0.1 (November 11, 2019):
   * Removed unnecessary files
     * `snackbar*`
     * `period_calculator.py`
     * `pt_extensions.py`
   * Add `apple-touch-icon` meta attributes back
   * Add new icons (`favicon.ico`, `apple-touch-icon-*.png`) in the `/static/img/` folder
-* Version 2.0.0 (2019-11-07):
+* Version 2.0.0 (November 7, 2019):
   * Move **all** calculation code client-side
   * Remove the seperator and the "Refresh" button
   * Remove the `?day=XXX&time=XX-XX` and replace it with client-side JavaScript
@@ -58,7 +58,7 @@ The app for all schedules
   * Removed `/timecalc` endpoint
   * Remove the JavaScript functions: `get_cookie()` and `set_cookie()`
   * Create new **beta** site [schedulesapp-beta.herokuapp.com](https://schedulesapp-beta.herokuapp.com/)
-* Version 1.1.5 (2019-11-04):
+* Version 1.1.5 (November 4, 2019):
   * Remove the `apple-touch-icon` meta attributes (didn't work when implemented) from `index.html`
   * Rename all instances of `school` to `schedule` in both `index.html` and `main.py`
   * Created new endpoint (`/schedule/<schedule_id/`) to replace `/school?schoolid=...`
@@ -67,11 +67,11 @@ The app for all schedules
   * Created new file `runtime.txt` for Heroku, which declares the **exact** Python version to use
     * 1.1.5 is using Python 3.7.5 (`python-3.7.5`)
   * Preparation for Version ~~1.2.0~~ 2.0.0 (estimated release: ~~late December 2019~~ November 7, 2019)
-* Version 1.1.4 (2019-09-04):
+* Version 1.1.4 (September 4, 2019):
   * Add the `apple-touch-icon` meta attributes
     * Spoiler Alert: It doesn't work (tested on an iPhone 7+ running iOS 12)
-* Version 1.1.3 (2019-09-03):
+* Version 1.1.3 (September 3, 2019):
   * Temporary fix for [issue #2](https://github.com/hkamran80/schedules/issues/2)
   * Add this changelog to the `README.md`
-* Version 1.1.2 (2019-09-02):
+* Version 1.1.2 (September 2, 2019):
   * Add the snackbar
