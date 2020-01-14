@@ -24,7 +24,7 @@ The app for all schedules
       * Add `New Schedule` template
       * Refactor `Bug Report` and `Feature Request` templates
     * New issue labels
-      * [`Architecture Improvement`](https://github.com/hkamran80/schedules/issues?utf8=✓&q=is%3Aissue+label%3A%22Architecture+Improvement%22)
+      * [`Architecture Enhancement`](https://github.com/hkamran80/schedules/issues?utf8=✓&q=is%3Aissue+label%3A%22Architecture+Enhancement%22)
 * Version 2.0.5 (2019-11-20):
   * Add notification support
   * Prevent notifications from running when the hour is not equal to zero
