@@ -7,8 +7,7 @@ assignees: hkamran80
 
 ---
 
-Possible Schedules ID: `{LOCATION}-{WIDE AREA}-{SCHEDULE CODE}`
+**Status:** Requested
 
-[Bell Schedule](Link to BELL SCHEDULE)
-
-Status: Requested
+* Possible Schedules ID: `{LOCATION}-{WIDE AREA}-{SCHEDULE CODE}`
+* [Bell Schedule](Link to BELL SCHEDULE)
