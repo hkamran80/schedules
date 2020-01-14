@@ -1,13 +1,13 @@
 # [Schedules](https://schedulesapp.herokuapp.com/)
 ![Build Status](https://img.shields.io/travis/com/hkamran80/schedules?style=for-the-badge)
-![Version](https://img.shields.io/badge/version-3.0.0b-green?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-3.0.0-green?style=for-the-badge)
 
 The app for all schedules
 
 ## [Feature Requests](https://github.com/hkamran80/schedules/issues?q=is%3Aissue+is%3Aopen+label%3A%22Feature+Request%22)
 
 ## Changelog
-* Version 3.0.0 (NET January 2020):
+* Version 3.0.0 (January 13, 2020):
   * Add `hh:mm:ss` countdown
   * Add generic 404 page
   * Change the schedule background to a dark gray, instead of the previous light blue
