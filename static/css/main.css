@@ -5,8 +5,8 @@ select#schedule_name {
 main#period_info {
   padding: 12px;
   text-align: center;
-  background-color: #BCD4DE;
-  color: #000000;
+  background-color: #404040;
+  color: #ffffff;
 }
 
 select#schedule_selection {

@@ -1,2 +1,4 @@
 Flask
 flask-compress
+gunicorn
+codecov

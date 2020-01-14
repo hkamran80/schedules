@@ -1,12 +1,30 @@
 # [Schedules](https://schedulesapp.herokuapp.com/)
 ![Build Status](https://img.shields.io/travis/com/hkamran80/schedules?style=for-the-badge)
-![Version](https://img.shields.io/badge/version-2.0.5-green?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-3.0.0-green?style=for-the-badge)
 
 The app for all schedules
 
 ## [Feature Requests](https://github.com/hkamran80/schedules/issues?q=is%3Aissue+is%3Aopen+label%3A%22Feature+Request%22)
 
 ## Changelog
+* Version 3.0.0 (January 13, 2020):
+  * Add `hh:mm:ss` countdown
+  * Add generic 404 page
+  * Change the schedule background to a dark gray, instead of the previous light blue
+  * Add schedule colors to the schedule selection on schedule pages (`/schedule/`)
+  * Remove the `un-average-workday` (Average Work Day) schedule
+  * Add more notifications
+    * Thirty second
+    * Thirty minute
+  * GitHub Repository Updates
+    * Create projects
+      * [Version 3](https://github.com/hkamran80/schedules/projects/1)
+      * [New Schedules](https://github.com/hkamran80/schedules/projects/4)
+    * Improve issue templates
+      * Add `New Schedule` template
+      * Refactor `Bug Report` and `Feature Request` templates
+    * New issue labels
+      * [`Architecture Improvement`](https://github.com/hkamran80/schedules/issues?utf8=✓&q=is%3Aissue+label%3A%22Architecture+Improvement%22)
 * Version 2.0.5 (2019-11-20):
   * Add notification support
   * Prevent notifications from running when the hour is not equal to zero

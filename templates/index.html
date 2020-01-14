@@ -21,7 +21,6 @@
 
 		<link rel="stylesheet" href="/static/css/all.css">
 		<link rel="stylesheet" href="/static/css/center.css">
-		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	</head>
 	<body>		
 		<header class="w3-container ut-pc-darkblue">
@@ -61,7 +60,7 @@
 				    	{% if schedule == schedule_id %}
 						<option value="{{ schedule }}" selected>{{ schedules[schedule] }}</option>
 				    	{% else %}
-						<option value="{{ schedule }}">{{ schedules[schedule] }}</option>
+						<option value="{{ schedule }}" class="color--{{ schedule }}">{{ schedules[schedule] }}</option>
 				        {% endif %}
 				    {% endfor %}
 			    </select>
@@ -91,17 +90,22 @@
 		    
 		var period_name_old = "",
 		    period_different = false,
-		    window_focused = true,
-	            fifteen_minute_notification = false,
+		    window_focused = true;
+		    
+	        var thirty_minute_notification = false,
+		    fifteen_minute_notification = false,
 		    ten_minute_notification = false,
 		    five_minute_notification = false,
-		    one_minute_notification = false;
+		    one_minute_notification = false,
+		    thirty_second_notification = false;
 
-                const schedule_id = "{{ schedule_id }}";
+                const schedule_id = "{{ schedule_id }}",
+		      schedule_name = "{{ schedule_name }}";
 
                 var current_day = d.toLocaleDateString("en-us", { weekday: 'short' }).toUpperCase(),
                     current_time = d.getHours().toString() + d.getMinutes().toString(),
-                    current_time_split = d.getHours().toString() + "-" + d.getMinutes().toString() + "-" + d.getSeconds().toString();
+                    current_time_split = d.getHours().toString() + "-" + d.getMinutes().toString() + "-" + d.getSeconds().toString(),
+		    current_time_full = d.getHours().toString() + d.getMinutes().toString() + d.getSeconds().toString();
                 
                 function update_current_date() {
                     d = new Date();
@@ -114,10 +118,13 @@
                 function get_current_period() {
                     if (typeof times[schedule_id][current_day] != undefined) {
                         var days_schedule = times[schedule_id][current_day],
-			    current_time_fd = Number(generate_four_digit_time());
+			    current_time_fd = Number(generate_four_digit_time().substring(0, 4));
                         for (_period in days_schedule) {
-                            period = days_schedule[_period]
-                            if (period[1] >= current_time_fd && current_time_fd >= period[0]) {
+                            period = days_schedule[_period];
+			    var period_start = [period[0].split("-")[0], period[0].split("-")[1]].join(""),
+				period_end = [period[1].split("-")[0], period[1].split("-")[1]].join("");
+				
+                            if (period_start <= current_time_fd && current_time_fd <= period_end) {
                                 return [_period, period]
                             }
                         }
@@ -140,47 +147,36 @@
                     }
                 }
 		function generate_four_digit_time(join_character="") {
-			return [zero_time(current_time_split.split("-")[0]), zero_time(current_time_split.split("-")[1])].join(join_character);
+			return [zero_time(current_time_split.split("-")[0]), zero_time(current_time_split.split("-")[1]), zero_time(current_time_split.split("-")[2])].join(join_character);
 		}
                 function calculate_time(st_time, ed_time) {
                     var start_time = st_time.toString(),
                         end_time = ed_time.toString();
 
-                    if (start_time.indexOf("-") != -1) {
-                        var _st = start_time.split("-"),
-                            st_hr = Number(_st[0]),
-                            st_min = Number(_st[1]);
-                    } else if (start_time.indexOf(":") != -1) {
-                        var _st = start_time.split(":"),
-                            st_hr = Number(_st[0]),
-                            st_min = Number(_st[1]);
-                    } else {
-                        var st_hr = Number(start_time.substring(0, 2)),
-                            st_min = Number(start_time.substring(2, start_time.length));
-                    }
+                    var _st = start_time.split("-"),
+		    	st_hr = Number(_st[0]),
+		    	st_min = Number(_st[1]),
+			st_sec = Number(_st[2]);
 
-                    if (end_time.indexOf("-") != -1) {
-                        var _ed = end_time.split("-"),
-                            ed_hr = Number(_ed[0]),
-                            ed_min = Number(_ed[1]);
-                    } else if (end_time.indexOf(":") != -1) {
-                        var _ed = end_time.split(":"),
-                            ed_hr = Number(_ed[0]),
-                            ed_min = Number(_ed[1]);
-                    } else {
-                        var ed_hr = Number(end_time.substring(0, 2)),
-                            ed_min = Number(end_time.substring(2, end_time.length));
-                    }
+		    var _ed = end_time.split("-"),
+		    	ed_hr = Number(_ed[0]),
+		    	ed_min = Number(_ed[1]),
+			ed_sec = Number(_ed[2]);
 
                     var hour_difference = ed_hr - st_hr,
-                        minute_difference = ed_min - st_min;
+                        minute_difference = ed_min - st_min,
+			second_difference = ed_sec - st_sec;
 
                     if (minute_difference < 0) {
                         hour_difference -= 1
                         minute_difference += 60
                     }
+		    if (second_difference < 0) {
+			minute_difference -= 1
+			second_difference += 60
+		    }
 
-                    return [hour_difference, minute_difference]
+                    return [hour_difference, minute_difference, second_difference]
                 }
 
                 function update_period() {
@@ -203,23 +199,26 @@
 		    period_name_old = period_data_name;
 
                     if (period_data != "No Time Available") {
-                        var scheduled_end;
-                        if (period_data[1].toString().length == 3) {
-                            var str_pd_1 = period_data[1].toString();
-                            scheduled_end = str_pd_1.substring(0, 1) + "-" + str_pd_1.substring(1, str_pd_1.length);
-                        } else {
-                            var str_pd_1 = period_data[1].toString();
-                            scheduled_end = str_pd_1.substring(0, 2) + "-" + str_pd_1.substring(2, str_pd_1.length);
-                        }
-                        
-			var time_difference = calculate_time(generate_four_digit_time(join_character="-"), scheduled_end),
+			var scheduled_start = period_data[0].toString(),
+			    scheduled_end = period_data[1].toString();
+			    
+			var time_difference = calculate_time(current_time_split, scheduled_end),
                             compiled_time_diff;
-                        if (time_difference[0] == 0) {
-			    compiled_time_diff = time_difference[1] + "m";
-                        } else {
-                            compiled_time_diff = time_difference[0] + "h" + time_difference[1] + "m";                            
-                        }
-                    } else {
+			    
+			if (time_difference[0] == 0) {
+				if (time_difference[1] == 0) {
+					compiled_time_diff = time_difference[2] + "s";
+				} else {
+					if (time_difference[2] == 0) {
+						compiled_time_diff = time_difference[1] + "m";
+					} else {
+						compiled_time_diff = time_difference[1] + "m" + time_difference[2] + "s";
+					}
+				}
+			} else {
+				compiled_time_diff = time_difference[0] + "h" + time_difference[1] + "m" + time_difference[2] + "s";
+			}
+		    } else {
                         var time_difference = "NT",
                             compiled_time_diff = "";
                     }
@@ -231,37 +230,52 @@
                     period_name.innerText = period_data_name;
 		    if (period_different == true) {
 			    period_different = false;
-		    	    fifteen_minute_notification = false;
+			    
+		    	    thirty_minute_notification = false;
+			    fifteen_minute_notification = false;
 			    ten_minute_notification = false;
 			    five_minute_notification = false;
 			    one_minute_notification = false;
+			    thirty_second_notification = false;
 		    }
                     period_time_remaining.innerText = compiled_time_diff;
                     date.innerText = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][d.getDay()];
                     time.innerText = hours + ":" + minutes + ":" + seconds;
 			
-			if (window_focused != true) {
-				if (Number(time_difference[0]) == 0) {
+			if (Number(time_difference[0]) == 0) {
+				if (Number(time_difference[2]) == 0) {
 					var minutes_left = Number(time_difference[1]);
-					if (minutes_left == 15 && !fifteen_minute_notification) {
-						show_notification(period_data_name, "Fifteen minutes");
+
+					if (minutes_left == 30 && !thirty_minute_notification) {
+						show_notification(schedule_name, period_data_name, "Thirty minutes");
+						thirty_minute_notification = true;
+					} else if (minutes_left == 15 && !fifteen_minute_notification) {
+						show_notification(schedule_name, period_data_name, "Fifteen minutes");
 						fifteen_minute_notification = true;
 					} else if (minutes_left == 10 && !ten_minute_notification) {
-						show_notification(period_data_name, "Ten minutes");
+						show_notification(schedule_name, period_data_name, "Ten minutes");
 						ten_minute_notification = true;
 					} else if (minutes_left == 5 && !five_minute_notification) {
-						show_notification(period_data_name, "Five minutes");
+						show_notification(schedule_name, period_data_name, "Five minutes");
 						five_minute_notification = true;
 					} else if (minutes_left == 1 && !one_minute_notification) {
-						show_notification(period_data_name, "One minute");
+						show_notification(schedule_name, period_data_name, "One minute");
 						one_minute_notification = true;
 					}
+				} else if (Number(time_difference[1]) == 0 && Number(time_difference[2]) == 30 && !thirty_second_notification) {
+					show_notification(schedule_name, period_data_name, "Thirty seconds");
+					thirty_second_notification = true;
 				}
 			}
 		}
-		function show_notification(period_name="Unknown Period", time_remaining="XX minutes") {
-			var title_text = "Schedules - " + period_name,
-			    body_text = time_remaining + " left";
+			 
+		function show_notification(name="Schedules", period_name="Unknown Period", notification_text="XX minutes", notification_type="time_remaining") {
+			var title_text = name + " - " + period_name;
+			if (notification_type == "time_remaining") {
+				var body_text = notification_text + " left";
+			} else {
+				var body_text = notification_text;
+			}
 			
 			if (!("Notification" in window)) {
 				alert("This browser does not support system notifications");
@@ -282,6 +296,7 @@
             </script>
 		{% endif %}
 		
+		<link rel="stylesheet" href="/static/css/w3.css">
 		<link rel="stylesheet" href="/static/css/main.css">
 		<link rel="stylesheet" href="/static/css/schedule-colors.css">
 	</body>

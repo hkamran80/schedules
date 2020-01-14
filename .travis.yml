@@ -5,3 +5,5 @@ python:
 install:
     - pip install -r requirements.txt
 script: python3 main.py --ci
+after_success:
+    - codecov
