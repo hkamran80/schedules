@@ -16,6 +16,7 @@ The app for all schedules
   * Add more notifications
     * Thirty second
     * Thirty minute
+  * Update runtime version to Python 3.7.7
   * GitHub Repository Updates
     * Create projects
       * [Version 3](https://github.com/hkamran80/schedules/projects/1)
