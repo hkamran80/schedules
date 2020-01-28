@@ -7,7 +7,8 @@
 			"Change the schedule background to a dark gray, instead of the previous light blue",
 			"Add schedule colors to the schedule selection on schedule pages (<code>/schedule/</code>)",
 			"Remove the <code>un-average-workday</code> (Average Work Day) schedule",
-			"Add more notifications<ul><li>Thirty second</li><li>Thirty minute</li></ul>"
+			"Add more notifications<ul><li>Thirty second</li><li>Thirty minute</li></ul>",
+			"Update runtime version to Python 3.7.7"
 		]
 	},
 	"2.0.5": {
