@@ -4,7 +4,7 @@
 
 The app for all schedules
 
-## [Feature Requests](https://github.com/hkamran80/schedules/issues?q=is%3Aissue+is%3Aopen+label%3A%22Feature+Request%22)
+## [Enhancements](https://github.com/hkamran80/schedules/issues?q=is%3Aissue+is%3Aopen+label%3A%22Enhancement%22)
 
 ## Changelog
 * Version 3.0.0 (January 13, 2020):
