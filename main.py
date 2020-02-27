@@ -65,9 +65,7 @@ def schedule(schedule_id):
 
 @app.route("/changelog", methods=["GET"])
 def view_changelog():
-	changelog = json.loads(open("changelog.json").read())
-	
-	return render_template("changelog.html", versions=list(changelog.keys()), changelog=changelog)
+	return redirect("https://github.com/hkamran80/schedules/blob/master/README.md#changelog")
 
 if __name__ == "__main__":
 	if len(sys.argv) > 1 and sys.argv[1] == "--ci":
