@@ -7,7 +7,7 @@ The app for all schedules
 ## [Enhancements](https://github.com/hkamran80/schedules/issues?q=is%3Aissue+is%3Aopen+label%3A%22Enhancement%22)
 
 ## Changelog
-* Version 3.0.1 (February 26, 2020):
+* Version 3.0.1 (February 26, 2020): 
   * Fix the "Feature Requests" link on the README
   * Drop the runtime version down to Python 3.7.6 (the `heroku-18` stack doesn't support 3.7.7, here's a [useful link](https://devcenter.heroku.com/articles/python-support#specifying-a-python-version))
   * Change the `/changelog` endpoint to redirect to the GitHub README changelog, instead of the built-in web one (may be replaced later on)
