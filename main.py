@@ -2,8 +2,8 @@
 Schedules
 Contributors:
 	:: H. Kamran [@hkamran80] (author)
-Version: 3.0.0
-Last Updated: 2020-01-13, @hkamran80
+Version: 3.0.3
+Last Updated: 2020-05-23, @hkamran80
 """
 
 from flask import Flask, render_template, request, redirect, url_for
@@ -14,21 +14,21 @@ import sys
 import os
 
 def force_https(protocol: str, url: str):
-	if "herokuapp" in url:
-                if "-beta" in url:
-                        url = "https://beta.schedules.unisontech.org"
-                else:
-                        url = "https://schedules.unisontech.org"
+    if "herokuapp" in url:
+        if "-beta" in url:
+            url = "https://beta.schedules.unisontech.org"
         else:
-                if protocol.lower() == "http":
-                        url = url.replace("http", "https")
-                else:
-                        url = None
-        
-        if url is not None:
-                return False, url
+            url = "https://schedules.unisontech.org"
+    else:
+        if protocol.lower() == "http":
+            url = url.replace("http", "https")
         else:
-                return True, None
+            url = None
+
+    if url is not None:
+        return False, url
+    else:
+        return True, None
 
 app = Flask(__name__)
 Compress(app)
