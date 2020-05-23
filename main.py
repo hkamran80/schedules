@@ -27,8 +27,8 @@ def force_https(protocol: str, url: str):
 
     if url is not None:
         return False, url
-    else:
-        return True, None
+
+    return True, None
 
 app = Flask(__name__)
 Compress(app)
