@@ -15,18 +15,20 @@ import os
 
 def force_https(protocol: str, url: str):
 	if "herokuapp" in url:
-		if protocol.lower() == "http":
-			if "-beta" in url:
-				return False, "https://beta.schedules.unisontech.org"
-			else:
-				return False, "https://schedules.unisontech.org"
-		else:
-			return True, None
-	else:
-		if protocol.lower() == "http":
-			return False, url.replace("http", "https")
-		else:
-			return True, None
+                if "-beta" in url:
+                        url = "https://beta.schedules.unisontech.org"
+                else:
+                        url = "https://schedules.unisontech.org"
+        else:
+                if protocol.lower() == "http":
+                        url = url.replace("http", "https")
+                else:
+                        url = None
+        
+        if url is not None:
+                return False, url
+        else:
+                return True, None
 
 app = Flask(__name__)
 Compress(app)
