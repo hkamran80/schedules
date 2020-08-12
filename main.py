@@ -3,7 +3,7 @@ Schedules
 Contributors:
 	:: H. Kamran [@hkamran80] (author)
 Version: 3.0.3
-Last Updated: 2020-05-23, @hkamran80
+Last Updated: 2020-08-12, @hkamran80
 """
 
 from flask import Flask, render_template, request, redirect, url_for
@@ -12,6 +12,7 @@ import times
 import json
 import sys
 import os
+
 
 def force_https(protocol: str, url: str):
     if "herokuapp" in url:
@@ -30,59 +31,79 @@ def force_https(protocol: str, url: str):
 
     return True, None
 
+
 app = Flask(__name__)
 Compress(app)
 
+
 @app.errorhandler(404)
 def page_not_found(error):
-	print(error)
-	return render_template("404.html")
+    print(error)
+    return render_template("404.html")
+
 
 @app.route("/", methods=["GET"])
 def index():
-	f_https = force_https(request.headers["X-Forwarded-Proto"], request.url)
-	if f_https[0]:
-		schedules = {
-			"ca-auhsd-ahs": "Acalanes High School",
-			"ca-auhsd-chs": "Campolindo High School"
-		}
-		
-		if request.method == "GET":
-			return render_template("index.html", schedule_valid=False, schedules=schedules)
-	else:
-		return redirect(f_https[1])
+    f_https = force_https(request.headers["X-Forwarded-Proto"], request.url)
+    if f_https[0]:
+        schedules = {
+            "ca-auhsd-ahs": "Acalanes High School",
+            "ca-auhsd-chs": "Campolindo High School",
+            "ca-auhsd-dls": "AUHSD Distance Learning Schedule",
+        }
+
+        if request.method == "GET":
+            return render_template(
+                "index.html", schedule_valid=False, schedules=schedules
+            )
+    else:
+        return redirect(f_https[1])
+
 
 @app.route("/schedule/<schedule_id>", methods=["GET"])
-def schedule(schedule_id):	
-	f_https = force_https(request.headers["X-Forwarded-Proto"], request.url)
-	if f_https[0]:
-		schedules = {
-			"ca-auhsd-ahs": "Acalanes High School",
-			"ca-auhsd-chs": "Campolindo High School"
-		}
-		
-		if request.method == "GET":
-			try:
-				schedule_name = schedules[schedule_id]
+def schedule(schedule_id):
+    f_https = force_https(request.headers["X-Forwarded-Proto"], request.url)
+    if f_https[0]:
+        schedules = {
+            "ca-auhsd-ahs": "Acalanes High School",
+            "ca-auhsd-chs": "Campolindo High School",
+            "ca-auhsd-dls": "AUHSD Distance Learning Schedule",
+        }
 
-				if not schedule_id:
-					return redirect("/")
+        if request.method == "GET":
+            try:
+                schedule_name = schedules[schedule_id]
 
-				return render_template("index.html", schedule_valid=True, schedule_id=schedule_id, schedule_name=schedule_name, schedules=schedules, schedule_color=schedule_id, raw_schedule_json=json.dumps(times.times))
-			except KeyError:
-				return redirect(url_for("index"))
-	else:
-		return redirect(f_https[1])
+                if not schedule_id:
+                    return redirect("/")
+
+                return render_template(
+                    "index.html",
+                    schedule_valid=True,
+                    schedule_id=schedule_id,
+                    schedule_name=schedule_name,
+                    schedules=schedules,
+                    schedule_color=schedule_id,
+                    raw_schedule_json=json.dumps(times.times),
+                )
+            except KeyError:
+                return redirect(url_for("index"))
+    else:
+        return redirect(f_https[1])
+
 
 @app.route("/changelog", methods=["GET"])
 def view_changelog():
-	return redirect("https://github.com/hkamran80/schedules/blob/master/README.md#changelog")
+    return redirect(
+        "https://github.com/hkamran80/schedules/blob/master/README.md#changelog"
+    )
+
 
 if __name__ == "__main__":
-	if len(sys.argv) > 1 and sys.argv[1] == "--ci":
-		print("CI pass-through")
-	else:
-		# Repl.it - 8080, Heroku - use the environment variable "PORT"
-		app_port = 3000
+    if len(sys.argv) > 1 and sys.argv[1] == "--ci":
+        print("CI pass-through")
+    else:
+        # Repl.it - 8080, Heroku - use the environment variable "PORT"
+        app_port = 3000
 
-		app.run(host="0.0.0.0", port=os.environ["PORT"] or app_port, debug=True)
+        app.run(host="0.0.0.0", port=os.environ["PORT"] or app_port, debug=True)
