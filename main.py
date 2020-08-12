@@ -44,7 +44,8 @@ def index():
 	if f_https[0]:
 		schedules = {
 			"ca-auhsd-ahs": "Acalanes High School",
-			"ca-auhsd-chs": "Campolindo High School"
+			"ca-auhsd-chs": "Campolindo High School",
+            "ca-auhsd-dls": "AUHSD Distance Learning Schedule"
 		}
 		
 		if request.method == "GET":
@@ -58,7 +59,8 @@ def schedule(schedule_id):
 	if f_https[0]:
 		schedules = {
 			"ca-auhsd-ahs": "Acalanes High School",
-			"ca-auhsd-chs": "Campolindo High School"
+			"ca-auhsd-chs": "Campolindo High School",
+            "ca-auhsd-dls": "AUHSD Distance Learning Schedule"
 		}
 		
 		if request.method == "GET":
