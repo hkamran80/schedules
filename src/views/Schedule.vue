@@ -1,11 +1,12 @@
 <template>
     <div class="schedule">
         <h3>{{ this.schedules[this.$route.params.id].name }}</h3>
-        <span>
-            DEBUG: 
-            {{ current_day }} - {{ current_split_time }} ||
-            {{ current_period }} || {{ current_period_raw }}
-        </span>
+        <v-card class="mx-auto" max-width="500" outlined v-if="developer_mode">
+            <v-card-text>
+                {{ current_day }} - {{ current_split_time }} ||
+                {{ current_period }} || {{ current_period_raw }}
+            </v-card-text>
+        </v-card>
         <v-card
             class="mx-auto"
             max-width="500"
@@ -13,8 +14,17 @@
             @click="get_current_period"
         >
             <v-card-title>
-                <span class="title font-weight-regular">
+                <span
+                    class="title font-weight-regular"
+                    v-if="
+                        current_period != 'No Period' &&
+                            current_period != 'No Periods Today'
+                    "
+                >
                     {{ current_period }} - {{ time_remaining }}
+                </span>
+                <span class="title font-weight-regular" v-else>
+                    No Period
                 </span>
             </v-card-title>
         </v-card>
@@ -59,6 +69,7 @@ export default {
             current_time: "",
             current_split_time: "",
 
+            one_hour_notification: false,
             thirty_minute_notification: false,
             fifteen_minute_notification: false,
             ten_minute_notification: false,
@@ -66,7 +77,8 @@ export default {
             one_minute_notification: false,
             thirty_second_notification: false,
 
-            main_interval: ""
+            main_interval: "",
+            developer_mode: this.$route.query.dev == "true"
         };
     },
     created() {
@@ -97,10 +109,11 @@ export default {
             this.previous_period = this.current_period;
 
             let compiled_time_difference;
+            var time_difference;
             if (this.current_period_raw[1] != "") {
                 let scheduled_end = this.current_period_raw[1][1].toString();
 
-                let time_difference = this.calculate_time(
+                time_difference = this.calculate_time(
                     this.current_split_time,
                     scheduled_end
                 );
@@ -133,19 +146,111 @@ export default {
                 }
             } else {
                 compiled_time_difference = "";
+                time_difference = "";
             }
             this.time_remaining = compiled_time_difference;
-            console.debug("Set time remaining value");
 
             if (this.period_different) {
                 this.period_different = false;
 
+                this.one_hour_notification = false;
                 this.thirty_minute_notification = false;
                 this.fifteen_minute_notification = false;
                 this.ten_minute_notification = false;
                 this.five_minute_notification = false;
                 this.one_minute_notification = false;
                 this.thirty_second_notification = false;
+            }
+
+            if (time_difference != "") {
+                this.scheduled_notifications(time_difference);
+            }
+        },
+        scheduled_notifications: function(time_difference) {
+            let notification_title =
+                this.schedules[this.$route.params.id].short_name +
+                " - " +
+                this.current_period;
+            let notification_icon = "";
+
+            if (Number(time_difference[0]) == 0) {
+                let minutes_remaining = Number(time_difference[1]);
+                if (Number(time_difference[2]) == 0) {
+                    if (
+                        minutes_remaining == 30 &&
+                        !this.thirty_minute_notification
+                    ) {
+                        this.notify(
+                            notification_title,
+                            "Thirty minutes remaining",
+                            notification_icon
+                        );
+                        this.thirty_minute_notification = true;
+                    } else if (
+                        minutes_remaining == 15 &&
+                        !this.fifteen_minute_notification
+                    ) {
+                        this.notify(
+                            notification_title,
+                            "Fifteen minutes remaining",
+                            notification_icon
+                        );
+                        this.fifteen_minute_notification = true;
+                    } else if (
+                        minutes_remaining == 10 &&
+                        !this.ten_minute_notification
+                    ) {
+                        this.notify(
+                            notification_title,
+                            "Ten minutes remaining",
+                            notification_icon
+                        );
+                        this.ten_minute_notification = true;
+                    } else if (
+                        minutes_remaining == 5 &&
+                        !this.five_minute_notification
+                    ) {
+                        this.notify(
+                            notification_title,
+                            "Five minutes remaining",
+                            notification_icon
+                        );
+                        this.five_minute_notification = true;
+                    } else if (
+                        minutes_remaining == 1 &&
+                        !this.one_minute_notification
+                    ) {
+                        this.notify(
+                            notification_title,
+                            "One minute remaining",
+                            notification_icon
+                        );
+                        this.one_minute_notification = true;
+                    }
+                } else if (
+                    minutes_remaining == 0 &&
+                    Number(time_difference[2]) == 0 &&
+                    !this.thirty_second_notification
+                ) {
+                    this.notify(
+                        notification_title,
+                        "Thirty seconds remaining",
+                        notification_icon
+                    );
+                    this.thirty_second_notification = true;
+                }
+            } else if (
+                Number(time_difference[0]) == 1 &&
+                Number(time_difference[1]) == 0 &&
+                Number(time_difference[2]) == 0 &&
+                !this.one_hour_notification
+            ) {
+                this.notify(
+                    notification_title,
+                    "One hour remaining",
+                    notification_icon
+                );
+                this.one_hour_notification = true;
             }
         },
         calculate_time: function(time_1, time_2) {
@@ -202,7 +307,7 @@ export default {
                 }
             } else {
                 if (!current_period) {
-                    this.current_period_raw = ["No Periods for Given Day", ""];
+                    this.current_period_raw = ["No Periods Today", ""];
                 }
                 console.info("FRI schedule: ");
                 console.error(

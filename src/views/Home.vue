@@ -31,6 +31,9 @@
 </template>
 
 <style scoped>
+a {
+    text-decoration: none;
+}
 div.v-card.schedule-card {
     padding: 0 5px;
     margin: 10px 0;
