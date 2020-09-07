@@ -16,7 +16,7 @@ Vue.use(VueNativeNotification, {
 });
 Vue.use(Toast, {
     transition: "Vue-Toastification__bounce",
-    maxToasts: 20,
+    maxToasts: 5,
     newestOnTop: true
 });
 

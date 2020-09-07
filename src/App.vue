@@ -2,6 +2,10 @@
     <div id="app">
         <navigation :schedules="schedules" />
         <router-view :schedules="schedules" />
+
+        <v-btn fab dark fixed right bottom v-on:click="toggle_dark_mode">
+            <v-icon>mdi-theme-light-dark</v-icon>
+        </v-btn>
     </div>
 </template>
 
@@ -10,6 +14,8 @@ import Navigation from "@/components/Navigation.vue";
 export default {
     name: "App",
     data: () => ({
+        fab: false,
+        debug: true,
         schedules: {
             "ca-auhsd-hss": {
                 name: "AUHSD Standard Schedule",
@@ -31,6 +37,38 @@ export default {
     }),
     components: {
         Navigation
+    },
+    methods: {
+        toggle_dark_mode: function() {
+            if (this.debug) console.log("Toggling dark mode...");
+            if (this.debug) console.log(this.$vuetify.theme.dark);
+            this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
+            if (this.debug) console.log(this.$vuetify.theme.dark);
+            localStorage.setItem(
+                "dark_theme",
+                this.$vuetify.theme.dark.toString()
+            );
+        }
+    },
+    mounted() {
+        const theme = localStorage.getItem("dark_theme");
+        if (theme) {
+            // deepcode ignore UseStrictEquality: Loaded as a String, not a Boolean
+            if (theme == "true") {
+                this.$vuetify.theme.dark = true;
+            } else {
+                this.$vuetify.theme.dark = false;
+            }
+        } else if (
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches
+        ) {
+            this.$vuetify.theme.dark = true;
+            localStorage.setItem(
+                "dark_theme",
+                this.$vuetify.theme.dark.toString()
+            );
+        }
     }
 };
 </script>

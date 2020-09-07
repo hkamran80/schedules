@@ -7,12 +7,7 @@
                 {{ current_period }} || {{ current_period_raw }}
             </v-card-text>
         </v-card>
-        <v-card
-            class="mx-auto"
-            max-width="500"
-            outlined
-            @click="get_current_period"
-        >
+        <v-card class="mx-auto" max-width="500" outlined>
             <v-card-title>
                 <span
                     class="title font-weight-regular"
@@ -28,7 +23,14 @@
                 </span>
             </v-card-title>
         </v-card>
-        <v-card class="mx-auto" max-width="500" outlined>
+        <v-card
+            class="mx-auto"
+            max-width="500"
+            outlined
+            v-if="
+                next_period != 'No Period' && next_period != 'No Periods Today'
+            "
+        >
             <v-card-title>
                 <span class="title font-weight-regular">
                     {{ next_period }} - {{ next_period_starting }}
@@ -56,8 +58,8 @@ export default {
         return {
             current_period: "",
             time_remaining: "",
-            next_period: "Passing (Zero / First Periods)",
-            next_period_starting: "9:00 AM",
+            next_period: "",
+            next_period_starting: "",
 
             previous_period: "",
             period_different: false,
@@ -85,10 +87,29 @@ export default {
         this.main_interval = setInterval(this.main, 1000);
     },
     mounted() {
-        // deepcode ignore PromiseNotCaughtGeneral: Pretty sure I did that already
         this.$notification
             .requestPermission()
-            .then(this.notification_permissions_callback, console.error);
+            .then(this.notification_permissions_callback, console.error)
+            .catch(console.error);
+
+        const theme = localStorage.getItem("dark_theme");
+        if (theme) {
+            // deepcode ignore UseStrictEquality: Loaded as a String, not a Boolean
+            if (theme == "true") {
+                this.$vuetify.theme.dark = true;
+            } else {
+                this.$vuetify.theme.dark = false;
+            }
+        } else if (
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches
+        ) {
+            this.$vuetify.theme.dark = true;
+            localStorage.setItem(
+                "dark_theme",
+                this.$vuetify.theme.dark.toString()
+            );
+        }
     },
     destroyed() {
         clearInterval(this.main_interval);
@@ -107,6 +128,9 @@ export default {
                 this.period_different = false;
             }
             this.previous_period = this.current_period;
+
+            this.next_period = "No Period";
+            this.next_period_starting = "";
 
             let compiled_time_difference;
             var time_difference;
@@ -385,6 +409,13 @@ export default {
                     icon: icon
                 },
                 {}
+            );
+        },
+        toggle_dark_mode: function() {
+            this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
+            localStorage.setItem(
+                "dark_theme",
+                this.$vuetify.theme.dark.toString()
             );
         }
     }
