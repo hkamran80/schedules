@@ -313,11 +313,18 @@ export default {
                         this.schedules[this.$route.params.id].schedule
                     )[this.current_day],
                     split_time = this.current_split_time.split("-").join("");
+                if (this.developer_mode) console.debug(day_schedule);
                 for (var _period in day_schedule) {
                     var period = day_schedule[_period],
                         period_start = period[0].split("-").join(""),
                         period_end = period[1].split("-").join("");
 
+                    if (this.developer_mode) console.debug(_period, period);
+                    if (this.developer_mode)
+                        console.debug(
+                            period_start <= split_time &&
+                                split_time <= period_end
+                        );
                     if (
                         period_start <= split_time &&
                         split_time <= period_end
