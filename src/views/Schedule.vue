@@ -79,6 +79,14 @@ export default {
             one_minute_notification: false,
             thirty_second_notification: false,
 
+            allow_one_hour_notification: true,
+            allow_thirty_minute_notification: true,
+            allow_fifteen_minute_notification: true,
+            allow_ten_minute_notification: true,
+            allow_five_minute_notification: true,
+            allow_one_minute_notification: true,
+            allow_thirty_second_notification: true,
+
             main_interval: "",
             developer_mode: this.$route.query.dev == "true"
         };
@@ -202,7 +210,8 @@ export default {
                 if (Number(time_difference[2]) == 0) {
                     if (
                         minutes_remaining == 30 &&
-                        !this.thirty_minute_notification
+                        !this.thirty_minute_notification &&
+                        this.allow_thirty_minute_notification
                     ) {
                         this.notify(
                             notification_title,
@@ -212,7 +221,8 @@ export default {
                         this.thirty_minute_notification = true;
                     } else if (
                         minutes_remaining == 15 &&
-                        !this.fifteen_minute_notification
+                        !this.fifteen_minute_notification &&
+                        this.allow_fifteen_minute_notification
                     ) {
                         this.notify(
                             notification_title,
@@ -222,7 +232,8 @@ export default {
                         this.fifteen_minute_notification = true;
                     } else if (
                         minutes_remaining == 10 &&
-                        !this.ten_minute_notification
+                        !this.ten_minute_notification &&
+                        this.allow_ten_minute_notification
                     ) {
                         this.notify(
                             notification_title,
@@ -232,7 +243,8 @@ export default {
                         this.ten_minute_notification = true;
                     } else if (
                         minutes_remaining == 5 &&
-                        !this.five_minute_notification
+                        !this.five_minute_notification &&
+                        this.allow_five_minute_notification
                     ) {
                         this.notify(
                             notification_title,
@@ -242,7 +254,8 @@ export default {
                         this.five_minute_notification = true;
                     } else if (
                         minutes_remaining == 1 &&
-                        !this.one_minute_notification
+                        !this.one_minute_notification &&
+                        this.allow_one_minute_notification
                     ) {
                         this.notify(
                             notification_title,
@@ -254,7 +267,8 @@ export default {
                 } else if (
                     minutes_remaining == 0 &&
                     Number(time_difference[2]) == 0 &&
-                    !this.thirty_second_notification
+                    !this.thirty_second_notification &&
+                    this.allow_thirty_second_notification
                 ) {
                     this.notify(
                         notification_title,
@@ -267,7 +281,8 @@ export default {
                 Number(time_difference[0]) == 1 &&
                 Number(time_difference[1]) == 0 &&
                 Number(time_difference[2]) == 0 &&
-                !this.one_hour_notification
+                !this.one_hour_notification &&
+                this.allow_one_hour_notification
             ) {
                 this.notify(
                     notification_title,
