@@ -1,13 +1,13 @@
 <template>
     <div class="schedule">
         <h3>{{ this.schedules[this.$route.params.id].name }}</h3>
-        <v-card class="mx-auto" max-width="500" outlined v-if="developer_mode">
+        <v-card class="mx-auto" max-width="550" outlined v-if="developer_mode">
             <v-card-text>
                 {{ current_day }} - {{ current_split_time }} ||
-                {{ current_period }} || {{ current_period_raw }}
+                {{ current_period_raw }}
             </v-card-text>
         </v-card>
-        <v-card class="mx-auto" max-width="500" outlined>
+        <v-card class="mx-auto" max-width="550" outlined>
             <v-card-title>
                 <span
                     class="title font-weight-regular"
@@ -25,7 +25,7 @@
         </v-card>
         <v-card
             class="mx-auto"
-            max-width="500"
+            max-width="550"
             outlined
             v-if="
                 next_period != 'No Period' && next_period != 'No Periods Today'
@@ -333,33 +333,20 @@ export default {
             }
         },
         calculate_time: function(time_1, time_2) {
-            const time_1_string = time_1.toString(),
-                time_2_string = time_2.toString();
+            let time_1_string = time_1.replaceAll("-", ":"),
+                time_2_string = time_2.replaceAll("-", ":");
 
-            let time_1_split = time_1_string.split("-"),
-                time_1_hour = Number(time_1_split[0]),
-                time_1_minutes = Number(time_1_split[1]),
-                time_1_seconds = Number(time_1_split[2]);
+            let start_time = new Date("1970-01-01 " + time_1_string),
+                end_time = new Date("1970-01-01 " + time_2_string);
+            let ms_difference = end_time - start_time;
 
-            let time_2_split = time_2_string.split("-"),
-                time_2_hour = Number(time_2_split[0]),
-                time_2_minutes = Number(time_2_split[1]),
-                time_2_seconds = Number(time_2_split[2]);
+            let seconds = ms_difference / 1000;
+            let hours = parseInt(seconds / 3600);
+            seconds = seconds % 3600;
+            let minutes = parseInt(seconds / 60);
+            seconds = seconds % 60;
 
-            let hour_difference = time_2_hour - time_1_hour,
-                minute_difference = time_2_minutes - time_1_minutes,
-                second_difference = time_2_seconds - time_1_seconds;
-
-            if (minute_difference < 0) {
-                hour_difference -= 1;
-                minute_difference += 60;
-            }
-            if (second_difference < 0) {
-                minute_difference -= 1;
-                second_difference += 60;
-            }
-
-            return [hour_difference, minute_difference, second_difference];
+            return [hours, minutes, seconds];
         },
         get_current_period: function() {
             var current_period;
