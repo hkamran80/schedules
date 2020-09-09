@@ -52,7 +52,6 @@ export default {
         }
     },
     mounted() {
-        console.log(process.env.NODE_ENV);
         const theme = localStorage.getItem("dark_theme");
         if (theme) {
             // deepcode ignore UseStrictEquality: Loaded as a String, not a Boolean
@@ -73,6 +72,20 @@ export default {
         }
 
         // Version Handling
+        if (process.env.NODE_ENV == "production") {
+            let url =
+                    window.location.protocol +
+                    "//" +
+                    window.location.host +
+                    "/version.json",
+                request = new XMLHttpRequest();
+
+            request.open("GET", url);
+            request.responseType = "json";
+            request.send();
+
+            console.log(request.response["version"]);
+        }
     }
 };
 </script>
