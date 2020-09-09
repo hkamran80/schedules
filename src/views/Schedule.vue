@@ -56,21 +56,26 @@ export default {
     },
     data: function() {
         return {
+            // Current and Next Period Information
             current_period: "",
             time_remaining: "",
             next_period: "",
             next_period_starting: "",
 
+            // Previous Period Information
             previous_period: "",
             period_different: false,
 
+            // Raw Period Information
             current_period_raw: "",
             next_period_raw: "",
 
+            // Date and Time
             current_day: "",
             current_time: "",
             current_split_time: "",
 
+            // Notifications
             one_hour_notification: false,
             thirty_minute_notification: false,
             fifteen_minute_notification: false,
@@ -79,6 +84,7 @@ export default {
             one_minute_notification: false,
             thirty_second_notification: false,
 
+            // Preferences
             allow_one_hour_notification: true,
             allow_thirty_minute_notification: true,
             allow_fifteen_minute_notification: true,
@@ -86,6 +92,7 @@ export default {
             allow_five_minute_notification: true,
             allow_one_minute_notification: true,
             allow_thirty_second_notification: true,
+            twenty_four_hour_time: false,
 
             main_interval: "",
             developer_mode: this.$route.query.dev == "true"
@@ -137,8 +144,39 @@ export default {
             }
             this.previous_period = this.current_period;
 
-            this.next_period = "No Period";
-            this.next_period_starting = "";
+            //this.next_period = "No Period";
+            //this.next_period_starting = "";
+
+            this.get_next_period();
+            this.next_period = this.next_period_raw[0];
+
+            let np_starting_string;
+            if (!this.twenty_four_hour_time) {
+                let np_starting_hour = Number(
+                    this.next_period_raw[1][0].split("-").slice(0, 1)
+                );
+
+                let hour_string;
+                if (np_starting_hour > 12) {
+                    hour_string = (np_starting_hour - 12).toString();
+                } else {
+                    hour_string = np_starting_hour.toString();
+                }
+
+                let np_starting =
+                    hour_string +
+                    ":" +
+                    this.next_period_raw[1][0].split("-").slice(1, 2);
+                let np_starting_12hr = np_starting_hour >= 12 ? "PM" : "AM";
+
+                np_starting_string = np_starting + " " + np_starting_12hr;
+            } else {
+                np_starting_string = this.next_period_raw[1][0]
+                    .split("-")
+                    .slice(0, 2)
+                    .join(":");
+            }
+            this.next_period_starting = np_starting_string;
 
             let compiled_time_difference;
             var time_difference;
@@ -334,12 +372,6 @@ export default {
                         period_start = period[0].split("-").join(""),
                         period_end = period[1].split("-").join("");
 
-                    if (this.developer_mode) console.debug(_period, period);
-                    if (this.developer_mode)
-                        console.debug(
-                            period_start <= split_time &&
-                                split_time <= period_end
-                        );
                     if (
                         period_start <= split_time &&
                         split_time <= period_end
@@ -355,12 +387,39 @@ export default {
                 if (!current_period) {
                     this.current_period_raw = ["No Periods Today", ""];
                 }
-                console.info("FRI schedule: ");
-                console.error(
-                    JSON.parse(this.schedules[this.$route.params.id].schedule)[
-                        "FRI"
-                    ]
-                );
+            }
+        },
+        get_next_period: function() {
+            var next_period;
+            if (this.schedules[this.$route.params.id] != undefined) {
+                var day_schedule = JSON.parse(
+                    this.schedules[this.$route.params.id].schedule
+                )[this.current_day];
+                for (var _period in day_schedule) {
+                    var period = day_schedule[_period],
+                        period_start = period[0].split("-").join("");
+
+                    if (
+                        period_start ==
+                        (
+                            Number(
+                                this.current_period_raw[1][1]
+                                    .split("-")
+                                    .join("")
+                            ) + 1
+                        ).toString()
+                    ) {
+                        this.next_period_raw = [_period, period];
+                        next_period = [_period, period];
+                    }
+                }
+                if (!next_period) {
+                    this.next_period_raw = ["No Period", ""];
+                }
+            } else {
+                if (!next_period) {
+                    this.next_period_raw = ["No Periods Today", ""];
+                }
             }
         },
         update_times: function() {
