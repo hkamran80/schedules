@@ -208,6 +208,8 @@ export default {
             this.get_next_period();
             this.next_period = this.next_period_raw[0];
 
+            if (this.developer_mode) console.log(this.next_period_raw);
+
             let np_starting_string;
             if (!this.twenty_four_hour_time) {
                 let np_starting_hour = Number(
@@ -399,8 +401,24 @@ export default {
                     var period = day_schedule[_period],
                         period_start = period[0].split("-").join("");
 
+                    if (this.developer_mode)
+                        console.log(
+                            _period,
+                            period,
+                            this.current_split_time,
+                            this.current_period_raw[1],
+                            period_start ==
+                                (
+                                    Number(
+                                        this.current_period_raw[1][1]
+                                            .split("-")
+                                            .join("")
+                                    ) + 1
+                                ).toString()
+                        );
+
                     if (
-                        period_start ==
+                        Number(period_start) ==
                         (
                             Number(
                                 this.current_period_raw[1][1]
