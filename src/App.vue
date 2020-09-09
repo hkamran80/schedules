@@ -3,9 +3,9 @@
         <navigation :schedules="schedules" />
         <router-view :schedules="schedules" />
 
-        <v-btn fab dark fixed right bottom v-on:click="toggle_dark_mode">
+        <!--<v-btn fab dark fixed right bottom v-on:click="toggle_dark_mode">
             <v-icon>mdi-theme-light-dark</v-icon>
-        </v-btn>
+        </v-btn>-->
     </div>
 </template>
 
