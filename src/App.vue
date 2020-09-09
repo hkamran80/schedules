@@ -16,6 +16,7 @@ export default {
     data: () => ({
         fab: false,
         debug: true,
+        version: "",
         schedules: {
             "ca-auhsd-hss": {
                 name: "AUHSD Standard Schedule",
@@ -51,6 +52,7 @@ export default {
         }
     },
     mounted() {
+        console.log(process.env.NODE_ENV);
         const theme = localStorage.getItem("dark_theme");
         if (theme) {
             // deepcode ignore UseStrictEquality: Loaded as a String, not a Boolean
@@ -69,6 +71,8 @@ export default {
                 this.$vuetify.theme.dark.toString()
             );
         }
+
+        // Version Handling
     }
 };
 </script>
