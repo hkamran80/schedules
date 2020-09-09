@@ -388,31 +388,49 @@ export default {
                     var period = day_schedule[_period],
                         period_start = period[0].split("-").join("");
 
+                    let previous_period_end;
+                    if (
+                        this.current_period_raw[1][1].split("-").slice(2, 3) !=
+                        "59"
+                    ) {
+                        previous_period_end = (
+                            Number(
+                                this.current_period_raw[1][1]
+                                    .split("-")
+                                    .join("")
+                            ) + 1
+                        ).toString();
+                    } else {
+                        let _end = this.current_period_raw[1][1].split("-"),
+                            hours = Number(_end.slice(0, 1)),
+                            minutes = Number(_end.slice(1, 2)),
+                            seconds = Number(_end.slice(2, 3));
+
+                        if (seconds == 59) {
+                            minutes += 1;
+                            seconds = 0;
+                        }
+                        if (minutes == 59) {
+                            hours += 1;
+                            minutes = 0;
+                        }
+                        previous_period_end =
+                            this.pad_number(hours) +
+                            this.pad_number(minutes) +
+                            this.pad_number(seconds);
+                    }
+
                     if (this.developer_mode)
                         console.log(
                             _period,
                             period,
                             this.current_split_time,
                             this.current_period_raw[1],
-                            period_start ==
-                                (
-                                    Number(
-                                        this.current_period_raw[1][1]
-                                            .split("-")
-                                            .join("")
-                                    ) + 1
-                                ).toString()
+                            period_start == previous_period_end
                         );
 
                     if (
-                        Number(period_start) ==
-                        (
-                            Number(
-                                this.current_period_raw[1][1]
-                                    .split("-")
-                                    .join("")
-                            ) + 1
-                        ).toString()
+                        Number(period_start).toString() == previous_period_end
                     ) {
                         this.next_period_raw = [_period, period];
                         next_period = [_period, period];
