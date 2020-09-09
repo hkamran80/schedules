@@ -144,36 +144,7 @@ export default {
             }
             this.previous_period = this.current_period;
 
-            this.get_next_period();
-            this.next_period = this.next_period_raw[0];
-
-            let np_starting_string;
-            if (!this.twenty_four_hour_time) {
-                let np_starting_hour = Number(
-                    this.next_period_raw[1][0].split("-").slice(0, 1)
-                );
-
-                let hour_string;
-                if (np_starting_hour > 12) {
-                    hour_string = (np_starting_hour - 12).toString();
-                } else {
-                    hour_string = np_starting_hour.toString();
-                }
-
-                let np_starting =
-                    hour_string +
-                    ":" +
-                    this.next_period_raw[1][0].split("-").slice(1, 2);
-                let np_starting_12hr = np_starting_hour >= 12 ? "PM" : "AM";
-
-                np_starting_string = np_starting + " " + np_starting_12hr;
-            } else {
-                np_starting_string = this.next_period_raw[1][0]
-                    .split("-")
-                    .slice(0, 2)
-                    .join(":");
-            }
-            this.next_period_starting = np_starting_string;
+            this.update_next_period();
 
             let compiled_time_difference;
             var time_difference;
@@ -229,9 +200,41 @@ export default {
                 this.thirty_second_notification = false;
             }
 
-            if (time_difference != "") {
+            if (time_difference) {
                 this.scheduled_notifications(time_difference);
             }
+        },
+        update_next_period: function() {
+            this.get_next_period();
+            this.next_period = this.next_period_raw[0];
+
+            let np_starting_string;
+            if (!this.twenty_four_hour_time) {
+                let np_starting_hour = Number(
+                    this.next_period_raw[1][0].split("-").slice(0, 1)
+                );
+
+                let hour_string;
+                if (np_starting_hour > 12) {
+                    hour_string = (np_starting_hour - 12).toString();
+                } else {
+                    hour_string = np_starting_hour.toString();
+                }
+
+                let np_starting =
+                    hour_string +
+                    ":" +
+                    this.next_period_raw[1][0].split("-").slice(1, 2);
+                let np_starting_12hr = np_starting_hour >= 12 ? "PM" : "AM";
+
+                np_starting_string = np_starting + " " + np_starting_12hr;
+            } else {
+                np_starting_string = this.next_period_raw[1][0]
+                    .split("-")
+                    .slice(0, 2)
+                    .join(":");
+            }
+            this.next_period_starting = np_starting_string;
         },
         scheduled_notifications: function(time_difference) {
             let notification_title =
