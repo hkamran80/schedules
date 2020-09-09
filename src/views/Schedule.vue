@@ -144,9 +144,6 @@ export default {
             }
             this.previous_period = this.current_period;
 
-            //this.next_period = "No Period";
-            //this.next_period_starting = "";
-
             this.get_next_period();
             this.next_period = this.next_period_raw[0];
 
