@@ -14,9 +14,9 @@ import Navigation from "@/components/Navigation.vue";
 export default {
     name: "App",
     data: () => ({
-        fab: false,
-        debug: true,
-        version: "",
+        //fab: false,
+        version: "2.0.0-alpha-0.2",
+        update_interval: "",
         schedules: {
             "ca-auhsd-hss": {
                 name: "AUHSD Standard Schedule",
@@ -49,6 +49,48 @@ export default {
                 "dark_theme",
                 this.$vuetify.theme.dark.toString()
             );
+        },
+        check_for_update: function() {
+            if (process.env.NODE_ENV == "production") {
+                let url =
+                    window.location.protocol +
+                    "//" +
+                    window.location.host +
+                    "/version.json";
+
+                let version;
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => (version = data.version))
+                    .catch(error =>
+                        console.error(
+                            "An error occurred trying to fetch the version: ",
+                            error
+                        )
+                    );
+
+                if (version != this.version) {
+                    let toast_options = {
+                        position: "bottom-right",
+                        timeout: 5000,
+                        closeOnClick: true,
+                        pauseOnFocusLoss: false,
+                        pauseOnHover: false,
+                        draggable: false,
+                        draggablePercent: 0.6,
+                        showCloseButtonOnHover: false,
+                        hideProgressBar: true,
+                        closeButton: false,
+                        icon: true,
+                        rtl: false
+                    };
+
+                    this.$toast.info(
+                        "An update is available, please refresh the page",
+                        toast_options
+                    );
+                }
+            }
         }
     },
     mounted() {
@@ -72,22 +114,11 @@ export default {
         }
 
         // Version Handling
-        if (process.env.NODE_ENV == "production") {
-            let url =
-                window.location.protocol +
-                "//" +
-                window.location.host +
-                "/version.json";
-            fetch(url)
-                .then(response => response.json())
-                .then(data => console.info(data.version))
-                .catch(error =>
-                    console.error(
-                        "An error occurred trying to fetch the version: ",
-                        error
-                    )
-                );
-        }
+        this.update_interval = setInterval(this.check_for_update, 300000);
+    },
+    destroyed() {
+        clearInterval(this.update_interval);
+        this.update_interval = 0;
     }
 };
 </script>
