@@ -4,7 +4,7 @@
         <v-card class="mx-auto" max-width="550" outlined v-if="developer_mode">
             <v-card-text>
                 {{ current_day }} - {{ current_split_time }} ||
-                {{ current_period_raw }}
+                {{ current_period_raw }} || {{ next_period_raw }}
             </v-card-text>
         </v-card>
         <v-card class="mx-auto" max-width="550" outlined>
