@@ -135,73 +135,81 @@ export default {
             this.update_times();
             this.get_current_period();
 
-            this.current_period = this.current_period_raw[0];
+            if (
+                this.current_period_raw[0] != "No Period" &&
+                this.current_period_raw[0] != "No Periods Today"
+            ) {
+                this.current_period = this.current_period_raw[0];
 
-            if (this.current_period != this.previous_period) {
-                this.period_different = true;
-            } else {
-                this.period_different = false;
-            }
-            this.previous_period = this.current_period;
+                if (this.current_period != this.previous_period) {
+                    this.period_different = true;
+                } else {
+                    this.period_different = false;
+                }
+                this.previous_period = this.current_period;
 
-            this.update_next_period();
+                this.update_next_period();
 
-            let compiled_time_difference;
-            var time_difference;
-            if (this.current_period_raw[1] != "") {
-                let scheduled_end = this.current_period_raw[1][1].toString();
+                let compiled_time_difference;
+                var time_difference;
+                if (this.current_period_raw[1] != "") {
+                    let scheduled_end = this.current_period_raw[1][1].toString();
 
-                time_difference = this.calculate_time(
-                    this.current_split_time,
-                    scheduled_end
-                );
+                    time_difference = this.calculate_time(
+                        this.current_split_time,
+                        scheduled_end
+                    );
 
-                if (time_difference[0] == 0) {
-                    if (time_difference[1] == 0) {
-                        compiled_time_difference =
-                            "00:00:" + this.pad_number(time_difference[2]);
-                    } else {
-                        if (time_difference[2] == 0) {
+                    if (time_difference[0] == 0) {
+                        if (time_difference[1] == 0) {
                             compiled_time_difference =
-                                "00:" +
-                                this.pad_number(time_difference[1]) +
-                                ":00";
+                                "00:00:" + this.pad_number(time_difference[2]);
                         } else {
-                            compiled_time_difference =
-                                "00:" +
-                                this.pad_number(time_difference[1]) +
-                                ":" +
-                                this.pad_number(time_difference[2]);
+                            if (time_difference[2] == 0) {
+                                compiled_time_difference =
+                                    "00:" +
+                                    this.pad_number(time_difference[1]) +
+                                    ":00";
+                            } else {
+                                compiled_time_difference =
+                                    "00:" +
+                                    this.pad_number(time_difference[1]) +
+                                    ":" +
+                                    this.pad_number(time_difference[2]);
+                            }
                         }
+                    } else {
+                        compiled_time_difference =
+                            this.pad_number(time_difference[0]) +
+                            ":" +
+                            this.pad_number(time_difference[1]) +
+                            ":" +
+                            this.pad_number(time_difference[2]);
                     }
                 } else {
-                    compiled_time_difference =
-                        this.pad_number(time_difference[0]) +
-                        ":" +
-                        this.pad_number(time_difference[1]) +
-                        ":" +
-                        this.pad_number(time_difference[2]);
+                    compiled_time_difference = "";
+                    time_difference = "";
+                }
+                this.time_remaining = compiled_time_difference;
+
+                if (this.period_different) {
+                    this.period_different = false;
+
+                    this.one_hour_notification = false;
+                    this.thirty_minute_notification = false;
+                    this.fifteen_minute_notification = false;
+                    this.ten_minute_notification = false;
+                    this.five_minute_notification = false;
+                    this.one_minute_notification = false;
+                    this.thirty_second_notification = false;
+                }
+
+                if (time_difference) {
+                    this.scheduled_notifications(time_difference);
                 }
             } else {
-                compiled_time_difference = "";
-                time_difference = "";
-            }
-            this.time_remaining = compiled_time_difference;
-
-            if (this.period_different) {
-                this.period_different = false;
-
-                this.one_hour_notification = false;
-                this.thirty_minute_notification = false;
-                this.fifteen_minute_notification = false;
-                this.ten_minute_notification = false;
-                this.five_minute_notification = false;
-                this.one_minute_notification = false;
-                this.thirty_second_notification = false;
-            }
-
-            if (time_difference) {
-                this.scheduled_notifications(time_difference);
+                this.current_period = this.current_period_raw[0];
+                this.next_period = "No Period";
             }
         },
         update_next_period: function() {

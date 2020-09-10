@@ -15,7 +15,8 @@ export default {
     name: "App",
     data: () => ({
         //fab: false,
-        version: "2.0.0-alpha-0.2",
+        debug: true,
+        version: "2.0.0-alpha-0.3",
         update_interval: "",
         schedules: {
             "ca-auhsd-hss": {
@@ -114,6 +115,7 @@ export default {
         }
 
         // Version Handling
+        this.check_for_update();
         this.update_interval = setInterval(this.check_for_update, 300000);
     },
     destroyed() {
