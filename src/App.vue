@@ -16,7 +16,7 @@ export default {
     data: () => ({
         //fab: false,
         debug: true,
-        version: "2.0.0-alpha-0.3",
+        version: "2.0.0-alpha-0.4",
         update_interval: "",
         schedules: {
             "ca-auhsd-hss": {
@@ -91,6 +91,8 @@ export default {
                         toast_options
                     );
                 }
+
+                this.version = version;
             }
         }
     },
