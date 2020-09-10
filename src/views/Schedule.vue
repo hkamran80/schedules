@@ -45,6 +45,7 @@ div.v-card {
     padding: 0 5px;
     margin: 10px 0;
     text-align: center;
+    overflow-wrap: break-word;
 }
 </style>
 
@@ -215,36 +216,40 @@ export default {
         update_next_period: function() {
             this.get_next_period();
             this.next_period = this.next_period_raw[0];
+            if (
+                this.next_period_raw[0] != "No Period" &&
+                this.next_period_raw[0] != "No Periods Today"
+            ) {
+                if (this.developer_mode) console.log(this.next_period_raw);
 
-            if (this.developer_mode) console.log(this.next_period_raw);
+                let np_starting_string;
+                if (!this.twenty_four_hour_time) {
+                    let np_starting_hour = Number(
+                        this.next_period_raw[1][0].split("-").slice(0, 1)
+                    );
 
-            let np_starting_string;
-            if (!this.twenty_four_hour_time) {
-                let np_starting_hour = Number(
-                    this.next_period_raw[1][0].split("-").slice(0, 1)
-                );
+                    let hour_string;
+                    if (np_starting_hour > 12) {
+                        hour_string = (np_starting_hour - 12).toString();
+                    } else {
+                        hour_string = np_starting_hour.toString();
+                    }
 
-                let hour_string;
-                if (np_starting_hour > 12) {
-                    hour_string = (np_starting_hour - 12).toString();
+                    let np_starting =
+                        hour_string +
+                        ":" +
+                        this.next_period_raw[1][0].split("-").slice(1, 2);
+                    let np_starting_12hr = np_starting_hour >= 12 ? "PM" : "AM";
+
+                    np_starting_string = np_starting + " " + np_starting_12hr;
                 } else {
-                    hour_string = np_starting_hour.toString();
+                    np_starting_string = this.next_period_raw[1][0]
+                        .split("-")
+                        .slice(0, 2)
+                        .join(":");
                 }
-
-                let np_starting =
-                    hour_string +
-                    ":" +
-                    this.next_period_raw[1][0].split("-").slice(1, 2);
-                let np_starting_12hr = np_starting_hour >= 12 ? "PM" : "AM";
-
-                np_starting_string = np_starting + " " + np_starting_12hr;
-            } else {
-                np_starting_string = this.next_period_raw[1][0]
-                    .split("-")
-                    .slice(0, 2)
-                    .join(":");
+                this.next_period_starting = np_starting_string;
             }
-            this.next_period_starting = np_starting_string;
         },
         scheduled_notifications: function(time_difference) {
             let notification_title =

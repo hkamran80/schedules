@@ -6,6 +6,10 @@
         <!--<v-btn fab dark fixed right bottom v-on:click="toggle_dark_mode">
             <v-icon>mdi-theme-light-dark</v-icon>
         </v-btn>-->
+
+        <v-btn dark fab fixed right bottom v-if="update_available">
+            <v-icon dark>mdi-update</v-icon>
+        </v-btn>
     </div>
 </template>
 
@@ -18,6 +22,7 @@ export default {
         debug: true,
         version: "2.0.0-alpha-0.4",
         update_interval: "",
+        update_available: false,
         schedules: {
             "ca-auhsd-hss": {
                 name: "AUHSD Standard Schedule",
@@ -90,10 +95,17 @@ export default {
                         "An update is available, please refresh the page",
                         toast_options
                     );
+
+                    this.update_available = true;
+                } else {
+                    this.update_available = false;
                 }
 
                 this.version = version;
             }
+        },
+        update: function() {
+            window.location.reload(true);
         }
     },
     mounted() {
