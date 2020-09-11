@@ -1,16 +1,20 @@
 <template>
-    <div id="app">
-        <navigation :schedules="schedules" />
-        <router-view :schedules="schedules" />
+    <v-app id="app">
+        <v-main>
+            <v-container fluid>
+                <navigation :schedules="schedules" />
+                <router-view :schedules="schedules" />
+            </v-container>
+        </v-main>
 
-        <!--<v-btn fab dark fixed right bottom v-on:click="toggle_dark_mode">
+        <v-btn fab dark fixed right bottom v-on:click="toggle_dark_mode">
             <v-icon>mdi-theme-light-dark</v-icon>
-        </v-btn>-->
+        </v-btn>
 
         <v-btn dark fab fixed right bottom v-if="update_available">
             <v-icon dark>mdi-update</v-icon>
         </v-btn>
-    </div>
+    </v-app>
 </template>
 
 <script>
@@ -20,8 +24,8 @@ export default {
     data: () => ({
         //fab: false,
         debug: true,
-        update_interval: "",
-        update_available: false,
+        //update_interval: "",
+        //update_available: false,
         schedules: {
             "ca-auhsd-hss": {
                 name: "AUHSD Standard Schedule",
@@ -54,7 +58,7 @@ export default {
                 "dark_theme",
                 this.$vuetify.theme.dark.toString()
             );
-        },
+        }
         /*check_for_update: function() {
             if (process.env.NODE_ENV == "production") {
                 let url =
@@ -144,7 +148,6 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: left;
-    color: #2c3e50;
-    padding: 35px 65px;
+    padding: 15px 45px;
 }
 </style>

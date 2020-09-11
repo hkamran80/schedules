@@ -14,7 +14,7 @@
                     class="mx-auto schedule-card"
                     :color="schedule.color"
                     dark
-                    max-width="600"
+                    max-width="100%"
                     outlined
                 >
                     <v-card-title>
@@ -49,35 +49,6 @@ export default {
     name: "Home",
     props: {
         schedules: Object
-    },
-    methods: {
-        toggle_dark_mode: function() {
-            this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
-            localStorage.setItem(
-                "dark_theme",
-                this.$vuetify.theme.dark.toString()
-            );
-        }
-    },
-    mounted() {
-        const theme = localStorage.getItem("dark_theme");
-        if (theme) {
-            // deepcode ignore UseStrictEquality: Loaded as a String, not a Boolean
-            if (theme == "true") {
-                this.$vuetify.theme.dark = true;
-            } else {
-                this.$vuetify.theme.dark = false;
-            }
-        } else if (
-            window.matchMedia &&
-            window.matchMedia("(prefers-color-scheme: dark)").matches
-        ) {
-            this.$vuetify.theme.dark = true;
-            localStorage.setItem(
-                "dark_theme",
-                this.$vuetify.theme.dark.toString()
-            );
-        }
     }
 };
 </script>

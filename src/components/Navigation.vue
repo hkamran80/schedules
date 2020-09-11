@@ -2,11 +2,11 @@
     <div class="navigation">
         <v-row no-gutters>
             <v-col align-self="center" justify="center">
-                <h1>
+                <h1 color="primary">
                     Schedules
                 </h1>
                 <div id="nav_links">
-                    <router-link to="/">Home</router-link> |
+                    <router-link to="/" color="primary">Home</router-link> |
                     <span>
                         <router-link to="/schedule/ca-auhsd-hss">
                             Acalanes High School
@@ -20,8 +20,13 @@
                     </span>
                 </div>
             </v-col>
-            <v-col class="text-align--right" align-self="center" cols="3">
-                <span>{{ current_date }}</span> - 
+            <v-col
+                class="text-align--right"
+                align-self="center"
+                justify="center"
+                cols="3"
+            >
+                <span>{{ current_date }}</span> -
                 <span>{{ current_time }}</span>
             </v-col>
         </v-row>
@@ -117,7 +122,6 @@ export default {
 
 .navigation a {
     font-weight: bold;
-    color: #2c3e50;
 }
 
 .navigation a.router-link-exact-active {

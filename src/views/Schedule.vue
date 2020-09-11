@@ -1,42 +1,52 @@
 <template>
     <div class="schedule">
         <h3>{{ this.schedules[this.$route.params.id].name }}</h3>
-        <v-card class="mx-auto" max-width="550" outlined v-if="developer_mode">
-            <v-card-text>
-                {{ current_day }} - {{ current_split_time }} ||
-                {{ current_period_raw }} || {{ next_period_raw }}
-            </v-card-text>
-        </v-card>
-        <v-card class="mx-auto" max-width="550" outlined>
-            <v-card-title>
-                <span
-                    class="title font-weight-regular"
+        <v-row align="start" justify="start">
+            <v-col>
+                <v-card
+                    class="mx-auto"
+                    max-width="100%"
+                    outlined
+                    v-if="developer_mode"
+                >
+                    <v-card-text>
+                        {{ current_day }} - {{ current_split_time }} ||
+                        {{ current_period_raw }} || {{ next_period_raw }}
+                    </v-card-text>
+                </v-card>
+                <v-card class="mx-auto" max-width="100%" outlined>
+                    <v-card-title>
+                        <span
+                            class="title font-weight-regular"
+                            v-if="
+                                current_period != 'No Period' &&
+                                    current_period != 'No Periods Today'
+                            "
+                        >
+                            {{ current_period }} - {{ time_remaining }}
+                        </span>
+                        <span class="title font-weight-regular" v-else>
+                            No Period
+                        </span>
+                    </v-card-title>
+                </v-card>
+                <v-card
+                    class="mx-auto"
+                    max-width="100%"
+                    outlined
                     v-if="
-                        current_period != 'No Period' &&
-                            current_period != 'No Periods Today'
+                        next_period != 'No Period' &&
+                            next_period != 'No Periods Today'
                     "
                 >
-                    {{ current_period }} - {{ time_remaining }}
-                </span>
-                <span class="title font-weight-regular" v-else>
-                    No Period
-                </span>
-            </v-card-title>
-        </v-card>
-        <v-card
-            class="mx-auto"
-            max-width="550"
-            outlined
-            v-if="
-                next_period != 'No Period' && next_period != 'No Periods Today'
-            "
-        >
-            <v-card-title>
-                <span class="title font-weight-regular">
-                    {{ next_period }} - {{ next_period_starting }}
-                </span>
-            </v-card-title>
-        </v-card>
+                    <v-card-title>
+                        <span class="title font-weight-regular">
+                            {{ next_period }} - {{ next_period_starting }}
+                        </span>
+                    </v-card-title>
+                </v-card>
+            </v-col>
+        </v-row>
     </div>
 </template>
 
@@ -107,25 +117,6 @@ export default {
             .requestPermission()
             .then(this.notification_permissions_callback, console.error)
             .catch(console.error);
-
-        const theme = localStorage.getItem("dark_theme");
-        if (theme) {
-            // deepcode ignore UseStrictEquality: Loaded as a String, not a Boolean
-            if (theme == "true") {
-                this.$vuetify.theme.dark = true;
-            } else {
-                this.$vuetify.theme.dark = false;
-            }
-        } else if (
-            window.matchMedia &&
-            window.matchMedia("(prefers-color-scheme: dark)").matches
-        ) {
-            this.$vuetify.theme.dark = true;
-            localStorage.setItem(
-                "dark_theme",
-                this.$vuetify.theme.dark.toString()
-            );
-        }
     },
     destroyed() {
         clearInterval(this.main_interval);
@@ -526,13 +517,6 @@ export default {
                     icon: icon
                 },
                 {}
-            );
-        },
-        toggle_dark_mode: function() {
-            this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
-            localStorage.setItem(
-                "dark_theme",
-                this.$vuetify.theme.dark.toString()
             );
         }
     }
