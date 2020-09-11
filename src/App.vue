@@ -20,7 +20,6 @@ export default {
     data: () => ({
         //fab: false,
         debug: true,
-        version: "2.0.0-alpha-0.4",
         update_interval: "",
         update_available: false,
         schedules: {
@@ -56,7 +55,7 @@ export default {
                 this.$vuetify.theme.dark.toString()
             );
         },
-        check_for_update: function() {
+        /*check_for_update: function() {
             if (process.env.NODE_ENV == "production") {
                 let url =
                     window.location.protocol +
@@ -106,7 +105,7 @@ export default {
         },
         update: function() {
             window.location.reload(true);
-        }
+        }*/
     },
     mounted() {
         const theme = localStorage.getItem("dark_theme");
@@ -129,12 +128,12 @@ export default {
         }
 
         // Version Handling
-        this.check_for_update();
-        this.update_interval = setInterval(this.check_for_update, 300000);
+        //this.check_for_update();
+        //this.update_interval = setInterval(this.check_for_update, 300000);
     },
     destroyed() {
-        clearInterval(this.update_interval);
-        this.update_interval = 0;
+        //clearInterval(this.update_interval);
+        //this.update_interval = 0;
     }
 };
 </script>
