@@ -9,7 +9,25 @@
   </head>
   <body>
     <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+        <article>
+			<h1>JavaScript Notice for Schedules</h1>
+			<div>
+				<p>The redesigned version of Schedules requires JavaScript to be enabled. Please enable it to continue. You can use <a href="https://support.google.com/adsense/answer/12654?hl=en" target="_blank">this Google Support page</a> for instructions on how to enable JavaScript.</p>
+				<p>We apologize for any inconveniences this may have caused.</p>
+				<p>Thank you for using Schedules.</p>
+			</div>
+        </article>
+        <style>
+			body { text-align: center; padding: 20px; }
+			@media (min-width: 768px){
+				body { padding-top: 150px; }
+			}
+			h1 { font-size: 50px; }
+			body { font: 20px Helvetica, sans-serif; color: #333; }
+			article { display: block; text-align: left; max-width: 650px; margin: 0 auto; }
+			a { color: #dc8100; text-decoration: none; }
+			a:hover { color: #333; text-decoration: none; }
+		</style>
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->

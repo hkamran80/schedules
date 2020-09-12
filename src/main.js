@@ -12,6 +12,15 @@ import "@mdi/font/css/materialdesignicons.css";
 
 Vue.config.productionTip = false;
 
+Vue.prototype.$twenty_four_hour_time = false;
+Vue.prototype.$allow_one_hour_notification = true;
+Vue.prototype.$allow_thirty_minute_notification = true;
+Vue.prototype.$allow_fifteen_minute_notification = true;
+Vue.prototype.$allow_ten_minute_notification = true;
+Vue.prototype.$allow_five_minute_notification = true;
+Vue.prototype.$allow_one_minute_notification = true;
+Vue.prototype.$allow_thirty_second_notification = true;
+
 Vue.use(VueNativeNotification, {
     requestOnNotify: true
 });
