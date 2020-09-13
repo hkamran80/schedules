@@ -37,23 +37,68 @@
             </v-col>
         </v-row>
 
-        <v-dialog v-model="settings" max-width="500">
+        <v-dialog v-model="settings" scrollable max-width="500">
             <v-card>
                 <v-card-title class="headline">
                     Preferences
                 </v-card-title>
 
                 <v-card-text>
+                    <v-subheader>General</v-subheader>
                     <v-switch
                         v-model="toggle_theme"
                         label="Dark Theme"
                         inset
                     ></v-switch>
-                    <v-switch
+                    <!--<v-switch
                         v-model="toggle_tfht"
                         :label="
                             `Twenty-four Hour Time (${this.$twenty_four_hour_time})`
                         "
+                        inset
+                    ></v-switch>-->
+                    <v-switch
+                        v-model="toggle_tfht"
+                        label="Twenty-four Hour Time"
+                        inset
+                    ></v-switch>
+
+                    <v-divider />
+
+                    <v-subheader>Notifications</v-subheader>
+                    <v-switch
+                        v-model="toggle_ohn"
+                        label="One Hour Notifications"
+                        inset
+                    ></v-switch>
+                    <v-switch
+                        v-model="toggle_thmn"
+                        label="Thirty Minute Notifications"
+                        inset
+                    ></v-switch>
+                    <v-switch
+                        v-model="toggle_fimn"
+                        label="Fifteen Minute Notifications"
+                        inset
+                    ></v-switch>
+                    <v-switch
+                        v-model="toggle_tmn"
+                        label="Ten Minute Notifications"
+                        inset
+                    ></v-switch>
+                    <v-switch
+                        v-model="toggle_fmn"
+                        label="Five Minute Notifications"
+                        inset
+                    ></v-switch>
+                    <v-switch
+                        v-model="toggle_omn"
+                        label="One Minute Notifications"
+                        inset
+                    ></v-switch>
+                    <v-switch
+                        v-model="toggle_thsn"
+                        label="Thirty Second Notifications"
                         inset
                     ></v-switch>
                 </v-card-text>
@@ -72,7 +117,7 @@ export default {
         return {
             settings: false,
             toggle_theme: this.$vuetify.theme.dark,
-            toggle_tfht: this.$twenty_four_hour_time,
+            toggle_tfht: !this.$twenty_four_hour_time,
             toggle_ohn: this.$allow_one_hour_notification,
             toggle_thmn: this.$allow_thirty_minute_notification,
             toggle_fimn: this.$allow_fifteen_minute_notification,
@@ -92,6 +137,15 @@ export default {
                 "dark_theme",
                 this.$vuetify.theme.dark.toString()
             );
+            if (this.$vuetify.theme.dark) {
+                for (let a of document.getElementsByTagName("a")) {
+                    a.style.setProperty("--inactive-link-color", "#3179bc");
+                }
+            } else {
+                for (let a of document.getElementsByTagName("a")) {
+                    a.style.setProperty("--inactive-link-color", "#2c3e50");
+                }
+            }
         },
         toggle_twenty_four_hour_time: function() {
             this.$twenty_four_hour_time = !this.$twenty_four_hour_time;
@@ -166,12 +220,22 @@ export default {
                 d.getDate() +
                 ", " +
                 d.getFullYear();
-            this.current_time =
-                this.pad_number(d.getHours().toString()) +
-                ":" +
-                this.pad_number(d.getMinutes().toString()) +
-                ":" +
-                this.pad_number(d.getSeconds().toString());
+
+            if (this.$twenty_four_hour_time) {
+                this.current_time =
+                    this.pad_number(d.getHours().toString()) +
+                    ":" +
+                    this.pad_number(d.getMinutes().toString()) +
+                    ":" +
+                    this.pad_number(d.getSeconds().toString());
+            } else {
+                this.current_time = d.toLocaleString("en-us", {
+                    hour: "numeric",
+                    minute: "numeric",
+                    second: "numeric",
+                    hour12: true
+                });
+            }
         },
         pad_number: function(number) {
             var padded;
@@ -185,6 +249,7 @@ export default {
         }
     },
     created() {
+        // Twenty-four Hour Time
         const _twenty_four_hour_time = localStorage.getItem(
             "twenty_four_hour_time"
         );
@@ -198,19 +263,27 @@ export default {
             localStorage.setItem("twenty_four_hour_time", "created.false");
         }
 
+        // Interval Initalization
         this.datetime_interval = setInterval(
             this.update_datetime_strings,
             1000
         );
     },
     mounted() {
+        // Dark Theme
         const theme = localStorage.getItem("dark_theme");
         if (theme) {
             // deepcode ignore UseStrictEquality: Loaded as a String, not a Boolean
             if (theme == "true") {
                 this.$vuetify.theme.dark = true;
+                for (let a of document.getElementsByTagName("a")) {
+                    a.style.setProperty("--inactive-link-color", "#3179bc");
+                }
             } else {
                 this.$vuetify.theme.dark = false;
+                for (let a of document.getElementsByTagName("a")) {
+                    a.style.setProperty("--inactive-link-color", "#2c3e50");
+                }
             }
         } else if (
             window.matchMedia &&
@@ -221,6 +294,13 @@ export default {
                 "dark_theme",
                 this.$vuetify.theme.dark.toString()
             );
+            for (let a of document.getElementsByTagName("a")) {
+                a.style.setProperty("--inactive-link-color", "#3179bc");
+            }
+        } else {
+            for (let a of document.getElementsByTagName("a")) {
+                a.style.setProperty("--inactive-link-color", "#2c3e50");
+            }
         }
     },
     watch: {
@@ -260,13 +340,17 @@ export default {
 </script>
 
 <style scoped>
+a {
+    --inactive-link-color: #2c3e50;
+}
+
 .navigation {
     padding: 30px 0;
 }
 
 .navigation a {
     font-weight: bold;
-    color: #2c3e50;
+    color: var(--inactive-link-color);
 }
 
 .navigation a.router-link-exact-active {
