@@ -260,7 +260,7 @@ export default {
                 this.$twenty_four_hour_time = false;
             }
         } else {
-            localStorage.setItem("twenty_four_hour_time", "created.false");
+            localStorage.setItem("twenty_four_hour_time", "false");
         }
 
         // Interval Initalization
