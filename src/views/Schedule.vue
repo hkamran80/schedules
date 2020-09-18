@@ -400,14 +400,21 @@ export default {
                             minutes = Number(_end.slice(1, 2)),
                             seconds = Number(_end.slice(2, 3));
 
-                        if (seconds == 59) {
+                        if (seconds >= 59) {
                             minutes += 1;
-                            seconds = 0;
+                            seconds =
+                                seconds >= 60 ? seconds - 60 : seconds - 59;
                         }
-                        if (minutes == 59) {
+                        if (this.developer_mode)
+                            console.log("PPE [2]: ", hours, minutes, seconds);
+                        if (minutes >= 59) {
                             hours += 1;
-                            minutes = 0;
+                            minutes =
+                                minutes > 59 ? minutes - 60 : minutes - 59;
                         }
+                        if (this.developer_mode)
+                            console.log("PPE [3]: ", hours, minutes, seconds);
+
                         previous_period_end =
                             this.pad_number(hours) +
                             this.pad_number(minutes) +
@@ -420,7 +427,9 @@ export default {
                             period,
                             this.current_split_time,
                             this.current_period_raw[1],
-                            period_start == previous_period_end
+                            period_start == previous_period_end,
+                            previous_period_end,
+                            Number(period_start).toString()
                         );
 
                     if (

@@ -3,10 +3,15 @@
         <v-row no-gutters>
             <v-col align-self="center" justify="center">
                 <h1 color="primary">
-                    Schedules
+                    <router-link
+                        id="schedules-home-link"
+                        to="/"
+                        color="primary"
+                    >
+                        Schedules
+                    </router-link>
                 </h1>
                 <div id="nav_links">
-                    <router-link to="/" color="primary">Home</router-link> |
                     <span>
                         <router-link to="/schedule/ca-auhsd-hss">
                             Acalanes High School
@@ -351,6 +356,10 @@ a {
 .navigation a {
     font-weight: bold;
     color: var(--inactive-link-color);
+}
+
+.navigation a#schedules-home-link {
+    text-decoration: none;
 }
 
 .navigation a.router-link-exact-active {
