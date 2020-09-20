@@ -2,7 +2,7 @@ module.exports = {
     transpileDependencies: ["vuetify"],
     chainWebpack: config => {
         config.plugin("html").tap(args => {
-            args[0].title = "Schedules [PWA]";
+            args[0].title = "Schedules";
             return args;
         });
     },
@@ -11,7 +11,8 @@ module.exports = {
         themeColor: "#2c3e50",
         workboxPluginMode: "InjectManifest",
         workboxOptions: {
-            swSrc: "src/service-worker.js"
+            swSrc: "src/service-worker.js",
+            exclude: ["/_redirects", "/version.json"]
         }
     }
 };
