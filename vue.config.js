@@ -5,5 +5,13 @@ module.exports = {
             args[0].title = "Schedules [PWA]";
             return args;
         });
+    },
+    pwa: {
+        name: "Schedules (beta)",
+        themeColor: "#2c3e50",
+        workboxPluginMode: "InjectManifest",
+        workboxOptions: {
+            swSrc: "src/service-worker.js"
+        }
     }
 };

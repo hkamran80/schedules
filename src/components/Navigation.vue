@@ -34,7 +34,12 @@
                 <span>{{ current_date }}</span> -
                 <span>{{ current_time }}</span>
 
-                <v-btn icon id="settings_icon" @click.stop="settings = true">
+                <v-btn
+                    icon
+                    id="settings_icon"
+                    @click.stop="settings = true"
+                    aria-label="Settings"
+                >
                     <v-icon>
                         mdi-settings-outline
                     </v-icon>

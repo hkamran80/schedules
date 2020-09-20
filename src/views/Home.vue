@@ -1,8 +1,8 @@
 <template>
     <div class="home">
-        <h3>
+        <h2>
             Welcome to Schedules! Click on a schedule below to get started!
-        </h3>
+        </h2>
         <div id="schedules">
             <router-link
                 v-for="(schedule, schedule_id) in schedules"

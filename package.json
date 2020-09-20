@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "lintserve": "vue-cli-service lint; vue-cli-service serve"
+    "lintserve": "vue-cli-service lint; vue-cli-service serve",
+    "lintserve:dev": "vue-cli-service lint; vue-cli-service build; serve -s dist -l 8090"
   },
   "dependencies": {
     "@mdi/font": "^3.6.95",

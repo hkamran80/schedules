@@ -87,6 +87,7 @@ export default {
             current_split_time: "",
 
             // Notifications
+            notifications_supported: false,
             one_hour_notification: false,
             thirty_minute_notification: false,
             fifteen_minute_notification: false,
@@ -103,10 +104,14 @@ export default {
         this.main_interval = setInterval(this.main, 1000);
     },
     mounted() {
-        this.$notification
+        /*this.$notification
             .requestPermission()
             .then(this.notification_permissions_callback, console.error)
-            .catch(console.error);
+            .catch(console.error);*/
+        if ("Notification" in window && "serviceWorker" in navigator) {
+            this.notifications_supported = true;
+            this.request_notifications_permission();
+        }
     },
     destroyed() {
         clearInterval(this.main_interval);
@@ -473,12 +478,27 @@ export default {
 
             return padded;
         },
-        notification_permissions_callback: function(result) {
-            if (result != "granted") {
-                this.show_toast(
-                    'To receive notifications, click "Allow" on the notification permission pop-up',
-                    "warning"
-                );
+        request_notifications_permission: function() {
+            if (this.notificationsSupported) {
+                Notification.requestPermission(result => {
+                    console.log("Notification Permission Result: ", result);
+                    if (result !== "granted") {
+                        this.show_toast(
+                            'To receive notifications, click "Allow" on the notification permission pop-up',
+                            "warning"
+                        );
+                    } else {
+                        this.show_toast(
+                            "A demo notification will be sent to test the notifications capability.",
+                            "info"
+                        );
+                        this.notify(
+                            "Schedules - Demo",
+                            "This is a demo notification to test the notifications capability.",
+                            ""
+                        );
+                    }
+                });
             }
         },
         show_toast: function(content, type) {
@@ -504,19 +524,34 @@ export default {
                 case "success":
                     this.$toast.success(content, toast_options);
                     break;
+                case "info":
+                    this.$toast.info(content, toast_options);
+                    break;
                 default:
                     console.error("Invalid toast type");
             }
         },
         notify: function(title, body, icon) {
-            this.$notification.show(
+            /*this.$notification.show(
                 title,
                 {
                     body: body,
                     icon: icon
                 },
                 {}
-            );
+            );*/
+            if ("serviceWorker" in navigator) {
+                navigator.serviceWorker.ready
+                    .then(swr =>
+                        swr.showNotification(title, {
+                            body: body,
+                            icon: icon
+                        })
+                    )
+                    .catch(swg_err =>
+                        console.error("Service worker not ready: ", swg_err)
+                    );
+            }
         }
     }
 };
