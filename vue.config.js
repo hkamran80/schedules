@@ -12,7 +12,7 @@ module.exports = {
         workboxPluginMode: "InjectManifest",
         workboxOptions: {
             swSrc: "src/service-worker.js",
-            exclude: ["/_redirects", "/version.json"],
+            //exclude: ["/_redirects", "/version.json"],
             //skipWaiting: true,
             //clientsClaim: true
         },
