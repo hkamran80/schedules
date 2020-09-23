@@ -13,8 +13,8 @@ module.exports = {
         workboxOptions: {
             swSrc: "src/service-worker.js",
             exclude: ["/_redirects", "/version.json"],
-            skipWaiting: true,
-            clientsClaim: true
+            //skipWaiting: true,
+            //clientsClaim: true
         },
         manifestOptions: {
             backgroundColor: "#2c3e50"
