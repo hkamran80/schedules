@@ -14,9 +14,9 @@ jobs:
     - name: Audit Live Site
       uses: jakejarvis/lighthouse-action@master
       with:
-        url: 'https://schedules.unisontech.org'
+        url: 'https://beta-schedules.unisontech.org'
     - name: Upload Results as Artifact
       uses: actions/upload-artifact@master
       with:
-        name: Lighthouse Report
+        name: Lighthouse Report (RD-PWA Beta)
         path: './report'

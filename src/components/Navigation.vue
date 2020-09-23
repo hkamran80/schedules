@@ -39,6 +39,7 @@
                     id="settings_icon"
                     @click.stop="settings = true"
                     aria-label="Settings"
+                    title="Settings"
                 >
                     <v-icon>
                         mdi-settings-outline

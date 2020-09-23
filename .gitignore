@@ -21,4 +21,6 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
 changes.txt
+audits/
