@@ -21,6 +21,9 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+.dccache
 
-changes.txt
+changes/
 audits/
+
+tmp*

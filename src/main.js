@@ -6,9 +6,6 @@ import vuetify from "./plugins/vuetify";
 import VueNativeNotification from "vue-native-notification";
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
-//import Toasted from "vue-toasted";
-import "roboto-fontface/css/roboto/roboto-fontface.css";
-import "@mdi/font/css/materialdesignicons.css";
 
 Vue.config.productionTip = false;
 
@@ -29,12 +26,6 @@ Vue.use(Toast, {
     maxToasts: 5,
     newestOnTop: true
 });
-/*Vue.use(Toasted, {
-    position: "bottom-right",
-    duration: 5000,
-    theme: "outline",
-    iconPack: "mdi"
-});*/
 
 new Vue({
     router,

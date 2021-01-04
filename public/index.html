@@ -1,39 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <meta name="Description" content="An app for schedules">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+        <meta name="Description" content="An app for schedules" />
 
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+        <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css"
+        />
 
-    <title><%= htmlWebpackPlugin.options.title %></title>
-  </head>
-  <body>
-    <noscript>
-        <article>
-			<h1>JavaScript Notice for Schedules</h1>
-			<div>
-				<p>The redesigned version of Schedules requires JavaScript to be enabled. Please enable it to continue. You can use <a href="https://support.google.com/adsense/answer/12654?hl=en" target="_blank">this Google Support page</a> for instructions on how to enable JavaScript.</p>
-				<p>We apologize for any inconveniences this may have caused.</p>
-				<p>Thank you for using Schedules.</p>
-			</div>
-        </article>
-        <style>
-			body { text-align: center; padding: 20px; }
-			@media (min-width: 768px){
-				body { padding-top: 150px; }
-			}
-			h1 { font-size: 50px; }
-			body { font: 20px Helvetica, sans-serif; color: #333; }
-			article { display: block; text-align: left; max-width: 650px; margin: 0 auto; }
-			a { color: #dc8100; text-decoration: none; }
-			a:hover { color: #333; text-decoration: none; }
-		</style>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+        <title><%= htmlWebpackPlugin.options.title %></title>
+    </head>
+    <body>
+        <noscript>
+            <article>
+                <h1>JavaScript Notice for Schedules</h1>
+                <div>
+                    <p>
+                        The redesigned version of Schedules requires JavaScript
+                        to be enabled. Please enable it to continue. You can use
+                        <a
+                            href="https://support.google.com/adsense/answer/12654?hl=en"
+                            target="_blank"
+                            >this Google Support page</a
+                        >
+                        for instructions on how to enable JavaScript.
+                    </p>
+                    <p>
+                        We apologize for any inconveniences this may have
+                        caused.
+                    </p>
+                    <p>Thank you for using Schedules.</p>
+                </div>
+            </article>
+            <style>
+                body {
+                    text-align: center;
+                    padding: 20px;
+                }
+                @media (min-width: 768px) {
+                    body {
+                        padding-top: 150px;
+                    }
+                }
+                h1 {
+                    font-size: 50px;
+                }
+                body {
+                    font: 20px Helvetica, sans-serif;
+                    color: #333;
+                }
+                article {
+                    display: block;
+                    text-align: left;
+                    max-width: 650px;
+                    margin: 0 auto;
+                }
+                a {
+                    color: #dc8100;
+                    text-decoration: none;
+                }
+                a:hover {
+                    color: #333;
+                    text-decoration: none;
+                }
+            </style>
+        </noscript>
+        <div id="app"></div>
+    </body>
 </html>

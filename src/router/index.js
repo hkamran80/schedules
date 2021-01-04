@@ -9,19 +9,32 @@ const routes = [
     {
         path: "/",
         name: "home",
-        component: Home
+        component: Home,
     },
     {
         path: "/schedule/:id",
         name: "schedule",
-        component: Schedule
-    }
+        component: Schedule,
+    },
+    {
+        path: "/notfound",
+        name: "NotFound",
+        component: () =>
+            import(/* webpackChuckName: "notfound" */ "../views/NotFound.vue"),
+    },
+    {
+        path: "*",
+        redirect: (from) => ({
+            name: "NotFound",
+            query: { path: window.location.origin + from.path },
+        }),
+    },
 ];
 
 const router = new VueRouter({
     mode: "history",
     base: process.env.BASE_URL,
-    routes
+    routes,
 });
 
 export default router;

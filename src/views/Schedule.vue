@@ -1,90 +1,92 @@
 <template>
-    <div class="schedule">
-        <h3>{{ this.schedules[this.$route.params.id].name }}</h3>
-        <v-row align="start" justify="start">
-            <v-col>
-                <v-card
-                    class="mx-auto"
-                    max-width="100%"
-                    outlined
-                    v-if="developer_mode"
-                >
-                    <v-card-text>
-                        {{ current_day }} - {{ current_split_time }} ||
-                        {{ current_period_raw }} || {{ next_period_raw }}
-                    </v-card-text>
-                </v-card>
-                <v-card class="mx-auto" max-width="100%" outlined>
-                    <v-card-title>
-                        <span
-                            class="title font-weight-regular"
-                            v-if="
-                                current_period != 'No Period' &&
-                                    current_period != 'No Periods Today'
-                            "
-                        >
-                            {{ current_period }} - {{ time_remaining }}
-                        </span>
-                        <span class="title font-weight-regular" v-else>
-                            No Period
-                        </span>
-                    </v-card-title>
-                </v-card>
-                <v-card
-                    class="mx-auto"
-                    max-width="100%"
-                    outlined
+    <center-layout>
+        <header class="pb-4">
+            <h2 class="pb-1" v-text="schedules[this.$route.params.id].name" />
+            <h3
+                v-if="current_pp.day !== null && current_pp.time !== null"
+                v-text="`${current_pp.day} - ${current_pp.time}`"
+            />
+        </header>
+
+        <v-card class="mx-auto" outlined>
+            <v-card-title>
+                <span
+                    class="title font-weight-regular"
                     v-if="
-                        next_period != 'No Period' &&
-                            next_period != 'No Periods Today'
+                        current_period !== null &&
+                            current_period !== 'No Period' &&
+                            current_period !== 'No Periods Today'
                     "
-                >
-                    <v-card-title>
-                        <span class="title font-weight-regular">
-                            {{ next_period }} - {{ next_period_starting }}
-                        </span>
-                    </v-card-title>
-                </v-card>
-            </v-col>
-        </v-row>
-    </div>
+                    v-text="`${current_period} - ${time_remaining}`"
+                />
+                <span class="title font-weight-regular" v-else>
+                    No Period
+                </span>
+            </v-card-title>
+        </v-card>
+        <v-card
+            class="mx-auto"
+            outlined
+            v-if="
+                next_period !== null &&
+                    next_period !== 'No Period' &&
+                    next_period !== 'No Periods Today'
+            "
+        >
+            <v-card-title>
+                <span
+                    class="title font-weight-regular"
+                    v-text="`${next_period} - ${next_period_starting}`"
+                />
+            </v-card-title>
+        </v-card>
+
+        <div v-if="developer_mode">
+            <v-divider />
+            <v-card class="mx-auto" outlined>
+                <v-card-text>
+                    {{ current_day }} - {{ current_split_time }} ||
+                    {{ current_period_raw }} || {{ next_period_raw }} ||
+                    {{ $twenty_four_hour_time }}
+                </v-card-text>
+            </v-card>
+            <v-btn text block @click="dev"> Development Function </v-btn>
+        </div>
+    </center-layout>
 </template>
 
-<style scoped>
-div.v-card {
-    padding: 0 5px;
-    margin: 10px 0;
-    text-align: center;
-    overflow-wrap: break-word;
-}
-</style>
-
 <script>
+import CenterLayout from "@/components/CenterLayout.vue";
 export default {
     name: "Schedule",
     props: {
         schedules: Object
     },
+    components: { CenterLayout },
     data: function() {
         return {
             // Current and Next Period Information
-            current_period: "",
-            time_remaining: "",
-            next_period: "",
-            next_period_starting: "",
+            current_period: null,
+            time_remaining: null,
+            next_period: null,
+            next_period_starting: null,
 
             // Previous Period Information
-            previous_period: "",
+            previous_period: null,
             period_different: false,
 
             // Raw Period Information
-            current_period_raw: "",
-            next_period_raw: "",
+            current_period_raw: [],
+            next_period_raw: [],
 
             // Date and Time
             current_day: "",
             current_time: "",
             current_split_time: "",
+            current_pp: {
+                day: null,
+                time: null
+            },
 
             // Notifications
             notifications_supported: false,
@@ -96,28 +98,27 @@ export default {
             one_minute_notification: false,
             thirty_second_notification: false,
 
-            main_interval: "",
-            developer_mode: this.$route.query.dev == "true"
+            main_interval: null,
+            developer_mode: this.$route.query.dev === "true"
         };
     },
     created() {
         this.main_interval = setInterval(this.main, 1000);
     },
     mounted() {
-        /*this.$notification
+        this.$notification
             .requestPermission()
             .then(this.notification_permissions_callback, console.error)
-            .catch(console.error);*/
-        if ("Notification" in window && "serviceWorker" in navigator) {
-            this.notifications_supported = true;
-            this.request_notifications_permission();
-        }
+            .catch(console.error);
     },
     destroyed() {
         clearInterval(this.main_interval);
         this.main_interval = 0;
     },
     methods: {
+        dev: function() {
+            console.log(this.$twenty_four_hour_time);
+        },
         main: function() {
             this.update_times();
             this.get_current_period();
@@ -206,7 +207,7 @@ export default {
                 this.next_period_raw[0] != "No Period" &&
                 this.next_period_raw[0] != "No Periods Today"
             ) {
-                if (this.developer_mode) console.log(this.next_period_raw);
+                //if (this.developer_mode) console.log(this.next_period_raw);
 
                 let np_starting_string;
                 if (!this.$twenty_four_hour_time) {
@@ -354,7 +355,7 @@ export default {
                         this.schedules[this.$route.params.id].schedule
                     )[this.current_day],
                     split_time = this.current_split_time.split("-").join("");
-                if (this.developer_mode) console.debug(day_schedule);
+                //if (this.developer_mode) console.debug(day_schedule);
                 for (var _period in day_schedule) {
                     var period = day_schedule[_period],
                         period_start = period[0].split("-").join(""),
@@ -410,15 +411,13 @@ export default {
                             seconds =
                                 seconds >= 60 ? seconds - 60 : seconds - 59;
                         }
-                        if (this.developer_mode)
-                            console.log("PPE [2]: ", hours, minutes, seconds);
+                        //if (this.developer_mode) console.log("PPE [2]: ", hours, minutes, seconds);
                         if (minutes >= 59) {
                             hours += 1;
                             minutes =
                                 minutes > 59 ? minutes - 60 : minutes - 59;
                         }
-                        if (this.developer_mode)
-                            console.log("PPE [3]: ", hours, minutes, seconds);
+                        //if (this.developer_mode) console.log("PPE [3]: ", hours, minutes, seconds);
 
                         previous_period_end =
                             this.pad_number(hours) +
@@ -426,7 +425,7 @@ export default {
                             this.pad_number(seconds);
                     }
 
-                    if (this.developer_mode)
+                    /*if (this.developer_mode)
                         console.log(
                             _period,
                             period,
@@ -435,7 +434,7 @@ export default {
                             period_start == previous_period_end,
                             previous_period_end,
                             Number(period_start).toString()
-                        );
+                        );*/
 
                     if (
                         Number(period_start).toString() == previous_period_end
@@ -467,6 +466,16 @@ export default {
                 this.pad_number(d.getMinutes().toString()) +
                 "-" +
                 this.pad_number(d.getSeconds().toString());
+
+            this.current_pp.day = d.toLocaleDateString("en-us", {
+                weekday: "long"
+            });
+            this.current_pp.time = d.toLocaleString("en-us", {
+                hour: "numeric",
+                minute: "numeric",
+                second: "numeric",
+                hour12: !this.$twenty_four_hour_time
+            });
         },
         pad_number: function(number) {
             var padded;
@@ -477,29 +486,6 @@ export default {
             }
 
             return padded;
-        },
-        request_notifications_permission: function() {
-            if (this.notificationsSupported) {
-                Notification.requestPermission(result => {
-                    console.log("Notification Permission Result: ", result);
-                    if (result !== "granted") {
-                        this.show_toast(
-                            'To receive notifications, click "Allow" on the notification permission pop-up',
-                            "warning"
-                        );
-                    } else {
-                        this.show_toast(
-                            "A demo notification will be sent to test the notifications capability.",
-                            "info"
-                        );
-                        this.notify(
-                            "Schedules - Demo",
-                            "This is a demo notification to test the notifications capability.",
-                            ""
-                        );
-                    }
-                });
-            }
         },
         show_toast: function(content, type) {
             let toast_options = {
@@ -528,31 +514,36 @@ export default {
                     this.$toast.info(content, toast_options);
                     break;
                 default:
-                    console.error("Invalid toast type");
+                    this.$toast.info(content, toast_options);
+            }
+        },
+        notification_permissions_callback: function(result) {
+            if (result != "granted") {
+                this.show_toast(
+                    'To receive notifications, click "Allow" on the notification permission pop-up',
+                    "warning"
+                );
             }
         },
         notify: function(title, body, icon) {
-            /*this.$notification.show(
+            this.$notification.show(
                 title,
                 {
                     body: body,
                     icon: icon
                 },
                 {}
-            );*/
-            if ("serviceWorker" in navigator) {
-                navigator.serviceWorker.ready
-                    .then(swr =>
-                        swr.showNotification(title, {
-                            body: body,
-                            icon: icon
-                        })
-                    )
-                    .catch(swg_err =>
-                        console.error("Service worker not ready: ", swg_err)
-                    );
-            }
+            );
         }
     }
 };
 </script>
+
+<style scoped>
+div.v-card {
+    padding: 0 5px;
+    margin: 10px 0;
+    text-align: center;
+    overflow-wrap: break-word;
+}
+</style>

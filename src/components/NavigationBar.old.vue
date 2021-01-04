@@ -41,18 +41,14 @@
                     aria-label="Settings"
                     title="Settings"
                 >
-                    <v-icon>
-                        mdi-settings-outline
-                    </v-icon>
+                    <v-icon> mdi-cog-outline </v-icon>
                 </v-btn>
             </v-col>
         </v-row>
 
         <v-dialog v-model="settings" scrollable max-width="500">
             <v-card>
-                <v-card-title class="headline">
-                    Preferences
-                </v-card-title>
+                <v-card-title class="headline"> Preferences </v-card-title>
 
                 <v-card-text>
                     <v-subheader>General</v-subheader>
@@ -61,13 +57,6 @@
                         label="Dark Theme"
                         inset
                     ></v-switch>
-                    <!--<v-switch
-                        v-model="toggle_tfht"
-                        :label="
-                            `Twenty-four Hour Time (${this.$twenty_four_hour_time})`
-                        "
-                        inset
-                    ></v-switch>-->
                     <v-switch
                         v-model="toggle_tfht"
                         label="Twenty-four Hour Time"
@@ -361,11 +350,8 @@ a {
 
 .navigation a {
     font-weight: bold;
-    color: var(--inactive-link-color);
-}
-
-.navigation a#schedules-home-link {
     text-decoration: none;
+    color: var(--inactive-link-color);
 }
 
 .navigation a.router-link-exact-active {
