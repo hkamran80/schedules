@@ -121,7 +121,7 @@ export default {
     },
     data: function() {
         return {
-            settings: true
+            settings: false
         };
     },
     mounted() {
