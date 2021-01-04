@@ -10,6 +10,6 @@
 
 <script>
 export default {
-    name: "CenterLayout",
+    name: "CenterLayout"
 };
 </script>

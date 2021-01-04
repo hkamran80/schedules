@@ -21,6 +21,6 @@ import CenterLayout from "@/components/CenterLayout";
 
 export default {
     name: "NotFound",
-    components: { CenterLayout },
+    components: { CenterLayout }
 };
 </script>
