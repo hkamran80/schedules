@@ -3,10 +3,15 @@
         <v-row no-gutters>
             <v-col align-self="center" justify="center">
                 <h1 color="primary">
-                    Schedules
+                    <router-link
+                        id="schedules-home-link"
+                        to="/"
+                        color="primary"
+                    >
+                        Schedules
+                    </router-link>
                 </h1>
                 <div id="nav_links">
-                    <router-link to="/" color="primary">Home</router-link> |
                     <span>
                         <router-link to="/schedule/ca-auhsd-hss">
                             Acalanes High School
@@ -29,19 +34,21 @@
                 <span>{{ current_date }}</span> -
                 <span>{{ current_time }}</span>
 
-                <v-btn icon id="settings_icon" @click.stop="settings = true">
-                    <v-icon>
-                        mdi-settings-outline
-                    </v-icon>
+                <v-btn
+                    icon
+                    id="settings_icon"
+                    @click.stop="settings = true"
+                    aria-label="Settings"
+                    title="Settings"
+                >
+                    <v-icon> mdi-cog-outline </v-icon>
                 </v-btn>
             </v-col>
         </v-row>
 
         <v-dialog v-model="settings" scrollable max-width="500">
             <v-card>
-                <v-card-title class="headline">
-                    Preferences
-                </v-card-title>
+                <v-card-title class="headline"> Preferences </v-card-title>
 
                 <v-card-text>
                     <v-subheader>General</v-subheader>
@@ -50,13 +57,6 @@
                         label="Dark Theme"
                         inset
                     ></v-switch>
-                    <!--<v-switch
-                        v-model="toggle_tfht"
-                        :label="
-                            `Twenty-four Hour Time (${this.$twenty_four_hour_time})`
-                        "
-                        inset
-                    ></v-switch>-->
                     <v-switch
                         v-model="toggle_tfht"
                         label="Twenty-four Hour Time"
@@ -350,6 +350,7 @@ a {
 
 .navigation a {
     font-weight: bold;
+    text-decoration: none;
     color: var(--inactive-link-color);
 }
 

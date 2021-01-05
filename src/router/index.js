@@ -15,6 +15,19 @@ const routes = [
         path: "/schedule/:id",
         name: "schedule",
         component: Schedule
+    },
+    {
+        path: "/notfound",
+        name: "NotFound",
+        component: () =>
+            import(/* webpackChuckName: "notfound" */ "../views/NotFound.vue")
+    },
+    {
+        path: "*",
+        redirect: from => ({
+            name: "NotFound",
+            query: { path: window.location.origin + from.path }
+        })
     }
 ];
 
