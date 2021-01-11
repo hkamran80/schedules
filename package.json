@@ -9,8 +9,6 @@
     "serve:mock": "vue-cli-service build; serve -s dist -l 8090 --ssl-cert /Users/hkamran/Desktop/Desktop/Projects/Sites/certificates/server.crt --ssl-key /Users/hkamran/Desktop/Desktop/Projects/Sites/certificates/server.key"
   },
   "dependencies": {
-    "@mdi/font": "^5.8.55",
-    "clear-cache": "^1.0.1",
     "core-js": "^3.8.2",
     "register-service-worker": "^1.7.2",
     "roboto-fontface": "*",

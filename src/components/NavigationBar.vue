@@ -3,7 +3,9 @@
         <v-row id="navigation" no-gutters>
             <v-col align-self="center" justify="center" md="8" cols="12">
                 <router-link to="/">
-                    <h1 color="primary">Schedules</h1>
+                    <h1 color="primary">
+                        Schedules <span v-if="$beta_mode">(beta)</span>
+                    </h1>
                 </router-link>
             </v-col>
             <v-col
@@ -58,55 +60,6 @@
                         inset
                         @click="toggle_theme"
                     />
-                    <!-- TODO: Fix 24-hour time switch -->
-                    <!--<v-switch
-                        label="24-Hour Time"
-                        v-model="$twenty_four_hour_time"
-                        readonly
-                        inset
-                        @click="toggle_twenty_four_hour_time"
-                    />
-
-                    <v-divider />
-
-                    <v-subheader>Notifications</v-subheader>
-                    <v-switch
-                        label="One Hour Notifications"
-                        v-model="$allow_one_hour_notification"
-                        readonly
-                        inset
-                        @click="toggle_one_hour"
-                    ></v-switch>
-                    <v-switch
-                        v-model="toggle_thmn"
-                        label="Thirty Minute Notifications"
-                        inset
-                    ></v-switch>
-                    <v-switch
-                        v-model="toggle_fimn"
-                        label="Fifteen Minute Notifications"
-                        inset
-                    ></v-switch>
-                    <v-switch
-                        v-model="toggle_tmn"
-                        label="Ten Minute Notifications"
-                        inset
-                    ></v-switch>
-                    <v-switch
-                        v-model="toggle_fmn"
-                        label="Five Minute Notifications"
-                        inset
-                    ></v-switch>
-                    <v-switch
-                        v-model="toggle_omn"
-                        label="One Minute Notifications"
-                        inset
-                    ></v-switch>
-                    <v-switch
-                        v-model="toggle_thsn"
-                        label="Thirty Second Notifications"
-                        inset
-                    ></v-switch>-->
                 </v-card-text>
             </v-card>
         </v-dialog>
@@ -149,22 +102,6 @@ export default {
             localStorage.setItem(
                 "dark_theme",
                 this.$vuetify.theme.dark.toString()
-            );
-        },
-        toggle_twenty_four_hour_time: function() {
-            this.$twenty_four_hour_time = !this.$twenty_four_hour_time;
-            console.log(this.$twenty_four_hour_time);
-            localStorage.setItem(
-                "twenty_four_hour_time",
-                this.$twenty_four_hour_time.toString()
-            );
-        },
-        toggle_one_hour: function() {
-            this.$allow_one_hour_notification = !this
-                .$allow_one_hour_notification;
-            localStorage.setItem(
-                "allow_one_hour",
-                this.$allow_one_hour_notification.toString()
             );
         }
     }
