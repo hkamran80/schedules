@@ -33,12 +33,38 @@ export default {
     name: "App",
     data: () => ({
         debug: false,
-        schedules: schedules
+        schedules: schedules,
+        base_document_title: "Schedules"
     }),
     components: {
         NavigationBar
     },
-    mixins: [update]
+    mixins: [update],
+    created() {
+        if (this.$beta_mode) {
+            this.base_document_title = "Schedules (beta)";
+        } else if (this.$dev_mode) {
+            this.base_document_title = "Schedules (dev)";
+        }
+    },
+    watch: {
+        $route(to) {
+            if (to.name === "Home") {
+                document.title = this.base_document_title;
+            } else if (
+                to.name === "Schedule" &&
+                typeof this.schedules[to.params.id] !== "undefined"
+            ) {
+                document.title = `${this.base_document_title} | ${
+                    this.schedules[to.params.id].name
+                }`;
+            } else if (to.name === "NotFound") {
+                document.title = `${this.base_document_title} | Page Not Found`;
+            } else {
+                document.title = this.base_document_title;
+            }
+        }
+    }
 };
 </script>
 

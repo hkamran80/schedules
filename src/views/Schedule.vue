@@ -59,10 +59,20 @@
             <v-card class="mx-auto">
                 <v-card-title>
                     <v-row>
-                        <v-col class="text-left">
+                        <v-col>
                             Edit Period Names
                         </v-col>
                         <v-col cols="4" class="text-right">
+                            <v-btn icon @click="pn_import.dialog = true">
+                                <v-icon color="primary">
+                                    mdi-calendar-import
+                                </v-icon>
+                            </v-btn>
+                            <v-btn icon @click="pn_export_dialog = true">
+                                <v-icon color="primary">
+                                    mdi-calendar-export
+                                </v-icon>
+                            </v-btn>
                             <v-btn icon @click="save_period_names">
                                 <v-icon color="primary">
                                     mdi-content-save-outline
@@ -74,7 +84,7 @@
                         </v-col>
                     </v-row>
                 </v-card-title>
-                <v-card-text class="text-left">
+                <v-card-text>
                     <v-progress-linear
                         color="primary lighten-1"
                         background-color="primary lighten-4"
@@ -91,6 +101,75 @@
                             outlined
                         />
                     </div>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
+
+        <v-dialog v-model="pn_export_dialog" width="750">
+            <v-card class="mx-auto">
+                <v-card-title>
+                    <v-row>
+                        <v-col>
+                            Export Period Names
+                        </v-col>
+                        <v-col cols="4" class="text-right">
+                            <v-btn icon @click="copy_epn_text">
+                                <v-icon color="primary">
+                                    mdi-content-copy
+                                </v-icon>
+                            </v-btn>
+                            <v-btn icon @click="pn_export_dialog = false">
+                                <v-icon color="primary">mdi-close</v-icon>
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </v-card-title>
+                <v-card-text>
+                    <v-textarea
+                        id="epn_string"
+                        v-model="epn_string"
+                        rows="8"
+                        readonly
+                        outlined
+                        label="Period Names String"
+                    />
+                </v-card-text>
+            </v-card>
+        </v-dialog>
+
+        <v-dialog v-model="pn_import.dialog" width="750">
+            <v-card class="mx-auto">
+                <v-card-title>
+                    <v-row>
+                        <v-col>
+                            Import Period Names
+                        </v-col>
+                        <v-col cols="4" class="text-right">
+                            <v-btn
+                                icon
+                                @click="import_pn_string"
+                                :disabled="
+                                    pn_import.string === null ||
+                                        pn_import.string === ''
+                                "
+                            >
+                                <v-icon color="primary">
+                                    mdi-calendar-import
+                                </v-icon>
+                            </v-btn>
+                            <v-btn icon @click="pn_import.dialog = false">
+                                <v-icon color="primary">mdi-close</v-icon>
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </v-card-title>
+                <v-card-text>
+                    <v-textarea
+                        v-model="pn_import.string"
+                        rows="8"
+                        outlined
+                        label="Period Names String"
+                    />
                 </v-card-text>
             </v-card>
         </v-dialog>
@@ -148,6 +227,11 @@ export default {
             pn_sch_id: "",
             period_names: {},
             edit_dialog: false,
+            pn_import: {
+                dialog: false,
+                string: null
+            },
+            pn_export_dialog: false,
 
             // Notifications
             notifications_supported: false,
@@ -177,8 +261,70 @@ export default {
         clearInterval(this.main_interval);
         this.main_interval = 0;
     },
+    computed: {
+        epn_string: function() {
+            return JSON.stringify(this.period_names);
+        }
+    },
     methods: {
-        dev: function() {},
+        import_pn_string: function() {
+            try {
+                let pn_import_string = JSON.parse(this.pn_import.string);
+
+                this.get_period_names();
+                let pn_keys = Object.keys(this.period_names),
+                    pn_match;
+
+                Object.keys(pn_import_string).forEach(key => {
+                    if (pn_match !== false) {
+                        if (pn_keys.indexOf(key) !== -1) {
+                            pn_match = true;
+                        } else {
+                            pn_match = false;
+                        }
+                    }
+                });
+
+                if (pn_match) {
+                    this.period_names = pn_import_string;
+                    localStorage.setItem(
+                        `schedule.${this.$route.params.id}`,
+                        JSON.stringify(pn_import_string)
+                    );
+
+                    this.pn_import.string = null;
+                    this.pn_import.dialog = false;
+                    this.edit_dialog = false;
+
+                    this.show_toast(
+                        "Successfully imported period names!",
+                        "success"
+                    );
+                } else {
+                    this.show_toast(
+                        "Key match failed. Please enter the correct string that matches this schedule's period name keys.",
+                        "error"
+                    );
+                }
+            } catch (e) {
+                this.show_toast(
+                    "Unable to import period names. An error occurred when parsing. Try again.",
+                    "error"
+                );
+            }
+        },
+        copy_epn_text: function() {
+            let epn_element = document.getElementById("epn_string");
+            epn_element.select();
+            document.execCommand("copy");
+
+            this.show_toast("Copied period names to the clipboard", "info");
+
+            this.pn_export_dialog = false;
+        },
+        dev: function() {
+            console.debug("Development function called");
+        },
         check_for_custom_period_name: function(period_name) {
             this.get_period_names();
 
@@ -464,7 +610,7 @@ export default {
         },
         get_current_period: function() {
             var current_period;
-            if (this.schedules[this.$route.params.id] != undefined) {
+            if (this.schedules[this.$route.params.id] !== undefined) {
                 var day_schedule = JSON.parse(
                         this.schedules[this.$route.params.id].schedule
                     )[this.current_day],
@@ -490,6 +636,11 @@ export default {
                 if (!current_period) {
                     this.current_period_raw = ["No Periods Today", ""];
                 }
+
+                this.$router.push({
+                    name: "NotFound",
+                    query: { path: window.location.origin + this.$route.path }
+                });
             }
         },
         get_next_period: function() {
@@ -628,8 +779,11 @@ export default {
                 case "info":
                     this.$toast.info(content, toast_options);
                     break;
+                case "error":
+                    this.$toast.error(content, toast_options);
+                    break;
                 default:
-                    this.$toast.info(content, toast_options);
+                    this.$toast(content, toast_options);
             }
         },
         notification_permissions_callback: function(result) {
@@ -658,7 +812,6 @@ export default {
 div.v-card {
     padding: 0 5px;
     margin: 10px 0;
-    text-align: center;
     overflow-wrap: break-word;
 }
 </style>

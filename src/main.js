@@ -9,6 +9,7 @@ import "vue-toastification/dist/index.css";
 
 Vue.config.productionTip = false;
 
+Vue.prototype.$dev_mode = process.env.NODE_ENV === "development";
 Vue.prototype.$beta_mode = process.env.VUE_APP_BETA_MODE === "true";
 
 Vue.prototype.$twenty_four_hour_time = false;
