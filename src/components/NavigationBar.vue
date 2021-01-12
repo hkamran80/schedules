@@ -5,6 +5,7 @@
                 <router-link to="/">
                     <h1 color="primary">
                         Schedules <span v-if="$beta_mode">(beta)</span>
+                        <span v-if="$dev_mode">(dev)</span>
                     </h1>
                 </router-link>
             </v-col>
@@ -28,41 +29,16 @@
                 <v-btn
                     icon
                     class="navigation-item"
-                    title="Open Preferences"
-                    aria-label="Open Preferences"
-                    @click="settings = true"
+                    title="Toggle Theme"
+                    aria-label="Toggle Theme"
+                    @click="toggle_theme"
                 >
                     <v-icon color="primary">
-                        mdi-cog-outline
+                        mdi-theme-light-dark
                     </v-icon>
                 </v-btn>
             </v-col>
         </v-row>
-
-        <v-dialog v-model="settings" scrollable max-width="500">
-            <v-card>
-                <v-card-title class="headline">
-                    <v-row no-gutters>
-                        <v-col> Preferences </v-col>
-                        <v-col cols="2" class="text-right">
-                            <v-btn icon @click="settings = false">
-                                <v-icon color="primary">mdi-close</v-icon>
-                            </v-btn>
-                        </v-col>
-                    </v-row>
-                </v-card-title>
-
-                <v-card-text>
-                    <v-switch
-                        label="Dark Theme"
-                        v-model="$vuetify.theme.dark"
-                        readonly
-                        inset
-                        @click="toggle_theme"
-                    />
-                </v-card-text>
-            </v-card>
-        </v-dialog>
     </div>
 </template>
 
@@ -71,11 +47,6 @@ export default {
     name: "NavigationBar",
     props: {
         schedules: Object
-    },
-    data: function() {
-        return {
-            settings: false
-        };
     },
     mounted() {
         const theme = localStorage.getItem("dark_theme");

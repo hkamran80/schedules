@@ -58,8 +58,8 @@
         <v-dialog v-model="edit_dialog" width="750" scrollable>
             <v-card class="mx-auto">
                 <v-card-title>
-                    <v-row>
-                        <v-col>
+                    <v-row align="center">
+                        <v-col class="text-wrap--break">
                             Edit Period Names
                         </v-col>
                         <v-col cols="4" class="text-right">
@@ -73,6 +73,7 @@
                                     mdi-calendar-export
                                 </v-icon>
                             </v-btn>
+
                             <v-btn icon @click="save_period_names">
                                 <v-icon color="primary">
                                     mdi-content-save-outline
@@ -108,8 +109,8 @@
         <v-dialog v-model="pn_export_dialog" width="750">
             <v-card class="mx-auto">
                 <v-card-title>
-                    <v-row>
-                        <v-col>
+                    <v-row align="center">
+                        <v-col class="text-wrap--break">
                             Export Period Names
                         </v-col>
                         <v-col cols="4" class="text-right">
@@ -140,8 +141,8 @@
         <v-dialog v-model="pn_import.dialog" width="750">
             <v-card class="mx-auto">
                 <v-card-title>
-                    <v-row>
-                        <v-col>
+                    <v-row align="center">
+                        <v-col class="text-wrap--break">
                             Import Period Names
                         </v-col>
                         <v-col cols="4" class="text-right">
@@ -347,6 +348,7 @@ export default {
                 JSON.stringify(this.period_names)
             );
             this.edit_dialog = false;
+            this.show_toast("Saved period names!", "success");
         },
         get_period_names: function() {
             if (
