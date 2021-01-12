@@ -8,12 +8,12 @@ Vue.use(VueRouter);
 const routes = [
     {
         path: "/",
-        name: "home",
+        name: "Home",
         component: Home
     },
     {
         path: "/schedule/:id",
-        name: "schedule",
+        name: "Schedule",
         component: Schedule
     },
     {

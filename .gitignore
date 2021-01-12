@@ -24,6 +24,7 @@ pnpm-debug.log*
 .dccache
 
 changes/
+changes.txt
 audits/
 
 tmp*

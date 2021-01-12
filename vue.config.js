@@ -4,7 +4,7 @@ module.exports = {
         config.plugin("html").tap(args => {
             args[0].title =
                 process.env.NODE_ENV === "development"
-                    ? "Schedules (beta)"
+                    ? "Schedules (dev)"
                     : "Schedules";
             return args;
         });
@@ -12,16 +12,16 @@ module.exports = {
     pwa: {
         name:
             process.env.NODE_ENV === "development"
-                ? "Schedules (beta)"
+                ? "Schedules (dev)"
                 : "Schedules",
-        themeColor: "#2c3e50",
+        themeColor: "#C2185B",
         workboxPluginMode: "InjectManifest",
         workboxOptions: {
             swSrc: "src/service-worker.js",
             exclude: [/\.map$/, /_redirects/]
         },
         manifestOptions: {
-            backgroundColor: "#2c3e50"
+            backgroundColor: "#C2185B"
         }
     }
 };
