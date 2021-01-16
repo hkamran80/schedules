@@ -6,7 +6,8 @@
                 <router-view :schedules="schedules" />
 
                 <v-snackbar bottom right :value="updateExists" :timeout="-1">
-                    An update is available for Schedules!
+                    An update is available for Schedules! Check out what's new
+                    on the homepage!
 
                     <template v-slot:action="{ attrs }">
                         <v-btn

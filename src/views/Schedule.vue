@@ -15,6 +15,9 @@
                     />
                 </v-col>
                 <v-col cols="3" class="text-right">
+                    <v-btn icon color="primary" @click="timetable = true">
+                        <v-icon>mdi-calendar-outline</v-icon>
+                    </v-btn>
                     <v-btn icon color="primary" @click="open_edit_dialog">
                         <v-icon>mdi-calendar-edit</v-icon>
                     </v-btn>
@@ -54,6 +57,25 @@
                 />
             </v-card-title>
         </v-card>
+
+        <v-dialog v-model="timetable" width="750" scrollable>
+            <v-card class="mx-auto">
+                <v-calendar
+                    color="primary"
+                    type="day"
+                    :events="schedule_periods"
+                    :first-time="
+                        this.schedule[this.current_day][
+                            Object.keys(this.schedule[this.current_day])[0]
+                        ][0].split('-')[0] + '00'
+                    "
+                    :short-weekdays="false"
+                    :event-ripple="false"
+                    :interval-count="calendar_interval_count"
+                    :interval-height="100"
+                />
+            </v-card>
+        </v-dialog>
 
         <v-dialog v-model="edit_dialog" width="750" scrollable>
             <v-card class="mx-auto">
@@ -183,7 +205,9 @@
                     {{ current_period_raw }} || {{ next_period_raw }}
                 </v-card-text>
                 <v-divider />
-                <v-card-text v-text="period_names" />
+                <v-card-text v-text="schedule_periods" />
+                <v-divider />
+                <v-card-text v-text="calendar_end_time" />
             </v-card>
             <v-btn text block @click="dev"> Development Function </v-btn>
         </div>
@@ -234,6 +258,9 @@ export default {
             },
             pn_export_dialog: false,
 
+            // Timetable
+            timetable: false,
+
             // Notifications
             notifications_supported: false,
             one_hour_notification: false,
@@ -263,6 +290,58 @@ export default {
         this.main_interval = 0;
     },
     computed: {
+        schedule: function() {
+            return JSON.parse(this.schedules[this.$route.params.id].schedule);
+        },
+        color: function() {
+            return this.schedules[this.$route.params.id].color;
+        },
+        calendar_interval_count: function() {
+            if (typeof this.schedule[this.current_day] !== "undefined") {
+                let end = this.schedule[this.current_day][
+                        Object.keys(this.schedule[this.current_day]).slice(
+                            -1
+                        )[0]
+                    ][1].split("-")[0],
+                    start = this.schedule[this.current_day][
+                        Object.keys(this.schedule[this.current_day])[0]
+                    ][0].split("-")[0];
+
+                return Number(end) - Number(start);
+            } else {
+                return null;
+            }
+        },
+        schedule_periods: function() {
+            let periods = [];
+            if (typeof this.schedule[this.current_day] !== "undefined") {
+                let day_schedule = this.schedule[this.current_day],
+                    d = new Date(),
+                    date = `${d.getFullYear()}-${this.pad_number(
+                        Number(d.getMonth()) + 1
+                    )}-${this.pad_number(d.getDate())}`;
+
+                Object.keys(day_schedule).forEach(period =>
+                    periods.push({
+                        name: period,
+                        start: `${date} ${day_schedule[period][0].replaceAll(
+                            "-",
+                            ":"
+                        )}`,
+                        end: `${date} ${day_schedule[period][1].replaceAll(
+                            "-",
+                            ":"
+                        )}`,
+                        color:
+                            period.indexOf("Passing") === -1
+                                ? this.color
+                                : "primary"
+                    })
+                );
+            }
+
+            return periods;
+        },
         epn_string: function() {
             return JSON.stringify(this.period_names);
         }
@@ -369,12 +448,8 @@ export default {
                 } else {
                     this.period_names = {};
 
-                    let schedule = JSON.parse(
-                        this.schedules[this.$route.params.id].schedule
-                    );
-
-                    Object.keys(schedule).forEach(day =>
-                        Object.keys(schedule[day]).forEach(
+                    Object.keys(this.schedule).forEach(day =>
+                        Object.keys(this.schedule[day]).forEach(
                             pn => (this.period_names[pn] = "")
                         )
                     );
@@ -613,9 +688,7 @@ export default {
         get_current_period: function() {
             var current_period;
             if (this.schedules[this.$route.params.id] !== undefined) {
-                var day_schedule = JSON.parse(
-                        this.schedules[this.$route.params.id].schedule
-                    )[this.current_day],
+                var day_schedule = this.schedule[this.current_day],
                     split_time = this.current_split_time.split("-").join("");
                 //if (this.developer_mode) console.debug(day_schedule);
                 for (var _period in day_schedule) {
@@ -648,9 +721,7 @@ export default {
         get_next_period: function() {
             var next_period;
             if (this.schedules[this.$route.params.id] != undefined) {
-                var day_schedule = JSON.parse(
-                    this.schedules[this.$route.params.id].schedule
-                )[this.current_day];
+                var day_schedule = this.schedule[this.current_day];
                 for (var _period in day_schedule) {
                     var period = day_schedule[_period],
                         period_start = period[0].split("-").join("");
@@ -817,3 +888,9 @@ div.v-card {
     overflow-wrap: break-word;
 }
 </style>
+
+<!--
+<style lang="sass" scoped>
+$calendar-daily-weekday-padding: 5px 0px 0px 0px
+</style>
+-->

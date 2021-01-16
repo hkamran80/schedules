@@ -11,26 +11,54 @@
             :to="`/schedule/${id}`"
             :title="schedule.name"
             :aria-label="schedule.name"
-            class="mx-auto schedule-card"
+            class="mx-auto schedule-card text-wrap--break"
             dark
             outlined
         >
             <v-card-title>
                 <v-icon medium left v-text="schedule.icon" />
-                <span class="title font-weight-light" v-text="schedule.name" />
+                <span v-text="schedule.name" />
             </v-card-title>
         </v-card>
+
+        <v-divider class="my-5" />
+
+        <v-card
+            class="mx-auto schedule-card text-wrap--break"
+            outlined
+            @click="whats_new = true"
+        >
+            <v-card-title>
+                What's New
+            </v-card-title>
+        </v-card>
+
+        <v-dialog v-model="whats_new" width="750" scrollable>
+            <whats-new @close="close_dialog" />
+        </v-dialog>
     </center-layout>
 </template>
 
 <script>
 import CenterLayout from "../components/CenterLayout.vue";
+import WhatsNew from "../components/WhatsNew.vue";
+
 export default {
     name: "Home",
     props: {
         schedules: Object
     },
-    components: { CenterLayout }
+    components: { CenterLayout, WhatsNew },
+    data: function() {
+        return {
+            whats_new: false
+        };
+    },
+    methods: {
+        close_dialog: function() {
+            this.whats_new = false;
+        }
+    }
 };
 </script>
 
