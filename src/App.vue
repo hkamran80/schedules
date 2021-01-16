@@ -84,7 +84,6 @@ a {
 
 /* Global Classes */
 .text-wrap--break {
-    display: inline-block;
     word-break: break-word;
     word-wrap: break-word;
 }
