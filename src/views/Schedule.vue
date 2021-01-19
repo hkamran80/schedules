@@ -63,7 +63,7 @@
             </v-card-title>
         </v-card>
 
-        <v-dialog v-model="timetable" width="750" scrollable>
+        <v-dialog v-model="timetable" width="1000" scrollable>
             <v-card class="mx-auto">
                 <v-calendar
                     color="primary"
@@ -72,8 +72,10 @@
                     :first-time="calendar_first_time"
                     :short-weekdays="false"
                     :event-ripple="false"
+                    :event-height="60"
+                    :event-margin-bottom="5"
                     :interval-count="calendar_interval_count"
-                    :interval-height="100"
+                    :interval-height="150"
                 />
             </v-card>
         </v-dialog>
@@ -201,6 +203,8 @@
         <div v-if="developer_mode">
             <v-divider />
             <v-card class="mx-auto" outlined>
+                <v-card-text v-text="$app_version" />
+                <v-divider />
                 <v-card-text>
                     {{ current_day }} - {{ current_split_time }} ||
                     {{ current_period_raw }} || {{ next_period_raw }}
@@ -306,16 +310,25 @@ export default {
         },
         calendar_interval_count: function() {
             if (typeof this.schedule[this.current_day] !== "undefined") {
-                let end = this.schedule[this.current_day][
+                let end_times = this.schedule[this.current_day][
                         Object.keys(this.schedule[this.current_day]).slice(
                             -1
                         )[0]
-                    ][1].split("-")[0],
-                    start = this.schedule[this.current_day][
-                        Object.keys(this.schedule[this.current_day])[0]
-                    ][0].split("-")[0];
+                    ][1].split("-"),
+                    start_time_hour = Number(
+                        this.schedule[this.current_day][
+                            Object.keys(this.schedule[this.current_day])[0]
+                        ][0].split("-")[0]
+                    ),
+                    end_time_hour;
 
-                return Number(end) - Number(start);
+                if (Number(end_times[1]) !== 0) {
+                    end_time_hour = Number(end_times[0]) + 1;
+                } else {
+                    end_time_hour = Number(end_times[0]);
+                }
+
+                return end_time_hour - start_time_hour;
             } else {
                 return null;
             }

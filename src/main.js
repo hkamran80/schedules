@@ -11,6 +11,7 @@ Vue.config.productionTip = false;
 
 Vue.prototype.$dev_mode = process.env.NODE_ENV === "development";
 Vue.prototype.$beta_mode = process.env.VUE_APP_BETA_MODE === "true";
+Vue.prototype.$app_version = require("../package.json").version;
 
 Vue.use(VueNativeNotification, {
     requestOnNotify: true
