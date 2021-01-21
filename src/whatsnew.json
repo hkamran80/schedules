@@ -5,6 +5,8 @@
         "Improve next period calculation",
         "Update custom period name display",
         "Rename beta to edge",
+        "Change developer mode to debug mode",
+        "Add toggle for debug mode",
         "Add anonymous analytics through Umami (privacy policy coming soon!)"
     ]
 }
