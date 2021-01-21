@@ -2,6 +2,7 @@
     "2.2.0 (beta 4)": [
         "Added a timetable view to the schedule view",
         "Added this modal for informing users what's new in Schedules",
-        "Improve next period calculation"
+        "Improve next period calculation",
+        "Update custom period name display"
     ]
 }

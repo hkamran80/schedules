@@ -351,7 +351,7 @@ export default {
 
                 Object.keys(day_schedule).forEach(period =>
                     periods.push({
-                        name: period,
+                        name: this.check_for_custom_period_name(period, true),
                         start: `${date} ${day_schedule[period][0].replaceAll(
                             "-",
                             ":"
@@ -434,7 +434,10 @@ export default {
             console.debug("Development function called");
             console.debug(this.schedule_periods);
         },
-        check_for_custom_period_name: function(period_name) {
+        check_for_custom_period_name: function(
+            period_name,
+            with_period = false
+        ) {
             this.get_period_names();
 
             if (
@@ -443,7 +446,9 @@ export default {
             ) {
                 return period_name;
             } else {
-                return this.period_names[period_name];
+                return with_period
+                    ? `${this.period_names[period_name]} (${period_name})`
+                    : this.period_names[period_name];
             }
         },
         open_edit_dialog: function() {
@@ -494,7 +499,8 @@ export default {
                 this.current_period_raw[0] !== "No Periods Today"
             ) {
                 this.current_period = this.check_for_custom_period_name(
-                    this.current_period_raw[0]
+                    this.current_period_raw[0],
+                    true
                 );
 
                 if (this.current_period !== this.previous_period) {
