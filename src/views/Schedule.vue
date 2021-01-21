@@ -752,10 +752,7 @@ export default {
                         period_start = period[0].split("-").join("");
 
                     let previous_period_end;
-                    if (
-                        this.current_period_raw[1][1].split("-").slice(2, 3) !==
-                        "59"
-                    ) {
+                    if (this.current_period_raw[1][1].split("-")[2] !== "59") {
                         previous_period_end = (
                             Number(
                                 this.current_period_raw[1][1]
@@ -764,10 +761,10 @@ export default {
                             ) + 1
                         ).toString();
                     } else {
-                        let _end = this.current_period_raw[1][1].split("-"),
-                            hours = Number(_end.slice(0, 1)),
-                            minutes = Number(_end.slice(1, 2)),
-                            seconds = Number(_end.slice(2, 3));
+                        let end = this.current_period_raw[1][1].split("-"),
+                            hours = Number(end[0]),
+                            minutes = Number(end[1]),
+                            seconds = Number(end[2]);
 
                         if (seconds >= 59) {
                             minutes += 1;
@@ -809,7 +806,8 @@ export default {
             this.current_day = d
                 .toLocaleDateString("en-us", { weekday: "short" })
                 .toUpperCase();
-            this.current_time =
+
+            /*this.current_time =
                 this.pad_number(d.getHours().toString()) +
                 this.pad_number(d.getMinutes().toString());
             this.current_split_time =
@@ -817,7 +815,10 @@ export default {
                 "-" +
                 this.pad_number(d.getMinutes().toString()) +
                 "-" +
-                this.pad_number(d.getSeconds().toString());
+                this.pad_number(d.getSeconds().toString());*/
+
+            this.current_time = "1252";
+            this.current_split_time = "12-52-33";
 
             this.current_pp.day = d.toLocaleDateString("en-us", {
                 weekday: "long"
