@@ -42,10 +42,29 @@ export default {
     },
     mixins: [update],
     created() {
-        if (this.$beta_mode) {
-            this.base_document_title = "Schedules (beta)";
+        if (this.$edge_mode) {
+            this.base_document_title = "Schedules (edge)";
         } else if (this.$dev_mode) {
             this.base_document_title = "Schedules (dev)";
+        }
+
+        if (!this.$dev_mode) {
+            let umami_script = document.createElement("script"),
+                script_tag = document.getElementsByTagName("script")[0];
+
+            umami_script.async = true;
+            umami_script.defer = true;
+            umami_script.src = "https://umami-sepia.vercel.app/umami.js";
+            umami_script.setAttribute(
+                "data-website-id",
+                this.$edge_mode
+                    ? "377298e5-bec6-48f0-a2f1-7070f42f12ca"
+                    : "ab9840ad-16a1-4b04-b87f-e5e396f466b4"
+            );
+
+            script_tag.parentNode.insertBefore(umami_script, script_tag);
+
+            console.log("Activated Umami anonymous analytics");
         }
     },
     watch: {

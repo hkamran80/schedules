@@ -4,7 +4,7 @@
             <v-col align-self="center" justify="center" md="8" cols="12">
                 <router-link to="/">
                     <h1 color="primary">
-                        Schedules <span v-if="$beta_mode">(beta)</span>
+                        Schedules <span v-if="$edge_mode">(edge)</span>
                         <span v-if="$dev_mode">(dev)</span>
                     </h1>
                 </router-link>
@@ -31,9 +31,10 @@
                     class="navigation-item"
                     title="Toggle Theme"
                     aria-label="Toggle Theme"
+                    color="primary"
                     @click="toggle_theme"
                 >
-                    <v-icon color="primary">
+                    <v-icon>
                         mdi-theme-light-dark
                     </v-icon>
                 </v-btn>

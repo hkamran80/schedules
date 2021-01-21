@@ -18,6 +18,16 @@
                     <v-btn
                         icon
                         color="primary"
+                        v-if="$edge_mode || $dev_mode"
+                        @click="toggle_debug_mode"
+                    >
+                        <v-icon>
+                            mdi-console-line
+                        </v-icon>
+                    </v-btn>
+                    <v-btn
+                        icon
+                        color="primary"
                         @click="timetable = true"
                         :disabled="schedule_periods.length === 0"
                     >
@@ -200,7 +210,7 @@
             </v-card>
         </v-dialog>
 
-        <div v-if="developer_mode">
+        <div v-if="debug_mode">
             <v-divider />
             <v-card class="mx-auto" outlined>
                 <v-card-text v-text="$app_version" />
@@ -277,7 +287,7 @@ export default {
             },
 
             main_interval: null,
-            developer_mode: this.$route.query.dev === "true"
+            debug_mode: this.$route.query.debug === "true"
         };
     },
     created() {
@@ -375,6 +385,22 @@ export default {
         }
     },
     methods: {
+        toggle_debug_mode: function() {
+            this.debug_mode = !this.debug_mode;
+
+            if (this.debug_mode === true) {
+                this.$router.replace({
+                    name: "Schedule",
+                    params: { id: this.$route.params.id },
+                    query: { debug: true }
+                });
+            } else {
+                this.$router.replace({
+                    name: "Schedule",
+                    params: { id: this.$route.params.id }
+                });
+            }
+        },
         import_pn_string: function() {
             try {
                 let pn_import_string = JSON.parse(this.pn_import.string);
