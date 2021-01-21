@@ -807,7 +807,7 @@ export default {
                 .toLocaleDateString("en-us", { weekday: "short" })
                 .toUpperCase();
 
-            /*this.current_time =
+            this.current_time =
                 this.pad_number(d.getHours().toString()) +
                 this.pad_number(d.getMinutes().toString());
             this.current_split_time =
@@ -815,10 +815,12 @@ export default {
                 "-" +
                 this.pad_number(d.getMinutes().toString()) +
                 "-" +
-                this.pad_number(d.getSeconds().toString());*/
+                this.pad_number(d.getSeconds().toString());
 
+            /*
             this.current_time = "1252";
             this.current_split_time = "12-52-33";
+            */
 
             this.current_pp.day = d.toLocaleDateString("en-us", {
                 weekday: "long"
