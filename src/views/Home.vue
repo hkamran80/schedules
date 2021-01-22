@@ -26,37 +26,55 @@
         <v-card
             class="mx-auto schedule-card text-wrap--break"
             outlined
-            @click="whats_new = true"
+            @click="dialogs.whats_new = true"
         >
             <v-card-title>
                 What's New
             </v-card-title>
         </v-card>
 
-        <v-dialog v-model="whats_new" width="750" scrollable>
+        <v-card
+            class="mx-auto schedule-card text-wrap--break"
+            outlined
+            @click="dialogs.privacy = true"
+        >
+            <v-card-title>
+                Privacy Notice
+            </v-card-title>
+        </v-card>
+
+        <v-dialog v-model="dialogs.whats_new" width="750" scrollable>
             <whats-new @close="close_dialog" />
+        </v-dialog>
+        <v-dialog v-model="dialogs.privacy" width="750" scrollable>
+            <privacy @close="close_dialog" />
         </v-dialog>
     </center-layout>
 </template>
 
 <script>
-import CenterLayout from "../components/CenterLayout.vue";
-import WhatsNew from "../components/WhatsNew.vue";
+import CenterLayout from "@/components/CenterLayout.vue";
+import WhatsNew from "@/components/WhatsNew.vue";
+import Privacy from "@/components/Privacy.vue";
 
 export default {
     name: "Home",
     props: {
         schedules: Object
     },
-    components: { CenterLayout, WhatsNew },
+    components: { CenterLayout, WhatsNew, Privacy },
     data: function() {
         return {
-            whats_new: false
+            dialogs: {
+                whats_new: false,
+                privacy: false
+            }
         };
     },
     methods: {
         close_dialog: function() {
-            this.whats_new = false;
+            this.dialogs.whats_new = false;
+            this.dialogs.privacy = false;
         }
     }
 };

@@ -1,0 +1,1 @@
+Please note, Schedules uses [Umami](https://umami.is), an open-source platform for anonymous analytics, which captures pages viewed, buttons clicked, device type (desktop, laptop, or mobile), browser, operating system, and country of origin.

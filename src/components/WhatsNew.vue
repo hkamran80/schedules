@@ -13,7 +13,7 @@
             </v-row>
         </v-card-title>
         <v-card-subtitle>
-            Starting from 2.2.0
+            Current Version: <span v-text="$app_version" />
         </v-card-subtitle>
         <v-card-text>
             <v-expansion-panels accordion>

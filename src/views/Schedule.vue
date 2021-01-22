@@ -73,7 +73,7 @@
             </v-card-title>
         </v-card>
 
-        <v-dialog v-model="timetable" width="1000" scrollable>
+        <v-dialog v-model="timetable" width="750" scrollable>
             <v-card class="mx-auto">
                 <v-calendar
                     color="primary"
@@ -216,13 +216,20 @@
                 <v-card-text v-text="$app_version" />
                 <v-divider />
                 <v-card-text>
-                    {{ current_day }} - {{ current_split_time }} ||
-                    {{ current_period_raw }} || {{ next_period_raw }}
+                    {{ current_day }} - {{ current_split_time }}
                 </v-card-text>
                 <v-divider />
-                <v-card-text v-text="schedule_periods" />
+                <v-card-text>
+                    {{ current_period_raw }}
+                </v-card-text>
+                <v-divider />
+                <v-card-text>
+                    {{ next_period_raw }}
+                </v-card-text>
             </v-card>
-            <v-btn text block @click="dev"> Development Function </v-btn>
+            <v-btn text block @click="debug_function">
+                Debug Function
+            </v-btn>
         </div>
     </center-layout>
 </template>
@@ -456,9 +463,8 @@ export default {
 
             this.pn_export_dialog = false;
         },
-        dev: function() {
+        debug_function: function() {
             console.debug("Development function called");
-            console.debug(this.schedule_periods);
         },
         check_for_custom_period_name: function(
             period_name,
