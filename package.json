@@ -6,7 +6,7 @@
         "serve": "vue-cli-service serve",
         "build": "vue-cli-service build",
         "lint": "vue-cli-service lint",
-        "serve:mock": "vue-cli-service build; serve -s dist -l 8090 --ssl-cert /Users/hkamran/Desktop/Desktop/Projects/Sites/certificates/server.crt --ssl-key /Users/hkamran/Desktop/Desktop/Projects/Sites/certificates/server.key"
+        "serve:mock": "vue-cli-service build; serve -s dist -l 8090 --ssl-cert $SSL_CERTIFICATE_PATH --ssl-key $SSL_KEY_PATH"
     },
     "dependencies": {
         "core-js": "^3.8.2",

@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import Home from "@/views/Home.vue";
 
 Vue.use(VueRouter);
 
@@ -11,16 +11,24 @@ const routes = [
         component: Home
     },
     {
+        path: "/schedule/new",
+        name: "NewSchedule",
+        component: () =>
+            import(
+                /* webpackChunkName: "newschedule" */ "@/views/NewSchedule.vue"
+            )
+    },
+    {
         path: "/schedule/:id",
         name: "Schedule",
         component: () =>
-            import(/* webpackChuckName: "schedule" */ "../views/Schedule.vue")
+            import(/* webpackChunkName: "schedule" */ "@/views/Schedule.vue")
     },
     {
         path: "/notfound",
         name: "NotFound",
         component: () =>
-            import(/* webpackChuckName: "notfound" */ "../views/NotFound.vue")
+            import(/* webpackChunkName: "notfound" */ "@/views/NotFound.vue")
     },
     {
         path: "*",

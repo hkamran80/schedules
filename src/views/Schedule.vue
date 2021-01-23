@@ -320,7 +320,7 @@ export default {
     },
     computed: {
         schedule: function() {
-            return JSON.parse(this.schedules[this.$route.params.id].schedule);
+            return this.schedules[this.$route.params.id].schedule;
         },
         color: function() {
             return this.schedules[this.$route.params.id].color;
@@ -465,6 +465,7 @@ export default {
         },
         debug_function: function() {
             console.debug("Development function called");
+            console.log(this.schedule);
         },
         check_for_custom_period_name: function(
             period_name,

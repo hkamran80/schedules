@@ -1,5 +1,5 @@
 {
-    "2.2.0 (edge 7)": [
+    "2.2.0 (Edge-7)": [
         "Added a timetable view to the schedule view",
         "Added this modal for informing users what's new in Schedules",
         "Improve next period calculation",
@@ -9,6 +9,8 @@
         "Add toggle for debug mode",
         "Add anonymous analytics through Umami",
         "Add privacy notice for analytics",
-        "Rename beta versioning (X.X.X-beta) to use edge (X.X.X-edge)"
+        "Rename beta versioning (X.X.X-beta) to use edge (X.X.X-edge)",
+        "Switch to JSON object for the schedule in schedules.json",
+        "The beginnings of adding a new schedule in the app"
     ]
 }

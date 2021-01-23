@@ -26,6 +26,21 @@
         <v-card
             class="mx-auto schedule-card text-wrap--break"
             outlined
+            :to="{ name: 'NewSchedule' }"
+        >
+            <v-card-title>
+                <v-icon medium left>
+                    mdi-plus
+                </v-icon>
+                New Schedule (alpha)
+            </v-card-title>
+        </v-card>
+
+        <v-divider class="my-5" />
+
+        <v-card
+            class="mx-auto schedule-card text-wrap--break"
+            outlined
             @click="dialogs.whats_new = true"
         >
             <v-card-title>
@@ -54,8 +69,8 @@
 
 <script>
 import CenterLayout from "@/components/CenterLayout.vue";
-import WhatsNew from "@/components/WhatsNew.vue";
-import Privacy from "@/components/Privacy.vue";
+import WhatsNew from "@/components/dialogs/WhatsNew.vue";
+import Privacy from "@/components/dialogs/Privacy.vue";
 
 export default {
     name: "Home",
