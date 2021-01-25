@@ -63,7 +63,7 @@ export default {
     name: "Privacy",
     components: { ExpandableCard },
     methods: {
-        close_dialog: function() {
+        close_dialog: () => {
             this.$emit("close");
         }
     }

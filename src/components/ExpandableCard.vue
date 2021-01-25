@@ -31,8 +31,6 @@ export default {
             default: true
         }
     },
-    data: function() {
-        return { hidden: true };
-    }
+    data: () => ({ hidden: false })
 };
 </script>
