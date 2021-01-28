@@ -24,9 +24,10 @@
         <v-divider class="my-5" />
 
         <v-card
+            :to="{ name: 'NewSchedule' }"
             class="mx-auto schedule-card text-wrap--break"
             outlined
-            :to="{ name: 'NewSchedule' }"
+            v-if="$edge_mode || $dev_mode"
         >
             <v-card-title>
                 <v-icon medium left>
