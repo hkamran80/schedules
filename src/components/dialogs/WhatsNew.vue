@@ -6,6 +6,14 @@
                     What's New in Schedules
                 </v-col>
                 <v-col cols="2" class="text-right">
+                    <v-btn
+                        icon
+                        color="primary"
+                        href="https://github.com/hkamran80/schedules"
+                        target="_blank"
+                    >
+                        <v-icon>mdi-github</v-icon>
+                    </v-btn>
                     <v-btn icon color="primary" @click="close_dialog">
                         <v-icon>mdi-close</v-icon>
                     </v-btn>

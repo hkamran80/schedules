@@ -18,50 +18,64 @@
                 <a href="https://umami.is" target="_blank">Umami</a> for
                 tracking page views.
             </p>
-            <expandable-card title="What is Umami?" class="mb-3">
-                <div class="hk-blockquote">
-                    <p>
-                        Umami is a simple, easy to use, self-hosted web
-                        analytics solution. The goal is to provide you with a
-                        friendlier, privacy-focused alternative to Google
-                        Analytics and a free, open-sourced alternative to paid
-                        solutions. Umami collects only the metrics you care
-                        about and everything fits on a single page.
-                    </p>
-                    <p>
-                        <i>
-                            &mdash;
+            <v-expansion-panels accordion>
+                <v-expansion-panel>
+                    <v-expansion-panel-header>
+                        What is Umami?
+                    </v-expansion-panel-header>
+                    <v-expansion-panel-content>
+                        <div class="hk-blockquote">
+                            <p>
+                                Umami is a simple, easy to use, self-hosted web
+                                analytics solution. The goal is to provide you
+                                with a friendlier, privacy-focused alternative
+                                to Google Analytics and a free, open-sourced
+                                alternative to paid solutions. Umami collects
+                                only the metrics you care about and everything
+                                fits on a single page.
+                            </p>
+                            <p>
+                                <i>
+                                    &mdash;
+                                    <a
+                                        href="https://umami.is/docs/about"
+                                        target="_blank"
+                                    >
+                                        Umami
+                                    </a>
+                                </i>
+                            </p>
+                        </div>
+                    </v-expansion-panel-content>
+                </v-expansion-panel>
+
+                <v-expansion-panel>
+                    <v-expansion-panel-header>
+                        What are Umami's features?
+                    </v-expansion-panel-header>
+                    <v-expansion-panel-content>
+                        <p>
+                            Umami has many features, including a focus on
+                            privacy, ownership of data collected, and simple
+                            analytics. A full list of features is available on
+                            the
                             <a
-                                href="https://umami.is/docs/about"
+                                href="https://umami.is/docs/features"
                                 target="_blank"
                             >
-                                Umami
-                            </a>
-                        </i>
-                    </p>
-                </div>
-            </expandable-card>
-
-            <expandable-card title="What are Umami's features?">
-                <p>
-                    Umami has many features, including simple analytics, a focus
-                    on privacy, and ownership of data collected. A full list of
-                    features is available on the
-                    <a href="https://umami.is/docs/features" target="_blank">
-                        Umami website</a
-                    >.
-                </p>
-            </expandable-card>
+                                Umami website</a
+                            >.
+                        </p>
+                    </v-expansion-panel-content>
+                </v-expansion-panel>
+            </v-expansion-panels>
         </v-card-text>
     </v-card>
 </template>
 
 <script>
-import ExpandableCard from "@/components/ExpandableCard.vue";
-
 export default {
     name: "Privacy",
-    components: { ExpandableCard },
     methods: {
         close_dialog: () => {
             this.$emit("close");

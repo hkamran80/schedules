@@ -11,11 +11,11 @@ const routes = [
         component: Home
     },
     {
-        path: "/alpha/schedule/new",
+        path: "/schedule/new",
         name: "NewSchedule",
         component: () =>
             import(
-                /* webpackChunkName: "alphanewschedule" */ "@/views/NewSchedule.vue"
+                /* webpackChunkName: "newschedule" */ "@/views/NewSchedule.vue"
             )
     },
     {

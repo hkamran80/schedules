@@ -19,7 +19,7 @@
                         icon
                         color="primary"
                         v-if="$edge_mode || $dev_mode"
-                        @click="toggle_debug_mode"
+                        @click="toggle_debugMode"
                     >
                         <v-icon>
                             mdi-console-line
@@ -33,8 +33,8 @@
                     >
                         <v-icon>mdi-calendar-outline</v-icon>
                     </v-btn>
-                    <v-btn icon color="primary" @click="open_edit_dialog">
-                        <v-icon>mdi-calendar-edit</v-icon>
+                    <v-btn icon color="primary" @click="settingsDialog = true">
+                        <v-icon>mdi-cog-outline</v-icon>
                     </v-btn>
                 </v-col>
             </v-row>
@@ -98,17 +98,6 @@
                             Edit Period Names
                         </v-col>
                         <v-col cols="4" class="text-right">
-                            <v-btn icon @click="pn_import.dialog = true">
-                                <v-icon color="primary">
-                                    mdi-calendar-import
-                                </v-icon>
-                            </v-btn>
-                            <v-btn icon @click="pn_export_dialog = true">
-                                <v-icon color="primary">
-                                    mdi-calendar-export
-                                </v-icon>
-                            </v-btn>
-
                             <v-btn icon @click="save_period_names">
                                 <v-icon color="primary">
                                     mdi-content-save-outline
@@ -136,6 +125,145 @@
                             v-model="period_names[pn]"
                             outlined
                         />
+                    </div>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
+
+        <v-dialog v-model="settingsDialog" width="750" scrollable>
+            <v-card class="mx-auto">
+                <v-card-title>
+                    <v-row align="center">
+                        <v-col class="text-wrap--break">
+                            Settings
+                        </v-col>
+                        <v-col cols="4" class="text-right">
+                            <v-btn icon @click="settingsDialog = false">
+                                <v-icon color="primary">mdi-close</v-icon>
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </v-card-title>
+
+                <v-card-text>
+                    <div class="mb-5">
+                        <h3 class="mb-5">
+                            Period Names
+                        </h3>
+
+                        <v-btn
+                            block
+                            color="primary"
+                            class="mb-3"
+                            @click="open_edit_dialog"
+                        >
+                            Edit
+                        </v-btn>
+                        <v-btn
+                            block
+                            color="primary"
+                            class="mb-3"
+                            @click="pn_import.dialog = true"
+                        >
+                            Import
+                        </v-btn>
+                        <v-btn
+                            block
+                            color="primary"
+                            @click="pn_export_dialog = true"
+                        >
+                            Export
+                        </v-btn>
+                    </div>
+
+                    <v-divider class="mb-2" />
+
+                    <div class="mt-5">
+                        <h3 class="mb-1">
+                            Notifications
+                        </h3>
+                        <div class="mb-5">
+                            <h4 class="mb-2">
+                                Days
+                            </h4>
+
+                            <v-switch
+                                v-for="(state,
+                                day) in allowedNotifications.days"
+                                :key="day"
+                                v-model="allowedNotifications.days[day]"
+                                :label="
+                                    day.replace(/\b[a-z]/g, str =>
+                                        str.toUpperCase()
+                                    )
+                                "
+                                inset
+                                hide-details
+                                readonly
+                                @click="
+                                    updateAllowedNotifications(
+                                        'day',
+                                        day,
+                                        !state
+                                    )
+                                "
+                            />
+                        </div>
+                        <div class="mb-5">
+                            <h4 class="mb-2">
+                                Intervals
+                            </h4>
+
+                            <v-switch
+                                v-for="(state,
+                                interval) in allowedNotifications.intervals"
+                                :key="interval"
+                                v-model="
+                                    allowedNotifications.intervals[interval]
+                                "
+                                :label="
+                                    interval
+                                        .split('_')
+                                        .join(' ')
+                                        .replace(/\b[a-z]/g, str =>
+                                            str.toUpperCase()
+                                        )
+                                "
+                                inset
+                                hide-details
+                                readonly
+                                @click="
+                                    updateAllowedNotifications(
+                                        'interval',
+                                        interval,
+                                        !state
+                                    )
+                                "
+                            />
+                        </div>
+                        <div class="mb-5">
+                            <h4 class="mb-2">
+                                Periods
+                            </h4>
+
+                            <v-switch
+                                v-for="(state,
+                                period) in allowedNotifications.periods"
+                                :key="period"
+                                v-model="allowedNotifications.periods[period]"
+                                :label="period"
+                                inset
+                                hide-details
+                                readonly
+                                @click="
+                                    updateAllowedNotifications(
+                                        'period',
+                                        period,
+                                        !state
+                                    )
+                                "
+                            />
+                        </div>
                     </div>
                 </v-card-text>
             </v-card>
@@ -210,7 +338,7 @@
             </v-card>
         </v-dialog>
 
-        <div v-if="debug_mode">
+        <div v-if="debugMode">
             <v-divider />
             <v-card class="mx-auto" outlined>
                 <v-card-text v-text="$app_version" />
@@ -268,6 +396,9 @@ export default {
                 time: null
             },
 
+            // Settings
+            settingsDialog: false,
+
             // Period Editing Functionality
             pn_sch_id: "",
             period_names: {},
@@ -292,14 +423,38 @@ export default {
                 one_minute: false,
                 thirty_second: false
             },
+            allowedNotifications: {
+                intervals: {
+                    one_hour: true,
+                    thirty_minute: true,
+                    fifteen_minute: true,
+                    ten_minute: true,
+                    five_minute: true,
+                    one_minute: true,
+                    thirty_second: true
+                },
+                days: {
+                    sunday: true,
+                    monday: true,
+                    tuesday: true,
+                    wednesday: true,
+                    thursday: true,
+                    friday: true,
+                    saturday: true
+                },
+                periods: {}
+            },
 
             main_interval: null,
-            debug_mode: this.$route.query.debug === "true"
+            debugMode: this.$route.query.debug === "true"
         };
     },
     created() {
         this.main_interval = setInterval(this.main, 1000);
-        this.get_period_names();
+
+        // Load Settings
+        this.getPeriodNames();
+        this.loadAllowedNotifications();
 
         if (typeof this.schedules[this.$route.params.id] === "undefined") {
             this.$router.push({
@@ -392,10 +547,47 @@ export default {
         }
     },
     methods: {
-        toggle_debug_mode: function() {
-            this.debug_mode = !this.debug_mode;
+        loadAllowedNotifications: function() {
+            let allowedNotifications = localStorage.getItem(
+                `allowedNotifications.${this.$route.params.id}`
+            );
 
-            if (this.debug_mode === true) {
+            if (allowedNotifications !== null) {
+                this.allowedNotifications = JSON.parse(allowedNotifications);
+            }
+
+            if (Object.keys(this.allowedNotifications.periods).length === 0) {
+                let periodNames = {};
+                Object.keys(this.schedule).forEach(day =>
+                    Object.keys(this.schedule[day]).forEach(
+                        periodName => (periodNames[periodName] = true)
+                    )
+                );
+                this.allowedNotifications.periods = periodNames;
+            }
+        },
+        updateAllowedNotifications: function(type, id, value) {
+            switch (type) {
+                case "interval":
+                    this.allowedNotifications.intervals[id] = value;
+                    break;
+                case "day":
+                    this.allowedNotifications.days[id] = value;
+                    break;
+                case "period":
+                    this.allowedNotifications.periods[id] = value;
+                    break;
+            }
+
+            localStorage.setItem(
+                `allowedNotifications.${this.$route.params.id}`,
+                JSON.stringify(this.allowedNotifications)
+            );
+        },
+        toggle_debugMode: function() {
+            this.debugMode = !this.debugMode;
+
+            if (this.debugMode === true) {
                 this.$router.replace({
                     name: "Schedule",
                     params: { id: this.$route.params.id },
@@ -412,7 +604,7 @@ export default {
             try {
                 let pn_import_string = JSON.parse(this.pn_import.string);
 
-                this.get_period_names();
+                this.getPeriodNames();
                 let pn_keys = Object.keys(this.period_names),
                     pn_match;
 
@@ -465,13 +657,13 @@ export default {
         },
         debug_function: function() {
             console.debug("Development function called");
-            console.log(this.schedule);
+            console.debug(this.current_pp.day.toLowerCase());
         },
         check_for_custom_period_name: function(
             period_name,
             with_period = false
         ) {
-            this.get_period_names();
+            this.getPeriodNames();
 
             if (
                 typeof this.period_names[period_name] === "undefined" ||
@@ -485,7 +677,7 @@ export default {
             }
         },
         open_edit_dialog: function() {
-            this.get_period_names();
+            this.getPeriodNames();
             this.edit_dialog = true;
         },
         save_period_names: function() {
@@ -496,7 +688,7 @@ export default {
             this.edit_dialog = false;
             this.show_toast("Saved period names!", "success");
         },
-        get_period_names: function() {
+        getPeriodNames: function() {
             if (
                 Object.keys(this.period_names).length === 0 ||
                 this.pn_sch_id !== this.$route.params.id
@@ -656,84 +848,97 @@ export default {
                 this.current_period;
             let notification_icon = "";
 
-            if (Number(time_difference[0]) === 0) {
-                let minutes_remaining = Number(time_difference[1]);
-                if (Number(time_difference[2]) == 0) {
-                    if (
-                        minutes_remaining === 30 &&
-                        !this.notifications.thirty_minute
-                    ) {
-                        this.notify(
-                            notification_title,
-                            "Thirty minutes remaining",
-                            notification_icon
-                        );
-                        this.notifications.thirty_minute = true;
+            if (
+                this.allowedNotifications.days[
+                    this.current_pp.day.toLowerCase()
+                ]
+            ) {
+                if (Number(time_difference[0]) === 0) {
+                    let minutes_remaining = Number(time_difference[1]);
+                    if (Number(time_difference[2]) == 0) {
+                        if (
+                            minutes_remaining === 30 &&
+                            !this.notifications.thirty_minute &&
+                            this.allowedNotifications.intervals.thirty_minute
+                        ) {
+                            this.notify(
+                                notification_title,
+                                "Thirty minutes remaining",
+                                notification_icon
+                            );
+                            this.notifications.thirty_minute = true;
+                        } else if (
+                            minutes_remaining === 15 &&
+                            !this.notifications.fifteen_minute &&
+                            this.allowedNotifications.intervals.fifteen_minute
+                        ) {
+                            this.notify(
+                                notification_title,
+                                "Fifteen minutes remaining",
+                                notification_icon
+                            );
+                            this.notifications.fifteen_minute = true;
+                        } else if (
+                            minutes_remaining === 10 &&
+                            !this.notifications.ten_minute &&
+                            this.allowedNotifications.intervals.ten_minute
+                        ) {
+                            this.notify(
+                                notification_title,
+                                "Ten minutes remaining",
+                                notification_icon
+                            );
+                            this.notifications.ten_minute = true;
+                        } else if (
+                            minutes_remaining === 5 &&
+                            !this.notifications.five_minute &&
+                            this.allowedNotifications.intervals.five_minute
+                        ) {
+                            this.notify(
+                                notification_title,
+                                "Five minutes remaining",
+                                notification_icon
+                            );
+                            this.notifications.five_minute = true;
+                        } else if (
+                            minutes_remaining === 1 &&
+                            !this.one_minute_notification &&
+                            this.allowedNotifications.intervals.one_minute
+                        ) {
+                            this.notify(
+                                notification_title,
+                                "One minute remaining",
+                                notification_icon
+                            );
+                            this.notifications.one_minute = true;
+                        }
                     } else if (
-                        minutes_remaining === 15 &&
-                        !this.notifications.fifteen_minute
+                        minutes_remaining === 0 &&
+                        Number(time_difference[2]) === 0 &&
+                        !this.notifications.thirty_second &&
+                        this.allowedNotifications.intervals.thirty_second
                     ) {
                         this.notify(
                             notification_title,
-                            "Fifteen minutes remaining",
+                            "Thirty seconds remaining",
                             notification_icon
                         );
-                        this.notifications.fifteen_minute = true;
-                    } else if (
-                        minutes_remaining === 10 &&
-                        !this.notifications.ten_minute
-                    ) {
-                        this.notify(
-                            notification_title,
-                            "Ten minutes remaining",
-                            notification_icon
-                        );
-                        this.notifications.ten_minute = true;
-                    } else if (
-                        minutes_remaining === 5 &&
-                        !this.notifications.five_minute
-                    ) {
-                        this.notify(
-                            notification_title,
-                            "Five minutes remaining",
-                            notification_icon
-                        );
-                        this.notifications.five_minute = true;
-                    } else if (
-                        minutes_remaining === 1 &&
-                        !this.one_minute_notification
-                    ) {
-                        this.notify(
-                            notification_title,
-                            "One minute remaining",
-                            notification_icon
-                        );
-                        this.notifications.one_minute = true;
+                        this.notifications.thirty_second = true;
                     }
                 } else if (
-                    minutes_remaining === 0 &&
+                    Number(time_difference[0]) === 1 &&
+                    Number(time_difference[1]) === 0 &&
                     Number(time_difference[2]) === 0 &&
-                    !this.notifications.thirty_second
+                    !this.notifications.one_hour &&
+                    this.allowedNotifications.intervals.one_hour
                 ) {
                     this.notify(
                         notification_title,
-                        "Thirty seconds remaining",
+                        "One hour remaining",
                         notification_icon
                     );
-                    this.notifications.thirty_second = true;
+                    this.notifications.one_hour = true;
                 }
-            } else if (
-                Number(time_difference[0]) === 1 &&
-                Number(time_difference[1]) === 0 &&
-                Number(time_difference[2]) === 0 &&
-                !this.notifications.one_hour
-            ) {
-                this.notify(
-                    notification_title,
-                    "One hour remaining",
-                    notification_icon
-                );
-                this.notifications.one_hour = true;
             }
         },
         calculate_time: function(time_1, time_2) {
@@ -939,9 +1144,3 @@ div.v-card {
     overflow-wrap: break-word;
 }
 </style>
-
-<!--
-<style lang="sass" scoped>
-$calendar-daily-weekday-padding: 5px 0px 0px 0px
-</style>
--->
