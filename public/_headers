@@ -1,0 +1,9 @@
+/*
+    X-Frame-Options: DENY
+    X-XSS-Protection: 1; mode=block
+    X-Content-Type-Options: nosniff
+    Content-Security-Policy: default-src 'self'; script-src 'self' https://umami-sepia.vercel.app; report-uri https://hkamran.report-uri.com/r/d/csp/reportOnly; report-to default
+    Referrer-Policy: strict-origin-when-cross-origin
+    Report-To: {"group":"default","max_age":31536000,"endpoints":[{"url":"https://hkamran.report-uri.com/a/d/g"}],"include_subdomains":true}
+    NEL: {"report_to":"default","max_age":31536000,"include_subdomains":true}
+    Expect-CT: max-age=0, report-uri="https://hkamran.report-uri.com/r/d/ct/reportOnly"

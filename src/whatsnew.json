@@ -14,6 +14,8 @@
         "The beginnings of adding a new schedule in the app",
         "Switch font to Lato",
         "Add settings panel to manage period names and notifications",
-        "Add notification interval, day, and period toggles"
+        "Add notification interval, day, and period toggles",
+        "Add AUHSD Hybrid schedule",
+        "Add security headers"
     ]
 }
