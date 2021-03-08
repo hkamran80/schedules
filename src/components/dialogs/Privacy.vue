@@ -77,7 +77,7 @@
 export default {
     name: "Privacy",
     methods: {
-        close_dialog: () => {
+        close_dialog: function() {
             this.$emit("close");
         }
     }

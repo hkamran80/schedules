@@ -9,23 +9,7 @@
                     </h1>
                 </router-link>
             </v-col>
-            <v-col
-                align-self="center"
-                justify="center"
-                md="4"
-                cols="12"
-                :class="{ 'text-right': !$vuetify.breakpoint.mobile }"
-            >
-                <router-link
-                    v-for="(schedule, id) in schedules"
-                    :key="id"
-                    :to="`/schedule/${id}`"
-                    :title="schedule.name"
-                    :aria-label="schedule.name"
-                    class="navigation-item"
-                    v-text="schedule.name"
-                />
-
+            <v-col align-self="center" class="text-right">
                 <v-btn
                     icon
                     class="navigation-item"
@@ -46,9 +30,6 @@
 <script>
 export default {
     name: "NavigationBar",
-    props: {
-        schedules: Object
-    },
     mounted() {
         const theme = localStorage.getItem("dark_theme");
         if (theme) {
@@ -89,18 +70,7 @@ export default {
     font-weight: bold;
 }
 
-#navigation a.navigation-item {
-    padding: 0 12px;
-}
-#navigation a.navigation-item:nth-of-type(1) {
-    padding-left: 0;
-}
-
 #navigation a.router-link-exact-active {
     color: #e91e63;
-}
-
-#navigation button.v-btn {
-    margin: 0 10px;
 }
 </style>

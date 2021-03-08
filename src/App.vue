@@ -2,7 +2,7 @@
     <v-app id="app">
         <v-main>
             <v-container fluid>
-                <navigation-bar :schedules="schedules" />
+                <navigation-bar />
                 <router-view :schedules="schedules" />
 
                 <v-snackbar bottom right :value="updateExists" :timeout="-1">
@@ -48,6 +48,7 @@ export default {
             this.base_document_title = "Schedules (dev)";
         }
 
+        // TODO: Add user option for enabling/disabling Umami
         if (!this.$dev_mode) {
             let umami_script = document.createElement("script"),
                 script_tag = document.getElementsByTagName("script")[0];
