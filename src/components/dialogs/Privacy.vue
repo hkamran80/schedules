@@ -6,7 +6,7 @@
                     Privacy Notice
                 </v-col>
                 <v-col cols="2" class="text-right">
-                    <v-btn icon color="primary" @click="close_dialog">
+                    <v-btn icon color="primary" @click="closeDialog">
                         <v-icon>mdi-close</v-icon>
                     </v-btn>
                 </v-col>
@@ -18,6 +18,17 @@
                 <a href="https://umami.is" target="_blank">Umami</a> for
                 tracking page views.
             </p>
+
+            <v-switch
+                v-model="umamiInstalled"
+                label="Umami Analytics"
+                inset
+                hide-details
+                readonly
+                @click="toggleUmami"
+                class="mb-5"
+            />
+
             <v-expansion-panels accordion>
                 <v-expansion-panel>
                     <v-expansion-panel-header>
@@ -76,8 +87,31 @@
 <script>
 export default {
     name: "Privacy",
+    data: function() {
+        return {
+            umamiInstalled: document.getElementById("umami-script") !== null
+        };
+    },
     methods: {
-        close_dialog: function() {
+        toggleUmami: function() {
+            if (this.umamiInstalled) {
+                this.uninstallUmami();
+                localStorage.setItem("umamiTracking", "false");
+            } else {
+                this.installUmami();
+                localStorage.setItem("umamiTracking", "true");
+            }
+
+            this.umamiInstalled =
+                document.getElementById("umami-script") !== null;
+        },
+        installUmami: function() {
+            this.$emit("installUmami");
+        },
+        uninstallUmami: function() {
+            this.$emit("uninstallUmami");
+        },
+        closeDialog: function() {
             this.$emit("close");
         }
     }

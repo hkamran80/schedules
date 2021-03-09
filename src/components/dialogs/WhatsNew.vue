@@ -14,7 +14,7 @@
                     >
                         <v-icon>mdi-github</v-icon>
                     </v-btn>
-                    <v-btn icon color="primary" @click="close_dialog">
+                    <v-btn icon color="primary" @click="closeDialog">
                         <v-icon>mdi-close</v-icon>
                     </v-btn>
                 </v-col>
@@ -55,7 +55,7 @@ export default {
         return { whatsnew: whatsnew };
     },
     methods: {
-        close_dialog: function() {
+        closeDialog: function() {
             this.$emit("close");
         }
     }

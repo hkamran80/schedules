@@ -2,6 +2,9 @@
 
 ## An app for all schedules
 
+![Security Headers](https://img.shields.io/security-headers?style=for-the-badge&url=https%3A%2F%2Fschedules.unisontech.org)
+![Security Headers (Edge)](https://img.shields.io/security-headers?label=Security%20Headers%20%28Edge%29&style=for-the-badge&url=https%3A%2F%2Fbeta-schedules.unisontech.org)
+
 ### Deployment
 
 -   Production: [schedules.unisontech.org](https://schedules.unisontech.org)

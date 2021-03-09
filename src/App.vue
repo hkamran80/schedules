@@ -35,7 +35,7 @@ export default {
     data: () => ({
         debug: false,
         schedules: schedules,
-        base_document_title: "Schedules"
+        baseDocumentTitle: "Schedules"
     }),
     components: {
         NavigationBar
@@ -43,46 +43,26 @@ export default {
     mixins: [update],
     created() {
         if (this.$edge_mode) {
-            this.base_document_title = "Schedules (edge)";
+            this.baseDocumentTitle = "Schedules (edge)";
         } else if (this.$dev_mode) {
-            this.base_document_title = "Schedules (dev)";
-        }
-
-        // TODO: Add user option for enabling/disabling Umami
-        if (!this.$dev_mode) {
-            let umami_script = document.createElement("script"),
-                script_tag = document.getElementsByTagName("script")[0];
-
-            umami_script.async = true;
-            umami_script.defer = true;
-            umami_script.src = "https://umami-sepia.vercel.app/umami.js";
-            umami_script.setAttribute(
-                "data-website-id",
-                this.$edge_mode
-                    ? "377298e5-bec6-48f0-a2f1-7070f42f12ca"
-                    : "ab9840ad-16a1-4b04-b87f-e5e396f466b4"
-            );
-
-            script_tag.parentNode.insertBefore(umami_script, script_tag);
-
-            console.log("Activated Umami anonymous analytics");
+            this.baseDocumentTitle = "Schedules (dev)";
         }
     },
     watch: {
         $route(to) {
             if (to.name === "Home") {
-                document.title = this.base_document_title;
+                document.title = this.baseDocumentTitle;
             } else if (
                 to.name === "Schedule" &&
                 typeof this.schedules[to.params.id] !== "undefined"
             ) {
-                document.title = `${this.base_document_title} | ${
+                document.title = `${this.baseDocumentTitle} | ${
                     this.schedules[to.params.id].name
                 }`;
             } else if (to.name === "NotFound") {
-                document.title = `${this.base_document_title} | Page Not Found`;
+                document.title = `${this.baseDocumentTitle} | Page Not Found`;
             } else {
-                document.title = this.base_document_title;
+                document.title = this.baseDocumentTitle;
             }
         }
     }

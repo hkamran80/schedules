@@ -42,7 +42,7 @@
         <v-card
             class="mx-auto schedule-card text-wrap--break"
             outlined
-            @click="dialogs.whats_new = true"
+            @click="dialogs.whatsNew = true"
         >
             <v-card-title>
                 What's New
@@ -59,11 +59,15 @@
             </v-card-title>
         </v-card>
 
-        <v-dialog v-model="dialogs.whats_new" width="750" scrollable>
-            <whats-new @close="close_dialog" />
+        <v-dialog v-model="dialogs.whatsNew" width="750" scrollable>
+            <whats-new @close="closeDialogs" />
         </v-dialog>
         <v-dialog v-model="dialogs.privacy" width="750" scrollable>
-            <privacy @close="close_dialog" />
+            <privacy
+                @installUmami="installUmami"
+                @uninstallUmami="uninstallUmami"
+                @close="closeDialogs"
+            />
         </v-dialog>
     </center-layout>
 </template>
@@ -82,14 +86,53 @@ export default {
     data: function() {
         return {
             dialogs: {
-                whats_new: false,
+                whatsNew: false,
                 privacy: false
             }
         };
     },
+    created() {
+        if (
+            !this.$dev_mode &&
+            localStorage.getItem("umamiTracking") !== "false"
+        ) {
+            this.installUmami();
+
+            if (localStorage.getItem("umamiTracking") === null) {
+                localStorage.setItem("umamiTracking", "true");
+            }
+        }
+    },
     methods: {
-        close_dialog: function() {
-            this.dialogs.whats_new = false;
+        installUmami: function() {
+            let umamiScript = document.createElement("script"),
+                scriptTag = document.getElementsByTagName("script")[0];
+
+            umamiScript.async = true;
+            umamiScript.defer = true;
+            umamiScript.src = "https://umami-sepia.vercel.app/umami.js";
+            umamiScript.id = "umami-script";
+            umamiScript.setAttribute(
+                "data-website-id",
+                this.$edge_mode
+                    ? "377298e5-bec6-48f0-a2f1-7070f42f12ca"
+                    : "ab9840ad-16a1-4b04-b87f-e5e396f466b4"
+            );
+
+            scriptTag.parentNode.insertBefore(umamiScript, scriptTag);
+
+            console.log("Activated Umami anonymous analytics");
+        },
+        uninstallUmami: function() {
+            let umamiScript = document.getElementById("umami-script");
+
+            umamiScript.remove();
+            localStorage.setItem("umamiTracking", "false");
+
+            console.log("Deactivated Umami anonymous analytics");
+        },
+        closeDialogs: function() {
+            this.dialogs.whatsNew = false;
             this.dialogs.privacy = false;
         }
     }
