@@ -169,9 +169,20 @@
                 "First Period": ["08-30-00", "09-45-00"],
                 "Brunch": ["09-45-01", "10-05-00"],
                 "Second Period": ["10-05-01", "11-20-00"],
-                "Passing (Second Period / Lunch)": ["11-20-01", "11-29-59"],
-                "Lunch": ["11-30-00", "12-34-59"],
-                "Passing (Lunch / Third Period)": ["12-35-00", "12-39-59"],
+                "Passing (Second Period / Academy/Lunch 1)": [
+                    "11-20-01",
+                    "11-29-59"
+                ],
+                "Academy (1) / Lunch (1)": ["11-30-00", "11-59-59"],
+                "Passing (Academy/Lunch 1 / Academy/Lunch 2)": [
+                    "12-00-00",
+                    "12-04-59"
+                ],
+                "Academy (2) / Lunch (2)": ["12-05-00", "12-34-59"],
+                "Passing (Academy/Lunch 2 / Third Period)": [
+                    "12-35-00",
+                    "12-39-59"
+                ],
                 "Third Period": ["12-40-00", "13-55-00"],
                 "Passing (Third / Seventh Periods)": ["13-55-01", "14-04-59"],
                 "Seventh Period": ["14-05-00", "15-20-00"]
@@ -180,9 +191,20 @@
                 "First Period": ["08-30-00", "09-45-00"],
                 "Brunch": ["09-45-01", "10-05-00"],
                 "Second Period": ["10-05-01", "11-20-00"],
-                "Passing (Second Period / Lunch))": ["11-20-01", "11-29-59"],
-                "Lunch": ["11-30-00", "12-34-59"],
-                "Passing (Lunch / Third Period)": ["12-35-00", "12-39-59"],
+                "Passing (Second Period / Academy/Lunch 1)": [
+                    "11-20-01",
+                    "11-29-59"
+                ],
+                "Academy (1) / Lunch (1)": ["11-30-00", "11-59-59"],
+                "Passing (Academy/Lunch 1 / Academy/Lunch 2)": [
+                    "12-00-00",
+                    "12-04-59"
+                ],
+                "Academy (2) / Lunch (2)": ["12-05-00", "12-34-59"],
+                "Passing (Academy/Lunch 2 / Third Period)": [
+                    "12-35-00",
+                    "12-39-59"
+                ],
                 "Third Period": ["12-40-00", "13-55-00"],
                 "Passing (Third / Seventh Periods)": ["13-55-01", "14-04-59"],
                 "Seventh Period": ["14-05-00", "15-20-00"]
@@ -191,9 +213,20 @@
                 "Fourth Period": ["08-30-00", "09-45-00"],
                 "Brunch": ["09-45-01", "10-05-00"],
                 "Fifth Period": ["10-05-01", "11-20-00"],
-                "Passing (Fifth Period / Lunch)": ["11-20-01", "11-29-59"],
-                "Lunch": ["11-30-00", "12-34-59"],
-                "Passing (Lunch / Sixth Period)": ["12-35-00", "12-39-59"],
+                "Passing (Fifth Period / Academy/Lunch 1)": [
+                    "11-20-01",
+                    "11-29-59"
+                ],
+                "Academy (1) / Lunch (1)": ["11-30-00", "11-59-59"],
+                "Passing (Academy/Lunch 1 / Academy/Lunch 2)": [
+                    "12-00-00",
+                    "12-04-59"
+                ],
+                "Academy (2) / Lunch (2)": ["12-05-00", "12-34-59"],
+                "Passing (Academy/Lunch 2 / Sixth Period)": [
+                    "12-35-00",
+                    "12-39-59"
+                ],
                 "Sixth Period": ["12-40-00", "13-55-00"],
                 "Passing (Sixth / Zero Periods)": ["13-55-01", "14-04-59"],
                 "Zero Period": ["14-05-00", "15-20-00"]
@@ -202,9 +235,20 @@
                 "Fourth Period": ["08-30-00", "09-45-00"],
                 "Brunch": ["09-45-01", "10-05-00"],
                 "Fifth Period": ["10-05-01", "11-20-00"],
-                "Passing (Fifth Period / Lunch)": ["11-20-01", "11-29-59"],
-                "Lunch": ["11-30-00", "12-34-59"],
-                "Passing (Lunch / Sixth Period)": ["12-35-00", "12-39-59"],
+                "Passing (Fifth Period / Academy/Lunch 1)": [
+                    "11-20-01",
+                    "11-29-59"
+                ],
+                "Academy (1) / Lunch (1)": ["11-30-00", "11-59-59"],
+                "Passing (Academy/Lunch 1 / Academy/Lunch 2)": [
+                    "12-00-00",
+                    "12-04-59"
+                ],
+                "Academy (2) / Lunch (2)": ["12-05-00", "12-34-59"],
+                "Passing (Academy/Lunch 2 / Sixth Period)": [
+                    "12-35-00",
+                    "12-39-59"
+                ],
                 "Sixth Period": ["12-40-00", "13-55-00"],
                 "Passing (Sixth / Zero Periods)": ["13-55-01", "14-04-59"],
                 "Zero Period": ["14-05-00", "15-20-00"]

@@ -1,5 +1,5 @@
 {
-    "2.2.0 (Edge-8)": [
+    "2.2.0 (Edge-9)": [
         "Added a timetable view to the schedule view",
         "Added this modal for informing users what's new in Schedules",
         "Improve next period calculation",
