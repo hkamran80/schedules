@@ -1,0 +1,14 @@
+version = 1
+
+exclude_patterns = [
+    "jsconfig.json",
+    "*.config.js"
+]
+
+[[analyzers]]
+name = "javascript"
+enabled = true
+
+  [analyzers.meta]
+  plugins = ["vue"]
+  environment = ["browser"]
