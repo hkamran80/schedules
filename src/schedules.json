@@ -151,6 +151,7 @@
         "schedule": {
             "MON": {
                 "Cohort Academy": ["09-00-00", "09-45-00"],
+                "Passing (Cohort Academy / First Period)": ["09-45-01", "09-59-59"],
                 "First Period": ["10-00-00", "10-40-00"],
                 "Passing (First / Second Periods)": ["10-40-01", "10-44-59"],
                 "Second Period": ["10-45-00", "11-25-00"],
