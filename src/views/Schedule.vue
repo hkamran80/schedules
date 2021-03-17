@@ -9,14 +9,35 @@
                     />
                     <h3
                         v-if="
-                            current_pp.day !== null && current_pp.time !== null
+                            currentPrettyDateTime.day !== null &&
+                                currentPrettyDateTime.time !== null
                         "
-                        v-text="`${current_pp.day} - ${current_pp.time}`"
+                        v-text="
+                            `${currentPrettyDateTime.day} - ${currentPrettyDateTime.time}`
+                        "
                     />
                 </v-col>
                 <v-col cols="3" class="text-right">
-                    <v-btn icon color="primary" @click="open_edit_dialog">
-                        <v-icon>mdi-calendar-edit</v-icon>
+                    <v-btn
+                        icon
+                        color="primary"
+                        v-if="$edge_mode || $dev_mode"
+                        @click="toggleDebugMode"
+                    >
+                        <v-icon>
+                            mdi-console-line
+                        </v-icon>
+                    </v-btn>
+                    <v-btn
+                        icon
+                        color="primary"
+                        @click="timetable = true"
+                        :disabled="schedulePeriods.length === 0"
+                    >
+                        <v-icon>mdi-calendar-outline</v-icon>
+                    </v-btn>
+                    <v-btn icon color="primary" @click="settingsDialog = true">
+                        <v-icon>mdi-cog-outline</v-icon>
                     </v-btn>
                 </v-col>
             </v-row>
@@ -27,11 +48,11 @@
                 <span
                     class="title font-weight-regular"
                     v-if="
-                        current_period !== null &&
-                            current_period !== 'No Period' &&
-                            current_period !== 'No Periods Today'
+                        currentPeriod !== null &&
+                            currentPeriod !== 'No Period' &&
+                            currentPeriod !== 'No Periods Today'
                     "
-                    v-text="`${current_period} - ${time_remaining}`"
+                    v-text="`${currentPeriod} - ${timeRemaining}`"
                 />
                 <span class="title font-weight-regular" v-else>
                     No Period
@@ -42,20 +63,37 @@
             class="mx-auto"
             outlined
             v-if="
-                next_period !== null &&
-                    next_period !== 'No Period' &&
-                    next_period !== 'No Periods Today'
+                nextPeriod !== null &&
+                    nextPeriod !== 'No Period' &&
+                    nextPeriod !== 'No Periods Today'
             "
         >
             <v-card-title>
                 <span
                     class="title font-weight-regular"
-                    v-text="`${next_period} - ${next_period_starting}`"
+                    v-text="`${nextPeriod} - ${nextPeriodStarting}`"
                 />
             </v-card-title>
         </v-card>
 
-        <v-dialog v-model="edit_dialog" width="750" scrollable>
+        <v-dialog v-model="timetable" width="750" scrollable>
+            <v-card class="mx-auto">
+                <v-calendar
+                    color="primary"
+                    type="day"
+                    :events="schedulePeriods"
+                    :first-time="calendarFirstTime"
+                    :short-weekdays="false"
+                    :event-ripple="false"
+                    :event-height="60"
+                    :event-margin-bottom="5"
+                    :interval-count="calendarIntervalCount"
+                    :interval-height="150"
+                />
+            </v-card>
+        </v-dialog>
+
+        <v-dialog v-model="editDialog" width="750" scrollable>
             <v-card class="mx-auto">
                 <v-card-title>
                     <v-row align="center">
@@ -63,23 +101,12 @@
                             Edit Period Names
                         </v-col>
                         <v-col cols="4" class="text-right">
-                            <v-btn icon @click="pn_import.dialog = true">
-                                <v-icon color="primary">
-                                    mdi-calendar-import
-                                </v-icon>
-                            </v-btn>
-                            <v-btn icon @click="pn_export_dialog = true">
-                                <v-icon color="primary">
-                                    mdi-calendar-export
-                                </v-icon>
-                            </v-btn>
-
-                            <v-btn icon @click="save_period_names">
+                            <v-btn icon @click="savePeriodNames">
                                 <v-icon color="primary">
                                     mdi-content-save-outline
                                 </v-icon>
                             </v-btn>
-                            <v-btn icon @click="edit_dialog = false">
+                            <v-btn icon @click="editDialog = false">
                                 <v-icon color="primary">mdi-close</v-icon>
                             </v-btn>
                         </v-col>
@@ -90,15 +117,15 @@
                         color="primary lighten-1"
                         background-color="primary lighten-4"
                         indeterminate
-                        v-if="Object.keys(this.period_names).length === 0"
+                        v-if="Object.keys(this.periodNames).length === 0"
                     />
 
-                    <div v-if="Object.keys(this.period_names).length !== 0">
+                    <div v-if="Object.keys(this.periodNames).length !== 0">
                         <v-text-field
-                            v-for="(value, pn) of period_names"
+                            v-for="(value, pn) of periodNames"
                             :key="pn"
                             :label="pn"
-                            v-model="period_names[pn]"
+                            v-model="periodNames[pn]"
                             outlined
                         />
                     </div>
@@ -106,7 +133,146 @@
             </v-card>
         </v-dialog>
 
-        <v-dialog v-model="pn_export_dialog" width="750">
+        <v-dialog v-model="settingsDialog" width="750" scrollable>
+            <v-card class="mx-auto">
+                <v-card-title>
+                    <v-row align="center">
+                        <v-col class="text-wrap--break">
+                            Settings
+                        </v-col>
+                        <v-col cols="4" class="text-right">
+                            <v-btn icon @click="settingsDialog = false">
+                                <v-icon color="primary">mdi-close</v-icon>
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </v-card-title>
+
+                <v-card-text>
+                    <div class="mb-5">
+                        <h3 class="mb-5">
+                            Period Names
+                        </h3>
+
+                        <v-btn
+                            block
+                            color="primary"
+                            class="mb-3"
+                            @click="openEditDialog"
+                        >
+                            Edit
+                        </v-btn>
+                        <v-btn
+                            block
+                            color="primary"
+                            class="mb-3"
+                            @click="periodNamesImport.dialog = true"
+                        >
+                            Import
+                        </v-btn>
+                        <v-btn
+                            block
+                            color="primary"
+                            @click="periodNamesExportDialog = true"
+                        >
+                            Export
+                        </v-btn>
+                    </div>
+
+                    <v-divider class="mb-2" />
+
+                    <div class="mt-5">
+                        <h3 class="mb-1">
+                            Notifications
+                        </h3>
+                        <div class="mb-5">
+                            <h4 class="mb-2">
+                                Days
+                            </h4>
+
+                            <v-switch
+                                v-for="(state,
+                                day) in allowedNotifications.days"
+                                :key="day"
+                                v-model="allowedNotifications.days[day]"
+                                :label="
+                                    day.replace(/\b[a-z]/g, str =>
+                                        str.toUpperCase()
+                                    )
+                                "
+                                inset
+                                hide-details
+                                readonly
+                                @click="
+                                    updateAllowedNotifications(
+                                        'day',
+                                        day,
+                                        !state
+                                    )
+                                "
+                            />
+                        </div>
+                        <div class="mb-5">
+                            <h4 class="mb-2">
+                                Intervals
+                            </h4>
+
+                            <v-switch
+                                v-for="(state,
+                                interval) in allowedNotifications.intervals"
+                                :key="interval"
+                                v-model="
+                                    allowedNotifications.intervals[interval]
+                                "
+                                :label="
+                                    interval
+                                        .split('_')
+                                        .join(' ')
+                                        .replace(/\b[a-z]/g, str =>
+                                            str.toUpperCase()
+                                        )
+                                "
+                                inset
+                                hide-details
+                                readonly
+                                @click="
+                                    updateAllowedNotifications(
+                                        'interval',
+                                        interval,
+                                        !state
+                                    )
+                                "
+                            />
+                        </div>
+                        <div class="mb-5">
+                            <h4 class="mb-2">
+                                Periods
+                            </h4>
+
+                            <v-switch
+                                v-for="(state,
+                                period) in allowedNotifications.periods"
+                                :key="period"
+                                v-model="allowedNotifications.periods[period]"
+                                :label="period"
+                                inset
+                                hide-details
+                                readonly
+                                @click="
+                                    updateAllowedNotifications(
+                                        'period',
+                                        period,
+                                        !state
+                                    )
+                                "
+                            />
+                        </div>
+                    </div>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
+
+        <v-dialog v-model="periodNamesExportDialog" width="750">
             <v-card class="mx-auto">
                 <v-card-title>
                     <v-row align="center">
@@ -114,12 +280,15 @@
                             Export Period Names
                         </v-col>
                         <v-col cols="4" class="text-right">
-                            <v-btn icon @click="copy_epn_text">
+                            <v-btn icon @click="copyExportedPeriodNames">
                                 <v-icon color="primary">
                                     mdi-content-copy
                                 </v-icon>
                             </v-btn>
-                            <v-btn icon @click="pn_export_dialog = false">
+                            <v-btn
+                                icon
+                                @click="periodNamesExportDialog = false"
+                            >
                                 <v-icon color="primary">mdi-close</v-icon>
                             </v-btn>
                         </v-col>
@@ -127,8 +296,8 @@
                 </v-card-title>
                 <v-card-text>
                     <v-textarea
-                        id="epn_string"
-                        v-model="epn_string"
+                        id="exportPeriodNamesString"
+                        v-model="exportPeriodNamesString"
                         rows="8"
                         readonly
                         outlined
@@ -138,7 +307,7 @@
             </v-card>
         </v-dialog>
 
-        <v-dialog v-model="pn_import.dialog" width="750">
+        <v-dialog v-model="periodNamesImport.dialog" width="750">
             <v-card class="mx-auto">
                 <v-card-title>
                     <v-row align="center">
@@ -148,17 +317,20 @@
                         <v-col cols="4" class="text-right">
                             <v-btn
                                 icon
-                                @click="import_pn_string"
+                                @click="importPeriodNamesString"
                                 :disabled="
-                                    pn_import.string === null ||
-                                        pn_import.string === ''
+                                    periodNamesImport.string === null ||
+                                        periodNamesImport.string === ''
                                 "
                             >
                                 <v-icon color="primary">
                                     mdi-calendar-import
                                 </v-icon>
                             </v-btn>
-                            <v-btn icon @click="pn_import.dialog = false">
+                            <v-btn
+                                icon
+                                @click="periodNamesImport.dialog = false"
+                            >
                                 <v-icon color="primary">mdi-close</v-icon>
                             </v-btn>
                         </v-col>
@@ -166,7 +338,7 @@
                 </v-card-title>
                 <v-card-text>
                     <v-textarea
-                        v-model="pn_import.string"
+                        v-model="periodNamesImport.string"
                         rows="8"
                         outlined
                         label="Period Names String"
@@ -175,17 +347,26 @@
             </v-card>
         </v-dialog>
 
-        <div v-if="developer_mode">
+        <div v-if="debugMode">
             <v-divider />
             <v-card class="mx-auto" outlined>
+                <v-card-text v-text="$app_version" />
+                <v-divider />
                 <v-card-text>
-                    {{ current_day }} - {{ current_split_time }} ||
-                    {{ current_period_raw }} || {{ next_period_raw }}
+                    {{ currentDay }} - {{ currentSplitTime }}
                 </v-card-text>
                 <v-divider />
-                <v-card-text v-text="period_names" />
+                <v-card-text>
+                    {{ currentPeriodRaw }}
+                </v-card-text>
+                <v-divider />
+                <v-card-text>
+                    {{ nextPeriodRaw }}
+                </v-card-text>
             </v-card>
-            <v-btn text block @click="dev"> Development Function </v-btn>
+            <v-btn text block @click="debugFunction">
+                Debug Function
+            </v-btn>
         </div>
     </center-layout>
 </template>
@@ -202,399 +383,564 @@ export default {
     data: function() {
         return {
             // Current and Next Period Information
-            current_period: null,
-            time_remaining: null,
-            next_period: null,
-            next_period_starting: null,
+            currentPeriod: null,
+            timeRemaining: null,
+            nextPeriod: null,
+            nextPeriodStarting: null,
 
             // Previous Period Information
-            previous_period: null,
-            period_different: false,
+            previousPeriod: null,
+            differentPeriod: false,
 
             // Raw Period Information
-            current_period_raw: [],
-            next_period_raw: [],
+            currentPeriodRaw: [],
+            nextPeriodRaw: [],
 
             // Date and Time
-            current_day: "",
-            current_time: "",
-            current_split_time: "",
-            current_pp: {
+            currentDay: "",
+            currentTime: "",
+            currentSplitTime: "",
+            currentPrettyDateTime: {
                 day: null,
                 time: null
             },
 
+            // Settings
+            settingsDialog: false,
+
             // Period Editing Functionality
-            pn_sch_id: "",
-            period_names: {},
-            edit_dialog: false,
-            pn_import: {
+            periodNamesScheduleId: "",
+            periodNames: {},
+            editDialog: false,
+            periodNamesImport: {
                 dialog: false,
                 string: null
             },
-            pn_export_dialog: false,
+            periodNamesExportDialog: false,
+
+            // Timetable
+            timetable: false,
 
             // Notifications
-            notifications_supported: false,
-            one_hour_notification: false,
-            thirty_minute_notification: false,
-            fifteen_minute_notification: false,
-            ten_minute_notification: false,
-            five_minute_notification: false,
-            one_minute_notification: false,
-            thirty_second_notification: false,
+            notificationsSupported: false,
+            notifications: {
+                oneHour: false,
+                thirtyMinute: false,
+                fifteenMinute: false,
+                tenMinute: false,
+                fiveMinute: false,
+                oneMinute: false,
+                thirtySecond: false
+            },
+            allowedNotifications: {
+                intervals: {
+                    oneHour: true,
+                    thirtyMinute: true,
+                    fifteenMinute: true,
+                    tenMinute: true,
+                    fiveMinute: true,
+                    oneMinute: true,
+                    thirtySecond: true
+                },
+                days: {
+                    sunday: true,
+                    monday: true,
+                    tuesday: true,
+                    wednesday: true,
+                    thursday: true,
+                    friday: true,
+                    saturday: true
+                },
+                periods: {}
+            },
 
-            main_interval: null,
-            developer_mode: this.$route.query.dev === "true"
+            mainInterval: null,
+            debugMode: this.$route.query.debug === "true"
         };
     },
     created() {
-        this.main_interval = setInterval(this.main, 1000);
-        this.get_period_names();
+        this.mainInterval = setInterval(this.main, 1000);
+
+        // Load Settings
+        this.getPeriodNames();
+        this.loadAllowedNotifications();
+
+        if (typeof this.schedules[this.$route.params.id] === "undefined") {
+            this.$router.push({
+                name: "NotFound",
+                query: { path: window.location.origin + this.$route.path }
+            });
+        }
     },
     mounted() {
         this.$notification
             .requestPermission()
-            .then(this.notification_permissions_callback, console.error)
+            .then(this.notificationPermissionsCallback, console.error)
             .catch(console.error);
     },
     destroyed() {
-        clearInterval(this.main_interval);
-        this.main_interval = 0;
+        clearInterval(this.mainInterval);
+        this.mainInterval = 0;
     },
     computed: {
-        epn_string: function() {
-            return JSON.stringify(this.period_names);
+        schedule: function() {
+            return this.schedules[this.$route.params.id].schedule;
+        },
+        color: function() {
+            return this.schedules[this.$route.params.id].color;
+        },
+        calendarIntervalCount: function() {
+            if (typeof this.schedule[this.currentDay] !== "undefined") {
+                let end_times = this.schedule[this.currentDay][
+                        Object.keys(this.schedule[this.currentDay]).slice(-1)[0]
+                    ][1].split("-"),
+                    start_time_hour = Number(
+                        this.schedule[this.currentDay][
+                            Object.keys(this.schedule[this.currentDay])[0]
+                        ][0].split("-")[0]
+                    ),
+                    end_time_hour;
+
+                end_time_hour =
+                    Number(end_times[1]) !== 0
+                        ? Number(end_times[0]) + 1
+                        : Number(end_times[0]);
+
+                return end_time_hour - start_time_hour;
+            } else {
+                return null;
+            }
+        },
+        calendarFirstTime: function() {
+            return typeof this.schedule[this.currentDay] !== "undefined"
+                ? this.schedule[this.currentDay][
+                      Object.keys(this.schedule[this.currentDay])[0]
+                  ][0].split("-")[0] + "00"
+                : "08:00";
+        },
+        schedulePeriods: function() {
+            let periods = [];
+            if (typeof this.schedule[this.currentDay] !== "undefined") {
+                let day_schedule = this.schedule[this.currentDay],
+                    d = new Date(),
+                    date = `${d.getFullYear()}-${this.padNumber(
+                        Number(d.getMonth()) + 1
+                    )}-${this.padNumber(d.getDate())}`;
+
+                Object.keys(day_schedule).forEach(period =>
+                    periods.push({
+                        name: this.checkForCustomPeriodName(period, true),
+                        start: `${date} ${day_schedule[period][0].replaceAll(
+                            "-",
+                            ":"
+                        )}`,
+                        end: `${date} ${day_schedule[period][1].replaceAll(
+                            "-",
+                            ":"
+                        )}`,
+                        color:
+                            period.indexOf("Passing") === -1
+                                ? this.color
+                                : "primary"
+                    })
+                );
+            }
+
+            return periods;
+        },
+        exportPeriodNamesString: function() {
+            return JSON.stringify(this.periodNames);
         }
     },
     methods: {
-        import_pn_string: function() {
-            try {
-                let pn_import_string = JSON.parse(this.pn_import.string);
+        loadAllowedNotifications: function() {
+            let allowedNotifications = localStorage.getItem(
+                `allowedNotifications.${this.$route.params.id}`
+            );
 
-                this.get_period_names();
-                let pn_keys = Object.keys(this.period_names),
+            if (allowedNotifications !== null) {
+                this.allowedNotifications = JSON.parse(allowedNotifications);
+            }
+
+            if (Object.keys(this.allowedNotifications.periods).length === 0) {
+                let periodNames = {};
+                Object.keys(this.schedule).forEach(day =>
+                    Object.keys(this.schedule[day]).forEach(
+                        periodName => (periodNames[periodName] = true)
+                    )
+                );
+                this.allowedNotifications.periods = periodNames;
+            }
+        },
+        updateAllowedNotifications: function(type, id, value) {
+            switch (type) {
+                case "interval":
+                    this.allowedNotifications.intervals[id] = value;
+                    break;
+                case "day":
+                    this.allowedNotifications.days[id] = value;
+                    break;
+                case "period":
+                    this.allowedNotifications.periods[id] = value;
+                    break;
+            }
+
+            localStorage.setItem(
+                `allowedNotifications.${this.$route.params.id}`,
+                JSON.stringify(this.allowedNotifications)
+            );
+        },
+        toggleDebugMode: function() {
+            this.debugMode = !this.debugMode;
+
+            if (this.debugMode === true) {
+                this.$router.replace({
+                    name: "Schedule",
+                    params: { id: this.$route.params.id },
+                    query: { debug: true }
+                });
+            } else {
+                this.$router.replace({
+                    name: "Schedule",
+                    params: { id: this.$route.params.id }
+                });
+            }
+        },
+        importPeriodNamesString: function() {
+            try {
+                let periodNamesImport_string = JSON.parse(
+                    this.periodNamesImport.string
+                );
+
+                this.getPeriodNames();
+                let pn_keys = Object.keys(this.periodNames),
                     pn_match;
 
-                Object.keys(pn_import_string).forEach(key => {
+                Object.keys(periodNamesImport_string).forEach(key => {
                     if (pn_match !== false) {
-                        if (pn_keys.indexOf(key) !== -1) {
-                            pn_match = true;
-                        } else {
-                            pn_match = false;
-                        }
+                        pn_match = pn_keys.indexOf(key) !== -1 ? true : false;
                     }
                 });
 
                 if (pn_match) {
-                    this.period_names = pn_import_string;
+                    this.periodNames = periodNamesImport_string;
                     localStorage.setItem(
                         `schedule.${this.$route.params.id}`,
-                        JSON.stringify(pn_import_string)
+                        JSON.stringify(periodNamesImport_string)
                     );
 
-                    this.pn_import.string = null;
-                    this.pn_import.dialog = false;
-                    this.edit_dialog = false;
+                    this.periodNamesImport.string = null;
+                    this.periodNamesImport.dialog = false;
+                    this.editDialog = false;
 
-                    this.show_toast(
+                    this.showToast(
                         "Successfully imported period names!",
                         "success"
                     );
                 } else {
-                    this.show_toast(
+                    this.showToast(
                         "Key match failed. Please enter the correct string that matches this schedule's period name keys.",
                         "error"
                     );
                 }
             } catch (e) {
-                this.show_toast(
+                this.showToast(
                     "Unable to import period names. An error occurred when parsing. Try again.",
                     "error"
                 );
             }
         },
-        copy_epn_text: function() {
-            let epn_element = document.getElementById("epn_string");
+        copyExportedPeriodNames: function() {
+            let epn_element = document.getElementById(
+                "exportPeriodNamesString"
+            );
             epn_element.select();
             document.execCommand("copy");
 
-            this.show_toast("Copied period names to the clipboard", "info");
+            this.showToast("Copied period names to the clipboard", "info");
 
-            this.pn_export_dialog = false;
+            this.periodNamesExportDialog = false;
         },
-        dev: function() {
+        debugFunction: function() {
             console.debug("Development function called");
+            console.debug(this.currentPrettyDateTime.day.toLowerCase());
         },
-        check_for_custom_period_name: function(period_name) {
-            this.get_period_names();
+        checkForCustomPeriodName: function(period_name, with_period = false) {
+            this.getPeriodNames();
 
             if (
-                typeof this.period_names[period_name] === "undefined" ||
-                this.period_names[period_name] === ""
+                typeof this.periodNames[period_name] === "undefined" ||
+                this.periodNames[period_name] === ""
             ) {
                 return period_name;
             } else {
-                return this.period_names[period_name];
+                return with_period
+                    ? `${this.periodNames[period_name]} (${period_name})`
+                    : this.periodNames[period_name];
             }
         },
-        open_edit_dialog: function() {
-            this.get_period_names();
-            this.edit_dialog = true;
+        openEditDialog: function() {
+            this.getPeriodNames();
+            this.editDialog = true;
         },
-        save_period_names: function() {
+        savePeriodNames: function() {
             localStorage.setItem(
                 `schedule.${this.$route.params.id}`,
-                JSON.stringify(this.period_names)
+                JSON.stringify(this.periodNames)
             );
-            this.edit_dialog = false;
-            this.show_toast("Saved period names!", "success");
+            this.editDialog = false;
+            this.showToast("Saved period names!", "success");
         },
-        get_period_names: function() {
+        getPeriodNames: function() {
             if (
-                Object.keys(this.period_names).length === 0 ||
-                this.pn_sch_id !== this.$route.params.id
+                Object.keys(this.periodNames).length === 0 ||
+                this.periodNamesScheduleId !== this.$route.params.id
             ) {
-                this.pn_sch_id = this.$route.params.id;
+                this.periodNamesScheduleId = this.$route.params.id;
                 if (
                     localStorage.getItem(
                         `schedule.${this.$route.params.id}`
                     ) !== null
                 ) {
-                    this.period_names = JSON.parse(
+                    this.periodNames = JSON.parse(
                         localStorage.getItem(
                             `schedule.${this.$route.params.id}`
                         )
                     );
                 } else {
-                    this.period_names = {};
+                    this.periodNames = {};
 
-                    let schedule = JSON.parse(
-                        this.schedules[this.$route.params.id].schedule
-                    );
-
-                    Object.keys(schedule).forEach(day =>
-                        Object.keys(schedule[day]).forEach(
-                            pn => (this.period_names[pn] = "")
+                    Object.keys(this.schedule).forEach(day =>
+                        Object.keys(this.schedule[day]).forEach(
+                            pn => (this.periodNames[pn] = "")
                         )
                     );
                 }
             }
         },
         main: function() {
-            this.update_times();
-            this.get_current_period();
+            this.updateTimes();
+            this.getCurrentPeriod();
 
             if (
-                this.current_period_raw[0] != "No Period" &&
-                this.current_period_raw[0] != "No Periods Today"
+                this.currentPeriodRaw[0] !== "No Period" &&
+                this.currentPeriodRaw[0] !== "No Periods Today"
             ) {
-                this.current_period = this.check_for_custom_period_name(
-                    this.current_period_raw[0]
+                this.currentPeriod = this.checkForCustomPeriodName(
+                    this.currentPeriodRaw[0],
+                    true
                 );
 
-                if (this.current_period != this.previous_period) {
-                    this.period_different = true;
+                if (this.currentPeriod !== this.previousPeriod) {
+                    this.differentPeriod = true;
                 } else {
-                    this.period_different = false;
+                    this.differentPeriod = false;
                 }
-                this.previous_period = this.current_period;
+                this.previousPeriod = this.currentPeriod;
 
-                this.update_next_period();
+                this.updateNextPeriod();
 
                 let compiled_time_difference;
                 var time_difference;
-                if (this.current_period_raw[1] != "") {
-                    let scheduled_end = this.current_period_raw[1][1].toString();
+                if (this.currentPeriodRaw[1] !== "") {
+                    let scheduled_end = this.currentPeriodRaw[1][1].toString();
 
-                    time_difference = this.calculate_time(
-                        this.current_split_time,
+                    time_difference = this.calculateTimeDifference(
+                        this.currentSplitTime,
                         scheduled_end
                     );
 
-                    if (time_difference[0] == 0) {
-                        if (time_difference[1] == 0) {
+                    if (time_difference[0] === 0) {
+                        if (time_difference[1] === 0) {
                             compiled_time_difference =
-                                "00:00:" + this.pad_number(time_difference[2]);
+                                "00:00:" + this.padNumber(time_difference[2]);
                         } else {
-                            if (time_difference[2] == 0) {
-                                compiled_time_difference =
-                                    "00:" +
-                                    this.pad_number(time_difference[1]) +
-                                    ":00";
-                            } else {
-                                compiled_time_difference =
-                                    "00:" +
-                                    this.pad_number(time_difference[1]) +
-                                    ":" +
-                                    this.pad_number(time_difference[2]);
-                            }
+                            compiled_time_difference =
+                                time_difference[2] === 0
+                                    ? "00:" +
+                                      this.padNumber(time_difference[1]) +
+                                      ":00"
+                                    : "00:" +
+                                      this.padNumber(time_difference[1]) +
+                                      ":" +
+                                      this.padNumber(time_difference[2]);
                         }
                     } else {
                         compiled_time_difference =
-                            this.pad_number(time_difference[0]) +
+                            this.padNumber(time_difference[0]) +
                             ":" +
-                            this.pad_number(time_difference[1]) +
+                            this.padNumber(time_difference[1]) +
                             ":" +
-                            this.pad_number(time_difference[2]);
+                            this.padNumber(time_difference[2]);
                     }
                 } else {
                     compiled_time_difference = "";
                     time_difference = "";
                 }
-                this.time_remaining = compiled_time_difference;
+                this.timeRemaining = compiled_time_difference;
 
-                if (this.period_different) {
-                    this.period_different = false;
+                if (this.differentPeriod) {
+                    this.differentPeriod = false;
 
-                    this.one_hour_notification = false;
-                    this.thirty_minute_notification = false;
-                    this.fifteen_minute_notification = false;
-                    this.ten_minute_notification = false;
-                    this.five_minute_notification = false;
-                    this.one_minute_notification = false;
-                    this.thirty_second_notification = false;
+                    this.notifications.oneHour = false;
+                    this.notifications.thirtyMinute = false;
+                    this.notifications.fifteenMinute = false;
+                    this.notifications.tenMinute = false;
+                    this.notifications.fiveMinute = false;
+                    this.notifications.oneMinute = false;
+                    this.notifications.thirtySecond = false;
                 }
 
                 if (time_difference) {
-                    this.scheduled_notifications(time_difference);
+                    this.scheduledNotifications(time_difference);
                 }
             } else {
-                this.current_period = this.check_for_custom_period_name(
-                    this.current_period_raw[0]
+                this.currentPeriod = this.checkForCustomPeriodName(
+                    this.currentPeriodRaw[0]
                 );
-                this.next_period = "No Period";
+                this.nextPeriod = "No Period";
             }
         },
-        update_next_period: function() {
-            this.get_next_period();
+        updateNextPeriod: function() {
+            this.getNextPeriod();
 
-            this.next_period = this.check_for_custom_period_name(
-                this.next_period_raw[0]
+            this.nextPeriod = this.checkForCustomPeriodName(
+                this.nextPeriodRaw[0]
             );
             if (
-                this.next_period_raw[0] != "No Period" &&
-                this.next_period_raw[0] != "No Periods Today"
+                this.nextPeriodRaw[0] != "No Period" &&
+                this.nextPeriodRaw[0] != "No Periods Today"
             ) {
-                //if (this.developer_mode) console.log(this.next_period_raw);
-
                 let np_starting_string;
+
                 if (!this.$twenty_four_hour_time) {
                     let np_starting_hour = Number(
-                        this.next_period_raw[1][0].split("-").slice(0, 1)
+                        this.nextPeriodRaw[1][0].split("-").slice(0, 1)
                     );
 
-                    let hour_string;
-                    if (np_starting_hour > 12) {
-                        hour_string = (np_starting_hour - 12).toString();
-                    } else {
-                        hour_string = np_starting_hour.toString();
-                    }
+                    let hour_string =
+                        np_starting_hour > 12
+                            ? (np_starting_hour - 12).toString()
+                            : np_starting_hour.toString();
 
                     let np_starting =
                         hour_string +
                         ":" +
-                        this.next_period_raw[1][0].split("-").slice(1, 2);
+                        this.nextPeriodRaw[1][0].split("-").slice(1, 2);
                     let np_starting_12hr = np_starting_hour >= 12 ? "PM" : "AM";
 
                     np_starting_string = np_starting + " " + np_starting_12hr;
                 } else {
-                    np_starting_string = this.next_period_raw[1][0]
+                    np_starting_string = this.nextPeriodRaw[1][0]
                         .split("-")
                         .slice(0, 2)
                         .join(":");
                 }
-                this.next_period_starting = np_starting_string;
+                this.nextPeriodStarting = np_starting_string;
             }
         },
-        scheduled_notifications: function(time_difference) {
+        scheduledNotifications: function(time_difference) {
             let notification_title =
                 this.schedules[this.$route.params.id].short_name +
                 " - " +
-                this.current_period;
+                this.currentPeriod;
             let notification_icon = "";
 
-            if (Number(time_difference[0]) == 0) {
-                let minutes_remaining = Number(time_difference[1]);
-                if (Number(time_difference[2]) == 0) {
-                    if (
-                        minutes_remaining == 30 &&
-                        !this.thirty_minute_notification
-                    ) {
-                        this.notify(
-                            notification_title,
-                            "Thirty minutes remaining",
-                            notification_icon
-                        );
-                        this.thirty_minute_notification = true;
+            if (
+                this.allowedNotifications.days[
+                    this.currentPrettyDateTime.day.toLowerCase()
+                ] &&
+                this.allowedNotifications.periods[this.currentPeriod]
+            ) {
+                if (Number(time_difference[0]) === 0) {
+                    let minutes_remaining = Number(time_difference[1]);
+                    if (Number(time_difference[2]) == 0) {
+                        if (
+                            minutes_remaining === 30 &&
+                            !this.notifications.thirtyMinute &&
+                            this.allowedNotifications.intervals.thirtyMinute
+                        ) {
+                            this.notify(
+                                notification_title,
+                                "Thirty minutes remaining",
+                                notification_icon
+                            );
+                            this.notifications.thirtyMinute = true;
+                        } else if (
+                            minutes_remaining === 15 &&
+                            !this.notifications.fifteenMinute &&
+                            this.allowedNotifications.intervals.fifteenMinute
+                        ) {
+                            this.notify(
+                                notification_title,
+                                "Fifteen minutes remaining",
+                                notification_icon
+                            );
+                            this.notifications.fifteenMinute = true;
+                        } else if (
+                            minutes_remaining === 10 &&
+                            !this.notifications.tenMinute &&
+                            this.allowedNotifications.intervals.tenMinute
+                        ) {
+                            this.notify(
+                                notification_title,
+                                "Ten minutes remaining",
+                                notification_icon
+                            );
+                            this.notifications.tenMinute = true;
+                        } else if (
+                            minutes_remaining === 5 &&
+                            !this.notifications.fiveMinute &&
+                            this.allowedNotifications.intervals.fiveMinute
+                        ) {
+                            this.notify(
+                                notification_title,
+                                "Five minutes remaining",
+                                notification_icon
+                            );
+                            this.notifications.fiveMinute = true;
+                        } else if (
+                            minutes_remaining === 1 &&
+                            !this.oneMinute_notification &&
+                            this.allowedNotifications.intervals.oneMinute
+                        ) {
+                            this.notify(
+                                notification_title,
+                                "One minute remaining",
+                                notification_icon
+                            );
+                            this.notifications.oneMinute = true;
+                        }
                     } else if (
-                        minutes_remaining == 15 &&
-                        !this.fifteen_minute_notification
+                        minutes_remaining === 0 &&
+                        Number(time_difference[2]) === 0 &&
+                        !this.notifications.thirtySecond &&
+                        this.allowedNotifications.intervals.thirtySecond
                     ) {
                         this.notify(
                             notification_title,
-                            "Fifteen minutes remaining",
+                            "Thirty seconds remaining",
                             notification_icon
                         );
-                        this.fifteen_minute_notification = true;
-                    } else if (
-                        minutes_remaining == 10 &&
-                        !this.ten_minute_notification
-                    ) {
-                        this.notify(
-                            notification_title,
-                            "Ten minutes remaining",
-                            notification_icon
-                        );
-                        this.ten_minute_notification = true;
-                    } else if (
-                        minutes_remaining == 5 &&
-                        !this.five_minute_notification
-                    ) {
-                        this.notify(
-                            notification_title,
-                            "Five minutes remaining",
-                            notification_icon
-                        );
-                        this.five_minute_notification = true;
-                    } else if (
-                        minutes_remaining == 1 &&
-                        !this.one_minute_notification
-                    ) {
-                        this.notify(
-                            notification_title,
-                            "One minute remaining",
-                            notification_icon
-                        );
-                        this.one_minute_notification = true;
+                        this.notifications.thirtySecond = true;
                     }
                 } else if (
-                    minutes_remaining == 0 &&
-                    Number(time_difference[2]) == 0 &&
-                    !this.thirty_second_notification
+                    Number(time_difference[0]) === 1 &&
+                    Number(time_difference[1]) === 0 &&
+                    Number(time_difference[2]) === 0 &&
+                    !this.notifications.oneHour &&
+                    this.allowedNotifications.intervals.oneHour
                 ) {
                     this.notify(
                         notification_title,
-                        "Thirty seconds remaining",
+                        "One hour remaining",
                         notification_icon
                     );
-                    this.thirty_second_notification = true;
+                    this.notifications.oneHour = true;
                 }
-            } else if (
-                Number(time_difference[0]) == 1 &&
-                Number(time_difference[1]) == 0 &&
-                Number(time_difference[2]) == 0 &&
-                !this.one_hour_notification
-            ) {
-                this.notify(
-                    notification_title,
-                    "One hour remaining",
-                    notification_icon
-                );
-                this.one_hour_notification = true;
             }
         },
-        calculate_time: function(time_1, time_2) {
+        calculateTimeDifference: function(time_1, time_2) {
             let time_1_string = time_1.replaceAll("-", ":"),
                 time_2_string = time_2.replaceAll("-", ":");
 
@@ -610,151 +956,127 @@ export default {
 
             return [hours, minutes, seconds];
         },
-        get_current_period: function() {
-            var current_period;
-            if (this.schedules[this.$route.params.id] !== undefined) {
-                var day_schedule = JSON.parse(
-                        this.schedules[this.$route.params.id].schedule
-                    )[this.current_day],
-                    split_time = this.current_split_time.split("-").join("");
-                //if (this.developer_mode) console.debug(day_schedule);
-                for (var _period in day_schedule) {
-                    var period = day_schedule[_period],
-                        period_start = period[0].split("-").join(""),
-                        period_end = period[1].split("-").join("");
+        getCurrentPeriod: function() {
+            var currentPeriod = false;
+            if (typeof this.schedule[this.currentDay] !== "undefined") {
+                var day_schedule = this.schedule[this.currentDay],
+                    split_time = this.currentSplitTime.split("-").join("");
+
+                Object.keys(day_schedule).forEach(period_name => {
+                    let period_times = day_schedule[period_name],
+                        period_start = period_times[0].replaceAll("-", ""),
+                        period_end = period_times[1].replaceAll("-", "");
 
                     if (
                         period_start <= split_time &&
                         split_time <= period_end
                     ) {
-                        this.current_period_raw = [_period, period];
-                        current_period = [_period, period];
+                        this.currentPeriodRaw = [period_name, period_times];
+                        currentPeriod = true;
                     }
-                }
-                if (!current_period) {
-                    this.current_period_raw = ["No Period", ""];
+                });
+
+                if (!currentPeriod) {
+                    this.currentPeriodRaw = ["No Period", ""];
                 }
             } else {
-                if (!current_period) {
-                    this.current_period_raw = ["No Periods Today", ""];
+                if (!currentPeriod) {
+                    this.currentPeriodRaw = ["No Periods Today", ""];
                 }
-
-                this.$router.push({
-                    name: "NotFound",
-                    query: { path: window.location.origin + this.$route.path }
-                });
             }
         },
-        get_next_period: function() {
-            var next_period;
-            if (this.schedules[this.$route.params.id] != undefined) {
-                var day_schedule = JSON.parse(
-                    this.schedules[this.$route.params.id].schedule
-                )[this.current_day];
+        getNextPeriod: function() {
+            var nextPeriod;
+
+            if (typeof this.schedule[this.currentDay] !== "undefined") {
+                var day_schedule = this.schedule[this.currentDay];
                 for (var _period in day_schedule) {
                     var period = day_schedule[_period],
                         period_start = period[0].split("-").join("");
 
-                    let previous_period_end;
-                    if (
-                        this.current_period_raw[1][1].split("-").slice(2, 3) !=
-                        "59"
-                    ) {
-                        previous_period_end = (
+                    let previousPeriod_end;
+                    if (this.currentPeriodRaw[1][1].split("-")[2] !== "59") {
+                        previousPeriod_end = (
                             Number(
-                                this.current_period_raw[1][1]
-                                    .split("-")
-                                    .join("")
+                                this.currentPeriodRaw[1][1].split("-").join("")
                             ) + 1
                         ).toString();
                     } else {
-                        let _end = this.current_period_raw[1][1].split("-"),
-                            hours = Number(_end.slice(0, 1)),
-                            minutes = Number(_end.slice(1, 2)),
-                            seconds = Number(_end.slice(2, 3));
+                        let end = this.currentPeriodRaw[1][1].split("-"),
+                            hours = Number(end[0]),
+                            minutes = Number(end[1]),
+                            seconds = Number(end[2]);
 
                         if (seconds >= 59) {
                             minutes += 1;
                             seconds =
                                 seconds >= 60 ? seconds - 60 : seconds - 59;
                         }
-                        //if (this.developer_mode) console.log("PPE [2]: ", hours, minutes, seconds);
+
                         if (minutes >= 59) {
                             hours += 1;
                             minutes =
                                 minutes > 59 ? minutes - 60 : minutes - 59;
                         }
-                        //if (this.developer_mode) console.log("PPE [3]: ", hours, minutes, seconds);
 
-                        previous_period_end =
-                            this.pad_number(hours) +
-                            this.pad_number(minutes) +
-                            this.pad_number(seconds);
+                        previousPeriod_end =
+                            this.padNumber(hours) +
+                            this.padNumber(minutes) +
+                            this.padNumber(seconds);
                     }
 
-                    /*if (this.developer_mode)
-                        console.log(
-                            _period,
-                            period,
-                            this.current_split_time,
-                            this.current_period_raw[1],
-                            period_start == previous_period_end,
-                            previous_period_end,
-                            Number(period_start).toString()
-                        );*/
-
-                    if (
-                        Number(period_start).toString() == previous_period_end
-                    ) {
-                        this.next_period_raw = [_period, period];
-                        next_period = [_period, period];
+                    if (Number(period_start).toString() == previousPeriod_end) {
+                        this.nextPeriodRaw = [_period, period];
+                        nextPeriod = [_period, period];
                     }
                 }
-                if (!next_period) {
-                    this.next_period_raw = ["No Period", ""];
+                if (!nextPeriod) {
+                    this.nextPeriodRaw = ["No Period", ""];
                 }
             } else {
-                if (!next_period) {
-                    this.next_period_raw = ["No Periods Today", ""];
+                if (!nextPeriod) {
+                    this.nextPeriodRaw = ["No Periods Today", ""];
                 }
             }
         },
-        update_times: function() {
+        updateTimes: function() {
             const d = new Date();
-            this.current_day = d
+
+            this.currentDay = d
                 .toLocaleDateString("en-us", { weekday: "short" })
                 .toUpperCase();
-            this.current_time =
-                this.pad_number(d.getHours().toString()) +
-                this.pad_number(d.getMinutes().toString());
-            this.current_split_time =
-                this.pad_number(d.getHours().toString()) +
-                "-" +
-                this.pad_number(d.getMinutes().toString()) +
-                "-" +
-                this.pad_number(d.getSeconds().toString());
 
-            this.current_pp.day = d.toLocaleDateString("en-us", {
+            this.currentTime =
+                this.padNumber(d.getHours().toString()) +
+                this.padNumber(d.getMinutes().toString());
+            this.currentSplitTime =
+                this.padNumber(d.getHours().toString()) +
+                "-" +
+                this.padNumber(d.getMinutes().toString()) +
+                "-" +
+                this.padNumber(d.getSeconds().toString());
+
+            /*
+            this.currentTime = "1252";
+            this.currentSplitTime = "12-52-33";
+            */
+
+            this.currentPrettyDateTime.day = d.toLocaleDateString("en-us", {
                 weekday: "long"
             });
-            this.current_pp.time = d.toLocaleString("en-us", {
+            this.currentPrettyDateTime.time = d.toLocaleString("en-us", {
                 hour: "numeric",
                 minute: "numeric",
                 second: "numeric",
                 hour12: !this.$twenty_four_hour_time
             });
         },
-        pad_number: function(number) {
-            var padded;
-            if (Number(number) < 10) {
-                padded = "0" + Number(number).toString();
-            } else {
-                padded = Number(number).toString();
-            }
-
-            return padded;
+        padNumber: function(number) {
+            return Number(number < 10)
+                ? "0" + Number(number).toString()
+                : Number(number).toString();
         },
-        show_toast: function(content, type) {
+        showToast: function(content, type) {
             // TODO: Switch to native Vuetify snackbar
             let toast_options = {
                 position: "bottom-right",
@@ -788,15 +1110,15 @@ export default {
                     this.$toast(content, toast_options);
             }
         },
-        notification_permissions_callback: function(result) {
+        notificationPermissionsCallback: function(result) {
             if (result != "granted") {
-                this.show_toast(
+                this.showToast(
                     'To receive notifications, click "Allow" on the notification permission pop-up',
                     "warning"
                 );
             }
         },
-        notify: function(title, body, icon) {
+        notify: function(title, body, icon = "") {
             this.$notification.show(
                 title,
                 {

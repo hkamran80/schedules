@@ -2,11 +2,12 @@
     <v-app id="app">
         <v-main>
             <v-container fluid>
-                <navigation-bar :schedules="schedules" />
+                <navigation-bar />
                 <router-view :schedules="schedules" />
 
                 <v-snackbar bottom right :value="updateExists" :timeout="-1">
-                    An update is available for Schedules!
+                    An update is available for Schedules! Check out what's new
+                    on the homepage!
 
                     <template v-slot:action="{ attrs }">
                         <v-btn
@@ -34,34 +35,34 @@ export default {
     data: () => ({
         debug: false,
         schedules: schedules,
-        base_document_title: "Schedules"
+        baseDocumentTitle: "Schedules"
     }),
     components: {
         NavigationBar
     },
     mixins: [update],
     created() {
-        if (this.$beta_mode) {
-            this.base_document_title = "Schedules (beta)";
+        if (this.$edge_mode) {
+            this.baseDocumentTitle = "Schedules (edge)";
         } else if (this.$dev_mode) {
-            this.base_document_title = "Schedules (dev)";
+            this.baseDocumentTitle = "Schedules (dev)";
         }
     },
     watch: {
         $route(to) {
             if (to.name === "Home") {
-                document.title = this.base_document_title;
+                document.title = this.baseDocumentTitle;
             } else if (
                 to.name === "Schedule" &&
                 typeof this.schedules[to.params.id] !== "undefined"
             ) {
-                document.title = `${this.base_document_title} | ${
+                document.title = `${this.baseDocumentTitle} | ${
                     this.schedules[to.params.id].name
                 }`;
             } else if (to.name === "NotFound") {
-                document.title = `${this.base_document_title} | Page Not Found`;
+                document.title = `${this.baseDocumentTitle} | Page Not Found`;
             } else {
-                document.title = this.base_document_title;
+                document.title = this.baseDocumentTitle;
             }
         }
     }
@@ -70,7 +71,7 @@ export default {
 
 <style>
 #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
+    font-family: Lato, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: left;
@@ -83,7 +84,6 @@ a {
 
 /* Global Classes */
 .text-wrap--break {
-    display: inline-block;
     word-break: break-word;
     word-wrap: break-word;
 }

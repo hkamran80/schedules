@@ -8,6 +8,21 @@
         <meta name="Description" content="An app for schedules" />
 
         <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+
+        <link
+            rel="preload"
+            href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css"
+            as="style"
+        />
+        <link
+            rel="preload"
+            href="https://umami-sepia.vercel.app/umami.js"
+            as="script"
+        />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap"
+        />
         <link
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css"
@@ -17,12 +32,12 @@
     </head>
     <body>
         <noscript>
-            <article>
-                <h1>JavaScript Notice for Schedules</h1>
-                <div>
+            <div id="container">
+                <div id="body">
+                    <h1>JavaScript</h1>
                     <p>
-                        The redesigned version of Schedules requires JavaScript
-                        to be enabled. Please enable it to continue. You can use
+                        Schedules requires JavaScript to be enabled. Please
+                        enable it to continue. You can use
                         <a
                             href="https://support.google.com/adsense/answer/12654?hl=en"
                             target="_blank"
@@ -36,40 +51,31 @@
                     </p>
                     <p>Thank you for using Schedules.</p>
                 </div>
-            </article>
+            </div>
             <style>
-                body {
-                    text-align: center;
-                    padding: 20px;
+                body,
+                html {
+                    height: 100%;
+                    margin: 0;
                 }
-                @media (min-width: 768px) {
-                    body {
-                        padding-top: 150px;
-                    }
+
+                #container {
+                    height: 100%;
+                    background-position: center;
+                    background-size: cover;
+                    position: relative;
+                    font-family: Lato, sans-serif;
+                    font-size: 25px;
                 }
-                h1 {
-                    font-size: 50px;
-                }
-                body {
-                    font: 20px Helvetica, sans-serif;
-                    color: #333;
-                }
-                article {
-                    display: block;
-                    text-align: left;
-                    max-width: 650px;
-                    margin: 0 auto;
-                }
-                a {
-                    color: #dc8100;
-                    text-decoration: none;
-                }
-                a:hover {
-                    color: #333;
-                    text-decoration: none;
+                #body {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
                 }
             </style>
         </noscript>
-        <div id="app"></div>
+
+        <div id="app" />
     </body>
 </html>

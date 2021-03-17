@@ -1,0 +1,21 @@
+{
+    "2.2.0 (Edge-9)": [
+        "Added a timetable view to the schedule view",
+        "Added this modal for informing users what's new in Schedules",
+        "Improve next period calculation",
+        "Update custom period name display",
+        "Rename beta to edge",
+        "Change developer mode to debug mode",
+        "Add toggle for debug mode",
+        "Add anonymous analytics through Umami",
+        "Add privacy notice for analytics",
+        "Rename beta versioning (X.X.X-beta) to use edge (X.X.X-edge)",
+        "Switch to JSON object for the schedule in schedules.json",
+        "The beginnings of adding a new schedule in the app",
+        "Switch font to Lato",
+        "Add settings panel to manage period names and notifications",
+        "Add notification interval, day, and period toggles",
+        "Add AUHSD Hybrid schedule",
+        "Add security headers"
+    ]
+}

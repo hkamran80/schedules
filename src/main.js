@@ -10,16 +10,8 @@ import "vue-toastification/dist/index.css";
 Vue.config.productionTip = false;
 
 Vue.prototype.$dev_mode = process.env.NODE_ENV === "development";
-Vue.prototype.$beta_mode = process.env.VUE_APP_BETA_MODE === "true";
-
-Vue.prototype.$twenty_four_hour_time = false;
-Vue.prototype.$allow_one_hour_notification = true;
-Vue.prototype.$allow_thirty_minute_notification = true;
-Vue.prototype.$allow_fifteen_minute_notification = true;
-Vue.prototype.$allow_ten_minute_notification = true;
-Vue.prototype.$allow_five_minute_notification = true;
-Vue.prototype.$allow_one_minute_notification = true;
-Vue.prototype.$allow_thirty_second_notification = true;
+Vue.prototype.$edge_mode = process.env.VUE_APP_EDGE_MODE === "true";
+Vue.prototype.$app_version = require("../package.json").version;
 
 Vue.use(VueNativeNotification, {
     requestOnNotify: true
