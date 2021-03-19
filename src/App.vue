@@ -27,13 +27,12 @@
 
 <script>
 import NavigationBar from "@/components/NavigationBar.vue";
-import update from "./mixins/update";
+import update from "@/mixins/update";
 import schedules from "@/schedules.json";
 
 export default {
     name: "App",
     data: () => ({
-        debug: false,
         schedules: schedules,
         baseDocumentTitle: "Schedules"
     }),

@@ -1,5 +1,5 @@
 {
-    "2.2.0 (Edge-9)": [
+    "2.2.0": [
         "Added a timetable view to the schedule view",
         "Added this modal for informing users what's new in Schedules",
         "Improve next period calculation",
@@ -17,5 +17,6 @@
         "Add notification interval, day, and period toggles",
         "Add AUHSD Hybrid schedule",
         "Add security headers"
-    ]
+    ],
+    "2.2.1 (Edge-1)": ["Fix Umami analytics activation"]
 }

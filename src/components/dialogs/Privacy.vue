@@ -85,13 +85,11 @@
 </template>
 
 <script>
+import umami from "@/mixins/umami";
+
 export default {
     name: "Privacy",
-    data: function() {
-        return {
-            umamiInstalled: document.getElementById("umami-script") !== null
-        };
-    },
+    mixins: [umami],
     methods: {
         toggleUmami: function() {
             if (this.umamiInstalled) {
@@ -104,12 +102,6 @@ export default {
 
             this.umamiInstalled =
                 document.getElementById("umami-script") !== null;
-        },
-        installUmami: function() {
-            this.$emit("installUmami");
-        },
-        uninstallUmami: function() {
-            this.$emit("uninstallUmami");
         },
         closeDialog: function() {
             this.$emit("close");
