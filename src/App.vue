@@ -28,6 +28,7 @@
 <script>
 import NavigationBar from "@/components/NavigationBar.vue";
 import update from "@/mixins/update";
+import umami from "@/mixins/umami";
 import schedules from "@/schedules.json";
 
 export default {
@@ -39,7 +40,7 @@ export default {
     components: {
         NavigationBar
     },
-    mixins: [update],
+    mixins: [update, umami],
     created() {
         if (this.$edge_mode) {
             this.baseDocumentTitle = "Schedules (edge)";
