@@ -377,7 +377,13 @@ import CenterLayout from "@/components/CenterLayout.vue";
 export default {
     name: "Schedule",
     props: {
-        schedules: Object
+        schedules: {
+            type: Object,
+            required: true,
+            default: function() {
+                return {};
+            }
+        }
     },
     components: { CenterLayout },
     data: function() {

@@ -81,7 +81,13 @@ import Privacy from "@/components/dialogs/Privacy.vue";
 export default {
     name: "Home",
     props: {
-        schedules: Object
+        schedules: {
+            type: Object,
+            required: true,
+            default: function() {
+                return {};
+            }
+        }
     },
     components: { CenterLayout, WhatsNew, Privacy },
     data: function() {
