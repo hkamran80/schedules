@@ -21,21 +21,22 @@
             </v-card-title>
         </v-card>
 
-        <v-divider class="my-5" />
+        <div v-if="$edge_mode || $dev_mode">
+            <v-divider class="my-5" />
 
-        <v-card
-            :to="{ name: 'NewSchedule' }"
-            class="mx-auto schedule-card text-wrap--break"
-            outlined
-            v-if="$edge_mode || $dev_mode"
-        >
-            <v-card-title>
-                <v-icon medium left>
-                    mdi-plus
-                </v-icon>
-                New Schedule (alpha)
-            </v-card-title>
-        </v-card>
+            <v-card
+                :to="{ name: 'NewSchedule' }"
+                class="mx-auto schedule-card text-wrap--break"
+                outlined
+            >
+                <v-card-title>
+                    <v-icon medium left>
+                        mdi-plus
+                    </v-icon>
+                    New Schedule (alpha)
+                </v-card-title>
+            </v-card>
+        </div>
 
         <v-divider class="my-5" />
 
