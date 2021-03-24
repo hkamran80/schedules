@@ -17,5 +17,9 @@
         "Add notification interval, day, and period toggles",
         "Add AUHSD Hybrid schedule",
         "Add security headers"
+    ],
+    "2.2.1": [
+        "Fix Umami analytics activation",
+        "Fix duplicate divider issue with feature coming soon (currently in alpha)"
     ]
 }

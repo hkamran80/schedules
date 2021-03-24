@@ -27,20 +27,20 @@
 
 <script>
 import NavigationBar from "@/components/NavigationBar.vue";
-import update from "./mixins/update";
+import update from "@/mixins/update";
+import umami from "@/mixins/umami";
 import schedules from "@/schedules.json";
 
 export default {
     name: "App",
     data: () => ({
-        debug: false,
         schedules: schedules,
         baseDocumentTitle: "Schedules"
     }),
     components: {
         NavigationBar
     },
-    mixins: [update],
+    mixins: [update, umami],
     created() {
         if (this.$edge_mode) {
             this.baseDocumentTitle = "Schedules (edge)";
