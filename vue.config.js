@@ -12,6 +12,11 @@ module.exports = {
             return args;
         });
     },
+    configureWebpack: {
+        output: {
+            crossOriginLoading: "anonymous"
+        }
+    },
     pwa: {
         name:
             process.env.NODE_ENV === "development"
