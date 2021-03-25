@@ -40,6 +40,8 @@ if (!Vue.prototype.$dev_mode) {
         // We recommend adjusting this value in production
         tracesSampleRate: 1.0
     });
+
+    undefinedFunctionErrorPleaseInformSentryPrettyPlease();
 }
 
 new Vue({
