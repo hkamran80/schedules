@@ -21,5 +21,6 @@
     "2.2.1": [
         "Fix Umami analytics activation",
         "Fix duplicate divider issue with feature coming soon (currently in alpha)"
-    ]
+    ],
+    "2.2.2 (Edge-1)": ["Add Sentry.io tracking"]
 }
