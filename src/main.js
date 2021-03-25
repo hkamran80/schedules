@@ -14,9 +14,9 @@ import { Integrations } from "@sentry/tracing";
 Vue.config.productionTip = false;
 
 // Vue Global Variables
-Vue.prototype.$dev_mode = process.env.NODE_ENV === "development";
-Vue.prototype.$edge_mode = process.env.VUE_APP_EDGE_MODE === "true";
-Vue.prototype.$app_version = require("../package.json").version;
+Vue.prototype.$developmentMode = process.env.NODE_ENV === "development";
+Vue.prototype.$edgeMode = process.env.VUE_APP_EDGE_MODE === "true";
+Vue.prototype.$appVersion = require("../package.json").version;
 
 Vue.use(VueNativeNotification, {
     requestOnNotify: true
@@ -28,7 +28,7 @@ Vue.use(Toast, {
 });
 
 // Sentry.io Tracking
-if (!Vue.prototype.$dev_mode) {
+if (!Vue.prototype.$developmentMode) {
     Sentry.init({
         Vue,
         dsn: process.env.VUE_APP_SENTRY_DSN,

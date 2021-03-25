@@ -21,23 +21,31 @@
                     <v-btn
                         icon
                         color="primary"
-                        v-if="$edge_mode || $dev_mode"
+                        title="Toggle Debug Mode"
+                        aria-label="Toggle Debug Mode"
+                        v-if="$edgeMode || $developmentMode"
                         @click="toggleDebugMode"
                     >
-                        <v-icon>
-                            mdi-console-line
-                        </v-icon>
+                        <v-icon v-text="mdiConsoleLine" />
                     </v-btn>
                     <v-btn
                         icon
                         color="primary"
-                        @click="timetable = true"
+                        title="Open Timetable"
+                        aria-label="Open Timetable"
                         :disabled="schedulePeriods.length === 0"
+                        @click="timetable = true"
                     >
-                        <v-icon>mdi-calendar-outline</v-icon>
+                        <v-icon v-text="mdiCalendarOutline" />
                     </v-btn>
-                    <v-btn icon color="primary" @click="settingsDialog = true">
-                        <v-icon>mdi-cog-outline</v-icon>
+                    <v-btn
+                        icon
+                        color="primary"
+                        title="Open Schedule Preferences"
+                        aria-label="Open Schedule Preferences"
+                        @click="settingsDialog = true"
+                    >
+                        <v-icon v-text="mdiCogOutline" />
                     </v-btn>
                 </v-col>
             </v-row>
@@ -101,13 +109,19 @@
                             Edit Period Names
                         </v-col>
                         <v-col cols="4" class="text-right">
-                            <v-btn icon @click="savePeriodNames">
-                                <v-icon color="primary">
-                                    mdi-content-save-outline
-                                </v-icon>
+                            <v-btn
+                                icon
+                                color="primary"
+                                @click="savePeriodNames"
+                            >
+                                <v-icon v-text="mdiContentSaveOutline" />
                             </v-btn>
-                            <v-btn icon @click="editDialog = false">
-                                <v-icon color="primary">mdi-close</v-icon>
+                            <v-btn
+                                icon
+                                color="primary"
+                                @click="editDialog = false"
+                            >
+                                <v-icon v-text="mdiClose" />
                             </v-btn>
                         </v-col>
                     </v-row>
@@ -141,8 +155,12 @@
                             Settings
                         </v-col>
                         <v-col cols="4" class="text-right">
-                            <v-btn icon @click="settingsDialog = false">
-                                <v-icon color="primary">mdi-close</v-icon>
+                            <v-btn
+                                icon
+                                color="primary"
+                                @click="settingsDialog = false"
+                            >
+                                <v-icon v-text="mdiClose" />
                             </v-btn>
                         </v-col>
                     </v-row>
@@ -280,16 +298,19 @@
                             Export Period Names
                         </v-col>
                         <v-col cols="4" class="text-right">
-                            <v-btn icon @click="copyExportedPeriodNames">
-                                <v-icon color="primary">
-                                    mdi-content-copy
-                                </v-icon>
+                            <v-btn
+                                icon
+                                color="primary"
+                                @click="copyExportedPeriodNames"
+                            >
+                                <v-icon v-text="mdiContentCopy" />
                             </v-btn>
                             <v-btn
                                 icon
+                                color="primary"
                                 @click="periodNamesExportDialog = false"
                             >
-                                <v-icon color="primary">mdi-close</v-icon>
+                                <v-icon v-text="mdiClose" />
                             </v-btn>
                         </v-col>
                     </v-row>
@@ -317,21 +338,21 @@
                         <v-col cols="4" class="text-right">
                             <v-btn
                                 icon
+                                color="primary"
                                 @click="importPeriodNamesString"
                                 :disabled="
                                     periodNamesImport.string === null ||
                                         periodNamesImport.string === ''
                                 "
                             >
-                                <v-icon color="primary">
-                                    mdi-calendar-import
-                                </v-icon>
+                                <v-icon v-text="mdiCalendarImport" />
                             </v-btn>
                             <v-btn
                                 icon
+                                color="primary"
                                 @click="periodNamesImport.dialog = false"
                             >
-                                <v-icon color="primary">mdi-close</v-icon>
+                                <v-icon v-text="mdiClose" />
                             </v-btn>
                         </v-col>
                     </v-row>
@@ -350,19 +371,13 @@
         <div v-if="debugMode">
             <v-divider />
             <v-card class="mx-auto" outlined>
-                <v-card-text v-text="$app_version" />
+                <v-card-text v-text="`${$appVersion}`" />
                 <v-divider />
-                <v-card-text>
-                    {{ currentDay }} - {{ currentSplitTime }}
-                </v-card-text>
+                <v-card-text v-text="`${currentDay} - ${currentSplitTime}`" />
                 <v-divider />
-                <v-card-text>
-                    {{ currentPeriodRaw }}
-                </v-card-text>
+                <v-card-text v-text="currentPeriodRaw" />
                 <v-divider />
-                <v-card-text>
-                    {{ nextPeriodRaw }}
-                </v-card-text>
+                <v-card-text v-text="nextPeriodRaw" />
             </v-card>
             <v-btn text block @click="debugFunction">
                 Debug Function
@@ -373,6 +388,15 @@
 
 <script>
 import CenterLayout from "@/components/CenterLayout.vue";
+import {
+    mdiConsoleLine,
+    mdiCalendarOutline,
+    mdiCogOutline,
+    mdiContentSaveOutline,
+    mdiClose,
+    mdiContentCopy,
+    mdiCalendarImport
+} from "@mdi/js";
 
 export default {
     name: "Schedule",
@@ -461,7 +485,16 @@ export default {
             },
 
             mainInterval: null,
-            debugMode: this.$route.query.debug === "true"
+            debugMode: this.$route.query.debug === "true",
+
+            // Icons
+            mdiConsoleLine: mdiConsoleLine,
+            mdiCalendarOutline: mdiCalendarOutline,
+            mdiCogOutline: mdiCogOutline,
+            mdiContentSaveOutline: mdiContentSaveOutline,
+            mdiClose: mdiClose,
+            mdiContentCopy: mdiContentCopy,
+            mdiCalendarImport: mdiCalendarImport
         };
     },
     created() {
@@ -497,22 +530,22 @@ export default {
         },
         calendarIntervalCount: function() {
             if (typeof this.schedule[this.currentDay] !== "undefined") {
-                let end_times = this.schedule[this.currentDay][
+                let endTimes = this.schedule[this.currentDay][
                         Object.keys(this.schedule[this.currentDay]).slice(-1)[0]
                     ][1].split("-"),
-                    start_time_hour = Number(
+                    startTimeHour = Number(
                         this.schedule[this.currentDay][
                             Object.keys(this.schedule[this.currentDay])[0]
                         ][0].split("-")[0]
                     ),
-                    end_time_hour;
+                    endTimeHour;
 
-                end_time_hour =
-                    Number(end_times[1]) !== 0
-                        ? Number(end_times[0]) + 1
-                        : Number(end_times[0]);
+                endTimeHour =
+                    Number(endTimes[1]) !== 0
+                        ? Number(endTimes[0]) + 1
+                        : Number(endTimes[0]);
 
-                return end_time_hour - start_time_hour;
+                return endTimeHour - startTimeHour;
             } else {
                 return null;
             }
@@ -527,20 +560,20 @@ export default {
         schedulePeriods: function() {
             let periods = [];
             if (typeof this.schedule[this.currentDay] !== "undefined") {
-                let day_schedule = this.schedule[this.currentDay],
+                let daySchedule = this.schedule[this.currentDay],
                     d = new Date(),
                     date = `${d.getFullYear()}-${this.padNumber(
                         Number(d.getMonth()) + 1
                     )}-${this.padNumber(d.getDate())}`;
 
-                Object.keys(day_schedule).forEach(period =>
+                Object.keys(daySchedule).forEach(period =>
                     periods.push({
                         name: this.checkForCustomPeriodName(period, true),
-                        start: `${date} ${day_schedule[period][0].replaceAll(
+                        start: `${date} ${daySchedule[period][0].replaceAll(
                             "-",
                             ":"
                         )}`,
-                        end: `${date} ${day_schedule[period][1].replaceAll(
+                        end: `${date} ${daySchedule[period][1].replaceAll(
                             "-",
                             ":"
                         )}`,
@@ -614,25 +647,26 @@ export default {
         },
         importPeriodNamesString: function() {
             try {
-                let periodNamesImport_string = JSON.parse(
+                let periodNamesImportString = JSON.parse(
                     this.periodNamesImport.string
                 );
 
                 this.getPeriodNames();
-                let pn_keys = Object.keys(this.periodNames),
-                    pn_match;
+                let periodNameKeys = Object.keys(this.periodNames),
+                    periodNameMatch;
 
-                Object.keys(periodNamesImport_string).forEach(key => {
-                    if (pn_match !== false) {
-                        pn_match = pn_keys.indexOf(key) !== -1 ? true : false;
+                Object.keys(periodNamesImportString).forEach(key => {
+                    if (periodNameMatch !== false) {
+                        periodNameMatch =
+                            periodNameKeys.indexOf(key) !== -1 ? true : false;
                     }
                 });
 
-                if (pn_match) {
-                    this.periodNames = periodNamesImport_string;
+                if (periodNameMatch) {
+                    this.periodNames = periodNamesImportString;
                     localStorage.setItem(
                         `schedule.${this.$route.params.id}`,
-                        JSON.stringify(periodNamesImport_string)
+                        JSON.stringify(periodNamesImportString)
                     );
 
                     this.periodNamesImport.string = null;
@@ -657,10 +691,10 @@ export default {
             }
         },
         copyExportedPeriodNames: function() {
-            let epn_element = document.getElementById(
+            let exportedPeriodNamesElement = document.getElementById(
                 "exportPeriodNamesString"
             );
-            epn_element.select();
+            exportedPeriodNamesElement.select();
             document.execCommand("copy");
 
             this.showToast("Copied period names to the clipboard", "info");
@@ -671,18 +705,18 @@ export default {
             console.debug("Development function called");
             console.debug(this.currentPrettyDateTime.day.toLowerCase());
         },
-        checkForCustomPeriodName: function(period_name, with_period = false) {
+        checkForCustomPeriodName: function(periodName, withPeriod = false) {
             this.getPeriodNames();
 
             if (
-                typeof this.periodNames[period_name] === "undefined" ||
-                this.periodNames[period_name] === ""
+                typeof this.periodNames[periodName] === "undefined" ||
+                this.periodNames[periodName] === ""
             ) {
-                return period_name;
+                return periodName;
             } else {
-                return with_period
-                    ? `${this.periodNames[period_name]} (${period_name})`
-                    : this.periodNames[period_name];
+                return withPeriod
+                    ? `${this.periodNames[periodName]} (${periodName})`
+                    : this.periodNames[periodName];
             }
         },
         openEditDialog: function() {
@@ -746,44 +780,44 @@ export default {
 
                 this.updateNextPeriod();
 
-                let compiled_time_difference;
-                var time_difference;
+                let compiledTimeDifference;
+                var timeDifference;
                 if (this.currentPeriodRaw[1] !== "") {
-                    let scheduled_end = this.currentPeriodRaw[1][1].toString();
+                    let scheduledEnd = this.currentPeriodRaw[1][1].toString();
 
-                    time_difference = this.calculateTimeDifference(
+                    timeDifference = this.calculateTimeDifference(
                         this.currentSplitTime,
-                        scheduled_end
+                        scheduledEnd
                     );
 
-                    if (time_difference[0] === 0) {
-                        if (time_difference[1] === 0) {
-                            compiled_time_difference =
-                                "00:00:" + this.padNumber(time_difference[2]);
+                    if (timeDifference[0] === 0) {
+                        if (timeDifference[1] === 0) {
+                            compiledTimeDifference =
+                                "00:00:" + this.padNumber(timeDifference[2]);
                         } else {
-                            compiled_time_difference =
-                                time_difference[2] === 0
+                            compiledTimeDifference =
+                                timeDifference[2] === 0
                                     ? "00:" +
-                                      this.padNumber(time_difference[1]) +
+                                      this.padNumber(timeDifference[1]) +
                                       ":00"
                                     : "00:" +
-                                      this.padNumber(time_difference[1]) +
+                                      this.padNumber(timeDifference[1]) +
                                       ":" +
-                                      this.padNumber(time_difference[2]);
+                                      this.padNumber(timeDifference[2]);
                         }
                     } else {
-                        compiled_time_difference =
-                            this.padNumber(time_difference[0]) +
+                        compiledTimeDifference =
+                            this.padNumber(timeDifference[0]) +
                             ":" +
-                            this.padNumber(time_difference[1]) +
+                            this.padNumber(timeDifference[1]) +
                             ":" +
-                            this.padNumber(time_difference[2]);
+                            this.padNumber(timeDifference[2]);
                     }
                 } else {
-                    compiled_time_difference = "";
-                    time_difference = "";
+                    compiledTimeDifference = "";
+                    timeDifference = "";
                 }
-                this.timeRemaining = compiled_time_difference;
+                this.timeRemaining = compiledTimeDifference;
 
                 if (this.differentPeriod) {
                     this.differentPeriod = false;
@@ -797,8 +831,8 @@ export default {
                     this.notifications.thirtySecond = false;
                 }
 
-                if (time_difference) {
-                    this.scheduledNotifications(time_difference);
+                if (timeDifference) {
+                    this.scheduledNotifications(timeDifference);
                 }
             } else {
                 this.currentPeriod = this.checkForCustomPeriodName(
@@ -817,40 +851,45 @@ export default {
                 this.nextPeriodRaw[0] != "No Period" &&
                 this.nextPeriodRaw[0] != "No Periods Today"
             ) {
-                let np_starting_string;
+                let nextPeriodStartTimeString;
 
+                // FIXME: Add 24-hour time variable
                 if (!this.$twenty_four_hour_time) {
-                    let np_starting_hour = Number(
+                    let nextPeriodStartTimeHour = Number(
                         this.nextPeriodRaw[1][0].split("-").slice(0, 1)
                     );
 
-                    let hour_string =
-                        np_starting_hour > 12
-                            ? (np_starting_hour - 12).toString()
-                            : np_starting_hour.toString();
+                    let hourString =
+                        nextPeriodStartTimeHour > 12
+                            ? (nextPeriodStartTimeHour - 12).toString()
+                            : nextPeriodStartTimeHour.toString();
 
-                    let np_starting =
-                        hour_string +
+                    let nextPeriodStartTime =
+                        hourString +
                         ":" +
                         this.nextPeriodRaw[1][0].split("-").slice(1, 2);
-                    let np_starting_12hr = np_starting_hour >= 12 ? "PM" : "AM";
+                    let nextPeriodStartTimeTwelveHour =
+                        nextPeriodStartTimeHour >= 12 ? "PM" : "AM";
 
-                    np_starting_string = np_starting + " " + np_starting_12hr;
+                    nextPeriodStartTimeString =
+                        nextPeriodStartTime +
+                        " " +
+                        nextPeriodStartTimeTwelveHour;
                 } else {
-                    np_starting_string = this.nextPeriodRaw[1][0]
+                    nextPeriodStartTimeString = this.nextPeriodRaw[1][0]
                         .split("-")
                         .slice(0, 2)
                         .join(":");
                 }
-                this.nextPeriodStarting = np_starting_string;
+                this.nextPeriodStarting = nextPeriodStartTimeString;
             }
         },
-        scheduledNotifications: function(time_difference) {
-            let notification_title =
-                this.schedules[this.$route.params.id].short_name +
+        scheduledNotifications: function(timeDifference) {
+            let notificationTitle =
+                this.schedules[this.$route.params.id].shortName +
                 " - " +
                 this.currentPeriod;
-            let notification_icon = "";
+            let notificationIcon = "";
 
             if (
                 this.allowedNotifications.days[
@@ -858,103 +897,103 @@ export default {
                 ] &&
                 this.allowedNotifications.periods[this.currentPeriod]
             ) {
-                if (Number(time_difference[0]) === 0) {
-                    let minutes_remaining = Number(time_difference[1]);
-                    if (Number(time_difference[2]) == 0) {
+                if (Number(timeDifference[0]) === 0) {
+                    let minutesRemaining = Number(timeDifference[1]);
+                    if (Number(timeDifference[2]) == 0) {
                         if (
-                            minutes_remaining === 30 &&
+                            minutesRemaining === 30 &&
                             !this.notifications.thirtyMinute &&
                             this.allowedNotifications.intervals.thirtyMinute
                         ) {
                             this.notify(
-                                notification_title,
+                                notificationTitle,
                                 "Thirty minutes remaining",
-                                notification_icon
+                                notificationIcon
                             );
                             this.notifications.thirtyMinute = true;
                         } else if (
-                            minutes_remaining === 15 &&
+                            minutesRemaining === 15 &&
                             !this.notifications.fifteenMinute &&
                             this.allowedNotifications.intervals.fifteenMinute
                         ) {
                             this.notify(
-                                notification_title,
+                                notificationTitle,
                                 "Fifteen minutes remaining",
-                                notification_icon
+                                notificationIcon
                             );
                             this.notifications.fifteenMinute = true;
                         } else if (
-                            minutes_remaining === 10 &&
+                            minutesRemaining === 10 &&
                             !this.notifications.tenMinute &&
                             this.allowedNotifications.intervals.tenMinute
                         ) {
                             this.notify(
-                                notification_title,
+                                notificationTitle,
                                 "Ten minutes remaining",
-                                notification_icon
+                                notificationIcon
                             );
                             this.notifications.tenMinute = true;
                         } else if (
-                            minutes_remaining === 5 &&
+                            minutesRemaining === 5 &&
                             !this.notifications.fiveMinute &&
                             this.allowedNotifications.intervals.fiveMinute
                         ) {
                             this.notify(
-                                notification_title,
+                                notificationTitle,
                                 "Five minutes remaining",
-                                notification_icon
+                                notificationIcon
                             );
                             this.notifications.fiveMinute = true;
                         } else if (
-                            minutes_remaining === 1 &&
-                            !this.oneMinute_notification &&
+                            minutesRemaining === 1 &&
+                            !this.notifications.oneMinute &&
                             this.allowedNotifications.intervals.oneMinute
                         ) {
                             this.notify(
-                                notification_title,
+                                notificationTitle,
                                 "One minute remaining",
-                                notification_icon
+                                notificationIcon
                             );
                             this.notifications.oneMinute = true;
                         }
                     } else if (
-                        minutes_remaining === 0 &&
-                        Number(time_difference[2]) === 0 &&
+                        minutesRemaining === 0 &&
+                        Number(timeDifference[2]) === 0 &&
                         !this.notifications.thirtySecond &&
                         this.allowedNotifications.intervals.thirtySecond
                     ) {
                         this.notify(
-                            notification_title,
+                            notificationTitle,
                             "Thirty seconds remaining",
-                            notification_icon
+                            notificationIcon
                         );
                         this.notifications.thirtySecond = true;
                     }
                 } else if (
-                    Number(time_difference[0]) === 1 &&
-                    Number(time_difference[1]) === 0 &&
-                    Number(time_difference[2]) === 0 &&
+                    Number(timeDifference[0]) === 1 &&
+                    Number(timeDifference[1]) === 0 &&
+                    Number(timeDifference[2]) === 0 &&
                     !this.notifications.oneHour &&
                     this.allowedNotifications.intervals.oneHour
                 ) {
                     this.notify(
-                        notification_title,
+                        notificationTitle,
                         "One hour remaining",
-                        notification_icon
+                        notificationIcon
                     );
                     this.notifications.oneHour = true;
                 }
             }
         },
-        calculateTimeDifference: function(time_1, time_2) {
-            let time_1_string = time_1.replaceAll("-", ":"),
-                time_2_string = time_2.replaceAll("-", ":");
+        calculateTimeDifference: function(firstTime, secondTime) {
+            let firstTimeString = firstTime.replaceAll("-", ":"),
+                secondTimeString = secondTime.replaceAll("-", ":");
 
-            let start_time = new Date("1970-01-01 " + time_1_string),
-                end_time = new Date("1970-01-01 " + time_2_string);
-            let ms_difference = end_time - start_time;
+            let startTime = new Date("1970-01-01 " + firstTimeString),
+                endTime = new Date("1970-01-01 " + secondTimeString);
+            let millisecondDifference = endTime - startTime;
 
-            let seconds = ms_difference / 1000;
+            let seconds = millisecondDifference / 1000;
             let hours = parseInt(seconds / 3600);
             seconds = seconds % 3600;
             let minutes = parseInt(seconds / 60);
@@ -965,19 +1004,19 @@ export default {
         getCurrentPeriod: function() {
             var currentPeriod = false;
             if (typeof this.schedule[this.currentDay] !== "undefined") {
-                var day_schedule = this.schedule[this.currentDay],
-                    split_time = this.currentSplitTime.split("-").join("");
+                var daySchedule = this.schedule[this.currentDay],
+                    splitTime = this.currentSplitTime.split("-").join("");
 
-                Object.keys(day_schedule).forEach(period_name => {
-                    let period_times = day_schedule[period_name],
-                        period_start = period_times[0].replaceAll("-", ""),
-                        period_end = period_times[1].replaceAll("-", "");
+                Object.keys(daySchedule).forEach(periodName => {
+                    let periodTimes = daySchedule[periodName],
+                        periodStartTime = periodTimes[0].replaceAll("-", ""),
+                        periodEndTime = periodTimes[1].replaceAll("-", "");
 
                     if (
-                        period_start <= split_time &&
-                        split_time <= period_end
+                        periodStartTime <= splitTime &&
+                        splitTime <= periodEndTime
                     ) {
-                        this.currentPeriodRaw = [period_name, period_times];
+                        this.currentPeriodRaw = [periodName, periodTimes];
                         currentPeriod = true;
                     }
                 });
@@ -995,14 +1034,14 @@ export default {
             var nextPeriod;
 
             if (typeof this.schedule[this.currentDay] !== "undefined") {
-                var day_schedule = this.schedule[this.currentDay];
-                for (var _period in day_schedule) {
-                    var period = day_schedule[_period],
-                        period_start = period[0].split("-").join("");
+                var daySchedule = this.schedule[this.currentDay];
+                for (var _period in daySchedule) {
+                    var period = daySchedule[_period],
+                        periodStartTime = period[0].split("-").join("");
 
-                    let previousPeriod_end;
+                    let previousPeriodEndTime;
                     if (this.currentPeriodRaw[1][1].split("-")[2] !== "59") {
-                        previousPeriod_end = (
+                        previousPeriodEndTime = (
                             Number(
                                 this.currentPeriodRaw[1][1].split("-").join("")
                             ) + 1
@@ -1025,13 +1064,16 @@ export default {
                                 minutes > 59 ? minutes - 60 : minutes - 59;
                         }
 
-                        previousPeriod_end =
+                        previousPeriodEndTime =
                             this.padNumber(hours) +
                             this.padNumber(minutes) +
                             this.padNumber(seconds);
                     }
 
-                    if (Number(period_start).toString() == previousPeriod_end) {
+                    if (
+                        Number(periodStartTime).toString() ==
+                        previousPeriodEndTime
+                    ) {
                         this.nextPeriodRaw = [_period, period];
                         nextPeriod = [_period, period];
                     }
@@ -1062,11 +1104,6 @@ export default {
                 "-" +
                 this.padNumber(d.getSeconds().toString());
 
-            /*
-            this.currentTime = "1252";
-            this.currentSplitTime = "12-52-33";
-            */
-
             this.currentPrettyDateTime.day = d.toLocaleDateString("en-us", {
                 weekday: "long"
             });
@@ -1084,7 +1121,7 @@ export default {
         },
         showToast: function(content, type) {
             // TODO: Switch to native Vuetify snackbar
-            let toast_options = {
+            let toastOptions = {
                 position: "bottom-right",
                 timeout: 5000,
                 closeOnClick: true,
@@ -1101,19 +1138,19 @@ export default {
 
             switch (type) {
                 case "warning":
-                    this.$toast.warning(content, toast_options);
+                    this.$toast.warning(content, toastOptions);
                     break;
                 case "success":
-                    this.$toast.success(content, toast_options);
+                    this.$toast.success(content, toastOptions);
                     break;
                 case "info":
-                    this.$toast.info(content, toast_options);
+                    this.$toast.info(content, toastOptions);
                     break;
                 case "error":
-                    this.$toast.error(content, toast_options);
+                    this.$toast.error(content, toastOptions);
                     break;
                 default:
-                    this.$toast(content, toast_options);
+                    this.$toast(content, toastOptions);
             }
         },
         notificationPermissionsCallback: function(result) {

@@ -9,11 +9,9 @@
 
         <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
 
-        <link
-            rel="preload"
-            href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css"
-            as="style"
-        />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+
         <link
             rel="preload"
             href="https://umami-sepia.vercel.app/umami.js"
@@ -22,10 +20,6 @@
         <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap"
-        />
-        <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css"
         />
 
         <title><%= htmlWebpackPlugin.options.title %></title>

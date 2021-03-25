@@ -1,26 +1,24 @@
 <template>
     <div>
         <v-row id="navigation" no-gutters>
-            <v-col align-self="center" justify="center" md="8" cols="12">
-                <router-link to="/">
+            <v-col align-self="center" justify="center">
+                <router-link to="/" title="Home" aria-label="Home">
                     <h1 color="primary">
-                        Schedules <span v-if="$edge_mode">(edge)</span>
-                        <span v-if="$dev_mode">(dev)</span>
+                        Schedules <span v-if="$edgeMode">(edge)</span>
+                        <span v-if="$developmentMode">(dev)</span>
                     </h1>
                 </router-link>
             </v-col>
-            <v-col align-self="center" class="text-right">
+            <v-col align-self="center" cols="1" class="text-right">
                 <v-btn
                     icon
                     class="navigation-item"
                     title="Toggle Theme"
                     aria-label="Toggle Theme"
                     color="primary"
-                    @click="toggle_theme"
+                    @click="toggleTheme"
                 >
-                    <v-icon>
-                        mdi-theme-light-dark
-                    </v-icon>
+                    <v-icon v-text="mdiThemeLightDark" />
                 </v-btn>
             </v-col>
         </v-row>
@@ -28,10 +26,17 @@
 </template>
 
 <script>
+import { mdiThemeLightDark } from "@mdi/js";
+
 export default {
     name: "NavigationBar",
+    data: function() {
+        return {
+            mdiThemeLightDark: mdiThemeLightDark
+        };
+    },
     mounted() {
-        const theme = localStorage.getItem("dark_theme");
+        const theme = localStorage.getItem("darkTheme");
         if (theme) {
             if (theme === "true") {
                 this.$vuetify.theme.dark = true;
@@ -44,16 +49,16 @@ export default {
         ) {
             this.$vuetify.theme.dark = true;
             localStorage.setItem(
-                "dark_theme",
+                "darkTheme",
                 this.$vuetify.theme.dark.toString()
             );
         }
     },
     methods: {
-        toggle_theme: function() {
+        toggleTheme: function() {
             this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
             localStorage.setItem(
-                "dark_theme",
+                "darkTheme",
                 this.$vuetify.theme.dark.toString()
             );
         }

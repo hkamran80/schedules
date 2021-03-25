@@ -8,6 +8,7 @@ module.exports = {
                     : process.env.VUE_APP_EDGE_MODE === "true"
                     ? "Schedules (edge)"
                     : "Schedules";
+
             return args;
         });
     },

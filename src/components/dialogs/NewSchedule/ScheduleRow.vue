@@ -11,8 +11,8 @@
 
         <v-col cols="3">
             <v-dialog
-                ref="starttime_dialog"
-                v-model="dialogs.start_time"
+                ref="startTimeDialog"
+                v-model="dialogs.startTime"
                 :return-value.sync="times.start"
                 persistent
                 width="290px"
@@ -36,7 +36,7 @@
                     <v-btn
                         text
                         color="primary"
-                        @click="dialogs.start_time = false"
+                        @click="dialogs.startTime = false"
                     >
                         Cancel
                     </v-btn>
@@ -44,7 +44,7 @@
                     <v-btn
                         text
                         color="primary"
-                        @click="$refs.starttime_dialog.save(times.start)"
+                        @click="$refs.startTimeDialog.save(times.start)"
                     >
                         Save
                     </v-btn>
@@ -53,8 +53,8 @@
         </v-col>
         <v-col cols="3">
             <v-dialog
-                ref="endtime_dialog"
-                v-model="dialogs.end_time"
+                ref="endTimeDialog"
+                v-model="dialogs.endTime"
                 :return-value.sync="times.end"
                 persistent
                 width="290px"
@@ -78,7 +78,7 @@
                     <v-btn
                         text
                         color="primary"
-                        @click="dialgos.end_time = false"
+                        @click="dialgos.endTime = false"
                     >
                         Cancel
                     </v-btn>
@@ -86,7 +86,7 @@
                     <v-btn
                         text
                         color="primary"
-                        @click="$refs.endtime_dialog.save(times.end)"
+                        @click="$refs.endTimeDialog.save(times.end)"
                     >
                         Save
                     </v-btn>
@@ -116,8 +116,8 @@ export default {
                 "Saturday"
             ],
             dialogs: {
-                start_time: false,
-                end_time: false
+                startTime: false,
+                endTime: false
             }
         };
     },

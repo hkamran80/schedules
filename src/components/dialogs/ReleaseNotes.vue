@@ -3,7 +3,7 @@
         <v-card-title class="mb-1">
             <v-row align="center">
                 <v-col class="text-wrap--break">
-                    What's New in Schedules
+                    Release Notes
                 </v-col>
                 <v-col cols="2" class="text-right">
                     <v-btn
@@ -12,21 +12,19 @@
                         href="https://github.com/hkamran80/schedules"
                         target="_blank"
                     >
-                        <v-icon>mdi-github</v-icon>
+                        <v-icon v-text="mdiGithub" />
                     </v-btn>
                     <v-btn icon color="primary" @click="closeDialog">
-                        <v-icon>mdi-close</v-icon>
+                        <v-icon v-text="mdiClose" />
                     </v-btn>
                 </v-col>
             </v-row>
         </v-card-title>
-        <v-card-subtitle>
-            Current Version: <span v-text="$app_version" />
-        </v-card-subtitle>
+        <v-card-subtitle v-text="$appVersion" />
         <v-card-text>
-            <v-expansion-panels accordion>
+            <v-expansion-panels v-model="openPanels">
                 <v-expansion-panel
-                    v-for="(items, version) in whatsnew"
+                    v-for="(items, version) in releaseNotes"
                     :key="version"
                 >
                     <v-expansion-panel-header>
@@ -34,10 +32,10 @@
                     </v-expansion-panel-header>
                     <v-expansion-panel-content>
                         <span
-                            v-for="wn_item of items"
-                            :key="wn_item"
-                            class="whatsnew-item"
-                            v-text="wn_item"
+                            v-for="rnItem of items"
+                            :key="rnItem"
+                            class="releasenotes-item"
+                            v-text="rnItem"
                         />
                     </v-expansion-panel-content>
                 </v-expansion-panel>
@@ -47,14 +45,31 @@
 </template>
 
 <script>
-import whatsnew from "@/whatsnew.json";
+import releaseNotesJSON from "@/releaseNotes.json";
+import { mdiClose, mdiGithub } from "@mdi/js";
 
 export default {
-    name: "WhatsNew",
+    name: "ReleaseNotes",
     data: function() {
-        return { whatsnew: whatsnew };
+        return {
+            releaseNotes: {},
+            openPanels: 0,
+            mdiClose: mdiClose,
+            mdiGithub: mdiGithub
+        };
+    },
+    created() {
+        this.loadReleaseNotes();
     },
     methods: {
+        loadReleaseNotes: function() {
+            Object.keys(releaseNotesJSON)
+                .reverse()
+                .forEach(versionCode => {
+                    this.releaseNotes[versionCode] =
+                        releaseNotesJSON[versionCode];
+                });
+        },
         closeDialog: function() {
             this.$emit("close");
         }
@@ -63,7 +78,7 @@ export default {
 </script>
 
 <style scoped>
-.whatsnew-item {
+.releasenotes-item {
     display: block;
     margin-bottom: 5px;
 }
