@@ -9,7 +9,18 @@
                     </h1>
                 </router-link>
             </v-col>
-            <v-col align-self="center" cols="1" class="text-right">
+            <v-col align-self="center" cols="2" class="text-right">
+                <v-btn
+                    icon
+                    class="navigation-item"
+                    href="https://form.typeform.com/to/g0MlHGXj"
+                    target="_blank"
+                    title="Open Feedback Form"
+                    aria-label="Open Feedback Form"
+                    color="primary"
+                >
+                    <v-icon v-text="mdiCommentMultipleOutline" />
+                </v-btn>
                 <v-btn
                     icon
                     class="navigation-item"
@@ -26,16 +37,18 @@
 </template>
 
 <script>
-import { mdiThemeLightDark } from "@mdi/js";
+import { mdiThemeLightDark, mdiCommentMultipleOutline } from "@mdi/js";
 
 export default {
     name: "NavigationBar",
     data: function() {
         return {
-            mdiThemeLightDark: mdiThemeLightDark
+            mdiThemeLightDark: mdiThemeLightDark,
+            mdiCommentMultipleOutline: mdiCommentMultipleOutline
         };
     },
     mounted() {
+        // Set theme
         const theme = localStorage.getItem("darkTheme");
         if (theme) {
             if (theme === "true") {
@@ -77,5 +90,9 @@ export default {
 
 #navigation a.router-link-exact-active {
     color: #e91e63;
+}
+
+#navigation .navigation-item {
+    margin-right: 8px;
 }
 </style>

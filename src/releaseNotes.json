@@ -22,7 +22,7 @@
         "Fix Umami analytics activation",
         "Fix duplicate divider issue with feature coming soon (currently in alpha)"
     ],
-    "2.2.2 (Edge-3)": [
+    "2.3.0 (Edge-4)": [
         "Add Sentry.io error and performance monitoring",
         "Remove the AUHSD Distance Learning schedule",
         "Reverse the order of the What's New panel",
@@ -35,6 +35,7 @@
         "Switch to @mdi/js rather than the stylesheet for improved performance",
         "Remove the new schedule button from edge",
         "Switch the AUHSD schedules' icons to the outlined version",
-        "Switch to modern build system (module + nomodule)"
+        "Switch to modern build system (module + nomodule)",
+        "Add Typeform feedback form"
     ]
 }
