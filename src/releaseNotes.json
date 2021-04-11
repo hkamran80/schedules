@@ -22,7 +22,7 @@
         "Fix Umami analytics activation",
         "Fix duplicate divider issue with feature coming soon (currently in alpha)"
     ],
-    "2.3.0 (Edge-4)": [
+    "2.3.0 (Edge-5)": [
         "Add Sentry.io error and performance monitoring",
         "Remove the AUHSD Distance Learning schedule",
         "Reverse the order of the What's New panel",
@@ -36,6 +36,8 @@
         "Remove the new schedule button from edge",
         "Switch the AUHSD schedules' icons to the outlined version",
         "Switch to modern build system (module + nomodule)",
-        "Add Typeform feedback form"
+        "Add Typeform feedback form",
+        "Add favicons",
+        "Add Open Graph and Twitter social meta tags"
     ]
 }

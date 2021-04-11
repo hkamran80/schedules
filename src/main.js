@@ -8,8 +8,8 @@ import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 
 // Sentry Tracking
-// import * as Sentry from "@sentry/vue";
-// import { Integrations } from "@sentry/tracing";
+import * as Sentry from "@sentry/vue";
+import { Integrations } from "@sentry/tracing";
 
 Vue.config.productionTip = false;
 
@@ -28,19 +28,19 @@ Vue.use(Toast, {
 });
 
 // Sentry.io Tracking
-// if (!Vue.prototype.$developmentMode) {
-//     Sentry.init({
-//         Vue,
-//         dsn: process.env.VUE_APP_SENTRY_DSN,
-//         integrations: [new Integrations.BrowserTracing()],
-//         environment: process.env.VUE_APP_SENTRY_ENVIRONMENT,
+if (!Vue.prototype.$developmentMode) {
+    Sentry.init({
+        Vue,
+        dsn: process.env.VUE_APP_SENTRY_DSN,
+        integrations: [new Integrations.BrowserTracing()],
+        environment: process.env.VUE_APP_SENTRY_ENVIRONMENT,
 
-//         // Set tracesSampleRate to 1.0 to capture 100%
-//         // of transactions for performance monitoring.
-//         // We recommend adjusting this value in production
-//         tracesSampleRate: 1.0
-//     });
-// }
+        // Set tracesSampleRate to 1.0 to capture 100%
+        // of transactions for performance monitoring.
+        // We recommend adjusting this value in production
+        tracesSampleRate: 0.5
+    });
+}
 
 new Vue({
     router,

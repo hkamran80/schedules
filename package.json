@@ -1,6 +1,6 @@
 {
     "name": "schedules",
-    "version": "2.3.0-edge.4",
+    "version": "2.3.0-edge.5",
     "private": true,
     "scripts": {
         "serve": "vue-cli-service serve",
