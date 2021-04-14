@@ -11,10 +11,11 @@
             </v-col>
             <v-col align-self="center" cols="2" class="text-right">
                 <v-btn
-                    icon
-                    class="navigation-item"
                     href="https://form.typeform.com/to/g0MlHGXj"
                     target="_blank"
+                    rel="noopener"
+                    icon
+                    class="navigation-item"
                     title="Open Feedback Form"
                     aria-label="Open Feedback Form"
                     color="primary"

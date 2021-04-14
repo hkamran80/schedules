@@ -38,6 +38,7 @@
         "Switch to modern build system (module + nomodule)",
         "Add Typeform feedback form",
         "Add favicons",
-        "Add Open Graph and Twitter social meta tags"
+        "Add Open Graph and Twitter social meta tags",
+        "Fix CSP policy for the service worker"
     ]
 }
