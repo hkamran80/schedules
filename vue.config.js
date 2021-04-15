@@ -1,7 +1,7 @@
 // const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
 //     .BundleAnalyzerPlugin;
 
-const pageTitle =
+const webTitle =
     process.env.NODE_ENV === "development"
         ? "Schedules (dev)"
         : process.env.VUE_APP_EDGE_MODE === "true"
@@ -12,7 +12,7 @@ module.exports = {
     transpileDependencies: ["vuetify"],
     chainWebpack: config => {
         config.plugin("html").tap(args => {
-            args[0].title = pageTitle;
+            args[0].title = webTitle;
             return args;
         });
     },
@@ -23,7 +23,7 @@ module.exports = {
         // plugins: [new BundleAnalyzerPlugin()]
     },
     pwa: {
-        name: pageTitle,
+        name: webTitle,
         themeColor: "#C2185B",
         workboxPluginMode: "InjectManifest",
         workboxOptions: {
