@@ -1,6 +1,8 @@
 // const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
 //     .BundleAnalyzerPlugin;
 
+const PreloadWebpackPlugin = require("@vue/preload-webpack-plugin");
+
 const webTitle =
     process.env.NODE_ENV === "development"
         ? "Schedules (dev)"
@@ -18,16 +20,24 @@ module.exports = {
 
         config.plugins.delete("prefetch");
 
-        config.plugin("preload").tap(options => {
-            options[0].include = "allChunks";
-            return options;
-        });
+        // config
+        //     .plugin("preload")
+        //     .use("@vue/preload-webpack-plugin")
+        //     .tap(options => {
+        //         options[0].include = "allChunks";
+        //         return options;
+        //     });
     },
     configureWebpack: {
         output: {
             crossOriginLoading: "anonymous"
-        }
-        // plugins: [new BundleAnalyzerPlugin()]
+        },
+        plugins: [
+            new PreloadWebpackPlugin({
+                rel: "preload",
+                include: "allChunks"
+            })
+        ]
     },
     pwa: {
         name: webTitle,
