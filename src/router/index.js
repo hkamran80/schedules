@@ -10,14 +10,14 @@ const routes = [
         name: "Home",
         component: Home
     },
-    {
-        path: "/schedule/new",
-        name: "NewSchedule",
-        component: () =>
-            import(
-                /* webpackChunkName: "newschedule" */ "@/views/NewSchedule.vue"
-            )
-    },
+    // {
+    //     path: "/schedule/new",
+    //     name: "NewSchedule",
+    //     component: () =>
+    //         import(
+    //             /* webpackChunkName: "newschedule" */ "@/views/NewSchedule.vue"
+    //         )
+    // },
     {
         path: "/schedule/:id",
         name: "Schedule",

@@ -1,6 +1,3 @@
-// const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
-//     .BundleAnalyzerPlugin;
-
 const PreloadWebpackPlugin = require("@vue/preload-webpack-plugin");
 
 const webTitle =
@@ -19,14 +16,6 @@ module.exports = {
         });
 
         config.plugins.delete("prefetch");
-
-        // config
-        //     .plugin("preload")
-        //     .use("@vue/preload-webpack-plugin")
-        //     .tap(options => {
-        //         options[0].include = "allChunks";
-        //         return options;
-        //     });
     },
     configureWebpack: {
         output: {
@@ -45,10 +34,17 @@ module.exports = {
         workboxPluginMode: "InjectManifest",
         workboxOptions: {
             swSrc: "src/service-worker.js",
-            exclude: [/\.map$/, /_redirects/, /_headers/]
+            exclude: [/\.map$/, /_redirects/, /_headers/, /schedules\.json$/]
         },
         manifestOptions: {
-            backgroundColor: "#C2185B"
+            background_color: "#C2185B"
+        },
+        iconPaths: {
+            favicon32: "img/favicons/favicon-32.png",
+            favicon16: "img/favicons/favicon-16.png",
+            appleTouchIcon: "img/favicons/favicon-152.png",
+            maskIcon: "img/favicons/safari-pinned-tab.svg",
+            msTileImage: "img/favicons/favicon-144.png"
         }
     }
 };

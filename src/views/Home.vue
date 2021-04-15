@@ -41,8 +41,8 @@
         <v-divider class="my-5" />
 
         <v-card
-            title="Schedules' release notes"
-            aria-label="Schedules' release notes"
+            title="Release notes"
+            aria-label="Release notes"
             class="mx-auto schedule-card text-wrap--break"
             outlined
             @click="dialogs.releaseNotes = true"
@@ -79,8 +79,8 @@
 
 <script>
 import CenterLayout from "@/components/CenterLayout.vue";
-import ReleaseNotes from "@/components/dialogs/ReleaseNotes.vue";
-import Privacy from "@/components/dialogs/Privacy.vue";
+const ReleaseNotes = () => import("@/components/dialogs/ReleaseNotes.vue");
+const Privacy = () => import("@/components/dialogs/Privacy.vue");
 
 import { mdiPlus, mdiSchoolOutline } from "@mdi/js";
 
