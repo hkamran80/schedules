@@ -15,6 +15,13 @@ module.exports = {
             args[0].title = webTitle;
             return args;
         });
+
+        config.plugins.delete("prefetch");
+
+        config.plugin("preload").tap(options => {
+            options[0].include = "allChunks";
+            return options;
+        });
     },
     configureWebpack: {
         output: {

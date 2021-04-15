@@ -22,7 +22,7 @@
         "Fix Umami analytics activation",
         "Fix duplicate divider issue with feature coming soon (currently in alpha)"
     ],
-    "2.3.0 (Edge-6)": [
+    "2.3.0 (Edge-7)": [
         "Add Sentry.io error and performance monitoring",
         "Remove the AUHSD Distance Learning schedule",
         "Reverse the order of the What's New panel",
@@ -39,6 +39,7 @@
         "Add Typeform feedback form",
         "Add favicons",
         "Add Open Graph and Twitter social meta tags",
-        "Fix CSP policy for the service worker"
+        "Fix CSP policy for the service worker",
+        "Improve performance"
     ]
 }
