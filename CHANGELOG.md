@@ -22,5 +22,3 @@
 -   Fix CSP policy for the service worker
 -   Improve performance
 -   Add icon paths to `vue.config.js`
--   Remove the new schedule view
-    -   View, dialogs, and route from the repository
