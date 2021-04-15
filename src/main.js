@@ -8,8 +8,9 @@ import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 
 // Sentry Tracking
-import * as Sentry from "@sentry/vue";
-import { Integrations } from "@sentry/tracing";
+// import * as Sentry from "@sentry/vue";
+import { init } from "@sentry/vue";
+import { BrowserTracing } from "@sentry/tracing/dist/browser";
 
 Vue.config.productionTip = false;
 
@@ -29,10 +30,10 @@ Vue.use(Toast, {
 
 // Sentry.io Tracking
 if (!Vue.prototype.$developmentMode) {
-    Sentry.init({
+    init({
         Vue,
         dsn: process.env.VUE_APP_SENTRY_DSN,
-        integrations: [new Integrations.BrowserTracing()],
+        integrations: [new BrowserTracing()],
         environment: process.env.VUE_APP_SENTRY_ENVIRONMENT,
 
         // Set tracesSampleRate to 1.0 to capture 100%
