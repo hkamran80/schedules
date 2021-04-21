@@ -139,7 +139,8 @@ module.exports = {
                     icons: [
                         {
                             src: `/img/icons/${schedule.icon}.192.png`,
-                            sizes: "192x192"
+                            sizes: "192x192",
+                            purpose: "maskable"
                         }
                     ]
                 };
