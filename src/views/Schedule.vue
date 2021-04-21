@@ -110,7 +110,7 @@
             </v-card>
         </v-dialog>
 
-        <v-dialog v-model="editDialog" width="750" scrollable>
+        <v-dialog v-model="periodNamesEditDialog" width="750" scrollable>
             <v-card class="mx-auto">
                 <v-card-title>
                     <v-row align="center">
@@ -128,7 +128,7 @@
                             <v-btn
                                 icon
                                 color="primary"
-                                @click="editDialog = false"
+                                @click="periodNamesEditDialog = false"
                             >
                                 <v-icon v-text="mdiClose" />
                             </v-btn>
@@ -185,7 +185,7 @@
                             block
                             color="primary"
                             class="mb-3"
-                            @click="openEditDialog"
+                            @click="openPeriodNameEditDialog"
                         >
                             Edit
                         </v-btn>
@@ -208,10 +208,156 @@
 
                     <v-divider class="mb-2" />
 
-                    <div class="mt-5">
-                        <h3 class="mb-1">
+                    <div class="mb-5">
+                        <h3 class="mb-5">
                             Notifications
                         </h3>
+
+                        <v-btn
+                            block
+                            color="primary"
+                            class="mb-3"
+                            @click="openNotificationEditDialog"
+                        >
+                            Edit
+                        </v-btn>
+                        <v-btn
+                            block
+                            color="primary"
+                            class="mb-3"
+                            @click="notificationSettingsImport.dialog = true"
+                        >
+                            Import
+                        </v-btn>
+                        <v-btn
+                            block
+                            color="primary"
+                            @click="notificationSettingsExportDialog = true"
+                        >
+                            Export
+                        </v-btn>
+                    </div>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
+
+        <v-dialog v-model="periodNamesExportDialog" width="750">
+            <v-card class="mx-auto">
+                <v-card-title>
+                    <v-row align="center">
+                        <v-col class="text-wrap--break">
+                            Export Period Names
+                        </v-col>
+                        <v-col cols="4" class="text-right">
+                            <v-btn
+                                icon
+                                color="primary"
+                                @click="copyExportedPeriodNames"
+                            >
+                                <v-icon v-text="mdiContentCopy" />
+                            </v-btn>
+                            <v-btn
+                                icon
+                                color="primary"
+                                @click="periodNamesExportDialog = false"
+                            >
+                                <v-icon v-text="mdiClose" />
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </v-card-title>
+                <v-card-text>
+                    <v-textarea
+                        id="exportPeriodNamesString"
+                        v-model="exportPeriodNamesString"
+                        rows="8"
+                        readonly
+                        outlined
+                        label="Period Names String"
+                    />
+                </v-card-text>
+            </v-card>
+        </v-dialog>
+
+        <v-dialog v-model="periodNamesImport.dialog" width="750">
+            <v-card class="mx-auto">
+                <v-card-title>
+                    <v-row align="center">
+                        <v-col class="text-wrap--break">
+                            Import Period Names
+                        </v-col>
+                        <v-col cols="4" class="text-right">
+                            <v-btn
+                                icon
+                                color="primary"
+                                @click="importPeriodNamesString"
+                                :disabled="
+                                    periodNamesImport.string === null ||
+                                        periodNamesImport.string === ''
+                                "
+                            >
+                                <v-icon v-text="mdiCalendarImport" />
+                            </v-btn>
+                            <v-btn
+                                icon
+                                color="primary"
+                                @click="periodNamesImport.dialog = false"
+                            >
+                                <v-icon v-text="mdiClose" />
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </v-card-title>
+                <v-card-text>
+                    <v-textarea
+                        v-model="periodNamesImport.string"
+                        rows="8"
+                        outlined
+                        label="Period Names String"
+                    />
+                </v-card-text>
+            </v-card>
+        </v-dialog>
+
+        <v-dialog
+            v-model="notificationSettingsEditDialog"
+            width="750"
+            scrollable
+        >
+            <v-card class="mx-auto">
+                <v-card-title>
+                    <v-row align="center">
+                        <v-col class="text-wrap--break">
+                            Edit Notification Settings
+                        </v-col>
+                        <v-col cols="1" class="text-right">
+                            <v-btn
+                                icon
+                                color="primary"
+                                @click="notificationSettingsEditDialog = false"
+                            >
+                                <v-icon v-text="mdiClose" />
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </v-card-title>
+                <v-card-text>
+                    <v-progress-linear
+                        color="primary lighten-1"
+                        background-color="primary lighten-4"
+                        indeterminate
+                        v-if="
+                            Object.keys(this.allowedNotifications.periods)
+                                .length === 0
+                        "
+                    />
+
+                    <div
+                        v-if="
+                            Object.keys(this.allowedNotifications.periods)
+                                .length !== 0
+                        "
+                    >
                         <div class="mb-5">
                             <h4 class="mb-2">
                                 Days
@@ -299,25 +445,27 @@
             </v-card>
         </v-dialog>
 
-        <v-dialog v-model="periodNamesExportDialog" width="750">
+        <v-dialog v-model="notificationSettingsExportDialog" width="750">
             <v-card class="mx-auto">
                 <v-card-title>
                     <v-row align="center">
                         <v-col class="text-wrap--break">
-                            Export Period Names
+                            Export Notification Settings
                         </v-col>
                         <v-col cols="4" class="text-right">
                             <v-btn
                                 icon
                                 color="primary"
-                                @click="copyExportedPeriodNames"
+                                @click="copyExportedNotificationSettings"
                             >
                                 <v-icon v-text="mdiContentCopy" />
                             </v-btn>
                             <v-btn
                                 icon
                                 color="primary"
-                                @click="periodNamesExportDialog = false"
+                                @click="
+                                    notificationSettingsExportDialog = false
+                                "
                             >
                                 <v-icon v-text="mdiClose" />
                             </v-btn>
@@ -326,32 +474,33 @@
                 </v-card-title>
                 <v-card-text>
                     <v-textarea
-                        id="exportPeriodNamesString"
-                        v-model="exportPeriodNamesString"
+                        id="exportNotificationsString"
+                        v-model="exportNotificationsString"
                         rows="8"
                         readonly
                         outlined
-                        label="Period Names String"
+                        label="Notification Settings String"
                     />
                 </v-card-text>
             </v-card>
         </v-dialog>
 
-        <v-dialog v-model="periodNamesImport.dialog" width="750">
+        <v-dialog v-model="notificationSettingsImport.dialog" width="750">
             <v-card class="mx-auto">
                 <v-card-title>
                     <v-row align="center">
                         <v-col class="text-wrap--break">
-                            Import Period Names
+                            Import Notification Settings
                         </v-col>
                         <v-col cols="4" class="text-right">
                             <v-btn
                                 icon
                                 color="primary"
-                                @click="importPeriodNamesString"
+                                @click="importNotificationSettingsString"
                                 :disabled="
-                                    periodNamesImport.string === null ||
-                                        periodNamesImport.string === ''
+                                    notificationSettingsImport.string ===
+                                        null ||
+                                        notificationSettingsImport.string === ''
                                 "
                             >
                                 <v-icon v-text="mdiCalendarImport" />
@@ -359,7 +508,9 @@
                             <v-btn
                                 icon
                                 color="primary"
-                                @click="periodNamesImport.dialog = false"
+                                @click="
+                                    notificationSettingsImport.dialog = false
+                                "
                             >
                                 <v-icon v-text="mdiClose" />
                             </v-btn>
@@ -368,10 +519,10 @@
                 </v-card-title>
                 <v-card-text>
                     <v-textarea
-                        v-model="periodNamesImport.string"
+                        v-model="notificationSettingsImport.string"
                         rows="8"
                         outlined
-                        label="Period Names String"
+                        label="Notification Settings String"
                     />
                 </v-card-text>
             </v-card>
@@ -453,7 +604,7 @@ export default {
             // Period Editing Functionality
             periodNamesScheduleId: "",
             periodNames: {},
-            editDialog: false,
+            periodNamesEditDialog: false,
             periodNamesImport: {
                 dialog: false,
                 string: null
@@ -495,6 +646,12 @@ export default {
                 },
                 periods: {}
             },
+            notificationSettingsEditDialog: false,
+            notificationSettingsImport: {
+                dialog: false,
+                string: null
+            },
+            notificationSettingsExportDialog: false,
 
             mainInterval: null,
             debugMode: this.$route.query.debug === "true",
@@ -575,9 +732,119 @@ export default {
         },
         exportPeriodNamesString: function() {
             return JSON.stringify(this.periodNames);
+        },
+        exportNotificationsString: function() {
+            return JSON.stringify(this.allowedNotifications);
         }
     },
     methods: {
+        importNotificationSettingsString: function() {
+            try {
+                let notificationSettingsImportString = JSON.parse(
+                    this.notificationSettingsImport.string
+                );
+
+                let rootKeys = Object.keys(this.allowedNotifications),
+                    intervalKeys = Object.keys(
+                        this.allowedNotifications.intervals
+                    ),
+                    dayKeys = Object.keys(this.allowedNotifications.days),
+                    periodKeys = Object.keys(this.allowedNotifications.periods);
+
+                // Root key match
+                if (
+                    Object.keys(notificationSettingsImportString)
+                        .map(key => rootKeys.indexOf(key))
+                        .filter(keyIndex => keyIndex === -1).length === 0
+                ) {
+                    let intervalKeyMatch =
+                            Object.keys(
+                                notificationSettingsImportString.intervals
+                            )
+                                .map(key => intervalKeys.indexOf(key))
+                                .filter(keyIndex => keyIndex === -1).length ===
+                            0,
+                        daysKeyMatch =
+                            Object.keys(notificationSettingsImportString.days)
+                                .map(key => dayKeys.indexOf(key))
+                                .filter(keyIndex => keyIndex === -1).length ===
+                            0,
+                        periodsKeyMatch =
+                            Object.keys(
+                                notificationSettingsImportString.periods
+                            )
+                                .map(key => periodKeys.indexOf(key))
+                                .filter(keyIndex => keyIndex === -1).length ===
+                            0,
+                        typeCheck =
+                            Object.values(notificationSettingsImportString)
+                                .map(rootValue =>
+                                    Object.values(rootValue).map(
+                                        keyValue => typeof keyValue
+                                    )
+                                )
+                                .flat()
+                                .filter(type => type !== "boolean").length ===
+                            0;
+
+                    if (
+                        intervalKeyMatch &&
+                        daysKeyMatch &&
+                        periodsKeyMatch &&
+                        typeCheck
+                    ) {
+                        this.allowedNotifications = notificationSettingsImportString;
+
+                        localStorage.setItem(
+                            `allowedNotifications.${this.$route.params.id}`,
+                            JSON.stringify(this.allowedNotifications)
+                        );
+
+                        this.notificationSettingsImport.string = null;
+                        this.notificationSettingsImport.dialog = false;
+                        this.notificationSettingsEditDialog = false;
+
+                        this.showToast(
+                            "Successfully imported notification settings!",
+                            "success"
+                        );
+                    } else {
+                        this.showToast(
+                            "One of the key/value pairs is incorrect. Please copy and paste the exported notification settings from Schedules.",
+                            "error"
+                        );
+                    }
+                } else {
+                    this.showToast(
+                        "One of the root keys is incorrect. Please copy and paste the exported notification settings from Schedules.",
+                        "error"
+                    );
+                }
+            } catch (e) {
+                this.showToast(
+                    "Unable to import notification settings. An error occurred when parsing. Try again.",
+                    "error"
+                );
+            }
+        },
+        copyExportedNotificationSettings: function() {
+            let exportedNotificationSettingsElement = document.getElementById(
+                "exportNotificationsString"
+            );
+            exportedNotificationSettingsElement.select();
+            document.execCommand("copy");
+
+            this.showToast(
+                "Copied notification settings to the clipboard",
+                "info"
+            );
+
+            this.notificationSettingsExportDialog = false;
+        },
+        openNotificationEditDialog: function() {
+            this.loadAllowedNotifications();
+            this.notificationSettingsEditDialog = true;
+        },
         closeDialogs: function() {
             this.timetable = false;
         },
@@ -661,7 +928,7 @@ export default {
 
                     this.periodNamesImport.string = null;
                     this.periodNamesImport.dialog = false;
-                    this.editDialog = false;
+                    this.periodNamesEditDialog = false;
 
                     this.showToast(
                         "Successfully imported period names!",
@@ -669,7 +936,7 @@ export default {
                     );
                 } else {
                     this.showToast(
-                        "One of the period keys is incorrect.",
+                        "One of the period keys is incorrect. Please copy and paste the exported period names from Schedules.",
                         "error"
                     );
                 }
@@ -693,7 +960,7 @@ export default {
         },
         debugFunction: function() {
             console.debug("Development function called");
-            console.debug(this.currentPrettyDateTime.day.toLowerCase());
+            console.debug(this.allowedNotifications);
         },
         checkForCustomPeriodName: function(periodName, withPeriod = false) {
             this.getPeriodNames();
@@ -709,16 +976,16 @@ export default {
                     : this.periodNames[periodName];
             }
         },
-        openEditDialog: function() {
+        openPeriodNameEditDialog: function() {
             this.getPeriodNames();
-            this.editDialog = true;
+            this.periodNamesEditDialog = true;
         },
         savePeriodNames: function() {
             localStorage.setItem(
                 `schedule.${this.$route.params.id}`,
                 JSON.stringify(this.periodNames)
             );
-            this.editDialog = false;
+            this.periodNamesEditDialog = false;
             this.showToast("Saved period names!", "success");
         },
         getPeriodNames: function() {
