@@ -1166,7 +1166,7 @@ export default {
                 title,
                 {
                     body: body,
-                    icon: "/img/favicons/favicon-192.png"
+                    badge: "/img/icons/school-outline.96.png"
                 },
                 {}
             );

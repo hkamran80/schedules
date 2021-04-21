@@ -1,4 +1,5 @@
 const PreloadWebpackPlugin = require("@vue/preload-webpack-plugin");
+const schedules = require("./src/schedules.json");
 
 const webTitle =
     process.env.NODE_ENV === "development"
@@ -73,6 +74,21 @@ module.exports = {
                     type: "image/svg+xml"
                 }
             ],
+            shortcuts: [
+                Object.values(schedules.slice(0, 4)).map(schedule => {
+                    return {
+                        name: schedule.name,
+                        short_name: schedule.shortName,
+                        description: `The ${schedule.name}`,
+                        icons: [
+                            {
+                                src: "/img/icons/school-outline.192.png",
+                                sizes: "192x192"
+                            }
+                        ]
+                    };
+                })
+            ],
             display_override: ["minimal-ui"],
             display: "standalone",
             background_color: "#6D1E3B",
@@ -85,7 +101,9 @@ module.exports = {
             description:
                 "An app for schedules. Find out exactly how much time is remaining in a period or what the period is.",
             scope: "https://beta-schedules.unisontech.org",
-            prefer_related_applications: false
+            categories: ["productivity", "utilities"],
+            prefer_related_applications: false,
+            related_applications: []
         }
     }
 };
