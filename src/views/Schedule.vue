@@ -528,6 +528,9 @@ export default {
         color: function() {
             return this.schedules[this.$route.params.id].color;
         },
+        icon: function() {
+            return this.schedules[this.$route.params.id].icon;
+        },
         calendarIntervalCount: function() {
             if (typeof this.schedule[this.currentDay] !== "undefined") {
                 let endTimes = this.schedule[this.currentDay][
@@ -1166,7 +1169,8 @@ export default {
                 title,
                 {
                     body: body,
-                    badge: "/img/icons/school-outline.96.png"
+                    icon: `/img/icons/${this.icon}.192.png`,
+                    badge: `/img/icons/${this.icon}.96.png`
                 },
                 {}
             );

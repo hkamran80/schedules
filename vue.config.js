@@ -8,6 +8,9 @@ const webTitle =
         ? "Schedules (edge)"
         : "Schedules";
 
+const schedule_keys = Object.keys(schedules),
+    schedule_values = Object.values(schedules);
+
 module.exports = {
     transpileDependencies: ["vuetify"],
     chainWebpack: config => {
@@ -48,57 +51,99 @@ module.exports = {
         },
         manifestOptions: {
             icons: [
-                {
-                    src: "/img/favicons/favicon-32.png",
-                    sizes: "32x32",
-                    type: "image/png"
-                },
+                // Favicons
                 {
                     src: "/img/favicons/favicon-16.png",
                     sizes: "16x16",
-                    type: "image/png"
+                    type: "image/png",
+                    purpose: "any"
+                },
+                {
+                    src: "/img/favicons/favicon-32.png",
+                    sizes: "32x32",
+                    type: "image/png",
+                    purpose: "any"
                 },
                 {
                     src: "/img/favicons/favicon-144.png",
                     sizes: "144x144",
-                    type: "image/png"
+                    type: "image/png",
+                    purpose: "any"
                 },
                 {
                     src: "/img/favicons/favicon-152.png",
                     sizes: "152x152",
-                    type: "image/png"
+                    type: "image/png",
+                    purpose: "any"
                 },
                 {
                     src: "/img/favicons/safari-pinned-tab.svg",
                     sizes: "942x942",
-                    type: "image/svg+xml"
+                    type: "image/svg+xml",
+                    purpose: "any"
+                },
+
+                // Maskable
+                {
+                    src: "/img/maskable/maskable-16.png",
+                    sizes: "16x16",
+                    type: "image/png",
+                    purpose: "maskable"
+                },
+                {
+                    src: "/img/maskable/maskable-32.png",
+                    sizes: "32x32",
+                    type: "image/png",
+                    purpose: "maskable"
+                },
+                {
+                    src: "/img/maskable/maskable-144.png",
+                    sizes: "144x144",
+                    type: "image/png",
+                    purpose: "maskable"
+                },
+                {
+                    src: "/img/maskable/maskable-152.png",
+                    sizes: "152x152",
+                    type: "image/png",
+                    purpose: "maskable"
+                },
+                {
+                    src: "/img/maskable/maskable-192.png",
+                    sizes: "192x192",
+                    type: "image/png",
+                    purpose: "maskable"
+                },
+                {
+                    src: "/img/maskable/maskable-196.png",
+                    sizes: "196x196",
+                    type: "image/png",
+                    purpose: "maskable"
                 }
             ],
-            shortcuts: Object.values(schedules)
-                .slice(0, 4)
-                .map(schedule => {
-                    return {
-                        name: schedule.name,
-                        short_name: schedule.shortName,
-                        description: `The ${schedule.name}`,
-                        url: `/schedule/${
-                            Object.keys(schedules)[
-                                Object.values(schedules).indexOf(
-                                    Object.values(schedules).filter(
-                                        schedule_val =>
-                                            schedule_val.name === schedule.name
-                                    )[0]
-                                )
-                            ]
-                        }`,
-                        icons: [
-                            {
-                                src: "/img/icons/school-outline.192.png",
-                                sizes: "192x192"
-                            }
+            shortcuts: schedule_values.slice(0, 4).map(schedule => {
+                return {
+                    name: schedule.name,
+                    short_name: schedule.shortName,
+                    description: `The ${schedule.name}`,
+                    url: `/schedule/${
+                        schedule_keys[
+                            schedule_values.indexOf(
+                                schedule_values.filter(
+                                    schedule_val =>
+                                        schedule_val.name === schedule.name
+                                )[0]
+                            )
                         ]
-                    };
-                }),
+                    }`,
+                    icons: [
+                        {
+                            src: `/img/icons/${schedule.icon}.192.png`,
+                            sizes: "192x192"
+                        }
+                    ]
+                };
+            }),
             display_override: ["minimal-ui"],
             display: "standalone",
             background_color: "#6D1E3B",
