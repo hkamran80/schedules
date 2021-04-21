@@ -30,7 +30,7 @@ module.exports = {
     },
     pwa: {
         name: webTitle,
-        themeColor: "#C2185B",
+        themeColor: "#6D1E3B",
         workboxPluginMode: "InjectManifest",
         workboxOptions: {
             swSrc: "src/service-worker.js",
@@ -46,7 +46,6 @@ module.exports = {
             ]
         },
         manifestOptions: {
-            background_color: "#C2185B",
             icons: [
                 {
                     src: "/img/favicons/favicon-32.png",
@@ -59,6 +58,11 @@ module.exports = {
                     type: "image/png"
                 },
                 {
+                    src: "/img/favicons/favicon-144.png",
+                    sizes: "144x144",
+                    type: "image/png"
+                },
+                {
                     src: "/img/favicons/favicon-152.png",
                     sizes: "152x152",
                     type: "image/png"
@@ -67,21 +71,21 @@ module.exports = {
                     src: "/img/favicons/safari-pinned-tab.svg",
                     sizes: "942x942",
                     type: "image/svg+xml"
-                },
-                {
-                    src: "/img/favicons/favicon-144.png",
-                    sizes: "144x144",
-                    type: "image/png"
                 }
-            ]
-        },
-        iconPaths: {
-            faviconSVG: null,
-            favicon32: "img/favicons/favicon-32.png",
-            favicon16: "img/favicons/favicon-16.png",
-            appleTouchIcon: "img/favicons/favicon-152.png",
-            maskIcon: "img/favicons/safari-pinned-tab.svg",
-            msTileImage: "img/favicons/favicon-144.png"
+            ],
+            display_override: ["minimal-ui"],
+            display: "standalone",
+            background_color: "#6D1E3B",
+            url: process.env.VUE_APP_EDGE_MODE
+                ? "https://beta-schedules.unisontech.org"
+                : "https://schedules.unisontech.org",
+            manifestUrl: "/manifest.json",
+            lang: "en",
+            orientation: "any",
+            description:
+                "An app for schedules. Find out exactly how much time is remaining in a period or what the period is.",
+            scope: "https://beta-schedules.unisontech.org",
+            prefer_related_applications: false
         }
     }
 };

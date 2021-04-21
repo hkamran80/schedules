@@ -22,3 +22,4 @@
 -   Fix CSP policy for the service worker
 -   Improve performance
 -   Add icon paths to `vue.config.js`
+-   Set notification icon to favicon

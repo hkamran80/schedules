@@ -1161,12 +1161,12 @@ export default {
                 );
             }
         },
-        notify: function(title, body, icon = "") {
+        notify: function(title, body) {
             this.$notification.show(
                 title,
                 {
                     body: body,
-                    icon: icon
+                    icon: "/img/favicons/favicon-192.png"
                 },
                 {}
             );
