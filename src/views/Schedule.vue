@@ -86,18 +86,27 @@
 
         <v-dialog v-model="timetable" width="750" scrollable>
             <v-card class="mx-auto">
-                <v-calendar
-                    color="primary"
-                    type="day"
-                    :events="schedulePeriods"
-                    :first-time="calendarFirstTime"
-                    :short-weekdays="false"
-                    :event-ripple="false"
-                    :event-height="60"
-                    :event-margin-bottom="5"
-                    :interval-count="calendarIntervalCount"
-                    :interval-height="150"
-                />
+                <v-card-title>
+                    <v-row align="center">
+                        <v-col> </v-col>
+                        <v-col cols="1" class="text-right">
+                            <v-btn
+                                icon
+                                color="primary"
+                                @click="timetable = false"
+                            >
+                                <v-icon v-text="mdiClose" />
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </v-card-title>
+                <v-card-text>
+                    <timetable
+                        :daySchedule="schedule[currentDay]"
+                        :schedulePeriods="schedulePeriods"
+                        @close="closeDialogs"
+                    />
+                </v-card-text>
             </v-card>
         </v-dialog>
 
@@ -244,10 +253,10 @@
                                 "
                                 :label="
                                     interval
-                                        .split('_')
-                                        .join(' ')
-                                        .replace(/\b[a-z]/g, str =>
-                                            str.toUpperCase()
+                                        .replace(/([A-Z]+)/g, ' $1')
+                                        .replace(/([A-Z][a-z])/g, ' $1')
+                                        .replace(/(^|\s)\S/g, t =>
+                                            t.toUpperCase()
                                         )
                                 "
                                 inset
@@ -397,6 +406,9 @@ import {
     mdiContentCopy,
     mdiCalendarImport
 } from "@mdi/js";
+import { padNumber, calculateTimeDifference } from "@/helper-functions.js";
+
+const Timetable = () => import("@/components/dialogs/Schedule/Timetable.vue");
 
 export default {
     name: "Schedule",
@@ -409,7 +421,7 @@ export default {
             }
         }
     },
-    components: { CenterLayout },
+    components: { CenterLayout, Timetable },
     data: function() {
         return {
             // Current and Next Period Information
@@ -531,46 +543,17 @@ export default {
         icon: function() {
             return this.schedules[this.$route.params.id].icon;
         },
-        calendarIntervalCount: function() {
-            if (typeof this.schedule[this.currentDay] !== "undefined") {
-                let endTimes = this.schedule[this.currentDay][
-                        Object.keys(this.schedule[this.currentDay]).slice(-1)[0]
-                    ][1].split("-"),
-                    startTimeHour = Number(
-                        this.schedule[this.currentDay][
-                            Object.keys(this.schedule[this.currentDay])[0]
-                        ][0].split("-")[0]
-                    ),
-                    endTimeHour;
-
-                endTimeHour =
-                    Number(endTimes[1]) !== 0
-                        ? Number(endTimes[0]) + 1
-                        : Number(endTimes[0]);
-
-                return endTimeHour - startTimeHour;
-            } else {
-                return null;
-            }
-        },
-        calendarFirstTime: function() {
-            return typeof this.schedule[this.currentDay] !== "undefined"
-                ? this.schedule[this.currentDay][
-                      Object.keys(this.schedule[this.currentDay])[0]
-                  ][0].split("-")[0] + "00"
-                : "08:00";
-        },
         schedulePeriods: function() {
             let periods = [];
             if (typeof this.schedule[this.currentDay] !== "undefined") {
                 let daySchedule = this.schedule[this.currentDay],
                     d = new Date(),
-                    date = `${d.getFullYear()}-${this.padNumber(
+                    date = `${d.getFullYear()}-${padNumber(
                         Number(d.getMonth()) + 1
-                    )}-${this.padNumber(d.getDate())}`;
+                    )}-${padNumber(d.getDate())}`;
 
-                Object.keys(daySchedule).forEach(period =>
-                    periods.push({
+                periods = Object.keys(daySchedule).map(period => {
+                    return {
                         name: this.checkForCustomPeriodName(period, true),
                         start: `${date} ${daySchedule[period][0].replaceAll(
                             "-",
@@ -584,8 +567,8 @@ export default {
                             period.indexOf("Passing") === -1
                                 ? this.color
                                 : "primary"
-                    })
-                );
+                    };
+                });
             }
 
             return periods;
@@ -595,6 +578,9 @@ export default {
         }
     },
     methods: {
+        closeDialogs: function() {
+            this.timetable = false;
+        },
         loadAllowedNotifications: function() {
             let allowedNotifications = localStorage.getItem(
                 `allowedNotifications.${this.$route.params.id}`
@@ -605,13 +591,16 @@ export default {
             }
 
             if (Object.keys(this.allowedNotifications.periods).length === 0) {
-                let periodNames = {};
-                Object.keys(this.schedule).forEach(day =>
-                    Object.keys(this.schedule[day]).forEach(
-                        periodName => (periodNames[periodName] = true)
-                    )
+                this.allowedNotifications.periods = Object.fromEntries(
+                    Object.values(this.schedule)
+                        .map(day =>
+                            Object.keys(day).map(day_schedule => [
+                                day_schedule,
+                                true
+                            ])
+                        )
+                        .flat()
                 );
-                this.allowedNotifications.periods = periodNames;
             }
         },
         updateAllowedNotifications: function(type, id, value) {
@@ -656,14 +645,12 @@ export default {
 
                 this.getPeriodNames();
                 let periodNameKeys = Object.keys(this.periodNames),
-                    periodNameMatch;
-
-                Object.keys(periodNamesImportString).forEach(key => {
-                    if (periodNameMatch !== false) {
-                        periodNameMatch =
-                            periodNameKeys.indexOf(key) !== -1 ? true : false;
-                    }
-                });
+                    periodNameMatch =
+                        Object.keys(periodNamesImportString)
+                            .map(periodName =>
+                                periodNameKeys.indexOf(periodName)
+                            )
+                            .filter(nameIndex => nameIndex === -1).length === 0;
 
                 if (periodNameMatch) {
                     this.periodNames = periodNamesImportString;
@@ -682,7 +669,7 @@ export default {
                     );
                 } else {
                     this.showToast(
-                        "Key match failed. Please enter the correct string that matches this schedule's period name keys.",
+                        "One of the period keys is incorrect.",
                         "error"
                     );
                 }
@@ -788,7 +775,7 @@ export default {
                 if (this.currentPeriodRaw[1] !== "") {
                     let scheduledEnd = this.currentPeriodRaw[1][1].toString();
 
-                    timeDifference = this.calculateTimeDifference(
+                    timeDifference = calculateTimeDifference(
                         this.currentSplitTime,
                         scheduledEnd
                     );
@@ -796,25 +783,25 @@ export default {
                     if (timeDifference[0] === 0) {
                         if (timeDifference[1] === 0) {
                             compiledTimeDifference =
-                                "00:00:" + this.padNumber(timeDifference[2]);
+                                "00:00:" + padNumber(timeDifference[2]);
                         } else {
                             compiledTimeDifference =
                                 timeDifference[2] === 0
                                     ? "00:" +
-                                      this.padNumber(timeDifference[1]) +
+                                      padNumber(timeDifference[1]) +
                                       ":00"
                                     : "00:" +
-                                      this.padNumber(timeDifference[1]) +
+                                      padNumber(timeDifference[1]) +
                                       ":" +
-                                      this.padNumber(timeDifference[2]);
+                                      padNumber(timeDifference[2]);
                         }
                     } else {
                         compiledTimeDifference =
-                            this.padNumber(timeDifference[0]) +
+                            padNumber(timeDifference[0]) +
                             ":" +
-                            this.padNumber(timeDifference[1]) +
+                            padNumber(timeDifference[1]) +
                             ":" +
-                            this.padNumber(timeDifference[2]);
+                            padNumber(timeDifference[2]);
                     }
                 } else {
                     compiledTimeDifference = "";
@@ -988,22 +975,6 @@ export default {
                 }
             }
         },
-        calculateTimeDifference: function(firstTime, secondTime) {
-            let firstTimeString = firstTime.replaceAll("-", ":"),
-                secondTimeString = secondTime.replaceAll("-", ":");
-
-            let startTime = new Date("1970-01-01 " + firstTimeString),
-                endTime = new Date("1970-01-01 " + secondTimeString);
-            let millisecondDifference = endTime - startTime;
-
-            let seconds = millisecondDifference / 1000;
-            let hours = parseInt(seconds / 3600);
-            seconds = seconds % 3600;
-            let minutes = parseInt(seconds / 60);
-            seconds = seconds % 60;
-
-            return [hours, minutes, seconds];
-        },
         getCurrentPeriod: function() {
             var currentPeriod = false;
             if (typeof this.schedule[this.currentDay] !== "undefined") {
@@ -1068,9 +1039,9 @@ export default {
                         }
 
                         previousPeriodEndTime =
-                            this.padNumber(hours) +
-                            this.padNumber(minutes) +
-                            this.padNumber(seconds);
+                            padNumber(hours) +
+                            padNumber(minutes) +
+                            padNumber(seconds);
                     }
 
                     if (
@@ -1098,14 +1069,14 @@ export default {
                 .toUpperCase();
 
             this.currentTime =
-                this.padNumber(d.getHours().toString()) +
-                this.padNumber(d.getMinutes().toString());
+                padNumber(d.getHours().toString()) +
+                padNumber(d.getMinutes().toString());
             this.currentSplitTime =
-                this.padNumber(d.getHours().toString()) +
+                padNumber(d.getHours().toString()) +
                 "-" +
-                this.padNumber(d.getMinutes().toString()) +
+                padNumber(d.getMinutes().toString()) +
                 "-" +
-                this.padNumber(d.getSeconds().toString());
+                padNumber(d.getSeconds().toString());
 
             this.currentPrettyDateTime.day = d.toLocaleDateString("en-us", {
                 weekday: "long"
@@ -1116,11 +1087,6 @@ export default {
                 second: "numeric",
                 hour12: !this.$twenty_four_hour_time
             });
-        },
-        padNumber: function(number) {
-            return Number(number < 10)
-                ? "0" + Number(number).toString()
-                : Number(number).toString();
         },
         showToast: function(content, type) {
             // TODO: Switch to native Vuetify snackbar
