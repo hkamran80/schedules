@@ -76,6 +76,12 @@ module.exports = {
                     purpose: "any"
                 },
                 {
+                    src: "/img/favicons/favicon-512.png",
+                    sizes: "512x512",
+                    type: "image/png",
+                    purpose: "any"
+                },
+                {
                     src: "/img/favicons/safari-pinned-tab.svg",
                     sizes: "942x942",
                     type: "image/svg+xml",
