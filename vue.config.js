@@ -75,19 +75,32 @@ module.exports = {
                 }
             ],
             shortcuts: [
-                Object.values(schedules.slice(0, 4)).map(schedule => {
-                    return {
-                        name: schedule.name,
-                        short_name: schedule.shortName,
-                        description: `The ${schedule.name}`,
-                        icons: [
-                            {
-                                src: "/img/icons/school-outline.192.png",
-                                sizes: "192x192"
-                            }
-                        ]
-                    };
-                })
+                Object.values(schedules)
+                    .slice(0, 4)
+                    .map(schedule => {
+                        return {
+                            name: schedule.name,
+                            short_name: schedule.shortName,
+                            description: `The ${schedule.name}`,
+                            url: `/schedule/${
+                                Object.keys(schedules)[
+                                    Object.values(schedules).indexOf(
+                                        Object.values(schedules).filter(
+                                            schedule_val =>
+                                                schedule_val.name ===
+                                                schedule.name
+                                        )[0]
+                                    )
+                                ]
+                            }`,
+                            icons: [
+                                {
+                                    src: "/img/icons/school-outline.192.png",
+                                    sizes: "192x192"
+                                }
+                            ]
+                        };
+                    })
             ],
             display_override: ["minimal-ui"],
             display: "standalone",
