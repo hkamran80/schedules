@@ -2,13 +2,12 @@ const PreloadWebpackPlugin = require("@vue/preload-webpack-plugin");
 const schedules = require("./src/schedules.json");
 
 const webTitle =
-    process.env.NODE_ENV === "development"
-        ? "Schedules (dev)"
-        : process.env.VUE_APP_EDGE_MODE === "true"
-        ? "Schedules (edge)"
-        : "Schedules";
-
-const schedule_keys = Object.keys(schedules),
+        process.env.NODE_ENV === "development"
+            ? "Schedules (dev)"
+            : process.env.VUE_APP_EDGE_MODE === "true"
+            ? "Schedules (edge)"
+            : "Schedules",
+    schedule_keys = Object.keys(schedules),
     schedule_values = Object.values(schedules);
 
 module.exports = {
@@ -139,8 +138,7 @@ module.exports = {
                     icons: [
                         {
                             src: `/img/icons/${schedule.icon}.192.png`,
-                            sizes: "192x192",
-                            purpose: "maskable"
+                            sizes: "192x192"
                         }
                     ]
                 };

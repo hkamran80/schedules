@@ -37,7 +37,7 @@
         "Switch the AUHSD schedules' icons to the outlined version",
         "Switch to modern build system (module + nomodule)",
         "Add Typeform feedback form",
-        "Add favicons",
+        "Add icons (favicons and app)",
         "Add Open Graph and Twitter social meta tags",
         "Fix CSP policy for the service worker",
         "Improve performance",
