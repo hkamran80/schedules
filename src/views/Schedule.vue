@@ -241,7 +241,7 @@
                         </div>
                         <div class="mb-5">
                             <h4 class="mb-2">
-                                Intervals
+                                Time Remaining
                             </h4>
 
                             <v-switch
