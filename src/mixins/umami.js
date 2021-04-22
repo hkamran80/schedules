@@ -4,10 +4,9 @@ export default {
             umamiInstalled: document.getElementById("umami-script") !== null
         };
     },
-
     created() {
         if (
-            !this.$dev_mode &&
+            !this.$developmentMode &&
             localStorage.getItem("umamiTracking") !== "false"
         ) {
             this.installUmami();
@@ -17,10 +16,12 @@ export default {
             }
         }
     },
-
     methods: {
         installUmami: function() {
-            if (!document.getElementById("umami-script")) {
+            if (
+                !this.$developmentMode &&
+                !document.getElementById("umami-script")
+            ) {
                 let umamiScript = document.createElement("script"),
                     scriptTag = document.getElementsByTagName("script")[0];
 
@@ -30,7 +31,7 @@ export default {
                 umamiScript.id = "umami-script";
                 umamiScript.setAttribute(
                     "data-website-id",
-                    this.$edge_mode
+                    this.$edgeMode
                         ? "377298e5-bec6-48f0-a2f1-7070f42f12ca"
                         : "ab9840ad-16a1-4b04-b87f-e5e396f466b4"
                 );
@@ -41,12 +42,14 @@ export default {
             }
         },
         uninstallUmami: function() {
-            let umamiScript = document.getElementById("umami-script");
+            if (!this.$developmentMode) {
+                let umamiScript = document.getElementById("umami-script");
 
-            umamiScript.remove();
-            localStorage.setItem("umamiTracking", "false");
+                umamiScript.remove();
+                localStorage.setItem("umamiTracking", "false");
 
-            console.log("Deactivated Umami anonymous analytics");
+                console.log("Deactivated Umami anonymous analytics");
+            }
         }
     }
 };

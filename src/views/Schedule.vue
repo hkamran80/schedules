@@ -21,23 +21,31 @@
                     <v-btn
                         icon
                         color="primary"
-                        v-if="$edge_mode || $dev_mode"
+                        title="Toggle Debug Mode"
+                        aria-label="Toggle Debug Mode"
+                        v-if="$edgeMode || $developmentMode"
                         @click="toggleDebugMode"
                     >
-                        <v-icon>
-                            mdi-console-line
-                        </v-icon>
+                        <v-icon v-text="mdiConsoleLine" />
                     </v-btn>
                     <v-btn
                         icon
                         color="primary"
-                        @click="timetable = true"
+                        title="Open Timetable"
+                        aria-label="Open Timetable"
                         :disabled="schedulePeriods.length === 0"
+                        @click="timetable = true"
                     >
-                        <v-icon>mdi-calendar-outline</v-icon>
+                        <v-icon v-text="mdiCalendarOutline" />
                     </v-btn>
-                    <v-btn icon color="primary" @click="settingsDialog = true">
-                        <v-icon>mdi-cog-outline</v-icon>
+                    <v-btn
+                        icon
+                        color="primary"
+                        title="Open Schedule Preferences"
+                        aria-label="Open Schedule Preferences"
+                        @click="settingsDialog = true"
+                    >
+                        <v-icon v-text="mdiCogOutline" />
                     </v-btn>
                 </v-col>
             </v-row>
@@ -78,22 +86,31 @@
 
         <v-dialog v-model="timetable" width="750" scrollable>
             <v-card class="mx-auto">
-                <v-calendar
-                    color="primary"
-                    type="day"
-                    :events="schedulePeriods"
-                    :first-time="calendarFirstTime"
-                    :short-weekdays="false"
-                    :event-ripple="false"
-                    :event-height="60"
-                    :event-margin-bottom="5"
-                    :interval-count="calendarIntervalCount"
-                    :interval-height="150"
-                />
+                <v-card-title>
+                    <v-row align="center">
+                        <v-col> </v-col>
+                        <v-col cols="1" class="text-right">
+                            <v-btn
+                                icon
+                                color="primary"
+                                @click="timetable = false"
+                            >
+                                <v-icon v-text="mdiClose" />
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </v-card-title>
+                <v-card-text>
+                    <timetable
+                        :daySchedule="schedule[currentDay]"
+                        :schedulePeriods="schedulePeriods"
+                        @close="closeDialogs"
+                    />
+                </v-card-text>
             </v-card>
         </v-dialog>
 
-        <v-dialog v-model="editDialog" width="750" scrollable>
+        <v-dialog v-model="periodNamesEditDialog" width="750" scrollable>
             <v-card class="mx-auto">
                 <v-card-title>
                     <v-row align="center">
@@ -101,13 +118,19 @@
                             Edit Period Names
                         </v-col>
                         <v-col cols="4" class="text-right">
-                            <v-btn icon @click="savePeriodNames">
-                                <v-icon color="primary">
-                                    mdi-content-save-outline
-                                </v-icon>
+                            <v-btn
+                                icon
+                                color="primary"
+                                @click="savePeriodNames"
+                            >
+                                <v-icon v-text="mdiContentSaveOutline" />
                             </v-btn>
-                            <v-btn icon @click="editDialog = false">
-                                <v-icon color="primary">mdi-close</v-icon>
+                            <v-btn
+                                icon
+                                color="primary"
+                                @click="periodNamesEditDialog = false"
+                            >
+                                <v-icon v-text="mdiClose" />
                             </v-btn>
                         </v-col>
                     </v-row>
@@ -141,8 +164,12 @@
                             Settings
                         </v-col>
                         <v-col cols="4" class="text-right">
-                            <v-btn icon @click="settingsDialog = false">
-                                <v-icon color="primary">mdi-close</v-icon>
+                            <v-btn
+                                icon
+                                color="primary"
+                                @click="settingsDialog = false"
+                            >
+                                <v-icon v-text="mdiClose" />
                             </v-btn>
                         </v-col>
                     </v-row>
@@ -158,7 +185,7 @@
                             block
                             color="primary"
                             class="mb-3"
-                            @click="openEditDialog"
+                            @click="openPeriodNameEditDialog"
                         >
                             Edit
                         </v-btn>
@@ -181,10 +208,156 @@
 
                     <v-divider class="mb-2" />
 
-                    <div class="mt-5">
-                        <h3 class="mb-1">
+                    <div class="mb-5">
+                        <h3 class="mb-5">
                             Notifications
                         </h3>
+
+                        <v-btn
+                            block
+                            color="primary"
+                            class="mb-3"
+                            @click="openNotificationEditDialog"
+                        >
+                            Edit
+                        </v-btn>
+                        <v-btn
+                            block
+                            color="primary"
+                            class="mb-3"
+                            @click="notificationSettingsImport.dialog = true"
+                        >
+                            Import
+                        </v-btn>
+                        <v-btn
+                            block
+                            color="primary"
+                            @click="notificationSettingsExportDialog = true"
+                        >
+                            Export
+                        </v-btn>
+                    </div>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
+
+        <v-dialog v-model="periodNamesExportDialog" width="750">
+            <v-card class="mx-auto">
+                <v-card-title>
+                    <v-row align="center">
+                        <v-col class="text-wrap--break">
+                            Export Period Names
+                        </v-col>
+                        <v-col cols="4" class="text-right">
+                            <v-btn
+                                icon
+                                color="primary"
+                                @click="copyExportedPeriodNames"
+                            >
+                                <v-icon v-text="mdiContentCopy" />
+                            </v-btn>
+                            <v-btn
+                                icon
+                                color="primary"
+                                @click="periodNamesExportDialog = false"
+                            >
+                                <v-icon v-text="mdiClose" />
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </v-card-title>
+                <v-card-text>
+                    <v-textarea
+                        id="exportPeriodNamesString"
+                        v-model="exportPeriodNamesString"
+                        rows="8"
+                        readonly
+                        outlined
+                        label="Period Names String"
+                    />
+                </v-card-text>
+            </v-card>
+        </v-dialog>
+
+        <v-dialog v-model="periodNamesImport.dialog" width="750">
+            <v-card class="mx-auto">
+                <v-card-title>
+                    <v-row align="center">
+                        <v-col class="text-wrap--break">
+                            Import Period Names
+                        </v-col>
+                        <v-col cols="4" class="text-right">
+                            <v-btn
+                                icon
+                                color="primary"
+                                @click="importPeriodNamesString"
+                                :disabled="
+                                    periodNamesImport.string === null ||
+                                        periodNamesImport.string === ''
+                                "
+                            >
+                                <v-icon v-text="mdiCalendarImport" />
+                            </v-btn>
+                            <v-btn
+                                icon
+                                color="primary"
+                                @click="periodNamesImport.dialog = false"
+                            >
+                                <v-icon v-text="mdiClose" />
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </v-card-title>
+                <v-card-text>
+                    <v-textarea
+                        v-model="periodNamesImport.string"
+                        rows="8"
+                        outlined
+                        label="Period Names String"
+                    />
+                </v-card-text>
+            </v-card>
+        </v-dialog>
+
+        <v-dialog
+            v-model="notificationSettingsEditDialog"
+            width="750"
+            scrollable
+        >
+            <v-card class="mx-auto">
+                <v-card-title>
+                    <v-row align="center">
+                        <v-col class="text-wrap--break">
+                            Edit Notification Settings
+                        </v-col>
+                        <v-col cols="1" class="text-right">
+                            <v-btn
+                                icon
+                                color="primary"
+                                @click="notificationSettingsEditDialog = false"
+                            >
+                                <v-icon v-text="mdiClose" />
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </v-card-title>
+                <v-card-text>
+                    <v-progress-linear
+                        color="primary lighten-1"
+                        background-color="primary lighten-4"
+                        indeterminate
+                        v-if="
+                            Object.keys(this.allowedNotifications.periods)
+                                .length === 0
+                        "
+                    />
+
+                    <div
+                        v-if="
+                            Object.keys(this.allowedNotifications.periods)
+                                .length !== 0
+                        "
+                    >
                         <div class="mb-5">
                             <h4 class="mb-2">
                                 Days
@@ -214,7 +387,7 @@
                         </div>
                         <div class="mb-5">
                             <h4 class="mb-2">
-                                Intervals
+                                Time Remaining
                             </h4>
 
                             <v-switch
@@ -226,10 +399,10 @@
                                 "
                                 :label="
                                     interval
-                                        .split('_')
-                                        .join(' ')
-                                        .replace(/\b[a-z]/g, str =>
-                                            str.toUpperCase()
+                                        .replace(/([A-Z]+)/g, ' $1')
+                                        .replace(/([A-Z][a-z])/g, ' $1')
+                                        .replace(/(^|\s)\S/g, t =>
+                                            t.toUpperCase()
                                         )
                                 "
                                 inset
@@ -272,76 +445,84 @@
             </v-card>
         </v-dialog>
 
-        <v-dialog v-model="periodNamesExportDialog" width="750">
+        <v-dialog v-model="notificationSettingsExportDialog" width="750">
             <v-card class="mx-auto">
                 <v-card-title>
                     <v-row align="center">
                         <v-col class="text-wrap--break">
-                            Export Period Names
+                            Export Notification Settings
                         </v-col>
                         <v-col cols="4" class="text-right">
-                            <v-btn icon @click="copyExportedPeriodNames">
-                                <v-icon color="primary">
-                                    mdi-content-copy
-                                </v-icon>
+                            <v-btn
+                                icon
+                                color="primary"
+                                @click="copyExportedNotificationSettings"
+                            >
+                                <v-icon v-text="mdiContentCopy" />
                             </v-btn>
                             <v-btn
                                 icon
-                                @click="periodNamesExportDialog = false"
+                                color="primary"
+                                @click="
+                                    notificationSettingsExportDialog = false
+                                "
                             >
-                                <v-icon color="primary">mdi-close</v-icon>
+                                <v-icon v-text="mdiClose" />
                             </v-btn>
                         </v-col>
                     </v-row>
                 </v-card-title>
                 <v-card-text>
                     <v-textarea
-                        id="exportPeriodNamesString"
-                        v-model="exportPeriodNamesString"
+                        id="exportNotificationsString"
+                        v-model="exportNotificationsString"
                         rows="8"
                         readonly
                         outlined
-                        label="Period Names String"
+                        label="Notification Settings String"
                     />
                 </v-card-text>
             </v-card>
         </v-dialog>
 
-        <v-dialog v-model="periodNamesImport.dialog" width="750">
+        <v-dialog v-model="notificationSettingsImport.dialog" width="750">
             <v-card class="mx-auto">
                 <v-card-title>
                     <v-row align="center">
                         <v-col class="text-wrap--break">
-                            Import Period Names
+                            Import Notification Settings
                         </v-col>
                         <v-col cols="4" class="text-right">
                             <v-btn
                                 icon
-                                @click="importPeriodNamesString"
+                                color="primary"
+                                @click="importNotificationSettingsString"
                                 :disabled="
-                                    periodNamesImport.string === null ||
-                                        periodNamesImport.string === ''
+                                    notificationSettingsImport.string ===
+                                        null ||
+                                        notificationSettingsImport.string === ''
                                 "
                             >
-                                <v-icon color="primary">
-                                    mdi-calendar-import
-                                </v-icon>
+                                <v-icon v-text="mdiCalendarImport" />
                             </v-btn>
                             <v-btn
                                 icon
-                                @click="periodNamesImport.dialog = false"
+                                color="primary"
+                                @click="
+                                    notificationSettingsImport.dialog = false
+                                "
                             >
-                                <v-icon color="primary">mdi-close</v-icon>
+                                <v-icon v-text="mdiClose" />
                             </v-btn>
                         </v-col>
                     </v-row>
                 </v-card-title>
                 <v-card-text>
                     <v-textarea
-                        v-model="periodNamesImport.string"
+                        v-model="notificationSettingsImport.string"
                         rows="8"
                         outlined
-                        label="Period Names String"
+                        label="Notification Settings String"
                     />
                 </v-card-text>
             </v-card>
@@ -350,19 +531,13 @@
         <div v-if="debugMode">
             <v-divider />
             <v-card class="mx-auto" outlined>
-                <v-card-text v-text="$app_version" />
+                <v-card-text v-text="`${$appVersion}`" />
                 <v-divider />
-                <v-card-text>
-                    {{ currentDay }} - {{ currentSplitTime }}
-                </v-card-text>
+                <v-card-text v-text="`${currentDay} - ${currentSplitTime}`" />
                 <v-divider />
-                <v-card-text>
-                    {{ currentPeriodRaw }}
-                </v-card-text>
+                <v-card-text v-text="currentPeriodRaw" />
                 <v-divider />
-                <v-card-text>
-                    {{ nextPeriodRaw }}
-                </v-card-text>
+                <v-card-text v-text="nextPeriodRaw" />
             </v-card>
             <v-btn text block @click="debugFunction">
                 Debug Function
@@ -373,6 +548,18 @@
 
 <script>
 import CenterLayout from "@/components/CenterLayout.vue";
+import {
+    mdiConsoleLine,
+    mdiCalendarOutline,
+    mdiCogOutline,
+    mdiContentSaveOutline,
+    mdiClose,
+    mdiContentCopy,
+    mdiCalendarImport
+} from "@mdi/js";
+import { padNumber, calculateTimeDifference } from "@/helper-functions.js";
+
+const Timetable = () => import("@/components/dialogs/Schedule/Timetable.vue");
 
 export default {
     name: "Schedule",
@@ -385,7 +572,7 @@ export default {
             }
         }
     },
-    components: { CenterLayout },
+    components: { CenterLayout, Timetable },
     data: function() {
         return {
             // Current and Next Period Information
@@ -417,7 +604,7 @@ export default {
             // Period Editing Functionality
             periodNamesScheduleId: "",
             periodNames: {},
-            editDialog: false,
+            periodNamesEditDialog: false,
             periodNamesImport: {
                 dialog: false,
                 string: null
@@ -459,9 +646,24 @@ export default {
                 },
                 periods: {}
             },
+            notificationSettingsEditDialog: false,
+            notificationSettingsImport: {
+                dialog: false,
+                string: null
+            },
+            notificationSettingsExportDialog: false,
 
             mainInterval: null,
-            debugMode: this.$route.query.debug === "true"
+            debugMode: this.$route.query.debug === "true",
+
+            // Icons
+            mdiConsoleLine: mdiConsoleLine,
+            mdiCalendarOutline: mdiCalendarOutline,
+            mdiCogOutline: mdiCogOutline,
+            mdiContentSaveOutline: mdiContentSaveOutline,
+            mdiClose: mdiClose,
+            mdiContentCopy: mdiContentCopy,
+            mdiCalendarImport: mdiCalendarImport
         };
     },
     created() {
@@ -495,52 +697,26 @@ export default {
         color: function() {
             return this.schedules[this.$route.params.id].color;
         },
-        calendarIntervalCount: function() {
-            if (typeof this.schedule[this.currentDay] !== "undefined") {
-                let end_times = this.schedule[this.currentDay][
-                        Object.keys(this.schedule[this.currentDay]).slice(-1)[0]
-                    ][1].split("-"),
-                    start_time_hour = Number(
-                        this.schedule[this.currentDay][
-                            Object.keys(this.schedule[this.currentDay])[0]
-                        ][0].split("-")[0]
-                    ),
-                    end_time_hour;
-
-                end_time_hour =
-                    Number(end_times[1]) !== 0
-                        ? Number(end_times[0]) + 1
-                        : Number(end_times[0]);
-
-                return end_time_hour - start_time_hour;
-            } else {
-                return null;
-            }
-        },
-        calendarFirstTime: function() {
-            return typeof this.schedule[this.currentDay] !== "undefined"
-                ? this.schedule[this.currentDay][
-                      Object.keys(this.schedule[this.currentDay])[0]
-                  ][0].split("-")[0] + "00"
-                : "08:00";
+        icon: function() {
+            return this.schedules[this.$route.params.id].icon;
         },
         schedulePeriods: function() {
             let periods = [];
             if (typeof this.schedule[this.currentDay] !== "undefined") {
-                let day_schedule = this.schedule[this.currentDay],
+                let daySchedule = this.schedule[this.currentDay],
                     d = new Date(),
-                    date = `${d.getFullYear()}-${this.padNumber(
+                    date = `${d.getFullYear()}-${padNumber(
                         Number(d.getMonth()) + 1
-                    )}-${this.padNumber(d.getDate())}`;
+                    )}-${padNumber(d.getDate())}`;
 
-                Object.keys(day_schedule).forEach(period =>
-                    periods.push({
+                periods = Object.keys(daySchedule).map(period => {
+                    return {
                         name: this.checkForCustomPeriodName(period, true),
-                        start: `${date} ${day_schedule[period][0].replaceAll(
+                        start: `${date} ${daySchedule[period][0].replaceAll(
                             "-",
                             ":"
                         )}`,
-                        end: `${date} ${day_schedule[period][1].replaceAll(
+                        end: `${date} ${daySchedule[period][1].replaceAll(
                             "-",
                             ":"
                         )}`,
@@ -548,17 +724,130 @@ export default {
                             period.indexOf("Passing") === -1
                                 ? this.color
                                 : "primary"
-                    })
-                );
+                    };
+                });
             }
 
             return periods;
         },
         exportPeriodNamesString: function() {
             return JSON.stringify(this.periodNames);
+        },
+        exportNotificationsString: function() {
+            return JSON.stringify(this.allowedNotifications);
         }
     },
     methods: {
+        importNotificationSettingsString: function() {
+            try {
+                let notificationSettingsImportString = JSON.parse(
+                    this.notificationSettingsImport.string
+                );
+
+                let rootKeys = Object.keys(this.allowedNotifications),
+                    intervalKeys = Object.keys(
+                        this.allowedNotifications.intervals
+                    ),
+                    dayKeys = Object.keys(this.allowedNotifications.days),
+                    periodKeys = Object.keys(this.allowedNotifications.periods);
+
+                // Root key match
+                if (
+                    Object.keys(notificationSettingsImportString)
+                        .map(key => rootKeys.indexOf(key))
+                        .filter(keyIndex => keyIndex === -1).length === 0
+                ) {
+                    let intervalKeyMatch =
+                            Object.keys(
+                                notificationSettingsImportString.intervals
+                            )
+                                .map(key => intervalKeys.indexOf(key))
+                                .filter(keyIndex => keyIndex === -1).length ===
+                            0,
+                        daysKeyMatch =
+                            Object.keys(notificationSettingsImportString.days)
+                                .map(key => dayKeys.indexOf(key))
+                                .filter(keyIndex => keyIndex === -1).length ===
+                            0,
+                        periodsKeyMatch =
+                            Object.keys(
+                                notificationSettingsImportString.periods
+                            )
+                                .map(key => periodKeys.indexOf(key))
+                                .filter(keyIndex => keyIndex === -1).length ===
+                            0,
+                        typeCheck =
+                            Object.values(notificationSettingsImportString)
+                                .map(rootValue =>
+                                    Object.values(rootValue).map(
+                                        keyValue => typeof keyValue
+                                    )
+                                )
+                                .flat()
+                                .filter(type => type !== "boolean").length ===
+                            0;
+
+                    if (
+                        intervalKeyMatch &&
+                        daysKeyMatch &&
+                        periodsKeyMatch &&
+                        typeCheck
+                    ) {
+                        this.allowedNotifications = notificationSettingsImportString;
+
+                        localStorage.setItem(
+                            `allowedNotifications.${this.$route.params.id}`,
+                            JSON.stringify(this.allowedNotifications)
+                        );
+
+                        this.notificationSettingsImport.string = null;
+                        this.notificationSettingsImport.dialog = false;
+                        this.notificationSettingsEditDialog = false;
+
+                        this.showToast(
+                            "Successfully imported notification settings!",
+                            "success"
+                        );
+                    } else {
+                        this.showToast(
+                            "One of the key/value pairs is incorrect. Please copy and paste the exported notification settings from Schedules.",
+                            "error"
+                        );
+                    }
+                } else {
+                    this.showToast(
+                        "One of the root keys is incorrect. Please copy and paste the exported notification settings from Schedules.",
+                        "error"
+                    );
+                }
+            } catch (e) {
+                this.showToast(
+                    "Unable to import notification settings. An error occurred when parsing. Try again.",
+                    "error"
+                );
+            }
+        },
+        copyExportedNotificationSettings: function() {
+            let exportedNotificationSettingsElement = document.getElementById(
+                "exportNotificationsString"
+            );
+            exportedNotificationSettingsElement.select();
+            document.execCommand("copy");
+
+            this.showToast(
+                "Copied notification settings to the clipboard",
+                "info"
+            );
+
+            this.notificationSettingsExportDialog = false;
+        },
+        openNotificationEditDialog: function() {
+            this.loadAllowedNotifications();
+            this.notificationSettingsEditDialog = true;
+        },
+        closeDialogs: function() {
+            this.timetable = false;
+        },
         loadAllowedNotifications: function() {
             let allowedNotifications = localStorage.getItem(
                 `allowedNotifications.${this.$route.params.id}`
@@ -569,13 +858,16 @@ export default {
             }
 
             if (Object.keys(this.allowedNotifications.periods).length === 0) {
-                let periodNames = {};
-                Object.keys(this.schedule).forEach(day =>
-                    Object.keys(this.schedule[day]).forEach(
-                        periodName => (periodNames[periodName] = true)
-                    )
+                this.allowedNotifications.periods = Object.fromEntries(
+                    Object.values(this.schedule)
+                        .map(day =>
+                            Object.keys(day).map(day_schedule => [
+                                day_schedule,
+                                true
+                            ])
+                        )
+                        .flat()
                 );
-                this.allowedNotifications.periods = periodNames;
             }
         },
         updateAllowedNotifications: function(type, id, value) {
@@ -614,30 +906,29 @@ export default {
         },
         importPeriodNamesString: function() {
             try {
-                let periodNamesImport_string = JSON.parse(
+                let periodNamesImportString = JSON.parse(
                     this.periodNamesImport.string
                 );
 
                 this.getPeriodNames();
-                let pn_keys = Object.keys(this.periodNames),
-                    pn_match;
+                let periodNameKeys = Object.keys(this.periodNames),
+                    periodNameMatch =
+                        Object.keys(periodNamesImportString)
+                            .map(periodName =>
+                                periodNameKeys.indexOf(periodName)
+                            )
+                            .filter(nameIndex => nameIndex === -1).length === 0;
 
-                Object.keys(periodNamesImport_string).forEach(key => {
-                    if (pn_match !== false) {
-                        pn_match = pn_keys.indexOf(key) !== -1 ? true : false;
-                    }
-                });
-
-                if (pn_match) {
-                    this.periodNames = periodNamesImport_string;
+                if (periodNameMatch) {
+                    this.periodNames = periodNamesImportString;
                     localStorage.setItem(
                         `schedule.${this.$route.params.id}`,
-                        JSON.stringify(periodNamesImport_string)
+                        JSON.stringify(periodNamesImportString)
                     );
 
                     this.periodNamesImport.string = null;
                     this.periodNamesImport.dialog = false;
-                    this.editDialog = false;
+                    this.periodNamesEditDialog = false;
 
                     this.showToast(
                         "Successfully imported period names!",
@@ -645,7 +936,7 @@ export default {
                     );
                 } else {
                     this.showToast(
-                        "Key match failed. Please enter the correct string that matches this schedule's period name keys.",
+                        "One of the period keys is incorrect. Please copy and paste the exported period names from Schedules.",
                         "error"
                     );
                 }
@@ -657,10 +948,10 @@ export default {
             }
         },
         copyExportedPeriodNames: function() {
-            let epn_element = document.getElementById(
+            let exportedPeriodNamesElement = document.getElementById(
                 "exportPeriodNamesString"
             );
-            epn_element.select();
+            exportedPeriodNamesElement.select();
             document.execCommand("copy");
 
             this.showToast("Copied period names to the clipboard", "info");
@@ -669,32 +960,32 @@ export default {
         },
         debugFunction: function() {
             console.debug("Development function called");
-            console.debug(this.currentPrettyDateTime.day.toLowerCase());
+            console.debug(this.allowedNotifications);
         },
-        checkForCustomPeriodName: function(period_name, with_period = false) {
+        checkForCustomPeriodName: function(periodName, withPeriod = false) {
             this.getPeriodNames();
 
             if (
-                typeof this.periodNames[period_name] === "undefined" ||
-                this.periodNames[period_name] === ""
+                typeof this.periodNames[periodName] === "undefined" ||
+                this.periodNames[periodName] === ""
             ) {
-                return period_name;
+                return periodName;
             } else {
-                return with_period
-                    ? `${this.periodNames[period_name]} (${period_name})`
-                    : this.periodNames[period_name];
+                return withPeriod
+                    ? `${this.periodNames[periodName]} (${periodName})`
+                    : this.periodNames[periodName];
             }
         },
-        openEditDialog: function() {
+        openPeriodNameEditDialog: function() {
             this.getPeriodNames();
-            this.editDialog = true;
+            this.periodNamesEditDialog = true;
         },
         savePeriodNames: function() {
             localStorage.setItem(
                 `schedule.${this.$route.params.id}`,
                 JSON.stringify(this.periodNames)
             );
-            this.editDialog = false;
+            this.periodNamesEditDialog = false;
             this.showToast("Saved period names!", "success");
         },
         getPeriodNames: function() {
@@ -746,44 +1037,44 @@ export default {
 
                 this.updateNextPeriod();
 
-                let compiled_time_difference;
-                var time_difference;
+                let compiledTimeDifference;
+                var timeDifference;
                 if (this.currentPeriodRaw[1] !== "") {
-                    let scheduled_end = this.currentPeriodRaw[1][1].toString();
+                    let scheduledEnd = this.currentPeriodRaw[1][1].toString();
 
-                    time_difference = this.calculateTimeDifference(
+                    timeDifference = calculateTimeDifference(
                         this.currentSplitTime,
-                        scheduled_end
+                        scheduledEnd
                     );
 
-                    if (time_difference[0] === 0) {
-                        if (time_difference[1] === 0) {
-                            compiled_time_difference =
-                                "00:00:" + this.padNumber(time_difference[2]);
+                    if (timeDifference[0] === 0) {
+                        if (timeDifference[1] === 0) {
+                            compiledTimeDifference =
+                                "00:00:" + padNumber(timeDifference[2]);
                         } else {
-                            compiled_time_difference =
-                                time_difference[2] === 0
+                            compiledTimeDifference =
+                                timeDifference[2] === 0
                                     ? "00:" +
-                                      this.padNumber(time_difference[1]) +
+                                      padNumber(timeDifference[1]) +
                                       ":00"
                                     : "00:" +
-                                      this.padNumber(time_difference[1]) +
+                                      padNumber(timeDifference[1]) +
                                       ":" +
-                                      this.padNumber(time_difference[2]);
+                                      padNumber(timeDifference[2]);
                         }
                     } else {
-                        compiled_time_difference =
-                            this.padNumber(time_difference[0]) +
+                        compiledTimeDifference =
+                            padNumber(timeDifference[0]) +
                             ":" +
-                            this.padNumber(time_difference[1]) +
+                            padNumber(timeDifference[1]) +
                             ":" +
-                            this.padNumber(time_difference[2]);
+                            padNumber(timeDifference[2]);
                     }
                 } else {
-                    compiled_time_difference = "";
-                    time_difference = "";
+                    compiledTimeDifference = "";
+                    timeDifference = "";
                 }
-                this.timeRemaining = compiled_time_difference;
+                this.timeRemaining = compiledTimeDifference;
 
                 if (this.differentPeriod) {
                     this.differentPeriod = false;
@@ -797,8 +1088,8 @@ export default {
                     this.notifications.thirtySecond = false;
                 }
 
-                if (time_difference) {
-                    this.scheduledNotifications(time_difference);
+                if (timeDifference) {
+                    this.scheduledNotifications(timeDifference);
                 }
             } else {
                 this.currentPeriod = this.checkForCustomPeriodName(
@@ -817,40 +1108,44 @@ export default {
                 this.nextPeriodRaw[0] != "No Period" &&
                 this.nextPeriodRaw[0] != "No Periods Today"
             ) {
-                let np_starting_string;
+                let nextPeriodStartTimeString;
 
+                // FIXME: Add 24-hour time variable
                 if (!this.$twenty_four_hour_time) {
-                    let np_starting_hour = Number(
+                    let nextPeriodStartTimeHour = Number(
                         this.nextPeriodRaw[1][0].split("-").slice(0, 1)
                     );
 
-                    let hour_string =
-                        np_starting_hour > 12
-                            ? (np_starting_hour - 12).toString()
-                            : np_starting_hour.toString();
+                    let hourString =
+                        nextPeriodStartTimeHour > 12
+                            ? (nextPeriodStartTimeHour - 12).toString()
+                            : nextPeriodStartTimeHour.toString();
 
-                    let np_starting =
-                        hour_string +
+                    let nextPeriodStartTime =
+                        hourString +
                         ":" +
                         this.nextPeriodRaw[1][0].split("-").slice(1, 2);
-                    let np_starting_12hr = np_starting_hour >= 12 ? "PM" : "AM";
+                    let nextPeriodStartTimeTwelveHour =
+                        nextPeriodStartTimeHour >= 12 ? "PM" : "AM";
 
-                    np_starting_string = np_starting + " " + np_starting_12hr;
+                    nextPeriodStartTimeString =
+                        nextPeriodStartTime +
+                        " " +
+                        nextPeriodStartTimeTwelveHour;
                 } else {
-                    np_starting_string = this.nextPeriodRaw[1][0]
+                    nextPeriodStartTimeString = this.nextPeriodRaw[1][0]
                         .split("-")
                         .slice(0, 2)
                         .join(":");
                 }
-                this.nextPeriodStarting = np_starting_string;
+                this.nextPeriodStarting = nextPeriodStartTimeString;
             }
         },
-        scheduledNotifications: function(time_difference) {
-            let notification_title =
-                this.schedules[this.$route.params.id].short_name +
+        scheduledNotifications: function(timeDifference) {
+            let notificationTitle =
+                this.schedules[this.$route.params.id].shortName +
                 " - " +
                 this.currentPeriod;
-            let notification_icon = "";
 
             if (
                 this.allowedNotifications.days[
@@ -858,126 +1153,100 @@ export default {
                 ] &&
                 this.allowedNotifications.periods[this.currentPeriod]
             ) {
-                if (Number(time_difference[0]) === 0) {
-                    let minutes_remaining = Number(time_difference[1]);
-                    if (Number(time_difference[2]) == 0) {
+                if (Number(timeDifference[0]) === 0) {
+                    let minutesRemaining = Number(timeDifference[1]);
+                    if (Number(timeDifference[2]) == 0) {
                         if (
-                            minutes_remaining === 30 &&
+                            minutesRemaining === 30 &&
                             !this.notifications.thirtyMinute &&
                             this.allowedNotifications.intervals.thirtyMinute
                         ) {
                             this.notify(
-                                notification_title,
-                                "Thirty minutes remaining",
-                                notification_icon
+                                notificationTitle,
+                                "Thirty minutes remaining"
                             );
                             this.notifications.thirtyMinute = true;
                         } else if (
-                            minutes_remaining === 15 &&
+                            minutesRemaining === 15 &&
                             !this.notifications.fifteenMinute &&
                             this.allowedNotifications.intervals.fifteenMinute
                         ) {
                             this.notify(
-                                notification_title,
-                                "Fifteen minutes remaining",
-                                notification_icon
+                                notificationTitle,
+                                "Fifteen minutes remaining"
                             );
                             this.notifications.fifteenMinute = true;
                         } else if (
-                            minutes_remaining === 10 &&
+                            minutesRemaining === 10 &&
                             !this.notifications.tenMinute &&
                             this.allowedNotifications.intervals.tenMinute
                         ) {
                             this.notify(
-                                notification_title,
-                                "Ten minutes remaining",
-                                notification_icon
+                                notificationTitle,
+                                "Ten minutes remaining"
                             );
                             this.notifications.tenMinute = true;
                         } else if (
-                            minutes_remaining === 5 &&
+                            minutesRemaining === 5 &&
                             !this.notifications.fiveMinute &&
                             this.allowedNotifications.intervals.fiveMinute
                         ) {
                             this.notify(
-                                notification_title,
-                                "Five minutes remaining",
-                                notification_icon
+                                notificationTitle,
+                                "Five minutes remaining"
                             );
                             this.notifications.fiveMinute = true;
                         } else if (
-                            minutes_remaining === 1 &&
-                            !this.oneMinute_notification &&
+                            minutesRemaining === 1 &&
+                            !this.notifications.oneMinute &&
                             this.allowedNotifications.intervals.oneMinute
                         ) {
                             this.notify(
-                                notification_title,
-                                "One minute remaining",
-                                notification_icon
+                                notificationTitle,
+                                "One minute remaining"
                             );
                             this.notifications.oneMinute = true;
                         }
                     } else if (
-                        minutes_remaining === 0 &&
-                        Number(time_difference[2]) === 0 &&
+                        minutesRemaining === 0 &&
+                        Number(timeDifference[2]) === 0 &&
                         !this.notifications.thirtySecond &&
                         this.allowedNotifications.intervals.thirtySecond
                     ) {
                         this.notify(
-                            notification_title,
-                            "Thirty seconds remaining",
-                            notification_icon
+                            notificationTitle,
+                            "Thirty seconds remaining"
                         );
                         this.notifications.thirtySecond = true;
                     }
                 } else if (
-                    Number(time_difference[0]) === 1 &&
-                    Number(time_difference[1]) === 0 &&
-                    Number(time_difference[2]) === 0 &&
+                    Number(timeDifference[0]) === 1 &&
+                    Number(timeDifference[1]) === 0 &&
+                    Number(timeDifference[2]) === 0 &&
                     !this.notifications.oneHour &&
                     this.allowedNotifications.intervals.oneHour
                 ) {
-                    this.notify(
-                        notification_title,
-                        "One hour remaining",
-                        notification_icon
-                    );
+                    this.notify(notificationTitle, "One hour remaining");
                     this.notifications.oneHour = true;
                 }
             }
         },
-        calculateTimeDifference: function(time_1, time_2) {
-            let time_1_string = time_1.replaceAll("-", ":"),
-                time_2_string = time_2.replaceAll("-", ":");
-
-            let start_time = new Date("1970-01-01 " + time_1_string),
-                end_time = new Date("1970-01-01 " + time_2_string);
-            let ms_difference = end_time - start_time;
-
-            let seconds = ms_difference / 1000;
-            let hours = parseInt(seconds / 3600);
-            seconds = seconds % 3600;
-            let minutes = parseInt(seconds / 60);
-            seconds = seconds % 60;
-
-            return [hours, minutes, seconds];
-        },
         getCurrentPeriod: function() {
             var currentPeriod = false;
             if (typeof this.schedule[this.currentDay] !== "undefined") {
-                var day_schedule = this.schedule[this.currentDay],
-                    split_time = this.currentSplitTime.split("-").join("");
+                var daySchedule = this.schedule[this.currentDay],
+                    splitTime = this.currentSplitTime.split("-").join("");
 
-                Object.keys(day_schedule).forEach(period_name => {
-                    let period_times = day_schedule[period_name],
-                        period_start = period_times[0].replaceAll("-", ""),
-                        period_end = period_times[1].replaceAll("-", "");
+                Object.keys(daySchedule).forEach(periodName => {
+                    let periodTimes = daySchedule[periodName],
+                        periodStartTime = periodTimes[0].replaceAll("-", ""),
+                        periodEndTime = periodTimes[1].replaceAll("-", "");
 
                     if (
-                        period_start <= split_time &&
-                        split_time <= period_end
+                        periodStartTime <= splitTime &&
+                        splitTime <= periodEndTime
                     ) {
-                        this.currentPeriodRaw = [period_name, period_times];
+                        this.currentPeriodRaw = [periodName, periodTimes];
                         currentPeriod = true;
                     }
                 });
@@ -995,14 +1264,14 @@ export default {
             var nextPeriod;
 
             if (typeof this.schedule[this.currentDay] !== "undefined") {
-                var day_schedule = this.schedule[this.currentDay];
-                for (var _period in day_schedule) {
-                    var period = day_schedule[_period],
-                        period_start = period[0].split("-").join("");
+                var daySchedule = this.schedule[this.currentDay];
+                for (var _period in daySchedule) {
+                    var period = daySchedule[_period],
+                        periodStartTime = period[0].split("-").join("");
 
-                    let previousPeriod_end;
+                    let previousPeriodEndTime;
                     if (this.currentPeriodRaw[1][1].split("-")[2] !== "59") {
-                        previousPeriod_end = (
+                        previousPeriodEndTime = (
                             Number(
                                 this.currentPeriodRaw[1][1].split("-").join("")
                             ) + 1
@@ -1025,13 +1294,16 @@ export default {
                                 minutes > 59 ? minutes - 60 : minutes - 59;
                         }
 
-                        previousPeriod_end =
-                            this.padNumber(hours) +
-                            this.padNumber(minutes) +
-                            this.padNumber(seconds);
+                        previousPeriodEndTime =
+                            padNumber(hours) +
+                            padNumber(minutes) +
+                            padNumber(seconds);
                     }
 
-                    if (Number(period_start).toString() == previousPeriod_end) {
+                    if (
+                        Number(periodStartTime).toString() ==
+                        previousPeriodEndTime
+                    ) {
                         this.nextPeriodRaw = [_period, period];
                         nextPeriod = [_period, period];
                     }
@@ -1053,19 +1325,14 @@ export default {
                 .toUpperCase();
 
             this.currentTime =
-                this.padNumber(d.getHours().toString()) +
-                this.padNumber(d.getMinutes().toString());
+                padNumber(d.getHours().toString()) +
+                padNumber(d.getMinutes().toString());
             this.currentSplitTime =
-                this.padNumber(d.getHours().toString()) +
+                padNumber(d.getHours().toString()) +
                 "-" +
-                this.padNumber(d.getMinutes().toString()) +
+                padNumber(d.getMinutes().toString()) +
                 "-" +
-                this.padNumber(d.getSeconds().toString());
-
-            /*
-            this.currentTime = "1252";
-            this.currentSplitTime = "12-52-33";
-            */
+                padNumber(d.getSeconds().toString());
 
             this.currentPrettyDateTime.day = d.toLocaleDateString("en-us", {
                 weekday: "long"
@@ -1077,14 +1344,9 @@ export default {
                 hour12: !this.$twenty_four_hour_time
             });
         },
-        padNumber: function(number) {
-            return Number(number < 10)
-                ? "0" + Number(number).toString()
-                : Number(number).toString();
-        },
         showToast: function(content, type) {
             // TODO: Switch to native Vuetify snackbar
-            let toast_options = {
+            let toastOptions = {
                 position: "bottom-right",
                 timeout: 5000,
                 closeOnClick: true,
@@ -1101,19 +1363,19 @@ export default {
 
             switch (type) {
                 case "warning":
-                    this.$toast.warning(content, toast_options);
+                    this.$toast.warning(content, toastOptions);
                     break;
                 case "success":
-                    this.$toast.success(content, toast_options);
+                    this.$toast.success(content, toastOptions);
                     break;
                 case "info":
-                    this.$toast.info(content, toast_options);
+                    this.$toast.info(content, toastOptions);
                     break;
                 case "error":
-                    this.$toast.error(content, toast_options);
+                    this.$toast.error(content, toastOptions);
                     break;
                 default:
-                    this.$toast(content, toast_options);
+                    this.$toast(content, toastOptions);
             }
         },
         notificationPermissionsCallback: function(result) {
@@ -1124,12 +1386,13 @@ export default {
                 );
             }
         },
-        notify: function(title, body, icon = "") {
+        notify: function(title, body) {
             this.$notification.show(
                 title,
                 {
                     body: body,
-                    icon: icon
+                    icon: `/img/icons/${this.icon}.192.png`,
+                    badge: `/img/icons/${this.icon}.96.png`
                 },
                 {}
             );

@@ -1,36 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8" />
+        <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
         <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-        <meta name="Description" content="An app for schedules" />
 
-        <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+        <!-- Descriptive Tags -->
+        <meta name="title" content="Schedules" />
+        <meta name="description" content="An app for schedules" />
 
-        <link
-            rel="preload"
-            href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css"
-            as="style"
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://schedules.unisontech.org/" />
+        <meta property="og:title" content="Schedules" />
+        <meta
+            property="og:description"
+            content="An app for schedules. Find out exactly how much time is remaining in a period or what the period is."
         />
+        <meta property="og:image" content="/img/social_preview.png" />
+
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta
+            property="twitter:url"
+            content="https://schedules.unisontech.org/"
+        />
+        <meta property="twitter:title" content="Schedules" />
+        <meta
+            property="twitter:description"
+            content="An app for schedules. Find out exactly how much time is remaining in a period or what the period is."
+        />
+        <meta property="twitter:image" content="/img/social_preview.png" />
+
+        <!--  Supporting Tags -->
+        <meta property="og:site_name" content="Schedules" />
+        <meta
+            name="twitter:image:alt"
+            content="The Schedules logo on a background comprised of the light and dark variants of Schedules' primary color"
+        />
+
+        <!-- Icons -->
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="icon" sizes="16x16 32x32 64x64" href="/favicon.ico" />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="196x196"
+            href="/img/favicons/favicon-192.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="160x160"
+            href="/img/favicons/favicon-160.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="96x96"
+            href="/img/favicons/favicon-96.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="64x64"
+            href="/img/favicons/favicon-64.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/img/favicons/favicon-32.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/img/favicons/favicon-16.png"
+        />
+        <link rel="apple-touch-icon" href="/img/favicons/favicon-57.png" />
+        <link
+            rel="apple-touch-icon"
+            sizes="114x114"
+            href="/img/favicons/favicon-114.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="72x72"
+            href="/img/favicons/favicon-72.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="144x144"
+            href="/img/favicons/favicon-144.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="60x60"
+            href="/img/favicons/favicon-60.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="120x120"
+            href="/img/favicons/favicon-120.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="76x76"
+            href="/img/favicons/favicon-76.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="152x152"
+            href="/img/favicons/favicon-152.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="/img/favicons/favicon-180.png"
+        />
+        <meta name="msapplication-TileColor" content="#FFFFFF" />
+        <meta
+            name="msapplication-TileImage"
+            content="/img/favicons/favicon-144.png"
+        />
+        <meta
+            name="msapplication-config"
+            content="/img/favicons/browserconfig.xml"
+        />
+
+        <!-- Preconnect, prefetch, and preload -->
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+
         <link
             rel="preload"
             href="https://umami-sepia.vercel.app/umami.js"
             as="script"
         />
-        <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap"
-        />
-        <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css"
-        />
 
         <title><%= htmlWebpackPlugin.options.title %></title>
     </head>
     <body>
+        <!-- Lato Font -->
+        <style>
+            @font-face {
+                font-family: "Lato";
+                font-style: normal;
+                font-weight: 100;
+                font-display: swap;
+                src: url(https://fonts.gstatic.com/s/lato/v17/S6u8w4BMUTPHh30AXC-qNiXg7Q.woff2)
+                    format("woff2");
+                unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC,
+                    U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122,
+                    U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+            }
+
+            @font-face {
+                font-family: "Lato";
+                font-style: normal;
+                font-weight: 300;
+                font-display: swap;
+                src: url(https://fonts.gstatic.com/s/lato/v17/S6u9w4BMUTPHh7USSwiPGQ3q5d0.woff2)
+                    format("woff2");
+                unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC,
+                    U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122,
+                    U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+            }
+
+            @font-face {
+                font-family: "Lato";
+                font-style: normal;
+                font-weight: 400;
+                font-display: swap;
+                src: url(https://fonts.gstatic.com/s/lato/v17/S6uyw4BMUTPHjx4wXiWtFCc.woff2)
+                    format("woff2");
+                unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC,
+                    U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122,
+                    U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+            }
+
+            @font-face {
+                font-family: "Lato";
+                font-style: normal;
+                font-weight: 700;
+                font-display: swap;
+                src: url(https://fonts.gstatic.com/s/lato/v17/S6u9w4BMUTPHh6UVSwiPGQ3q5d0.woff2)
+                    format("woff2");
+                unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC,
+                    U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122,
+                    U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+            }
+
+            @font-face {
+                font-family: "Lato";
+                font-style: normal;
+                font-weight: 900;
+                font-display: swap;
+                src: url(https://fonts.gstatic.com/s/lato/v17/S6u9w4BMUTPHh50XSwiPGQ3q5d0.woff2)
+                    format("woff2");
+                unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC,
+                    U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122,
+                    U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+            }
+        </style>
+
         <noscript>
             <div id="container">
                 <div id="body">
@@ -52,6 +227,7 @@
                     <p>Thank you for using Schedules.</p>
                 </div>
             </div>
+
             <style>
                 body,
                 html {

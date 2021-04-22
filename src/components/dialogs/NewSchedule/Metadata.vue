@@ -6,8 +6,8 @@
                     Metadata
                 </v-col>
                 <v-col cols="2" class="text-right">
-                    <v-btn icon color="primary" @click="close_dialog">
-                        <v-icon>mdi-close</v-icon>
+                    <v-btn icon color="primary" @click="closeDialog">
+                        <v-icon v-text="mdiClose" />
                     </v-btn>
                 </v-col>
             </v-row>
@@ -52,10 +52,17 @@
 </template>
 
 <script>
+import { mdiClose } from "@mdi/js";
+
 export default {
     name: "Metadata",
+    data: function() {
+        return {
+            mdiClose: mdiClose
+        };
+    },
     methods: {
-        close_dialog: function() {
+        closeDialog: function() {
             this.$emit("close");
         }
     }

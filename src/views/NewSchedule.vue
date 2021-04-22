@@ -17,9 +17,7 @@
                         color="primary"
                         @click="dialogs.metadata = true"
                     >
-                        <v-icon>
-                            mdi-help-circle-outline
-                        </v-icon>
+                        <v-icon v-text="mdiHelpCircleOutline" />
                     </v-btn>
                 </v-col>
             </v-row>
@@ -38,7 +36,7 @@
             outlined
         />
         <v-text-field
-            v-model="metadata.short_name"
+            v-model="metadata.shortName"
             label="Short Name"
             hint="Your schedule's short name, used in notifications"
             outlined
@@ -63,9 +61,7 @@
                         color="primary"
                         @click="dialogs.schedule = true"
                     >
-                        <v-icon>
-                            mdi-help-circle-outline
-                        </v-icon>
+                        <v-icon v-text="mdiHelpCircleOutline" />
                     </v-btn>
                 </v-col>
             </v-row>
@@ -75,10 +71,10 @@
         <schedule-row />
 
         <v-dialog v-model="dialogs.metadata" width="750" scrollable>
-            <Metadata @close="close_dialog" />
+            <Metadata @close="closeDialog" />
         </v-dialog>
         <v-dialog v-model="dialogs.schedule" width="750" scrollable>
-            <Schedule @close="close_dialog" />
+            <Schedule @close="closeDialog" />
         </v-dialog>
     </center-layout>
 </template>
@@ -89,6 +85,8 @@ import Metadata from "@/components/dialogs/NewSchedule/Metadata.vue";
 import Schedule from "@/components/dialogs/NewSchedule/Schedule.vue";
 import ScheduleRow from "@/components/dialogs/NewSchedule/ScheduleRow.vue";
 
+import { mdiHelpCircleOutline } from "@mdi/js";
+
 export default {
     name: "NewSchedule",
     components: { CenterLayout, Metadata, Schedule, ScheduleRow },
@@ -97,14 +95,15 @@ export default {
             metadata: {
                 id: "",
                 name: "",
-                short_name: "",
+                shortName: "",
                 color: ""
             },
             schedule: [],
             dialogs: {
                 metadata: false,
                 schedule: false
-            }
+            },
+            mdiHelpCircleOutline: mdiHelpCircleOutline
         };
     }
 };

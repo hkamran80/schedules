@@ -1,7 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 const Home = () => import("@/views/Home.vue");
-// import Home from "@/views/Home.vue";
 
 Vue.use(VueRouter);
 
@@ -11,14 +10,14 @@ const routes = [
         name: "Home",
         component: Home
     },
-    {
-        path: "/schedule/new",
-        name: "NewSchedule",
-        component: () =>
-            import(
-                /* webpackChunkName: "newschedule" */ "@/views/NewSchedule.vue"
-            )
-    },
+    // {
+    //     path: "/schedule/new",
+    //     name: "NewSchedule",
+    //     component: () =>
+    //         import(
+    //             /* webpackChunkName: "newschedule" */ "@/views/NewSchedule.vue"
+    //         )
+    // },
     {
         path: "/schedule/:id",
         name: "Schedule",

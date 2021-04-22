@@ -7,7 +7,7 @@
                 </v-col>
                 <v-col cols="2" class="text-right">
                     <v-btn icon color="primary" @click="closeDialog">
-                        <v-icon>mdi-close</v-icon>
+                        <v-icon v-text="mdiClose" />
                     </v-btn>
                 </v-col>
             </v-row>
@@ -15,8 +15,13 @@
         <v-card-text>
             <p>
                 Schedules uses the open-source anonymous analytics platform
-                <a href="https://umami.is" target="_blank">Umami</a> for
-                tracking page views.
+                <a
+                    href="https://umami.is"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Umami</a
+                >
+                for tracking page views.
             </p>
 
             <v-switch
@@ -51,6 +56,7 @@
                                     <a
                                         href="https://umami.is/docs/about"
                                         target="_blank"
+                                        rel="noopener noreferrer"
                                     >
                                         Umami
                                     </a>
@@ -73,6 +79,7 @@
                             <a
                                 href="https://umami.is/docs/features"
                                 target="_blank"
+                                rel="noopener noreferrer"
                             >
                                 Umami website</a
                             >.
@@ -86,9 +93,15 @@
 
 <script>
 import umami from "@/mixins/umami";
+import { mdiClose } from "@mdi/js";
 
 export default {
     name: "Privacy",
+    data: function() {
+        return {
+            mdiClose: mdiClose
+        };
+    },
     mixins: [umami],
     methods: {
         toggleUmami: function() {

@@ -42,9 +42,10 @@ export default {
     },
     mixins: [update, umami],
     created() {
-        if (this.$edge_mode) {
+        // Document title
+        if (this.$edgeMode) {
             this.baseDocumentTitle = "Schedules (edge)";
-        } else if (this.$dev_mode) {
+        } else if (this.$developmentMode) {
             this.baseDocumentTitle = "Schedules (dev)";
         }
     },

@@ -3,7 +3,7 @@ node_modules
 /dist
 
 
-# local env files
+# Local environment variables
 .env.local
 .env.*.local
 
@@ -28,3 +28,7 @@ changes.txt
 audits/
 
 tmp*
+
+# Temporary - Alpha feature
+src/views/NewSchedule.vue
+src/components/dialogs/NewSchedule/
