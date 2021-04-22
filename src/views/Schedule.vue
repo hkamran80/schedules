@@ -1146,7 +1146,6 @@ export default {
                 this.schedules[this.$route.params.id].shortName +
                 " - " +
                 this.currentPeriod;
-            let notificationIcon = "";
 
             if (
                 this.allowedNotifications.days[
@@ -1164,8 +1163,7 @@ export default {
                         ) {
                             this.notify(
                                 notificationTitle,
-                                "Thirty minutes remaining",
-                                notificationIcon
+                                "Thirty minutes remaining"
                             );
                             this.notifications.thirtyMinute = true;
                         } else if (
@@ -1175,8 +1173,7 @@ export default {
                         ) {
                             this.notify(
                                 notificationTitle,
-                                "Fifteen minutes remaining",
-                                notificationIcon
+                                "Fifteen minutes remaining"
                             );
                             this.notifications.fifteenMinute = true;
                         } else if (
@@ -1186,8 +1183,7 @@ export default {
                         ) {
                             this.notify(
                                 notificationTitle,
-                                "Ten minutes remaining",
-                                notificationIcon
+                                "Ten minutes remaining"
                             );
                             this.notifications.tenMinute = true;
                         } else if (
@@ -1197,8 +1193,7 @@ export default {
                         ) {
                             this.notify(
                                 notificationTitle,
-                                "Five minutes remaining",
-                                notificationIcon
+                                "Five minutes remaining"
                             );
                             this.notifications.fiveMinute = true;
                         } else if (
@@ -1208,8 +1203,7 @@ export default {
                         ) {
                             this.notify(
                                 notificationTitle,
-                                "One minute remaining",
-                                notificationIcon
+                                "One minute remaining"
                             );
                             this.notifications.oneMinute = true;
                         }
@@ -1221,8 +1215,7 @@ export default {
                     ) {
                         this.notify(
                             notificationTitle,
-                            "Thirty seconds remaining",
-                            notificationIcon
+                            "Thirty seconds remaining"
                         );
                         this.notifications.thirtySecond = true;
                     }
@@ -1233,11 +1226,7 @@ export default {
                     !this.notifications.oneHour &&
                     this.allowedNotifications.intervals.oneHour
                 ) {
-                    this.notify(
-                        notificationTitle,
-                        "One hour remaining",
-                        notificationIcon
-                    );
+                    this.notify(notificationTitle, "One hour remaining");
                     this.notifications.oneHour = true;
                 }
             }
