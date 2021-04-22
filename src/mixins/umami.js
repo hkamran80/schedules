@@ -27,7 +27,7 @@ export default {
 
                 umamiScript.async = true;
                 umamiScript.defer = true;
-                umamiScript.src = "https://umami-sepia.vercel.app/umami.js";
+                umamiScript.src = "https://umami.unisontech.org/umami.js";
                 umamiScript.id = "umami-script";
                 umamiScript.setAttribute(
                     "data-website-id",
