@@ -11,6 +11,7 @@
                         color="primary"
                         href="https://github.com/hkamran80/schedules"
                         target="_blank"
+                        rel="noopener noreferrer"
                     >
                         <v-icon v-text="mdiGithub" />
                     </v-btn>

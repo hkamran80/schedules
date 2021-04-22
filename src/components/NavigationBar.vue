@@ -13,7 +13,7 @@
                 <v-btn
                     href="https://form.typeform.com/to/g0MlHGXj"
                     target="_blank"
-                    rel="noopener"
+                    rel="noopener noreferrer"
                     icon
                     class="navigation-item"
                     title="Open Feedback Form"

@@ -15,8 +15,13 @@
         <v-card-text>
             <p>
                 Schedules uses the open-source anonymous analytics platform
-                <a href="https://umami.is" target="_blank">Umami</a> for
-                tracking page views.
+                <a
+                    href="https://umami.is"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Umami</a
+                >
+                for tracking page views.
             </p>
 
             <v-switch
@@ -51,6 +56,7 @@
                                     <a
                                         href="https://umami.is/docs/about"
                                         target="_blank"
+                                        rel="noopener noreferrer"
                                     >
                                         Umami
                                     </a>
@@ -73,6 +79,7 @@
                             <a
                                 href="https://umami.is/docs/features"
                                 target="_blank"
+                                rel="noopener noreferrer"
                             >
                                 Umami website</a
                             >.
