@@ -1,5 +1,7 @@
 const PreloadWebpackPlugin = require("@vue/preload-webpack-plugin");
+const SentryWebpackPlugin = require("@sentry/webpack-plugin");
 const schedules = require("./src/schedules.json");
+const packageJson = require("package.json");
 
 const webTitle =
         process.env.NODE_ENV === "development"
@@ -28,7 +30,23 @@ module.exports = {
             new PreloadWebpackPlugin({
                 rel: "preload",
                 include: "allChunks"
-            })
+            }),
+            ...(process.env.NODE_ENV !== "development"
+                ? [
+                      new SentryWebpackPlugin({
+                          authToken: process.env.VUE_APP_SENTRY_AUTH_TOKEN,
+                          org: "hkamran",
+                          project: "schedules",
+                          release: `schedules@${packageJson.version}`,
+                          include: "./dist",
+                          ignore: [
+                              "node_modules",
+                              "vue.config.js",
+                              "jsconfig.json"
+                          ]
+                      })
+                  ]
+                : [])
         ]
     },
     pwa: {

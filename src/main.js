@@ -11,6 +11,7 @@ import "vue-toastification/dist/index.css";
 // import * as Sentry from "@sentry/vue";
 import { init } from "@sentry/vue";
 import { BrowserTracing } from "@sentry/tracing/dist/browser";
+const packageJson = require("../package.json");
 
 Vue.config.productionTip = false;
 
@@ -34,12 +35,16 @@ if (!Vue.prototype.$developmentMode) {
         Vue,
         dsn: process.env.VUE_APP_SENTRY_DSN,
         integrations: [new BrowserTracing()],
+        release: `schedules@${packageJson.version}`,
         environment: process.env.VUE_APP_SENTRY_ENVIRONMENT,
 
         // Set tracesSampleRate to 1.0 to capture 100%
         // of transactions for performance monitoring.
         // We recommend adjusting this value in production
-        tracesSampleRate: 0.5
+        tracesSampleRate: 0.25,
+        tracingOptions: {
+            trackComponents: true
+        }
     });
 }
 

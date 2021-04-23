@@ -1,6 +1,13 @@
 # Changelog
 
-## Version 2.3.0
+## Table of Contents
+
+-   [Version 2.3.0](#version-230)
+-   [Version 2.3.1 (Edge-2)](#version-231-edge-2)
+
+## Versions
+
+### Version 2.3.0
 
 -   Add Sentry.io error and performance monitoring (#87)
 -   Remove the AUHSD Distance Learning schedule (#86)
@@ -27,3 +34,8 @@
 -   Change "Intervals" to "Time Remaining" in notification settings
 -   Fix the time remaining notifications naming (#89)
 -   Move notification settings to separate dialogs
+
+### Version 2.3.1 (Edge-2)
+
+-   Update Umami domain to use unisontech.org
+-   Add source maps with Sentry for enhanced error logging
