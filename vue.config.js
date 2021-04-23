@@ -1,7 +1,7 @@
 const PreloadWebpackPlugin = require("@vue/preload-webpack-plugin");
 const SentryWebpackPlugin = require("@sentry/webpack-plugin");
 const schedules = require("./src/schedules.json");
-const packageJson = require("package.json");
+const packageJson = require("./package.json");
 
 const webTitle =
         process.env.NODE_ENV === "development"
