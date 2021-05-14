@@ -44,8 +44,7 @@ module.exports = {
                 /favicon\.ico$/,
                 /^manifest.*\.js?$/,
                 /_redirects/,
-                /_headers/,
-                /schedules\.json$/
+                /_headers/
             ]
         },
         manifestOptions: {
@@ -153,14 +152,14 @@ module.exports = {
             display: "standalone",
             background_color: "#6D1E3B",
             url: process.env.VUE_APP_EDGE_MODE
-                ? "https://beta-schedules.unisontech.org"
+                ? "https://beta-fj-schedules.unisontech.org"
                 : "https://schedules.unisontech.org",
             manifestUrl: "/manifest.json",
             lang: "en",
-            orientation: "any",
+            orientation: "natural",
             description:
                 "An app for schedules. Find out exactly how much time is remaining in a period or what the period is.",
-            scope: "https://beta-schedules.unisontech.org",
+            scope: "https://beta-fj-schedules.unisontech.org",
             categories: ["productivity", "utilities"],
             prefer_related_applications: false,
             related_applications: []

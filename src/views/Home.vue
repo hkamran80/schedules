@@ -64,6 +64,18 @@
             </v-card-title>
         </v-card>
 
+        <v-card
+            title="Debug function"
+            aria-label="Debug function"
+            class="mx-auto schedule-card text-wrap--break"
+            outlined
+            @click="debug"
+        >
+            <v-card-title>
+                Debug Function
+            </v-card-title>
+        </v-card>
+
         <v-dialog v-model="dialogs.releaseNotes" width="750" scrollable>
             <release-notes @close="closeDialogs" />
         </v-dialog>
@@ -83,6 +95,8 @@ const ReleaseNotes = () => import("@/components/dialogs/ReleaseNotes.vue");
 const Privacy = () => import("@/components/dialogs/Privacy.vue");
 
 import { mdiPlus, mdiSchoolOutline } from "@mdi/js";
+// import { schedulesURL } from "@/firebase/getSchedules";
+import { schedulesURL } from "../firebase/getSchedules";
 
 export default {
     name: "Home",
@@ -110,6 +124,12 @@ export default {
         closeDialogs: function() {
             this.dialogs.releaseNotes = false;
             this.dialogs.privacy = false;
+        },
+        debug: function() {
+            // console.debug(`Schedules URL: ${schedulesURL}`);
+            schedulesURL
+                .then(url => console.debug(`Schedules URL: ${url}`))
+                .catch(error => console.error(`Schedules URL error: ${error}`));
         }
     }
 };

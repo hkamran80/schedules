@@ -10,3 +10,25 @@ self.addEventListener("message", event => {
 // The precaching code provided by Workbox
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
+
+// worbox.routing.registerRoute(
+//     new RegExp(
+//         "^https://firebasestorage.googleapis.com/v0/b/open-access-856f5.appspot.com/o/schedules.json"
+//     ),
+//     new workbox.strategies.StaleWhileRevalidate({
+//         cacheName: "schedules",
+//         plugins: [new workbox.cacheableResponse.Plugin({ statuses: [200] })]
+//     })
+// );
+workbox.routing.registerRoute(
+    /^https:\/\/firebasestorage.googleapis.com\/v0\/b\/open-access-856f5.appspot.com\/o\/schedules.json/,
+    workbox.strategies.staleWhileRevalidate({
+        cacheName: "schedules",
+        plugins: [
+            new workbox.expiration.Plugin({
+                maxEntries: 20,
+                maxAgeSeconds: 7 * 24 * 60 * 60
+            })
+        ]
+    })
+);
