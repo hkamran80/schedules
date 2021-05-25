@@ -1,55 +1,41 @@
 <template>
     <center-layout>
-        <header class="pb-4">
-            <v-row dense no-gutters align="center">
-                <v-col>
-                    <h2
-                        class="pb-1"
-                        v-text="schedules[this.$route.params.id].name"
-                    />
-                    <h3
-                        v-if="
-                            currentPrettyDateTime.day !== null &&
-                                currentPrettyDateTime.time !== null
-                        "
-                        v-text="
-                            `${currentPrettyDateTime.day} - ${currentPrettyDateTime.time}`
-                        "
-                    />
-                </v-col>
-                <v-col cols="3" class="text-right">
-                    <v-btn
-                        icon
-                        color="primary"
-                        title="Toggle Debug Mode"
-                        aria-label="Toggle Debug Mode"
-                        v-if="$edgeMode || $developmentMode"
-                        @click="toggleDebugMode"
-                    >
-                        <v-icon v-text="mdiConsoleLine" />
-                    </v-btn>
-                    <v-btn
-                        icon
-                        color="primary"
-                        title="Open Timetable"
-                        aria-label="Open Timetable"
-                        :disabled="schedulePeriods.length === 0"
-                        @click="timetable = true"
-                    >
-                        <v-icon v-text="mdiCalendarOutline" />
-                    </v-btn>
-                    <v-btn
-                        icon
-                        color="primary"
-                        title="Open Schedule Preferences"
-                        aria-label="Open Schedule Preferences"
-                        @click="settingsDialog = true"
-                    >
-                        <v-icon v-text="mdiCogOutline" />
-                    </v-btn>
-                </v-col>
-            </v-row>
-        </header>
+        <utds-header
+            :title="schedules[this.$route.params.id].name"
+            :subtitle="prettyDateAndTime"
+        >
+            <template v-slot:icons>
+                <v-btn
+                    icon
+                    color="primary"
+                    title="Toggle Debug Mode"
+                    aria-label="Toggle Debug Mode"
+                    v-if="$edgeMode || $developmentMode"
+                    @click="toggleDebugMode"
+                >
+                    <v-icon v-text="mdiConsoleLine" />
+                </v-btn>
+                <v-btn
+                    icon
+                    color="primary"
+                    title="Open Timetable"
+                    aria-label="Open Timetable"
+                    :disabled="schedulePeriods.length === 0"
+                    @click="timetable = true"
+                >
+                    <v-icon v-text="mdiCalendarOutline" />
+                </v-btn>
+                <v-btn
+                    icon
+                    color="primary"
+                    title="Open Schedule Preferences"
+                    aria-label="Open Schedule Preferences"
+                    @click="settingsDialog = true"
+                >
+                    <v-icon v-text="mdiCogOutline" />
+                </v-btn>
+            </template>
+        </utds-header>
 
         <v-card class="mx-auto" outlined>
             <v-card-title>
@@ -87,18 +73,10 @@
         <v-dialog v-model="timetable" width="750" scrollable>
             <v-card class="mx-auto">
                 <v-card-title>
-                    <v-row align="center">
-                        <v-col> </v-col>
-                        <v-col cols="1" class="text-right">
-                            <v-btn
-                                icon
-                                color="primary"
-                                @click="timetable = false"
-                            >
-                                <v-icon v-text="mdiClose" />
-                            </v-btn>
-                        </v-col>
-                    </v-row>
+                    <v-spacer />
+                    <v-btn icon color="primary" @click="timetable = false">
+                        <v-icon v-text="mdiClose" />
+                    </v-btn>
                 </v-card-title>
                 <v-card-text>
                     <timetable
@@ -159,23 +137,29 @@
         <v-dialog v-model="settingsDialog" width="750" scrollable>
             <v-card class="mx-auto">
                 <v-card-title>
-                    <v-row align="center">
-                        <v-col class="text-wrap--break">
-                            Settings
-                        </v-col>
-                        <v-col cols="4" class="text-right">
-                            <v-btn
-                                icon
-                                color="primary"
-                                @click="settingsDialog = false"
-                            >
-                                <v-icon v-text="mdiClose" />
-                            </v-btn>
-                        </v-col>
-                    </v-row>
+                    Settings
+                    <v-spacer />
+                    <v-btn icon color="primary" @click="settingsDialog = false">
+                        <v-icon v-text="mdiClose" />
+                    </v-btn>
                 </v-card-title>
 
                 <v-card-text>
+                    <v-select
+                        v-model="currentDayUserOverride"
+                        label="Day Override"
+                        hint="The override will get reset if you reload the page"
+                        outlined
+                        clearable
+                        persistent-hint
+                        class="mt-3"
+                        :items="possibleDays"
+                        item-text="long"
+                        item-value="short"
+                    />
+
+                    <v-divider class="mb-4" />
+
                     <div class="mb-5">
                         <h3 class="mb-5">
                             Period Names
@@ -206,7 +190,7 @@
                         </v-btn>
                     </div>
 
-                    <v-divider class="mb-2" />
+                    <v-divider class="mb-4" />
 
                     <div class="mb-5">
                         <h3 class="mb-5">
@@ -531,8 +515,6 @@
         <div v-if="debugMode">
             <v-divider />
             <v-card class="mx-auto" outlined>
-                <v-card-text v-text="`${$appVersion}`" />
-                <v-divider />
                 <v-card-text v-text="`${currentDay} - ${currentSplitTime}`" />
                 <v-divider />
                 <v-card-text v-text="currentPeriodRaw" />
@@ -548,6 +530,7 @@
 
 <script>
 import CenterLayout from "@/components/CenterLayout.vue";
+import UtdsHeader from "@/components/utds/UtdsHeader.vue";
 import {
     mdiConsoleLine,
     mdiCalendarOutline,
@@ -557,7 +540,13 @@ import {
     mdiContentCopy,
     mdiCalendarImport
 } from "@mdi/js";
-import { padNumber, calculateTimeDifference } from "@/helper-functions.js";
+import {
+    days as shortLongDays,
+    padNumber,
+    calculateTimeDifference,
+    shortenedDayStringToLong,
+    getShortDay
+} from "@/helper-functions.js";
 
 const Timetable = () => import("@/components/dialogs/Schedule/Timetable.vue");
 
@@ -572,8 +561,8 @@ export default {
             }
         }
     },
-    components: { CenterLayout, Timetable },
-    data: function() {
+    components: { CenterLayout, UtdsHeader, Timetable },
+    data() {
         return {
             // Current and Next Period Information
             currentPeriod: null,
@@ -591,12 +580,27 @@ export default {
 
             // Date and Time
             currentDay: "",
+            currentDayUserOverride: null,
             currentTime: "",
             currentSplitTime: "",
             currentPrettyDateTime: {
                 day: null,
                 time: null
             },
+            possibleDays: Object.entries(shortLongDays)
+                .filter(
+                    day =>
+                        Object.keys(
+                            this.schedules[this.$route.params.id].schedule
+                        ).indexOf(day[0]) !== -1
+                )
+                .map(day => {
+                    return {
+                        short: day[0],
+                        long: day[1],
+                        disabled: day[0] === getShortDay()
+                    };
+                }),
 
             // Settings
             settingsDialog: false,
@@ -691,6 +695,33 @@ export default {
         this.mainInterval = 0;
     },
     computed: {
+        prettyDateAndTime() {
+            if (
+                this.currentPrettyDateTime.day !== null &&
+                this.currentPrettyDateTime.time !== null &&
+                this.currentDayUserOverride === null
+            ) {
+                return `${this.currentPrettyDateTime.day} - ${this.currentPrettyDateTime.time}`;
+            } else if (
+                this.currentPrettyDateTime.day !== null &&
+                this.currentPrettyDateTime.time !== null &&
+                this.currentDayUserOverride !== null
+            ) {
+                return `${
+                    this.currentPrettyDateTime.day
+                } (${shortenedDayStringToLong(this.currentDayUserOverride) ||
+                    this.currentDayUserOverride} schedule) - ${
+                    this.currentPrettyDateTime.time
+                }`;
+            } else {
+                return "";
+            }
+        },
+        currentDayOrOverride() {
+            return this.currentDayUserOverride !== null
+                ? this.currentDayUserOverride
+                : this.currentDay;
+        },
         schedule: function() {
             return this.schedules[this.$route.params.id].schedule;
         },
@@ -702,8 +733,10 @@ export default {
         },
         schedulePeriods: function() {
             let periods = [];
-            if (typeof this.schedule[this.currentDay] !== "undefined") {
-                let daySchedule = this.schedule[this.currentDay],
+            if (
+                typeof this.schedule[this.currentDayOrOverride] !== "undefined"
+            ) {
+                let daySchedule = this.schedule[this.currentDayOrOverride],
                     d = new Date(),
                     date = `${d.getFullYear()}-${padNumber(
                         Number(d.getMonth()) + 1
@@ -960,7 +993,7 @@ export default {
         },
         debugFunction: function() {
             console.debug("Development function called");
-            console.debug(this.allowedNotifications);
+            console.debug(Object.keys(this.schedule));
         },
         checkForCustomPeriodName: function(periodName, withPeriod = false) {
             this.getPeriodNames();
@@ -1233,8 +1266,10 @@ export default {
         },
         getCurrentPeriod: function() {
             var currentPeriod = false;
-            if (typeof this.schedule[this.currentDay] !== "undefined") {
-                var daySchedule = this.schedule[this.currentDay],
+            if (
+                typeof this.schedule[this.currentDayOrOverride] !== "undefined"
+            ) {
+                var daySchedule = this.schedule[this.currentDayOrOverride],
                     splitTime = this.currentSplitTime.split("-").join("");
 
                 Object.keys(daySchedule).forEach(periodName => {
@@ -1263,8 +1298,10 @@ export default {
         getNextPeriod: function() {
             var nextPeriod;
 
-            if (typeof this.schedule[this.currentDay] !== "undefined") {
-                var daySchedule = this.schedule[this.currentDay];
+            if (
+                typeof this.schedule[this.currentDayOrOverride] !== "undefined"
+            ) {
+                var daySchedule = this.schedule[this.currentDayOrOverride];
                 for (var _period in daySchedule) {
                     var period = daySchedule[_period],
                         periodStartTime = period[0].split("-").join("");

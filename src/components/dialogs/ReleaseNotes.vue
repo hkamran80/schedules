@@ -1,42 +1,34 @@
 <template>
     <v-card class="mx-auto">
         <v-card-title class="mb-1">
-            <v-row align="center">
-                <v-col class="text-wrap--break">
-                    Release Notes
-                </v-col>
-                <v-col cols="2" class="text-right">
-                    <v-btn
-                        icon
-                        color="primary"
-                        href="https://github.com/hkamran80/schedules"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <v-icon v-text="mdiGithub" />
-                    </v-btn>
-                    <v-btn icon color="primary" @click="closeDialog">
-                        <v-icon v-text="mdiClose" />
-                    </v-btn>
-                </v-col>
-            </v-row>
+            Release Notes
+            <v-spacer />
+            <v-btn
+                icon
+                color="primary"
+                href="https://github.com/hkamran80/schedules"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <v-icon v-text="mdiGithub" />
+            </v-btn>
+            <v-btn icon color="primary" @click="closeDialog">
+                <v-icon v-text="mdiClose" />
+            </v-btn>
         </v-card-title>
-        <v-card-subtitle v-text="$appVersion" />
+        <v-card-subtitle v-text="version" />
         <v-card-text>
             <v-expansion-panels v-model="openPanels">
                 <v-expansion-panel
-                    v-for="(items, version) in releaseNotes"
-                    :key="version"
+                    v-for="release in releaseNotes"
+                    :key="release.version"
                 >
-                    <v-expansion-panel-header>
-                        {{ version }}
-                    </v-expansion-panel-header>
-                    <v-expansion-panel-content>
+                    <v-expansion-panel-header v-text="release.version" />
+                    <v-expansion-panel-content class="changelog">
                         <span
-                            v-for="rnItem of items"
-                            :key="rnItem"
-                            class="releasenotes-item"
-                            v-text="rnItem"
+                            v-for="change in release.changelog"
+                            :key="change"
+                            v-text="change"
                         />
                     </v-expansion-panel-content>
                 </v-expansion-panel>
@@ -46,7 +38,8 @@
 </template>
 
 <script>
-import releaseNotesJSON from "@/releaseNotes.json";
+import releaseNotesJson from "@/releaseNotes.json";
+import pkg from "../../../package.json";
 import { mdiClose, mdiGithub } from "@mdi/js";
 
 export default {
@@ -54,6 +47,7 @@ export default {
     data: function() {
         return {
             releaseNotes: {},
+            version: pkg.version,
             openPanels: 0,
             mdiClose: mdiClose,
             mdiGithub: mdiGithub
@@ -64,11 +58,10 @@ export default {
     },
     methods: {
         loadReleaseNotes: function() {
-            Object.keys(releaseNotesJSON)
+            this.releaseNotes = Object.entries(releaseNotesJson)
                 .reverse()
-                .forEach(versionCode => {
-                    this.releaseNotes[versionCode] =
-                        releaseNotesJSON[versionCode];
+                .map(release => {
+                    return { version: release[0], changelog: release[1] };
                 });
         },
         closeDialog: function() {
@@ -79,7 +72,7 @@ export default {
 </script>
 
 <style scoped>
-.releasenotes-item {
+.changelog span {
     display: block;
     margin-bottom: 5px;
 }

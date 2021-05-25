@@ -6,19 +6,18 @@ import vuetify from "./plugins/vuetify";
 import VueNativeNotification from "vue-native-notification";
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
+import pkg from "../package.json";
 
 // Sentry Tracking
 // import * as Sentry from "@sentry/vue";
 import { init } from "@sentry/vue";
 import { BrowserTracing } from "@sentry/tracing/dist/browser";
-const packageJson = require("../package.json");
 
 Vue.config.productionTip = false;
 
 // Vue Global Variables
 Vue.prototype.$developmentMode = process.env.NODE_ENV === "development";
 Vue.prototype.$edgeMode = process.env.VUE_APP_EDGE_MODE === "true";
-Vue.prototype.$appVersion = require("../package.json").version;
 
 Vue.use(VueNativeNotification, {
     requestOnNotify: true
@@ -35,7 +34,7 @@ if (!Vue.prototype.$developmentMode) {
         Vue,
         dsn: process.env.VUE_APP_SENTRY_DSN,
         integrations: [new BrowserTracing()],
-        release: `schedules@${packageJson.version}`,
+        release: `schedules@${pkg.version}`,
         environment: process.env.VUE_APP_SENTRY_ENVIRONMENT,
 
         // Set tracesSampleRate to 1.0 to capture 100%

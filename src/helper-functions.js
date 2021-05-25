@@ -1,3 +1,13 @@
+export const days = {
+    SUN: "Sunday",
+    MON: "Monday",
+    TUE: "Tuesday",
+    WED: "Wednesday",
+    THU: "Thursday",
+    FRI: "Friday",
+    SAT: "Saturday"
+};
+
 export function padNumber(number) {
     return Number(number < 10)
         ? "0" + Number(number).toString()
@@ -18,5 +28,24 @@ export function calculateTimeDifference(firstTime, secondTime) {
     let minutes = parseInt(seconds / 60);
     seconds = seconds % 60;
 
+    // Percentage remaining: (startTime / endTime) * 100)
+
     return [hours, minutes, seconds];
+}
+
+export function shortenedDayStringToLong(shortenedDay) {
+    return days[shortenedDay] || null;
+}
+
+export function getShortDay() {
+    return new Date()
+        .toLocaleDateString("en-us", { weekday: "short" })
+        .toUpperCase();
+}
+
+export function encodeHTML(s) {
+    return s
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/"/g, "&quot;");
 }

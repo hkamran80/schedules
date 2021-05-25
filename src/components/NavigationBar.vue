@@ -9,7 +9,7 @@
                     </h1>
                 </router-link>
             </v-col>
-            <v-col align-self="center" cols="2" class="text-right">
+            <v-col align-self="center" cols="2" class="text-right header-icons">
                 <v-btn
                     href="https://form.typeform.com/to/g0MlHGXj"
                     target="_blank"
@@ -48,6 +48,14 @@ export default {
             mdiCommentMultipleOutline: mdiCommentMultipleOutline
         };
     },
+    created() {
+        if (this.$vuetify.breakpoint.mobile) {
+            document.documentElement.style.setProperty(
+                "--header-icons-margin-left",
+                "0px"
+            );
+        }
+    },
     mounted() {
         // Set theme
         const theme = localStorage.getItem("darkTheme");
@@ -80,6 +88,12 @@ export default {
 };
 </script>
 
+<style>
+:root {
+    --header-icons-margin-left: 8px;
+}
+</style>
+
 <style scoped>
 #navigation {
     padding: 30px 0;
@@ -94,6 +108,6 @@ export default {
 }
 
 #navigation .navigation-item {
-    margin-right: 8px;
+    margin-left: var(--header-icons-margin-left);
 }
 </style>
