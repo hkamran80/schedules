@@ -76,9 +76,9 @@ export function hourConversion(toHourType, time) {
             hourEnding = "AM";
         }
 
-        return `${hours}:${minutes} ${hourEnding}`;
+        return `${hours}:${padNumber(minutes)} ${hourEnding}`;
     } else {
-        return `${hours}:${minutes}`;
+        return `${hours}:${padNumber(minutes)}`;
     }
 }
 
