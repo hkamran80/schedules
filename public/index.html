@@ -7,16 +7,25 @@
         <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 
         <!-- Descriptive Tags -->
-        <meta name="title" content="Schedules" />
-        <meta name="description" content="An app for schedules" />
+        <meta name="title" content="<%= htmlWebpackPlugin.options.title %>" />
+        <meta
+            name="description"
+            content="<%= htmlWebpackPlugin.options.description %>"
+        />
 
         <!-- Open Graph / Facebook -->
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://schedules.unisontech.org/" />
-        <meta property="og:title" content="Schedules" />
+        <meta
+            property="og:url"
+            content="<%= htmlWebpackPlugin.options.url %>"
+        />
+        <meta
+            property="og:title"
+            content="<%= htmlWebpackPlugin.options.title %>"
+        />
         <meta
             property="og:description"
-            content="An app for schedules. Find out exactly how much time is remaining in a period or what the period is."
+            content="<%= htmlWebpackPlugin.options.description %>"
         />
         <meta property="og:image" content="/img/social_preview.png" />
 
@@ -24,17 +33,19 @@
         <meta property="twitter:card" content="summary_large_image" />
         <meta
             property="twitter:url"
-            content="https://schedules.unisontech.org/"
+            content="<%= htmlWebpackPlugin.options.url %>"
         />
-        <meta property="twitter:title" content="Schedules" />
+        <meta
+            property="twitter:title"
+            content="<%= htmlWebpackPlugin.options.title %>"
+        />
         <meta
             property="twitter:description"
-            content="An app for schedules. Find out exactly how much time is remaining in a period or what the period is."
+            content="<%= htmlWebpackPlugin.options.description %>"
         />
         <meta property="twitter:image" content="/img/social_preview.png" />
 
         <!--  Supporting Tags -->
-        <meta property="og:site_name" content="Schedules" />
         <meta
             name="twitter:image:alt"
             content="The Schedules logo on a background comprised of the light and dark variants of Schedules' primary color"

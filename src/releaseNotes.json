@@ -47,9 +47,12 @@
         "Fix the time remaining notifications naming",
         "Move notification settings to separate dialogs"
     ],
-    "2.3.1 (Edge-3)": [
+    "2.3.1 (Edge-4)": [
         "Change Umami domain to unisontech.org",
-        "Add source maps with Sentry for enhanced error logging","Switch to the UTDS header",
-        "Add day override (issue #66)"
+        "Add source maps with Sentry for enhanced error logging",
+        "Switch to the UTDS header",
+        "Add day override (issue #66)",
+        "Make the day override persistent",
+        "Dynamically generate the meta descriptive tags"
     ]
 }

@@ -49,3 +49,46 @@ export function encodeHTML(s) {
         .replace(/</g, "&lt;")
         .replace(/"/g, "&quot;");
 }
+
+export function hourConversion(toHourType, time) {
+    let timeSplit = time.split("-");
+
+    let hours = Number(timeSplit[0]),
+        minutes = Number(timeSplit[1]),
+        seconds = Number(timeSplit[2]);
+
+    if (seconds >= 59) {
+        seconds -= 59;
+        minutes += 1;
+    }
+
+    if (minutes >= 59) {
+        minutes -= 59;
+        hours += 1;
+    }
+
+    if (toHourType === "12-hour") {
+        let hourEnding;
+        if (hours >= 13) {
+            hours -= 12;
+            hourEnding = "PM";
+        } else {
+            hourEnding = "AM";
+        }
+
+        return `${hours}:${minutes} ${hourEnding}`;
+    } else {
+        return `${hours}:${minutes}`;
+    }
+}
+
+export function getDate() {
+    let d = new Date();
+    return (
+        d.getFullYear() +
+        "-" +
+        padNumber(d.getMonth() + 1) +
+        "-" +
+        padNumber(d.getDate())
+    );
+}

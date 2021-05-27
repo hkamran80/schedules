@@ -3,6 +3,11 @@
         <utds-header
             :title="schedules[this.$route.params.id].name"
             :subtitle="prettyDateAndTime"
+            :subtitleTooltip="
+                currentDayUserOverride !== null
+                    ? `Override resets at ${overrideExpirationTime}`
+                    : ''
+            "
         >
             <template v-slot:icons>
                 <v-btn
@@ -82,7 +87,6 @@
                     <timetable
                         :daySchedule="schedule[currentDay]"
                         :schedulePeriods="schedulePeriods"
-                        @close="closeDialogs"
                     />
                 </v-card-text>
             </v-card>
@@ -145,18 +149,35 @@
                 </v-card-title>
 
                 <v-card-text>
-                    <v-select
-                        v-model="currentDayUserOverride"
-                        label="Day Override"
-                        hint="The override will get reset if you reload the page"
-                        outlined
-                        clearable
-                        persistent-hint
-                        class="mt-3"
-                        :items="possibleDays"
-                        item-text="long"
-                        item-value="short"
-                    />
+                    <div class="mt-3">
+                        <v-select
+                            label="Day Override"
+                            :hint="
+                                currentTime <=
+                                Number(overrideExpirationTime24Hour)
+                                    ? currentDayUserOverride !== null
+                                        ? `Override resets at ${overrideExpirationTime}`
+                                        : `The override will get reset if you reload the page`
+                                    : `You cannot set an override at this time. Please wait till the next day with periods.`
+                            "
+                            outlined
+                            clearable
+                            persistent-hint
+                            v-model="currentDayUserOverride"
+                            :items="possibleDays"
+                            item-text="long"
+                            item-value="short"
+                            v-if="
+                                currentTime <=
+                                    Number(overrideExpirationTime24Hour)
+                            "
+                            @input="setDayOverride"
+                        />
+                        <span v-else>
+                            You cannot set an override at this time. Please wait
+                            till the next day with periods.
+                        </span>
+                    </div>
 
                     <v-divider class="mb-4" />
 
@@ -226,41 +247,11 @@
         </v-dialog>
 
         <v-dialog v-model="periodNamesExportDialog" width="750">
-            <v-card class="mx-auto">
-                <v-card-title>
-                    <v-row align="center">
-                        <v-col class="text-wrap--break">
-                            Export Period Names
-                        </v-col>
-                        <v-col cols="4" class="text-right">
-                            <v-btn
-                                icon
-                                color="primary"
-                                @click="copyExportedPeriodNames"
-                            >
-                                <v-icon v-text="mdiContentCopy" />
-                            </v-btn>
-                            <v-btn
-                                icon
-                                color="primary"
-                                @click="periodNamesExportDialog = false"
-                            >
-                                <v-icon v-text="mdiClose" />
-                            </v-btn>
-                        </v-col>
-                    </v-row>
-                </v-card-title>
-                <v-card-text>
-                    <v-textarea
-                        id="exportPeriodNamesString"
-                        v-model="exportPeriodNamesString"
-                        rows="8"
-                        readonly
-                        outlined
-                        label="Period Names String"
-                    />
-                </v-card-text>
-            </v-card>
+            <period-names-export
+                :periodNamesString="periodNamesExportString"
+                @afterCopy="afterPeriodNamesExport"
+                @close="periodNamesExportDialog = false"
+            />
         </v-dialog>
 
         <v-dialog v-model="periodNamesImport.dialog" width="750">
@@ -520,6 +511,12 @@
                 <v-card-text v-text="currentPeriodRaw" />
                 <v-divider />
                 <v-card-text v-text="nextPeriodRaw" />
+                <v-divider />
+                <v-card-text
+                    v-text="
+                        `${overrideExpirationTime} | ${overrideExpirationTime24Hour}`
+                    "
+                />
             </v-card>
             <v-btn text block @click="debugFunction">
                 Debug Function
@@ -545,10 +542,14 @@ import {
     padNumber,
     calculateTimeDifference,
     shortenedDayStringToLong,
-    getShortDay
+    getShortDay,
+    hourConversion,
+    getDate
 } from "@/helper-functions.js";
 
 const Timetable = () => import("@/components/dialogs/Schedule/Timetable.vue");
+const PeriodNamesExport = () =>
+    import("@/components/dialogs/Schedule/Settings/PeriodNamesExport.vue");
 
 export default {
     name: "Schedule",
@@ -561,7 +562,7 @@ export default {
             }
         }
     },
-    components: { CenterLayout, UtdsHeader, Timetable },
+    components: { CenterLayout, UtdsHeader, Timetable, PeriodNamesExport },
     data() {
         return {
             // Current and Next Period Information
@@ -587,6 +588,7 @@ export default {
                 day: null,
                 time: null
             },
+            twentyFourHourTime: false,
             possibleDays: Object.entries(shortLongDays)
                 .filter(
                     day =>
@@ -604,6 +606,7 @@ export default {
 
             // Settings
             settingsDialog: false,
+            originalPeriodNameInCustom: true,
 
             // Period Editing Functionality
             periodNamesScheduleId: "",
@@ -722,6 +725,22 @@ export default {
                 ? this.currentDayUserOverride
                 : this.currentDay;
         },
+        overrideExpirationTime() {
+            return hourConversion(
+                this.twentyFourHourTime ? "24-hour" : "12-hour",
+                this.schedule[this.currentDayOrOverride][
+                    Object.keys(this.schedule[this.currentDayOrOverride]).pop()
+                ][1]
+            );
+        },
+        overrideExpirationTime24Hour() {
+            return hourConversion(
+                "24-hour",
+                this.schedule[this.currentDayOrOverride][
+                    Object.keys(this.schedule[this.currentDayOrOverride]).pop()
+                ][1]
+            ).replace(":", "");
+        },
         schedule: function() {
             return this.schedules[this.$route.params.id].schedule;
         },
@@ -744,7 +763,10 @@ export default {
 
                 periods = Object.keys(daySchedule).map(period => {
                     return {
-                        name: this.checkForCustomPeriodName(period, true),
+                        name: this.checkForCustomPeriodName(
+                            period,
+                            this.originalPeriodNameInCustom
+                        ),
                         start: `${date} ${daySchedule[period][0].replaceAll(
                             "-",
                             ":"
@@ -763,7 +785,7 @@ export default {
 
             return periods;
         },
-        exportPeriodNamesString: function() {
+        periodNamesExportString: function() {
             return JSON.stringify(this.periodNames);
         },
         exportNotificationsString: function() {
@@ -771,6 +793,67 @@ export default {
         }
     },
     methods: {
+        getDayOverride() {
+            if (
+                localStorage.getItem(
+                    `schedule.${this.$route.params.id}.override`
+                ) !== null &&
+                this.currentDayUserOverride === null
+            ) {
+                let overrideData = JSON.parse(
+                    localStorage.getItem(
+                        `schedule.${this.$route.params.id}.override`
+                    )
+                );
+                if (
+                    getDate() === overrideData.expirationDate &&
+                    this.currentTime <=
+                        Number(overrideData.expirationTime.replace(":", ""))
+                ) {
+                    this.currentDayUserOverride = overrideData.day;
+                } else {
+                    console.info("The override data was not valid");
+                    localStorage.removeItem(
+                        `schedule.${this.$route.params.id}.override`
+                    );
+                }
+            }
+        },
+        setDayOverride(shortDayCode) {
+            this.currentDayUserOverride = shortDayCode;
+
+            if (shortDayCode !== null) {
+                let daySchedule = this.schedule[this.currentDayOrOverride],
+                    time = hourConversion(
+                        "24-hour",
+                        daySchedule[Object.keys(daySchedule).pop()][1]
+                    );
+
+                if (this.currentTime <= Number(time.replace(":", ""))) {
+                    localStorage.setItem(
+                        `schedule.${this.$route.params.id}.override`,
+                        JSON.stringify({
+                            day: shortDayCode,
+                            expirationDate: getDate(),
+                            expirationTime: hourConversion(
+                                "24-hour",
+                                daySchedule[Object.keys(daySchedule).pop()][1]
+                            )
+                        })
+                    );
+                } else {
+                    this.currentDayUserOverride = null;
+                    this.showToast(
+                        "The override cannot be set at this time. You must wait till the next day with periods begins.",
+                        "error"
+                    );
+                }
+            } else {
+                localStorage.removeItem(
+                    `schedule.${this.$route.params.id}.override`
+                );
+            }
+        },
         importNotificationSettingsString: function() {
             try {
                 let notificationSettingsImportString = JSON.parse(
@@ -878,9 +961,6 @@ export default {
             this.loadAllowedNotifications();
             this.notificationSettingsEditDialog = true;
         },
-        closeDialogs: function() {
-            this.timetable = false;
-        },
         loadAllowedNotifications: function() {
             let allowedNotifications = localStorage.getItem(
                 `allowedNotifications.${this.$route.params.id}`
@@ -980,20 +1060,19 @@ export default {
                 );
             }
         },
-        copyExportedPeriodNames: function() {
-            let exportedPeriodNamesElement = document.getElementById(
-                "exportPeriodNamesString"
-            );
-            exportedPeriodNamesElement.select();
-            document.execCommand("copy");
-
+        afterPeriodNamesExport: function() {
             this.showToast("Copied period names to the clipboard", "info");
-
             this.periodNamesExportDialog = false;
         },
-        debugFunction: function() {
+        debugFunction() {
             console.debug("Development function called");
-            console.debug(Object.keys(this.schedule));
+            console.debug(
+                this.currentTime <= Number(this.overrideExpirationTime24Hour)
+                    ? this.currentDayUserOverride !== null
+                        ? `Override resets at ${this.overrideExpirationTime}`
+                        : `The override will get reset if you reload the page`
+                    : `You cannot set an override at this time. Please wait till the next day with periods.`
+            );
         },
         checkForCustomPeriodName: function(periodName, withPeriod = false) {
             this.getPeriodNames();
@@ -1052,13 +1131,15 @@ export default {
             this.updateTimes();
             this.getCurrentPeriod();
 
+            this.getDayOverride();
+
             if (
                 this.currentPeriodRaw[0] !== "No Period" &&
                 this.currentPeriodRaw[0] !== "No Periods Today"
             ) {
                 this.currentPeriod = this.checkForCustomPeriodName(
                     this.currentPeriodRaw[0],
-                    true
+                    this.originalPeriodNameInCustom
                 );
 
                 if (this.currentPeriod !== this.previousPeriod) {
@@ -1070,8 +1151,7 @@ export default {
 
                 this.updateNextPeriod();
 
-                let compiledTimeDifference;
-                var timeDifference;
+                let compiledTimeDifference, timeDifference;
                 if (this.currentPeriodRaw[1] !== "") {
                     let scheduledEnd = this.currentPeriodRaw[1][1].toString();
 
@@ -1134,44 +1214,20 @@ export default {
         updateNextPeriod: function() {
             this.getNextPeriod();
 
-            this.nextPeriod = this.checkForCustomPeriodName(
-                this.nextPeriodRaw[0]
-            );
             if (
-                this.nextPeriodRaw[0] != "No Period" &&
-                this.nextPeriodRaw[0] != "No Periods Today"
+                this.nextPeriodRaw[0] !== "No Period" &&
+                this.nextPeriodRaw[0] !== "No Periods Today"
             ) {
-                let nextPeriodStartTimeString;
-
-                // FIXME: Add 24-hour time variable
-                if (!this.$twenty_four_hour_time) {
-                    let nextPeriodStartTimeHour = Number(
-                        this.nextPeriodRaw[1][0].split("-").slice(0, 1)
-                    );
-
-                    let hourString =
-                        nextPeriodStartTimeHour > 12
-                            ? (nextPeriodStartTimeHour - 12).toString()
-                            : nextPeriodStartTimeHour.toString();
-
-                    let nextPeriodStartTime =
-                        hourString +
-                        ":" +
-                        this.nextPeriodRaw[1][0].split("-").slice(1, 2);
-                    let nextPeriodStartTimeTwelveHour =
-                        nextPeriodStartTimeHour >= 12 ? "PM" : "AM";
-
-                    nextPeriodStartTimeString =
-                        nextPeriodStartTime +
-                        " " +
-                        nextPeriodStartTimeTwelveHour;
-                } else {
-                    nextPeriodStartTimeString = this.nextPeriodRaw[1][0]
-                        .split("-")
-                        .slice(0, 2)
-                        .join(":");
-                }
-                this.nextPeriodStarting = nextPeriodStartTimeString;
+                this.nextPeriodStarting = hourConversion(
+                    this.twentyFourHourTime ? "24-hour" : "12-hour",
+                    this.nextPeriodRaw[1][0]
+                );
+                this.nextPeriod = this.checkForCustomPeriodName(
+                    this.nextPeriodRaw[0],
+                    this.originalPeriodNameInCustom
+                );
+            } else {
+                this.nextPeriod = this.nextPeriodRaw[0];
             }
         },
         scheduledNotifications: function(timeDifference) {
@@ -1371,6 +1427,9 @@ export default {
                 "-" +
                 padNumber(d.getSeconds().toString());
 
+            // this.currentTime = "1220";
+            // this.currentSplitTime = "12-20-34";
+
             this.currentPrettyDateTime.day = d.toLocaleDateString("en-us", {
                 weekday: "long"
             });
@@ -1378,7 +1437,7 @@ export default {
                 hour: "numeric",
                 minute: "numeric",
                 second: "numeric",
-                hour12: !this.$twenty_four_hour_time
+                hour12: !this.twentyFourHourTime
             });
         },
         showToast: function(content, type) {

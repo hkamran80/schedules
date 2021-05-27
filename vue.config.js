@@ -7,6 +7,12 @@ const webTitle =
             : process.env.VUE_APP_EDGE_MODE === "true"
             ? "Schedules (edge)"
             : "Schedules",
+    url =
+        process.env.NODE_ENV === "development"
+            ? "http://127.0.0.1:8080"
+            : process.env.VUE_APP_EDGE_MODE === "true"
+            ? "https://beta-schedules.unisontech.org"
+            : "https://schedules.unisontech.org",
     schedule_keys = Object.keys(schedules),
     schedule_values = Object.values(schedules);
 
@@ -15,6 +21,9 @@ module.exports = {
     chainWebpack: config => {
         config.plugin("html").tap(args => {
             args[0].title = webTitle;
+            args[0].url = url;
+            args[0].description =
+                "An app for schedules. Find out exactly how much time is remaining in a period or what the period is.";
             return args;
         });
 
