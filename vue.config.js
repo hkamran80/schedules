@@ -1,5 +1,5 @@
-import PreloadWebpackPlugin from "@vue/preload-webpack-plugin";
-import schedules from "@/schedules.json";
+const PreloadWebpackPlugin = require("@vue/preload-webpack-plugin");
+const schedules = require("./src/schedules.json");
 
 const webTitle =
         process.env.NODE_ENV === "development"
@@ -18,8 +18,8 @@ const webTitle =
 
 module.exports = {
     transpileDependencies: ["vuetify"],
-    chainWebpack: config => {
-        config.plugin("html").tap(args => {
+    chainWebpack: (config) => {
+        config.plugin("html").tap((args) => {
             args[0].title = webTitle;
             args[0].url = url;
             args[0].description =
@@ -31,14 +31,14 @@ module.exports = {
     },
     configureWebpack: {
         output: {
-            crossOriginLoading: "anonymous"
+            crossOriginLoading: "anonymous",
         },
         plugins: [
             new PreloadWebpackPlugin({
                 rel: "preload",
-                include: ["schedule"]
-            })
-        ]
+                include: ["schedule"],
+            }),
+        ],
     },
     pwa: {
         name: webTitle,
@@ -53,8 +53,8 @@ module.exports = {
                 /favicon\.ico$/,
                 /^manifest.*\.js?$/,
                 /_redirects/,
-                /_headers/
-            ]
+                /_headers/,
+            ],
         },
         manifestOptions: {
             icons: [
@@ -63,37 +63,37 @@ module.exports = {
                     src: "/img/favicons/favicon-16.png",
                     sizes: "16x16",
                     type: "image/png",
-                    purpose: "any"
+                    purpose: "any",
                 },
                 {
                     src: "/img/favicons/favicon-32.png",
                     sizes: "32x32",
                     type: "image/png",
-                    purpose: "any"
+                    purpose: "any",
                 },
                 {
                     src: "/img/favicons/favicon-144.png",
                     sizes: "144x144",
                     type: "image/png",
-                    purpose: "any"
+                    purpose: "any",
                 },
                 {
                     src: "/img/favicons/favicon-152.png",
                     sizes: "152x152",
                     type: "image/png",
-                    purpose: "any"
+                    purpose: "any",
                 },
                 {
                     src: "/img/favicons/favicon-512.png",
                     sizes: "512x512",
                     type: "image/png",
-                    purpose: "any"
+                    purpose: "any",
                 },
                 {
                     src: "/img/favicons/safari-pinned-tab.svg",
                     sizes: "942x942",
                     type: "image/svg+xml",
-                    purpose: "any"
+                    purpose: "any",
                 },
 
                 // Maskable
@@ -101,40 +101,40 @@ module.exports = {
                     src: "/img/maskable/maskable-16.png",
                     sizes: "16x16",
                     type: "image/png",
-                    purpose: "maskable"
+                    purpose: "maskable",
                 },
                 {
                     src: "/img/maskable/maskable-32.png",
                     sizes: "32x32",
                     type: "image/png",
-                    purpose: "maskable"
+                    purpose: "maskable",
                 },
                 {
                     src: "/img/maskable/maskable-144.png",
                     sizes: "144x144",
                     type: "image/png",
-                    purpose: "maskable"
+                    purpose: "maskable",
                 },
                 {
                     src: "/img/maskable/maskable-152.png",
                     sizes: "152x152",
                     type: "image/png",
-                    purpose: "maskable"
+                    purpose: "maskable",
                 },
                 {
                     src: "/img/maskable/maskable-192.png",
                     sizes: "192x192",
                     type: "image/png",
-                    purpose: "maskable"
+                    purpose: "maskable",
                 },
                 {
                     src: "/img/maskable/maskable-196.png",
                     sizes: "196x196",
                     type: "image/png",
-                    purpose: "maskable"
-                }
+                    purpose: "maskable",
+                },
             ],
-            shortcuts: schedule_values.slice(0, 4).map(schedule => {
+            shortcuts: schedule_values.slice(0, 4).map((schedule) => {
                 return {
                     name: schedule.name,
                     short_name: schedule.shortName,
@@ -143,7 +143,7 @@ module.exports = {
                         schedule_keys[
                             schedule_values.indexOf(
                                 schedule_values.filter(
-                                    schedule_val =>
+                                    (schedule_val) =>
                                         schedule_val.name === schedule.name
                                 )[0]
                             )
@@ -152,9 +152,9 @@ module.exports = {
                     icons: [
                         {
                             src: `/img/icons/${schedule.icon}.192.png`,
-                            sizes: "192x192"
-                        }
-                    ]
+                            sizes: "192x192",
+                        },
+                    ],
                 };
             }),
             display_override: ["minimal-ui"],
@@ -169,7 +169,7 @@ module.exports = {
             scope: url,
             categories: ["productivity", "utilities"],
             prefer_related_applications: false,
-            related_applications: []
-        }
-    }
+            related_applications: [],
+        },
+    },
 };
