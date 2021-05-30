@@ -33,10 +33,12 @@ import schedules from "@/schedules.json";
 
 export default {
     name: "App",
-    data: () => ({
-        schedules: schedules,
-        baseDocumentTitle: "Schedules"
-    }),
+    data() {
+        return {
+            schedules: schedules,
+            baseDocumentTitle: "Schedules"
+        };
+    },
     components: {
         NavigationBar
     },
@@ -83,9 +85,10 @@ a {
     text-decoration: none;
 }
 
-/* Global Classes */
+/* Global Styles */
 .text-wrap--break {
-    word-break: break-word;
+    display: inline-block;
+    word-break: break-word !important;
     word-wrap: break-word;
 }
 </style>

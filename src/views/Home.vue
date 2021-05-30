@@ -1,8 +1,6 @@
 <template>
-    <center-layout>
-        <header class="pb-4">
-            <h2>Welcome! Select a schedule to begin!</h2>
-        </header>
+    <utds-center-layout>
+        <utds-header title="Welcome! Select a schedule to begin!" />
 
         <v-card
             v-for="(schedule, id) in schedules"
@@ -74,18 +72,17 @@
                 @close="closeDialogs"
             />
         </v-dialog>
-    </center-layout>
+    </utds-center-layout>
 </template>
 
 <script>
-import CenterLayout from "@/components/CenterLayout.vue";
+import { UtdsCenterLayout, UtdsHeader } from "utds-component-library";
 const ReleaseNotes = () => import("@/components/dialogs/ReleaseNotes.vue");
 const Privacy = () => import("@/components/dialogs/Privacy.vue");
 
 import { mdiPlus, mdiSchoolOutline } from "@mdi/js";
 
 export default {
-    name: "Home",
     props: {
         schedules: {
             type: Object,
@@ -95,8 +92,8 @@ export default {
             }
         }
     },
-    components: { CenterLayout, ReleaseNotes, Privacy },
-    data: function() {
+    components: { UtdsCenterLayout, UtdsHeader, ReleaseNotes, Privacy },
+    data() {
         return {
             dialogs: {
                 releaseNotes: false,
@@ -107,7 +104,7 @@ export default {
         };
     },
     methods: {
-        closeDialogs: function() {
+        closeDialogs() {
             this.dialogs.releaseNotes = false;
             this.dialogs.privacy = false;
         }
@@ -120,8 +117,6 @@ export default {
     padding: 0 5px;
     margin: 10px 0;
     text-align: center;
-    word-break: break-word;
-    word-wrap: break-word;
 }
 .v-card.schedule-card i.v-icon {
     margin-right: 15px;

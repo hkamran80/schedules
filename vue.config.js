@@ -1,5 +1,5 @@
-const PreloadWebpackPlugin = require("@vue/preload-webpack-plugin");
-const schedules = require("./src/schedules.json");
+import PreloadWebpackPlugin from "@vue/preload-webpack-plugin";
+import schedules from "@/schedules.json";
 
 const webTitle =
         process.env.NODE_ENV === "development"
@@ -36,7 +36,7 @@ module.exports = {
         plugins: [
             new PreloadWebpackPlugin({
                 rel: "preload",
-                include: "allChunks"
+                include: ["schedule"]
             })
         ]
     },
@@ -53,8 +53,7 @@ module.exports = {
                 /favicon\.ico$/,
                 /^manifest.*\.js?$/,
                 /_redirects/,
-                /_headers/,
-                /schedules\.json$/
+                /_headers/
             ]
         },
         manifestOptions: {
@@ -161,15 +160,13 @@ module.exports = {
             display_override: ["minimal-ui"],
             display: "standalone",
             background_color: "#6D1E3B",
-            url: process.env.VUE_APP_EDGE_MODE
-                ? "https://beta-schedules.unisontech.org"
-                : "https://schedules.unisontech.org",
+            url: url,
             manifestUrl: "/manifest.json",
             lang: "en",
             orientation: "any",
             description:
                 "An app for schedules. Find out exactly how much time is remaining in a period or what the period is.",
-            scope: "https://beta-schedules.unisontech.org",
+            scope: url,
             categories: ["productivity", "utilities"],
             prefer_related_applications: false,
             related_applications: []

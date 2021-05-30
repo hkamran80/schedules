@@ -1,9 +1,7 @@
 <template>
-    <center-layout>
-        <header class="pb-4">
-            <h2 class="pb-1">Page Not Found</h2>
-            <h3 class="text-wrap--break" v-text="$route.query.path" />
-        </header>
+    <utds-center-layout>
+        <utds-header title="Page Not Found" :subtitle="$route.query.path" />
+
         <article>
             <p>
                 The page you were trying to access does not exist. Click
@@ -13,14 +11,14 @@
                 to go to the homepage.
             </p>
         </article>
-    </center-layout>
+    </utds-center-layout>
 </template>
 
 <script>
-import CenterLayout from "@/components/CenterLayout";
+import { UtdsCenterLayout, UtdsHeader } from "utds-component-library";
 
 export default {
     name: "NotFound",
-    components: { CenterLayout }
+    components: { UtdsCenterLayout, UtdsHeader }
 };
 </script>

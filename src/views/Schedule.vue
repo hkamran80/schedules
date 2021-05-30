@@ -1,5 +1,5 @@
 <template>
-    <center-layout>
+    <utds-center-layout>
         <utds-header
             :title="schedules[this.$route.params.id].name"
             :subtitle="prettyDateAndTime"
@@ -149,7 +149,7 @@
                 </v-card-title>
 
                 <v-card-text>
-                    <div class="mt-3">
+                    <div class="my-3">
                         <v-select
                             label="Day Override"
                             :hint="
@@ -177,6 +177,19 @@
                             You cannot set an override at this time. Please wait
                             till the next day with periods.
                         </span>
+                    </div>
+
+                    <v-divider class="mb-4" />
+
+                    <div class="mb-5">
+                        <v-switch
+                            v-model="twentyFourHourTime"
+                            label="Twenty-four Hour Time"
+                            inset
+                            hide-details
+                            readonly
+                            @click="setTwentyFourHourTime(!twentyFourHourTime)"
+                        />
                     </div>
 
                     <v-divider class="mb-4" />
@@ -522,12 +535,11 @@
                 Debug Function
             </v-btn>
         </div>
-    </center-layout>
+    </utds-center-layout>
 </template>
 
 <script>
-import CenterLayout from "@/components/CenterLayout.vue";
-import UtdsHeader from "@/components/utds/UtdsHeader.vue";
+import { UtdsCenterLayout, UtdsHeader } from "utds-component-library";
 import {
     mdiConsoleLine,
     mdiCalendarOutline,
@@ -562,7 +574,7 @@ export default {
             }
         }
     },
-    components: { CenterLayout, UtdsHeader, Timetable, PeriodNamesExport },
+    components: { UtdsCenterLayout, UtdsHeader, Timetable, PeriodNamesExport },
     data() {
         return {
             // Current and Next Period Information
@@ -688,10 +700,14 @@ export default {
         }
     },
     mounted() {
-        this.$notification
-            .requestPermission()
-            .then(this.notificationPermissionsCallback, console.error)
-            .catch(console.error);
+        this.getTwentyFourHourTime();
+
+        if (Notification.permission === "granted") {
+            this.$notification
+                .requestPermission()
+                .then(this.notificationPermissionsCallback, console.error)
+                .catch(console.error);
+        }
     },
     destroyed() {
         clearInterval(this.mainInterval);
@@ -726,20 +742,32 @@ export default {
                 : this.currentDay;
         },
         overrideExpirationTime() {
-            return hourConversion(
-                this.twentyFourHourTime ? "24-hour" : "12-hour",
-                this.schedule[this.currentDayOrOverride][
-                    Object.keys(this.schedule[this.currentDayOrOverride]).pop()
-                ][1]
-            );
+            if (Object.keys(this.schedule).indexOf(getShortDay()) !== -1) {
+                return hourConversion(
+                    this.twentyFourHourTime ? "24-hour" : "12-hour",
+                    this.schedule[this.currentDayOrOverride][
+                        Object.keys(
+                            this.schedule[this.currentDayOrOverride]
+                        ).pop()
+                    ][1]
+                );
+            } else {
+                return "12:00 AM";
+            }
         },
         overrideExpirationTime24Hour() {
-            return hourConversion(
-                "24-hour",
-                this.schedule[this.currentDayOrOverride][
-                    Object.keys(this.schedule[this.currentDayOrOverride]).pop()
-                ][1]
-            ).replace(":", "");
+            if (Object.keys(this.schedule).indexOf(getShortDay()) !== -1) {
+                return hourConversion(
+                    "24-hour",
+                    this.schedule[this.currentDayOrOverride][
+                        Object.keys(
+                            this.schedule[this.currentDayOrOverride]
+                        ).pop()
+                    ][1]
+                ).replace(":", "");
+            } else {
+                return "0000";
+            }
         },
         schedule: function() {
             return this.schedules[this.$route.params.id].schedule;
@@ -793,6 +821,19 @@ export default {
         }
     },
     methods: {
+        getTwentyFourHourTime() {
+            if (localStorage.getItem("twentyFourHourTime") !== null) {
+                this.twentyFourHourTime =
+                    localStorage.getItem("twentyFourHourTime") === "true"
+                        ? true
+                        : false;
+            }
+        },
+        setTwentyFourHourTime(state) {
+            console.debug(state);
+            this.twentyFourHourTime = state;
+            localStorage.setItem("twentyFourHourTime", state.toString());
+        },
         getDayOverride() {
             if (
                 localStorage.getItem(
