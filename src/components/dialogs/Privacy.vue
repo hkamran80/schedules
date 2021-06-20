@@ -99,7 +99,7 @@ export default {
     name: "Privacy",
     data: function() {
         return {
-            mdiClose: mdiClose
+            mdiClose: mdiClose,
         };
     },
     mixins: [umami],
@@ -118,8 +118,8 @@ export default {
         },
         closeDialog: function() {
             this.$emit("close");
-        }
-    }
+        },
+    },
 };
 </script>
 

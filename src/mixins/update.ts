@@ -1,18 +1,20 @@
+import Vue from "vue";
+
 // Source: https://dev.to/drbragg/handling-service-worker-updates-in-your-vue-pwa-1pip
-export default {
+export default Vue.extend({
     data() {
         return {
             // Refresh Variables
             refreshing: false,
             registration: null,
-            updateExists: false
+            updateExists: false,
         };
     },
 
     created() {
         // Listen for our custom event from the SW registration
         document.addEventListener("swUpdated", this.updateAvailable, {
-            once: true
+            once: true,
         });
 
         // Prevent multiple refreshes
@@ -28,17 +30,27 @@ export default {
         // Store the SW registration so we can send it a message
         // We use `updateExists` to control whatever alert, toast, dialog, etc we want to use
         // To alert the user there is an update they need to refresh for
-        updateAvailable(event) {
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        updateAvailable(event: any): void {
             this.registration = event.detail;
             this.updateExists = true;
         },
         // Called when the user accepts the update
-        refreshApp() {
+        refreshApp(): void {
             this.updateExists = false;
             // Make sure we only send a 'skip waiting' message if the SW is waiting
-            if (!this.registration || !this.registration.waiting) return;
+            // if (!this.registration || !this.registration.waiting) return;
             // send message to SW to skip the waiting and activate the new SW
-            this.registration.waiting.postMessage({ type: "SKIP_WAITING" });
-        }
-    }
-};
+
+            if (
+                this.registration !== null &&
+                this.registration.waiting !== null
+            ) {
+                this.registration.waiting.postMessage({ type: "SKIP_WAITING" });
+            } else {
+                return;
+            }
+        },
+    },
+});

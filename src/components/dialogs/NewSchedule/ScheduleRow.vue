@@ -97,6 +97,7 @@
 </template>
 
 <script>
+/* eslint-disable @typescript-eslint/camelcase */
 export default {
     name: "ScheduleRow",
     data: function() {
@@ -104,7 +105,7 @@ export default {
             period: "",
             times: {
                 start: "",
-                end: ""
+                end: "",
             },
             days: [
                 "Sunday",
@@ -113,12 +114,12 @@ export default {
                 "Wednesday",
                 "Thursday",
                 "Friday",
-                "Saturday"
+                "Saturday",
             ],
             dialogs: {
                 startTime: false,
-                endTime: false
-            }
+                endTime: false,
+            },
         };
     },
     methods: {
@@ -128,9 +129,9 @@ export default {
         return_schedule_info: function() {
             return {
                 name: this.period,
-                times: this.times
+                times: this.times,
             };
-        }
-    }
+        },
+    },
 };
 </script>

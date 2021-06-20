@@ -50,7 +50,7 @@ export default {
             version: pkg.version,
             openPanels: 0,
             mdiClose: mdiClose,
-            mdiGithub: mdiGithub
+            mdiGithub: mdiGithub,
         };
     },
     created() {
@@ -60,14 +60,14 @@ export default {
         loadReleaseNotes: function() {
             this.releaseNotes = Object.entries(releaseNotesJson)
                 .reverse()
-                .map(release => {
+                .map((release) => {
                     return { version: release[0], changelog: release[1] };
                 });
         },
         closeDialog: function() {
             this.$emit("close");
-        }
-    }
+        },
+    },
 };
 </script>
 

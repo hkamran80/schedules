@@ -23,13 +23,13 @@ export default {
     name: "Schedule",
     data: function() {
         return {
-            mdiClose: mdiClose
+            mdiClose: mdiClose,
         };
     },
     methods: {
         closeDialog: function() {
             this.$emit("close");
-        }
-    }
+        },
+    },
 };
 </script>

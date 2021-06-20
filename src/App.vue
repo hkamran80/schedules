@@ -36,11 +36,11 @@ export default {
     data() {
         return {
             schedules: schedules,
-            baseDocumentTitle: "Schedules"
+            baseDocumentTitle: "Schedules",
         };
     },
     components: {
-        NavigationBar
+        NavigationBar,
     },
     mixins: [update, umami],
     created() {
@@ -67,8 +67,8 @@ export default {
             } else {
                 document.title = this.baseDocumentTitle;
             }
-        }
-    }
+        },
+    },
 };
 </script>
 

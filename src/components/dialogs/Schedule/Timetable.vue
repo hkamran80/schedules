@@ -13,46 +13,46 @@
     />
 </template>
 
-<script>
-export default {
-    name: "Timetable",
+<script lang="ts">
+import Vue from "vue";
+
+export default Vue.extend({
     props: {
         daySchedule: {
             type: Object,
             required: true,
             default: function() {
                 return {};
-            }
+            },
         },
         schedulePeriods: {
             type: Array,
             required: true,
             default: function() {
                 return [];
-            }
-        }
+            },
+        },
     },
     computed: {
-        calendarFirstTime: function() {
+        calendarFirstTime() {
             return typeof this.daySchedule !== "undefined"
                 ? this.daySchedule[Object.keys(this.daySchedule)[0]][0].split(
                       "-"
                   )[0] + "00"
                 : "08:00";
         },
-        calendarIntervalCount: function() {
+        calendarIntervalCount() {
             if (typeof this.daySchedule !== "undefined") {
-                let endTimes = this.daySchedule[
+                const endTimes = this.daySchedule[
                         Object.keys(this.daySchedule).slice(-1)[0]
                     ][1].split("-"),
                     startTimeHour = Number(
                         this.daySchedule[
                             Object.keys(this.daySchedule)[0]
                         ][0].split("-")[0]
-                    ),
-                    endTimeHour;
+                    );
 
-                endTimeHour =
+                const endTimeHour =
                     Number(endTimes[1]) !== 0
                         ? Number(endTimes[0]) + 1
                         : Number(endTimes[0]);
@@ -61,7 +61,7 @@ export default {
             } else {
                 return null;
             }
-        }
-    }
-};
+        },
+    },
+});
 </script>

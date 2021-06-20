@@ -43,7 +43,7 @@ export default {
     data: function() {
         return {
             mdiThemeLightDark: mdiThemeLightDark,
-            mdiCommentMultipleOutline: mdiCommentMultipleOutline
+            mdiCommentMultipleOutline: mdiCommentMultipleOutline,
         };
     },
     created() {
@@ -81,8 +81,8 @@ export default {
                 "darkTheme",
                 this.$vuetify.theme.dark.toString()
             );
-        }
-    }
+        },
+    },
 };
 </script>
 

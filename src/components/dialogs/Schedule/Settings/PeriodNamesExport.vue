@@ -35,7 +35,7 @@ export default {
     },
     methods: {
         copyPeriodNames() {
-            let exportedPeriodNamesElement = document.getElementById(
+            const exportedPeriodNamesElement = document.getElementById(
                 "periodNamesString"
             );
             exportedPeriodNamesElement.select();
@@ -45,7 +45,7 @@ export default {
         },
         closeDialog() {
             this.$emit("close");
-        }
-    }
+        },
+    },
 };
 </script>

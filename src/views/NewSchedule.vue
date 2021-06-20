@@ -96,15 +96,15 @@ export default {
                 id: "",
                 name: "",
                 shortName: "",
-                color: ""
+                color: "",
             },
             schedule: [],
             dialogs: {
                 metadata: false,
-                schedule: false
+                schedule: false,
             },
-            mdiHelpCircleOutline: mdiHelpCircleOutline
+            mdiHelpCircleOutline: mdiHelpCircleOutline,
         };
-    }
+    },
 };
 </script>

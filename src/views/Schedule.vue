@@ -25,7 +25,6 @@
                     color="primary"
                     title="Open Timetable"
                     aria-label="Open Timetable"
-                    :disabled="schedulePeriods.length === 0"
                     @click="timetable = true"
                 >
                     <v-icon v-text="mdiCalendarOutline" />
@@ -78,6 +77,16 @@
         <v-dialog v-model="timetable" width="750" scrollable>
             <v-card class="mx-auto">
                 <v-card-title>
+                    <v-select
+                        label="Day"
+                        outlined
+                        clearable
+                        v-model="timetableDay"
+                        :items="possibleDays"
+                        item-text="long"
+                        item-value="short"
+                        @input="setTimetableDay"
+                    />
                     <v-spacer />
                     <v-btn icon color="primary" @click="timetable = false">
                         <v-icon v-text="mdiClose" />
@@ -85,9 +94,38 @@
                 </v-card-title>
                 <v-card-text>
                     <timetable
-                        :daySchedule="schedule[currentDay]"
-                        :schedulePeriods="schedulePeriods"
+                        :daySchedule="
+                            timetableDay === null
+                                ? schedule[currentDayOrOverride]
+                                : schedule[timetableDay]
+                        "
+                        :schedulePeriods="
+                            customizableSchedulePeriods(
+                                timetableDay === null
+                                    ? schedule[currentDayOrOverride]
+                                    : schedule[timetableDay]
+                            )
+                        "
+                        v-if="
+                            (this.timetableDay === null
+                                ? this.schedule[this.currentDayOrOverride] !==
+                                  undefined
+                                    ? Object.keys(
+                                          this.schedule[
+                                              this.currentDayOrOverride
+                                          ]
+                                      ).length
+                                    : 0
+                                : this.schedule[this.timetableDay] !== undefined
+                                ? Object.keys(this.schedule[this.timetableDay])
+                                      .length
+                                : 0) !== 0
+                        "
                     />
+                    <span v-else>
+                        The timetable is not available for this day. Choose a
+                        different day.
+                    </span>
                 </v-card-text>
             </v-card>
         </v-dialog>
@@ -153,12 +191,9 @@
                         <v-select
                             label="Day Override"
                             :hint="
-                                currentTime <=
-                                Number(overrideExpirationTime24Hour)
-                                    ? currentDayUserOverride !== null
-                                        ? `Override resets at ${overrideExpirationTime}`
-                                        : `The override will get reset if you reload the page`
-                                    : `You cannot set an override at this time. Please wait till the next day with periods.`
+                                currentDayUserOverride !== null
+                                    ? `Override resets at ${overrideExpirationTime}`
+                                    : `The override will get reset after the last period on your override day`
                             "
                             outlined
                             clearable
@@ -167,16 +202,8 @@
                             :items="possibleDays"
                             item-text="long"
                             item-value="short"
-                            v-if="
-                                currentTime <=
-                                    Number(overrideExpirationTime24Hour)
-                            "
                             @input="setDayOverride"
                         />
-                        <span v-else>
-                            You cannot set an override at this time. Please wait
-                            till the next day with periods.
-                        </span>
                     </div>
 
                     <v-divider class="mb-4" />
@@ -357,7 +384,7 @@
                                 :key="day"
                                 v-model="allowedNotifications.days[day]"
                                 :label="
-                                    day.replace(/\b[a-z]/g, str =>
+                                    day.replace(/\b[a-z]/g, (str) =>
                                         str.toUpperCase()
                                     )
                                 "
@@ -389,7 +416,7 @@
                                     interval
                                         .replace(/([A-Z]+)/g, ' $1')
                                         .replace(/([A-Z][a-z])/g, ' $1')
-                                        .replace(/(^|\s)\S/g, t =>
+                                        .replace(/(^|\s)\S/g, (t) =>
                                             t.toUpperCase()
                                         )
                                 "
@@ -539,6 +566,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import { UtdsCenterLayout, UtdsHeader } from "utds-component-library";
 import {
     mdiConsoleLine,
@@ -547,7 +575,7 @@ import {
     mdiContentSaveOutline,
     mdiClose,
     mdiContentCopy,
-    mdiCalendarImport
+    mdiCalendarImport,
 } from "@mdi/js";
 import {
     days as shortLongDays,
@@ -556,7 +584,7 @@ import {
     shortenedDayStringToLong,
     getShortDay,
     hourConversion,
-    getDate
+    getDate,
 } from "@/helper-functions.js";
 
 const Timetable = () => import("@/components/dialogs/Schedule/Timetable.vue");
@@ -564,15 +592,14 @@ const PeriodNamesExport = () =>
     import("@/components/dialogs/Schedule/Settings/PeriodNamesExport.vue");
 
 export default {
-    name: "Schedule",
     props: {
         schedules: {
             type: Object,
             required: true,
             default: function() {
                 return {};
-            }
-        }
+            },
+        },
     },
     components: { UtdsCenterLayout, UtdsHeader, Timetable, PeriodNamesExport },
     data() {
@@ -598,21 +625,21 @@ export default {
             currentSplitTime: "",
             currentPrettyDateTime: {
                 day: null,
-                time: null
+                time: null,
             },
             twentyFourHourTime: false,
             possibleDays: Object.entries(shortLongDays)
                 .filter(
-                    day =>
+                    (day) =>
                         Object.keys(
                             this.schedules[this.$route.params.id].schedule
                         ).indexOf(day[0]) !== -1
                 )
-                .map(day => {
+                .map((day) => {
                     return {
                         short: day[0],
                         long: day[1],
-                        disabled: day[0] === getShortDay()
+                        disabled: day[0] === getShortDay(),
                     };
                 }),
 
@@ -626,12 +653,13 @@ export default {
             periodNamesEditDialog: false,
             periodNamesImport: {
                 dialog: false,
-                string: null
+                string: null,
             },
             periodNamesExportDialog: false,
 
             // Timetable
             timetable: false,
+            timetableDay: null,
 
             // Notifications
             notificationsSupported: false,
@@ -642,7 +670,7 @@ export default {
                 tenMinute: false,
                 fiveMinute: false,
                 oneMinute: false,
-                thirtySecond: false
+                thirtySecond: false,
             },
             allowedNotifications: {
                 intervals: {
@@ -652,7 +680,7 @@ export default {
                     tenMinute: true,
                     fiveMinute: true,
                     oneMinute: true,
-                    thirtySecond: true
+                    thirtySecond: true,
                 },
                 days: {
                     sunday: true,
@@ -661,14 +689,14 @@ export default {
                     wednesday: true,
                     thursday: true,
                     friday: true,
-                    saturday: true
+                    saturday: true,
                 },
-                periods: {}
+                periods: {},
             },
             notificationSettingsEditDialog: false,
             notificationSettingsImport: {
                 dialog: false,
-                string: null
+                string: null,
             },
             notificationSettingsExportDialog: false,
 
@@ -682,7 +710,7 @@ export default {
             mdiContentSaveOutline: mdiContentSaveOutline,
             mdiClose: mdiClose,
             mdiContentCopy: mdiContentCopy,
-            mdiCalendarImport: mdiCalendarImport
+            mdiCalendarImport: mdiCalendarImport,
         };
     },
     created() {
@@ -695,7 +723,7 @@ export default {
         if (typeof this.schedules[this.$route.params.id] === "undefined") {
             this.$router.push({
                 name: "NotFound",
-                query: { path: window.location.origin + this.$route.path }
+                query: { path: window.location.origin + this.$route.path },
             });
         }
     },
@@ -742,7 +770,11 @@ export default {
                 : this.currentDay;
         },
         overrideExpirationTime() {
-            if (Object.keys(this.schedule).indexOf(getShortDay()) !== -1) {
+            if (
+                Object.keys(this.schedule).indexOf(
+                    this.currentDayOrOverride
+                ) !== -1
+            ) {
                 return hourConversion(
                     this.twentyFourHourTime ? "24-hour" : "12-hour",
                     this.schedule[this.currentDayOrOverride][
@@ -756,7 +788,11 @@ export default {
             }
         },
         overrideExpirationTime24Hour() {
-            if (Object.keys(this.schedule).indexOf(getShortDay()) !== -1) {
+            if (
+                Object.keys(this.schedule).indexOf(
+                    this.currentDayOrOverride
+                ) !== -1
+            ) {
                 return hourConversion(
                     "24-hour",
                     this.schedule[this.currentDayOrOverride][
@@ -769,27 +805,27 @@ export default {
                 return "0000";
             }
         },
-        schedule: function() {
+        schedule() {
             return this.schedules[this.$route.params.id].schedule;
         },
-        color: function() {
+        color() {
             return this.schedules[this.$route.params.id].color;
         },
-        icon: function() {
+        icon() {
             return this.schedules[this.$route.params.id].icon;
         },
-        schedulePeriods: function() {
+        schedulePeriods() {
             let periods = [];
             if (
                 typeof this.schedule[this.currentDayOrOverride] !== "undefined"
             ) {
-                let daySchedule = this.schedule[this.currentDayOrOverride],
+                const daySchedule = this.schedule[this.currentDayOrOverride],
                     d = new Date(),
                     date = `${d.getFullYear()}-${padNumber(
                         Number(d.getMonth()) + 1
                     )}-${padNumber(d.getDate())}`;
 
-                periods = Object.keys(daySchedule).map(period => {
+                periods = Object.keys(daySchedule).map((period) => {
                     return {
                         name: this.checkForCustomPeriodName(
                             period,
@@ -806,21 +842,57 @@ export default {
                         color:
                             period.indexOf("Passing") === -1
                                 ? this.color
-                                : "primary"
+                                : "primary",
                     };
                 });
             }
 
             return periods;
         },
-        periodNamesExportString: function() {
+        periodNamesExportString() {
             return JSON.stringify(this.periodNames);
         },
-        exportNotificationsString: function() {
+        exportNotificationsString() {
             return JSON.stringify(this.allowedNotifications);
-        }
+        },
     },
     methods: {
+        customizableSchedulePeriods(schedule) {
+            let periods = [];
+            if (typeof schedule !== "undefined") {
+                const daySchedule = schedule,
+                    d = new Date(),
+                    date = `${d.getFullYear()}-${padNumber(
+                        Number(d.getMonth()) + 1
+                    )}-${padNumber(d.getDate())}`;
+
+                periods = Object.keys(daySchedule).map((period) => {
+                    return {
+                        name: this.checkForCustomPeriodName(
+                            period,
+                            this.originalPeriodNameInCustom
+                        ),
+                        start: `${date} ${daySchedule[period][0].replaceAll(
+                            "-",
+                            ":"
+                        )}`,
+                        end: `${date} ${daySchedule[period][1].replaceAll(
+                            "-",
+                            ":"
+                        )}`,
+                        color:
+                            period.indexOf("Passing") === -1
+                                ? this.color
+                                : "primary",
+                    };
+                });
+            }
+
+            return periods;
+        },
+        setTimetableDay(shortDayCode) {
+            this.timetableDay = shortDayCode;
+        },
         getTwentyFourHourTime() {
             if (localStorage.getItem("twentyFourHourTime") !== null) {
                 this.twentyFourHourTime =
@@ -841,7 +913,7 @@ export default {
                 ) !== null &&
                 this.currentDayUserOverride === null
             ) {
-                let overrideData = JSON.parse(
+                const overrideData = JSON.parse(
                     localStorage.getItem(
                         `schedule.${this.$route.params.id}.override`
                     )
@@ -864,7 +936,7 @@ export default {
             this.currentDayUserOverride = shortDayCode;
 
             if (shortDayCode !== null) {
-                let daySchedule = this.schedule[this.currentDayOrOverride],
+                const daySchedule = this.schedule[this.currentDayOrOverride],
                     time = hourConversion(
                         "24-hour",
                         daySchedule[Object.keys(daySchedule).pop()][1]
@@ -879,13 +951,15 @@ export default {
                             expirationTime: hourConversion(
                                 "24-hour",
                                 daySchedule[Object.keys(daySchedule).pop()][1]
-                            )
+                            ),
                         })
                     );
+
+                    this.setTimetableDay(shortDayCode);
                 } else {
                     this.currentDayUserOverride = null;
                     this.showToast(
-                        "The override cannot be set at this time. You must wait till the next day with periods begins.",
+                        "The override can only be set while the time is in between the start and end time of a schedule's day.",
                         "error"
                     );
                 }
@@ -895,13 +969,13 @@ export default {
                 );
             }
         },
-        importNotificationSettingsString: function() {
+        importNotificationSettingsString() {
             try {
-                let notificationSettingsImportString = JSON.parse(
+                const notificationSettingsImportString = JSON.parse(
                     this.notificationSettingsImport.string
                 );
 
-                let rootKeys = Object.keys(this.allowedNotifications),
+                const rootKeys = Object.keys(this.allowedNotifications),
                     intervalKeys = Object.keys(
                         this.allowedNotifications.intervals
                     ),
@@ -911,37 +985,37 @@ export default {
                 // Root key match
                 if (
                     Object.keys(notificationSettingsImportString)
-                        .map(key => rootKeys.indexOf(key))
-                        .filter(keyIndex => keyIndex === -1).length === 0
+                        .map((key) => rootKeys.indexOf(key))
+                        .filter((keyIndex) => keyIndex === -1).length === 0
                 ) {
-                    let intervalKeyMatch =
+                    const intervalKeyMatch =
                             Object.keys(
                                 notificationSettingsImportString.intervals
                             )
-                                .map(key => intervalKeys.indexOf(key))
-                                .filter(keyIndex => keyIndex === -1).length ===
-                            0,
+                                .map((key) => intervalKeys.indexOf(key))
+                                .filter((keyIndex) => keyIndex === -1)
+                                .length === 0,
                         daysKeyMatch =
                             Object.keys(notificationSettingsImportString.days)
-                                .map(key => dayKeys.indexOf(key))
-                                .filter(keyIndex => keyIndex === -1).length ===
-                            0,
+                                .map((key) => dayKeys.indexOf(key))
+                                .filter((keyIndex) => keyIndex === -1)
+                                .length === 0,
                         periodsKeyMatch =
                             Object.keys(
                                 notificationSettingsImportString.periods
                             )
-                                .map(key => periodKeys.indexOf(key))
-                                .filter(keyIndex => keyIndex === -1).length ===
-                            0,
+                                .map((key) => periodKeys.indexOf(key))
+                                .filter((keyIndex) => keyIndex === -1)
+                                .length === 0,
                         typeCheck =
                             Object.values(notificationSettingsImportString)
-                                .map(rootValue =>
+                                .map((rootValue) =>
                                     Object.values(rootValue).map(
-                                        keyValue => typeof keyValue
+                                        (keyValue) => typeof keyValue
                                     )
                                 )
                                 .flat()
-                                .filter(type => type !== "boolean").length ===
+                                .filter((type) => type !== "boolean").length ===
                             0;
 
                     if (
@@ -984,8 +1058,8 @@ export default {
                 );
             }
         },
-        copyExportedNotificationSettings: function() {
-            let exportedNotificationSettingsElement = document.getElementById(
+        copyExportedNotificationSettings() {
+            const exportedNotificationSettingsElement = document.getElementById(
                 "exportNotificationsString"
             );
             exportedNotificationSettingsElement.select();
@@ -998,12 +1072,12 @@ export default {
 
             this.notificationSettingsExportDialog = false;
         },
-        openNotificationEditDialog: function() {
+        openNotificationEditDialog() {
             this.loadAllowedNotifications();
             this.notificationSettingsEditDialog = true;
         },
-        loadAllowedNotifications: function() {
-            let allowedNotifications = localStorage.getItem(
+        loadAllowedNotifications() {
+            const allowedNotifications = localStorage.getItem(
                 `allowedNotifications.${this.$route.params.id}`
             );
 
@@ -1014,17 +1088,17 @@ export default {
             if (Object.keys(this.allowedNotifications.periods).length === 0) {
                 this.allowedNotifications.periods = Object.fromEntries(
                     Object.values(this.schedule)
-                        .map(day =>
-                            Object.keys(day).map(day_schedule => [
+                        .map((day) =>
+                            Object.keys(day).map((day_schedule) => [
                                 day_schedule,
-                                true
+                                true,
                             ])
                         )
                         .flat()
                 );
             }
         },
-        updateAllowedNotifications: function(type, id, value) {
+        updateAllowedNotifications(type, id, value) {
             switch (type) {
                 case "interval":
                     this.allowedNotifications.intervals[id] = value;
@@ -1042,36 +1116,37 @@ export default {
                 JSON.stringify(this.allowedNotifications)
             );
         },
-        toggleDebugMode: function() {
+        toggleDebugMode() {
             this.debugMode = !this.debugMode;
 
             if (this.debugMode === true) {
                 this.$router.replace({
                     name: "Schedule",
                     params: { id: this.$route.params.id },
-                    query: { debug: true }
+                    query: { debug: true },
                 });
             } else {
                 this.$router.replace({
                     name: "Schedule",
-                    params: { id: this.$route.params.id }
+                    params: { id: this.$route.params.id },
                 });
             }
         },
-        importPeriodNamesString: function() {
+        importPeriodNamesString() {
             try {
-                let periodNamesImportString = JSON.parse(
+                const periodNamesImportString = JSON.parse(
                     this.periodNamesImport.string
                 );
 
                 this.getPeriodNames();
-                let periodNameKeys = Object.keys(this.periodNames),
+                const periodNameKeys = Object.keys(this.periodNames),
                     periodNameMatch =
                         Object.keys(periodNamesImportString)
-                            .map(periodName =>
+                            .map((periodName) =>
                                 periodNameKeys.indexOf(periodName)
                             )
-                            .filter(nameIndex => nameIndex === -1).length === 0;
+                            .filter((nameIndex) => nameIndex === -1).length ===
+                        0;
 
                 if (periodNameMatch) {
                     this.periodNames = periodNamesImportString;
@@ -1101,21 +1176,14 @@ export default {
                 );
             }
         },
-        afterPeriodNamesExport: function() {
+        afterPeriodNamesExport() {
             this.showToast("Copied period names to the clipboard", "info");
             this.periodNamesExportDialog = false;
         },
         debugFunction() {
             console.debug("Development function called");
-            console.debug(
-                this.currentTime <= Number(this.overrideExpirationTime24Hour)
-                    ? this.currentDayUserOverride !== null
-                        ? `Override resets at ${this.overrideExpirationTime}`
-                        : `The override will get reset if you reload the page`
-                    : `You cannot set an override at this time. Please wait till the next day with periods.`
-            );
         },
-        checkForCustomPeriodName: function(periodName, withPeriod = false) {
+        checkForCustomPeriodName(periodName, withPeriod = false) {
             this.getPeriodNames();
 
             if (
@@ -1129,11 +1197,11 @@ export default {
                     : this.periodNames[periodName];
             }
         },
-        openPeriodNameEditDialog: function() {
+        openPeriodNameEditDialog() {
             this.getPeriodNames();
             this.periodNamesEditDialog = true;
         },
-        savePeriodNames: function() {
+        savePeriodNames() {
             localStorage.setItem(
                 `schedule.${this.$route.params.id}`,
                 JSON.stringify(this.periodNames)
@@ -1141,7 +1209,7 @@ export default {
             this.periodNamesEditDialog = false;
             this.showToast("Saved period names!", "success");
         },
-        getPeriodNames: function() {
+        getPeriodNames() {
             if (
                 Object.keys(this.periodNames).length === 0 ||
                 this.periodNamesScheduleId !== this.$route.params.id
@@ -1160,15 +1228,15 @@ export default {
                 } else {
                     this.periodNames = {};
 
-                    Object.keys(this.schedule).forEach(day =>
+                    Object.keys(this.schedule).forEach((day) =>
                         Object.keys(this.schedule[day]).forEach(
-                            pn => (this.periodNames[pn] = "")
+                            (pn) => (this.periodNames[pn] = "")
                         )
                     );
                 }
             }
         },
-        main: function() {
+        main() {
             this.updateTimes();
             this.getCurrentPeriod();
 
@@ -1194,7 +1262,7 @@ export default {
 
                 let compiledTimeDifference, timeDifference;
                 if (this.currentPeriodRaw[1] !== "") {
-                    let scheduledEnd = this.currentPeriodRaw[1][1].toString();
+                    const scheduledEnd = this.currentPeriodRaw[1][1].toString();
 
                     timeDifference = calculateTimeDifference(
                         this.currentSplitTime,
@@ -1252,7 +1320,7 @@ export default {
                 this.nextPeriod = "No Period";
             }
         },
-        updateNextPeriod: function() {
+        updateNextPeriod() {
             this.getNextPeriod();
 
             if (
@@ -1271,8 +1339,8 @@ export default {
                 this.nextPeriod = this.nextPeriodRaw[0];
             }
         },
-        scheduledNotifications: function(timeDifference) {
-            let notificationTitle =
+        scheduledNotifications(timeDifference) {
+            const notificationTitle =
                 this.schedules[this.$route.params.id].shortName +
                 " - " +
                 this.currentPeriod;
@@ -1284,7 +1352,7 @@ export default {
                 this.allowedNotifications.periods[this.currentPeriod]
             ) {
                 if (Number(timeDifference[0]) === 0) {
-                    let minutesRemaining = Number(timeDifference[1]);
+                    const minutesRemaining = Number(timeDifference[1]);
                     if (Number(timeDifference[2]) == 0) {
                         if (
                             minutesRemaining === 30 &&
@@ -1361,16 +1429,16 @@ export default {
                 }
             }
         },
-        getCurrentPeriod: function() {
-            var currentPeriod = false;
+        getCurrentPeriod() {
+            let currentPeriod = false;
             if (
                 typeof this.schedule[this.currentDayOrOverride] !== "undefined"
             ) {
-                var daySchedule = this.schedule[this.currentDayOrOverride],
+                const daySchedule = this.schedule[this.currentDayOrOverride],
                     splitTime = this.currentSplitTime.split("-").join("");
 
-                Object.keys(daySchedule).forEach(periodName => {
-                    let periodTimes = daySchedule[periodName],
+                Object.keys(daySchedule).forEach((periodName) => {
+                    const periodTimes = daySchedule[periodName],
                         periodStartTime = periodTimes[0].replaceAll("-", ""),
                         periodEndTime = periodTimes[1].replaceAll("-", "");
 
@@ -1392,15 +1460,15 @@ export default {
                 }
             }
         },
-        getNextPeriod: function() {
-            var nextPeriod;
+        getNextPeriod() {
+            let nextPeriod;
 
             if (
                 typeof this.schedule[this.currentDayOrOverride] !== "undefined"
             ) {
-                var daySchedule = this.schedule[this.currentDayOrOverride];
-                for (var _period in daySchedule) {
-                    var period = daySchedule[_period],
+                const daySchedule = this.schedule[this.currentDayOrOverride];
+                for (const _period in daySchedule) {
+                    const period = daySchedule[_period],
                         periodStartTime = period[0].split("-").join("");
 
                     let previousPeriodEndTime;
@@ -1451,7 +1519,7 @@ export default {
                 }
             }
         },
-        updateTimes: function() {
+        updateTimes() {
             const d = new Date();
 
             this.currentDay = d
@@ -1472,18 +1540,18 @@ export default {
             // this.currentSplitTime = "12-20-34";
 
             this.currentPrettyDateTime.day = d.toLocaleDateString("en-us", {
-                weekday: "long"
+                weekday: "long",
             });
             this.currentPrettyDateTime.time = d.toLocaleString("en-us", {
                 hour: "numeric",
                 minute: "numeric",
                 second: "numeric",
-                hour12: !this.twentyFourHourTime
+                hour12: !this.twentyFourHourTime,
             });
         },
-        showToast: function(content, type) {
+        showToast(content, type) {
             // TODO: Switch to native Vuetify snackbar
-            let toastOptions = {
+            const toastOptions = {
                 position: "bottom-right",
                 timeout: 5000,
                 closeOnClick: true,
@@ -1495,7 +1563,7 @@ export default {
                 hideProgressBar: true,
                 closeButton: false,
                 icon: true,
-                rtl: false
+                rtl: false,
             };
 
             switch (type) {
@@ -1515,7 +1583,7 @@ export default {
                     this.$toast(content, toastOptions);
             }
         },
-        notificationPermissionsCallback: function(result) {
+        notificationPermissionsCallback(result) {
             if (result != "granted") {
                 this.showToast(
                     'To receive notifications, click "Allow" on the notification permission pop-up',
@@ -1523,18 +1591,18 @@ export default {
                 );
             }
         },
-        notify: function(title, body) {
+        notify(title, body) {
             this.$notification.show(
                 title,
                 {
                     body: body,
                     icon: `/img/icons/${this.icon}.192.png`,
-                    badge: `/img/icons/${this.icon}.96.png`
+                    badge: `/img/icons/${this.icon}.96.png`,
                 },
                 {}
             );
-        }
-    }
+        },
+    },
 };
 </script>
 

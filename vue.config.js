@@ -1,7 +1,9 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const PreloadWebpackPlugin = require("@vue/preload-webpack-plugin");
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const schedules = require("./src/schedules.json");
 
-const webTitle =
+const title =
         process.env.NODE_ENV === "development"
             ? "Schedules (dev)"
             : process.env.VUE_APP_EDGE_MODE === "true"
@@ -13,17 +15,20 @@ const webTitle =
             : process.env.VUE_APP_EDGE_MODE === "true"
             ? "https://beta-schedules.unisontech.org"
             : "https://schedules.unisontech.org",
-    schedule_keys = Object.keys(schedules),
-    schedule_values = Object.values(schedules);
+    scheduleKeys = Object.keys(schedules),
+    scheduleValues = Object.values(schedules);
+
+const description =
+    "An app for schedules. Find out exactly how much time is remaining in a period or what the period is.";
 
 module.exports = {
     transpileDependencies: ["vuetify"],
     chainWebpack: (config) => {
         config.plugin("html").tap((args) => {
-            args[0].title = webTitle;
+            args[0].title = title;
             args[0].url = url;
-            args[0].description =
-                "An app for schedules. Find out exactly how much time is remaining in a period or what the period is.";
+            args[0].description = description;
+
             return args;
         });
 
@@ -41,7 +46,7 @@ module.exports = {
         ],
     },
     pwa: {
-        name: webTitle,
+        name: title,
         themeColor: "#6D1E3B",
         workboxPluginMode: "InjectManifest",
         workboxOptions: {
@@ -134,17 +139,18 @@ module.exports = {
                     purpose: "maskable",
                 },
             ],
-            shortcuts: schedule_values.slice(0, 4).map((schedule) => {
+            shortcuts: scheduleValues.slice(0, 4).map((schedule) => {
                 return {
                     name: schedule.name,
+                    // eslint-disable-next-line @typescript-eslint/camelcase
                     short_name: schedule.shortName,
                     description: `The ${schedule.name}`,
                     url: `/schedule/${
-                        schedule_keys[
-                            schedule_values.indexOf(
-                                schedule_values.filter(
-                                    (schedule_val) =>
-                                        schedule_val.name === schedule.name
+                        scheduleKeys[
+                            scheduleValues.indexOf(
+                                scheduleValues.filter(
+                                    (scheduleValue) =>
+                                        scheduleValue.name === schedule.name
                                 )[0]
                             )
                         ]
@@ -157,18 +163,25 @@ module.exports = {
                     ],
                 };
             }),
+
+            // eslint-disable-next-line @typescript-eslint/camelcase
             display_override: ["minimal-ui"],
             display: "standalone",
+
+            // eslint-disable-next-line @typescript-eslint/camelcase
             background_color: "#6D1E3B",
             url: url,
             manifestUrl: "/manifest.json",
             lang: "en",
             orientation: "any",
-            description:
-                "An app for schedules. Find out exactly how much time is remaining in a period or what the period is.",
+            description: description,
             scope: url,
             categories: ["productivity", "utilities"],
+
+            // eslint-disable-next-line @typescript-eslint/camelcase
             prefer_related_applications: false,
+
+            // eslint-disable-next-line @typescript-eslint/camelcase
             related_applications: [],
         },
     },

@@ -19,23 +19,6 @@
             </v-card-title>
         </v-card>
 
-        <div v-if="$developmentMode">
-            <v-divider class="my-5" />
-
-            <v-card
-                :to="{ name: 'NewSchedule' }"
-                title="Create a new schedule"
-                aria-label="Create a new schedule"
-                class="mx-auto schedule-card text-wrap--break"
-                outlined
-            >
-                <v-card-title>
-                    <v-icon medium left v-text="mdiPlus" />
-                    New Schedule
-                </v-card-title>
-            </v-card>
-        </div>
-
         <v-divider class="my-5" />
 
         <v-card
@@ -75,41 +58,42 @@
     </utds-center-layout>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from "vue";
 import { UtdsCenterLayout, UtdsHeader } from "utds-component-library";
 const ReleaseNotes = () => import("@/components/dialogs/ReleaseNotes.vue");
 const Privacy = () => import("@/components/dialogs/Privacy.vue");
 
 import { mdiPlus, mdiSchoolOutline } from "@mdi/js";
 
-export default {
+export default Vue.extend({
     props: {
         schedules: {
             type: Object,
             required: true,
             default: function() {
                 return {};
-            }
-        }
+            },
+        },
     },
     components: { UtdsCenterLayout, UtdsHeader, ReleaseNotes, Privacy },
     data() {
         return {
             dialogs: {
                 releaseNotes: false,
-                privacy: false
+                privacy: false,
             },
-            mdiPlus: mdiPlus,
-            mdiSchoolOutline: mdiSchoolOutline
+            mdiPlus,
+            mdiSchoolOutline,
         };
     },
     methods: {
-        closeDialogs() {
+        closeDialogs(): void {
             this.dialogs.releaseNotes = false;
             this.dialogs.privacy = false;
-        }
-    }
-};
+        },
+    },
+});
 </script>
 
 <style scoped>

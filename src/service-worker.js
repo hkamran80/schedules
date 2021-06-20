@@ -1,7 +1,7 @@
 /* eslint-disable no-undef, no-restricted-globals */
 
 // Source: https://dev.to/drbragg/handling-service-worker-updates-in-your-vue-pwa-1pip
-self.addEventListener("message", event => {
+self.addEventListener("message", (event) => {
     if (event.data && event.data.type === "SKIP_WAITING") {
         self.skipWaiting();
     }

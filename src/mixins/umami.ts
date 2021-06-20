@@ -1,7 +1,9 @@
-export default {
+import Vue from "vue";
+
+export default Vue.extend({
     data() {
         return {
-            umamiInstalled: document.getElementById("umami-script") !== null
+            umamiInstalled: document.getElementById("umami-script") !== null,
         };
     },
     created() {
@@ -17,12 +19,12 @@ export default {
         }
     },
     methods: {
-        installUmami: function() {
+        installUmami() {
             if (
                 !this.$developmentMode &&
                 !document.getElementById("umami-script")
             ) {
-                let umamiScript = document.createElement("script"),
+                const umamiScript = document.createElement("script"),
                     scriptTag = document.getElementsByTagName("script")[0];
 
                 umamiScript.async = true;
@@ -36,20 +38,32 @@ export default {
                         : "ab9840ad-16a1-4b04-b87f-e5e396f466b4"
                 );
 
-                scriptTag.parentNode.insertBefore(umamiScript, scriptTag);
+                if (scriptTag.parentNode) {
+                    scriptTag.parentNode.insertBefore(umamiScript, scriptTag);
 
-                console.log("Activated Umami anonymous analytics");
+                    console.log("Activated Umami anonymous analytics");
+                } else {
+                    console.error(
+                        "An unknown error occurred when attempting to activate Umami"
+                    );
+                }
             }
         },
-        uninstallUmami: function() {
+        uninstallUmami() {
             if (!this.$developmentMode) {
-                let umamiScript = document.getElementById("umami-script");
+                const umamiScript = document.getElementById("umami-script");
 
-                umamiScript.remove();
-                localStorage.setItem("umamiTracking", "false");
+                if (umamiScript) {
+                    umamiScript.remove();
+                    localStorage.setItem("umamiTracking", "false");
 
-                console.log("Deactivated Umami anonymous analytics");
+                    console.log("Deactivated Umami anonymous analytics");
+                } else {
+                    console.error(
+                        "An unknown error occurred when attempting to deactivate Umami"
+                    );
+                }
             }
-        }
-    }
-};
+        },
+    },
+});

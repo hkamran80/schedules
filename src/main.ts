@@ -3,8 +3,7 @@ import App from "./App.vue";
 import "./registerServiceWorker";
 import router from "./router";
 import vuetify from "./plugins/vuetify";
-import VueNativeNotification from "vue-native-notification";
-import Toast from "vue-toastification";
+import VueToastification from "vue-toastification";
 import "vue-toastification/dist/index.css";
 import pkg from "../package.json";
 
@@ -19,13 +18,10 @@ Vue.config.productionTip = false;
 Vue.prototype.$developmentMode = process.env.NODE_ENV === "development";
 Vue.prototype.$edgeMode = process.env.VUE_APP_EDGE_MODE === "true";
 
-Vue.use(VueNativeNotification, {
-    requestOnNotify: true
-});
-Vue.use(Toast, {
+Vue.use(VueToastification, {
     transition: "Vue-Toastification__bounce",
     maxToasts: 5,
-    newestOnTop: true
+    newestOnTop: true,
 });
 
 // Sentry.io Tracking
@@ -36,19 +32,15 @@ if (!Vue.prototype.$developmentMode) {
         integrations: [new BrowserTracing()],
         release: `schedules@${pkg.version}`,
         environment: process.env.VUE_APP_SENTRY_ENVIRONMENT,
-
-        // Set tracesSampleRate to 1.0 to capture 100%
-        // of transactions for performance monitoring.
-        // We recommend adjusting this value in production
         tracesSampleRate: 0.25,
         tracingOptions: {
-            trackComponents: true
-        }
+            trackComponents: true,
+        },
     });
 }
 
 new Vue({
     router,
     vuetify,
-    render: h => h(App)
+    render: (h) => h(App),
 }).$mount("#app");
