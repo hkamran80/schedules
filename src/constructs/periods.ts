@@ -1,13 +1,24 @@
-import { Period, PeriodTimes, PeriodNames } from "@/structures/periods";
-import { ScheduleTimes } from "@/structures/schedule";
-import { padNumber } from "./calculations";
+import {
+    Period,
+    PeriodTimes,
+    PeriodNames,
+    PeriodNamesError,
+} from "@/structures/periods";
+import { ScheduleDays, ScheduleTimes } from "@/structures/schedule";
+import { padNumber } from "@/constructs/calculations";
+import { loadFromStorage } from "@/constructs/storage";
+import { StorageKeyType } from "@/structures/storage";
 
 export function getCurrentPeriod(
     schedule: ScheduleTimes,
     splitTime: string
 ): Period | null {
+    if (schedule === null) {
+        return null;
+    }
+    
     const time = splitTime.split("-").join("");
-
+    
     const periods = Object.keys(schedule)
         .map((periodName) => {
             const periodTimes = schedule[periodName];
@@ -104,5 +115,57 @@ export function checkForCustomPeriodName(
         return withPeriod
             ? `${periodNames[periodName]} (${periodName})`
             : periodNames[periodName];
+    }
+}
+
+export function loadPeriodNames(
+    currentPeriodNames: PeriodNames,
+    scheduleId: string,
+    schedule: ScheduleDays
+): PeriodNames | null {
+    if (Object.keys(currentPeriodNames).length === 0) {
+        const storageSchedule = loadFromStorage(
+            scheduleId,
+            StorageKeyType.PERIOD_NAMES
+        );
+        let periodNames: PeriodNames;
+
+        if (storageSchedule !== null) {
+            periodNames = JSON.parse(storageSchedule) as PeriodNames;
+        } else {
+            periodNames = {} as PeriodNames;
+
+            Object.keys(schedule)
+                .flatMap((day) => Object.keys(schedule[day]))
+                .forEach((period) => (periodNames[period] = ""));
+        }
+
+        return periodNames as PeriodNames;
+    }
+
+    return null;
+}
+
+// To check whether the return of the function is the period names or an error, do: `importPeriodNames(...).constructor === Object`. It will return `true` if the function returned the names
+export function importPeriodNames(
+    importString: string,
+    currentPeriodNames: PeriodNames
+): PeriodNames | PeriodNamesError {
+    try {
+        const jsonString = JSON.parse(importString);
+
+        const nameKeys = Object.keys(currentPeriodNames),
+            nameMatch =
+                Object.keys(jsonString)
+                    .map((periodName) => nameKeys.indexOf(periodName))
+                    .filter((nameIndex) => nameIndex === -1).length === 0;
+
+        if (nameMatch) {
+            return jsonString as PeriodNames;
+        } else {
+            return PeriodNamesError.KEY_ERROR;
+        }
+    } catch {
+        return PeriodNamesError.IMPORT_ERROR;
     }
 }

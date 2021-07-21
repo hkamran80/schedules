@@ -1,8 +1,9 @@
 import Vue from "vue";
-import App from "./App.vue";
-import "./registerServiceWorker";
-import router from "./router";
-import vuetify from "./plugins/vuetify";
+import App from "@/App.vue";
+import "@/registerServiceWorker";
+import router from "@/router";
+import vuetify from "@/plugins/vuetify";
+import VueCompositionAPI from "@vue/composition-api";
 import VueToastification from "vue-toastification";
 import "vue-toastification/dist/index.css";
 import pkg from "../package.json";
@@ -18,6 +19,7 @@ Vue.config.productionTip = false;
 Vue.prototype.$developmentMode = process.env.NODE_ENV === "development";
 Vue.prototype.$edgeMode = process.env.VUE_APP_EDGE_MODE === "true";
 
+Vue.use(VueCompositionAPI);
 Vue.use(VueToastification, {
     transition: "Vue-Toastification__bounce",
     maxToasts: 5,

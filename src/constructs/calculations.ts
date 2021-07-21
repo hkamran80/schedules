@@ -50,8 +50,8 @@ export function hourConversion(
 
     if (toHourType === HourConversionType.TwelveHour) {
         let hourEnding;
-        if (hours >= 13) {
-            hours -= 12;
+        if (hours >= 12) {
+            if (hours >= 13) hours -= 12;
             hourEnding = "PM";
         } else {
             hourEnding = "AM";

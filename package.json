@@ -1,6 +1,6 @@
 {
     "name": "schedules",
-    "version": "2.4.0-edge.0",
+    "version": "3.0.0-edge.0",
     "private": true,
     "scripts": {
         "lint": "vue-cli-service lint",
@@ -11,9 +11,10 @@
     "dependencies": {
         "@sentry/tracing": "^6.7.1",
         "@sentry/vue": "^6.7.1",
+        "@vue/composition-api": "^1.0.0-rc.13",
         "core-js": "^3.8.2",
         "register-service-worker": "^1.7.2",
-        "utds-component-library": "^1.0.2",
+        "utds-component-library": "^1.0.6",
         "vue": "^2.6.11",
         "vue-router": "^3.4.9",
         "vue-toastification": "^1.7.8",

@@ -1,56 +1,38 @@
 import Vue from "vue";
 
-// Source: https://dev.to/drbragg/handling-service-worker-updates-in-your-vue-pwa-1pip
+// Based on: https://dev.to/drbragg/handling-service-worker-updates-in-your-vue-pwa-1pip
 export default Vue.extend({
     data() {
         return {
-            // Refresh Variables
             refreshing: false,
-            registration: null,
+            registrationWaiting: null as ServiceWorker | null,
             updateExists: false,
         };
     },
 
     created() {
-        // Listen for our custom event from the SW registration
         document.addEventListener("swUpdated", this.updateAvailable, {
             once: true,
         });
 
-        // Prevent multiple refreshes
         navigator.serviceWorker.addEventListener("controllerchange", () => {
             if (this.refreshing) return;
             this.refreshing = true;
-            // Here the actual reload of the page occurs
             window.location.reload();
         });
     },
 
     methods: {
-        // Store the SW registration so we can send it a message
-        // We use `updateExists` to control whatever alert, toast, dialog, etc we want to use
-        // To alert the user there is an update they need to refresh for
-
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         updateAvailable(event: any): void {
-            this.registration = event.detail;
+            this.registrationWaiting = event.detail.waiting;
             this.updateExists = true;
         },
-        // Called when the user accepts the update
         refreshApp(): void {
             this.updateExists = false;
-            // Make sure we only send a 'skip waiting' message if the SW is waiting
-            // if (!this.registration || !this.registration.waiting) return;
-            // send message to SW to skip the waiting and activate the new SW
 
-            if (
-                this.registration !== null &&
-                this.registration.waiting !== null
-            ) {
-                this.registration.waiting.postMessage({ type: "SKIP_WAITING" });
-            } else {
-                return;
-            }
+            if (this.registrationWaiting === null) return;
+            this.registrationWaiting.postMessage({ type: "SKIP_WAITING" });
         },
     },
 });

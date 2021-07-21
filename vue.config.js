@@ -173,7 +173,7 @@ module.exports = {
             url: url,
             manifestUrl: "/manifest.json",
             lang: "en",
-            orientation: "any",
+            orientation: "natural",
             description: description,
             scope: url,
             categories: ["productivity", "utilities"],

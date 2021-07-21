@@ -11,6 +11,14 @@ const routes: Array<RouteConfig> = [
             import(/* webpackChunkName: "home" */ "@/views/Home.vue"),
     },
     {
+        path: "/schedule/countdown",
+        name: "ScheduleCountdown",
+        component: () =>
+            import(
+                /* webpackChunkName: "schedulecountdown" */ "@/views/ScheduleCountdown.vue"
+            ),
+    },
+    {
         path: "/schedule/:id",
         name: "Schedule",
         component: () =>

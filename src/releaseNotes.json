@@ -1,61 +1,75 @@
 {
-    "2.2.0": [
-        "Added a timetable view to the schedule view",
-        "Added this modal for informing users what's new in Schedules",
-        "Improve next period calculation",
-        "Update custom period name display",
-        "Rename beta to edge",
-        "Change developer mode to debug mode",
-        "Add toggle for debug mode",
-        "Add anonymous analytics through Umami",
-        "Add privacy notice for analytics",
-        "Rename beta versioning (X.X.X-beta) to use edge (X.X.X-edge)",
-        "Switch to JSON object for the schedule in schedules.json",
-        "The beginnings of adding a new schedule in the app",
-        "Switch font to Lato",
-        "Add settings panel to manage period names and notifications",
-        "Add notification interval, day, and period toggles",
-        "Add AUHSD Hybrid schedule",
-        "Add security headers"
-    ],
-    "2.2.1": [
-        "Fix Umami analytics activation",
-        "Fix duplicate divider issue with feature coming soon (currently in alpha)"
-    ],
-    "2.3.0": [
-        "Add Sentry.io error and performance monitoring",
-        "Remove the AUHSD Distance Learning schedule",
-        "Reverse the order of the What's New panel",
-        "Change the expansion panel look from accordion",
-        "Automatically open latest version's what's new",
-        "Change What's New to Release Notes",
-        "Add tooltips to the buttons on the schedule page",
-        "Make the space occupied by the theme toggle button smaller",
-        "Add caching headers",
-        "Switch to @mdi/js rather than the stylesheet for improved performance",
-        "Remove the new schedule button from edge",
-        "Switch the AUHSD schedules' icons to the outlined version",
-        "Switch to modern build system (module + nomodule)",
-        "Add Typeform feedback form",
-        "Add icons (favicons and app)",
-        "Add Open Graph and Twitter social meta tags",
-        "Fix CSP policy for the service worker",
-        "Improve performance",
-        "Add icon and badge to notifications",
-        "Add a close button to the timetable",
-        "Change \"Intervals\" to \"Time Remaining\" in notification settings",
-        "Fix the time remaining notifications naming",
-        "Move notification settings to separate dialogs"
-    ],
-    "2.4.0 (Edge-0)": [
-        "Change Umami domain to unisontech.org",
-        "Add source maps with Sentry for enhanced error logging",
-        "Switch to the UTDS header",
-        "Add day override (issue #66)",
-        "Make the day override persistent",
-        "Dynamically generate the meta descriptive tags",
-        "Add twenty-four hour time switch",
-        "Increase padding around the icons",
-        "Switch to TypeScript (issue #118)"
-    ]
+    "2.2.0": {
+        "releaseDate": "2021-01-11",
+        "changelog": [
+            "Added a timetable view to the schedule view",
+            "Added this modal for informing users what's new in Schedules",
+            "Improve next period calculation",
+            "Update custom period name display",
+            "Rename beta to edge",
+            "Change developer mode to debug mode",
+            "Add toggle for debug mode",
+            "Add anonymous analytics through Umami",
+            "Add privacy notice for analytics",
+            "Rename beta versioning (X.X.X-beta) to use edge (X.X.X-edge)",
+            "Switch to JSON object for the schedule in schedules.json",
+            "The beginnings of adding a new schedule in the app",
+            "Switch font to Lato",
+            "Add settings panel to manage period names and notifications",
+            "Add notification interval, day, and period toggles",
+            "Add AUHSD Hybrid schedule",
+            "Add security headers"
+        ]
+    },
+    "2.2.1": {
+        "releaseDate": "2021-03-24",
+        "changelog": [
+            "Fix Umami analytics activation",
+            "Fix duplicate divider issue with feature coming soon (currently in alpha)"
+        ]
+    },
+    "2.3.0": {
+        "releaseDate": "2021-04-21",
+        "changelog": [
+            "Add Sentry.io error and performance monitoring",
+            "Remove the AUHSD Distance Learning schedule",
+            "Reverse the order of the What's New panel",
+            "Change the expansion panel look from accordion",
+            "Automatically open latest version's what's new",
+            "Change What's New to Release Notes",
+            "Add tooltips to the buttons on the schedule page",
+            "Make the space occupied by the theme toggle button smaller",
+            "Add caching headers",
+            "Switch to @mdi/js rather than the stylesheet for improved performance",
+            "Remove the new schedule button from edge",
+            "Switch the AUHSD schedules' icons to the outlined version",
+            "Switch to modern build system (module + nomodule)",
+            "Add Typeform feedback form",
+            "Add icons (favicons and app)",
+            "Add Open Graph and Twitter social meta tags",
+            "Fix CSP policy for the service worker",
+            "Improve performance",
+            "Add icon and badge to notifications",
+            "Add a close button to the timetable",
+            "Change \"Intervals\" to \"Time Remaining\" in notification settings",
+            "Fix the time remaining notifications naming",
+            "Move notification settings to separate dialogs"
+        ]
+    },
+    "3.0.0 (Edge - 0)": {
+        "releaseDate": "2021-07-15",
+        "changelog": [
+            "Change Umami domain to unisontech.org",
+            "Add source maps with Sentry for enhanced error logging",
+            "Switch to the UTDS header",
+            "Add a day override (issue #66)",
+            "Make the day override persistent",
+            "Dynamically generate the meta descriptive tags",
+            "Add twenty-four hour time switch",
+            "Increase padding around the icons",
+            "Switch to TypeScript (issue #118)",
+            "Add a countdown to any time (issue #120)",
+            "Switch to UTDS components (issue #117)"
+        ]
+    }
 }

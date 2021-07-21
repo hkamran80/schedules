@@ -1,5 +1,5 @@
 <template>
-    <utds-center-layout>
+    <utds-layout>
         <utds-header title="Welcome! Select a schedule to begin!" />
 
         <v-card
@@ -16,6 +16,21 @@
             <v-card-title>
                 <v-icon medium left v-text="$data[schedule.icon]" />
                 <span v-text="schedule.name" />
+            </v-card-title>
+        </v-card>
+
+        <v-card
+            to="/schedule/countdown"
+            title="Countdown"
+            aria-label="Countdown"
+            color="primary"
+            class="mx-auto schedule-card text-wrap--break"
+            dark
+            outlined
+        >
+            <v-card-title>
+                <v-icon medium left v-text="mdiTimerSand" />
+                <span>Countdown</span>
             </v-card-title>
         </v-card>
 
@@ -46,7 +61,12 @@
         </v-card>
 
         <v-dialog v-model="dialogs.releaseNotes" width="750" scrollable>
-            <release-notes @close="closeDialogs" />
+            <utds-release-notes
+                :currentVersion="currentVersion"
+                :rawReleaseNotes="releaseNotes"
+                githubRepository="hkamran80/schedules"
+                @close="dialogs.releaseNotes = false"
+            />
         </v-dialog>
         <v-dialog v-model="dialogs.privacy" width="750" scrollable>
             <privacy
@@ -55,16 +75,21 @@
                 @close="closeDialogs"
             />
         </v-dialog>
-    </utds-center-layout>
+    </utds-layout>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import { UtdsCenterLayout, UtdsHeader } from "utds-component-library";
-const ReleaseNotes = () => import("@/components/dialogs/ReleaseNotes.vue");
-const Privacy = () => import("@/components/dialogs/Privacy.vue");
+import {
+    UtdsLayout,
+    UtdsHeader,
+    UtdsReleaseNotes,
+} from "utds-component-library";
+import { mdiPlus, mdiSchoolOutline, mdiTimerSand } from "@mdi/js";
+import { version as currentVersion } from "../../package.json";
+import releaseNotes from "@/releaseNotes.json";
 
-import { mdiPlus, mdiSchoolOutline } from "@mdi/js";
+const Privacy = () => import("@/components/dialogs/Privacy.vue");
 
 export default Vue.extend({
     props: {
@@ -76,15 +101,18 @@ export default Vue.extend({
             },
         },
     },
-    components: { UtdsCenterLayout, UtdsHeader, ReleaseNotes, Privacy },
+    components: { UtdsLayout, UtdsHeader, UtdsReleaseNotes, Privacy },
     data() {
         return {
+            currentVersion,
+            releaseNotes,
             dialogs: {
                 releaseNotes: false,
                 privacy: false,
             },
             mdiPlus,
             mdiSchoolOutline,
+            mdiTimerSand,
         };
     },
     methods: {

@@ -16,3 +16,10 @@ export interface ScheduleDays {
 export interface ScheduleTimes {
     [periodName: string]: string[];
 }
+
+export interface TimetablePeriod {
+    name: string;
+    start: string;
+    end: string;
+    color: string;
+}
