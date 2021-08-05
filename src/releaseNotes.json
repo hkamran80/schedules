@@ -46,5 +46,8 @@
         "Change \"Intervals\" to \"Time Remaining\" in notification settings",
         "Fix the time remaining notifications naming",
         "Move notification settings to separate dialogs"
+    ],
+    "2.3.1": [
+        "Add the AUHSD First Week and the new AUHSD Standard schedules"
     ]
 }
