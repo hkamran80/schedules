@@ -265,7 +265,7 @@ export default defineComponent({
 
             if (timePickerTime.value) {
                 countdownTime.value =
-                    timePickerTime.value?.replace(":", "-") + "-00";
+                    timePickerTime.value.replace(":", "-") + "-00";
             }
 
             console.debug(timePickerTime.value);
