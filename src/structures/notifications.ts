@@ -28,8 +28,13 @@ export interface NotificationIntervals {
 }
 
 export interface NotificationPeriods {
-    [originalName: string]: string;
+    [originalName: string]: boolean;
 }
+
+export type AllowedNotificationIntervals =
+    | NotificationDays
+    | NotificationIntervals
+    | NotificationPeriods;
 
 export enum NotificationContent {
     ONE_HOUR = "One hour remaining",
@@ -43,6 +48,12 @@ export enum NotificationContent {
 
 export interface RootKeyMatch {
     [periodName: string]: boolean;
+}
+
+export enum NotificationType {
+    INTERVAL,
+    DAY,
+    PERIOD,
 }
 
 export enum NotificationSettingsError {

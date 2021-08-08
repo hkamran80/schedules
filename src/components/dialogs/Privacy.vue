@@ -30,8 +30,9 @@
                 inset
                 hide-details
                 readonly
-                @click="toggleUmami"
                 class="mb-5"
+                @click="toggleUmami"
+                :disabled="$developmentMode"
             />
 
             <v-expansion-panels accordion>

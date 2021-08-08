@@ -22,8 +22,22 @@ export const defaultEvents = {
     onshow: (): void => {},
 };
 
+function notificationSupported(): boolean {
+    return (
+        "Notification" in window &&
+        "serviceWorker" in navigator &&
+        "PushManager" in window
+    );
+}
+
+export function getPermission(): NotificationPermission {
+    return notificationSupported() ? Notification.permission : "denied";
+}
+
 export function requestPermission(): Promise<NotificationPermission> {
-    return Notification.requestPermission();
+    return notificationSupported()
+        ? Notification.requestPermission()
+        : Promise.resolve().then(() => "denied");
 }
 
 export function showNotification(
@@ -39,11 +53,11 @@ export function showNotification(
 
     return Promise.resolve()
         .then(() => {
-            if (requestOnNotify && Notification.permission !== "granted") {
+            if (requestOnNotify && getPermission() !== "granted") {
                 return requestPermission();
             }
 
-            return Notification.permission;
+            return getPermission();
         })
         .then((permission: NotificationPermission) => {
             if (permission === "denied") {
@@ -82,11 +96,13 @@ export function showNotification(
                     return e;
                 }
 
-                return navigator.serviceWorker.ready
-                    .then((registration) =>
-                        registration.showNotification(title, options)
-                    )
-                    .then(bindOnShow, bindOnError);
+                return notificationSupported()
+                    ? navigator.serviceWorker.ready
+                          .then((registration) =>
+                              registration.showNotification(title, options)
+                          )
+                          .then(bindOnShow, bindOnError)
+                    : "denied";
             }
         });
 }

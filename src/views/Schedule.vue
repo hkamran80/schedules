@@ -64,8 +64,69 @@
             </v-btn>
         </div>
 
-        <v-dialog v-model="settingsDialog" width="500">
-            <schedule-settings @close="settingsDialog = false" />
+        <v-dialog v-model="settingsDialog" width="500" scrollable>
+            <schedule-settings
+                @openPeriodNamesEdit="periodNamesEditDialog = true"
+                @openPeriodNamesImport="periodNamesImportDialog = true"
+                @openPeriodNamesExport="periodNamesExportDialog = true"
+                @openNotificationsEdit="notificationsEditDialog = true"
+                @openNotificationsExport="notificationsExportDialog = true"
+                @openNotificationsImport="notificationsImportDialog = true"
+                @close="settingsDialog = false"
+            />
+        </v-dialog>
+
+        <v-dialog v-model="periodNamesEditDialog" width="750" scrollable>
+            <period-names-edit
+                :key="periodNamesEditDialogForceRender"
+                :scheduleId="scheduleId"
+                :schedule="schedule"
+                :currentPeriodNames="periodNames"
+                @update="updatePeriodNames"
+                @close="periodNamesEditDialog = false"
+            />
+        </v-dialog>
+
+        <v-dialog v-model="periodNamesExportDialog" width="750">
+            <period-names-export
+                :periodNames="periodNames"
+                @close="periodNamesExportDialog = false"
+            />
+        </v-dialog>
+
+        <v-dialog v-model="periodNamesImportDialog" width="750">
+            <period-names-import
+                :scheduleId="scheduleId"
+                :periodNames="periodNames"
+                @save="updatePeriodNames"
+                @close="periodNamesImportDialog = false"
+            />
+        </v-dialog>
+
+        <v-dialog v-model="notificationsEditDialog" width="500" scrollable>
+            <notifications-edit
+                :key="notificationsEditDialogForceRender"
+                :scheduleId="scheduleId"
+                :currentAllowedNotifications="allowedNotifications"
+                @update="updateAllowedNotifications"
+                @close="notificationsEditDialog = false"
+            />
+        </v-dialog>
+
+        <v-dialog v-model="notificationsImportDialog" width="750">
+            <notifications-import
+                :scheduleId="scheduleId"
+                :allowedNotifications="allowedNotifications"
+                @save="updateAllowedNotifications"
+                @close="notificationsImportDialog = false"
+            />
+        </v-dialog>
+
+        <v-dialog v-model="notificationsExportDialog" width="750">
+            <notifications-export
+                :allowedNotifications="allowedNotifications"
+                @close="notificationsExportDialog = false"
+            />
         </v-dialog>
     </utds-layout>
 </template>
@@ -76,13 +137,24 @@ import {
     defineComponent,
     onMounted,
     ref,
+    SetupContext,
 } from "@vue/composition-api";
 import { UtdsLayout, UtdsHeader } from "utds-component-library";
 import { mdiConsoleLine, mdiCalendarOutline, mdiCogOutline } from "@mdi/js";
-import ScheduleSettings from "@/components/ScheduleSettings.vue";
+import { useToast } from "vue-toastification/composition";
+
+const ScheduleSettings = () => import("@/components/ScheduleSettings.vue");
+const PeriodNamesEdit = () => import("@/components/PeriodNamesEdit.vue");
+const PeriodNamesExport = () => import("@/components/PeriodNamesExport.vue");
+const PeriodNamesImport = () => import("@/components/PeriodNamesImport.vue");
+const NotificationsEdit = () => import("@/components/NotificationsEdit.vue");
+const NotificationsExport = () =>
+    import("@/components/NotificationsExport.vue");
+const NotificationsImport = () =>
+    import("@/components/NotificationsImport.vue");
 
 import { Schedule } from "@/structures/schedule";
-import { Period } from "@/structures/periods";
+import { Period, PeriodNames } from "@/structures/periods";
 import { Nullable } from "@/structures/types";
 import {
     AllowedNotifications,
@@ -104,11 +176,12 @@ import {
     padNumber,
 } from "@/constructs/calculations";
 import { loadAllowedNotifications, notify } from "@/constructs/notifications";
+import { getPermission, requestPermission } from "@/notifications";
 
 import { loadMetadata } from "@/composables/loadMetadata";
 import { loadDatetime } from "@/composables/dateTime";
 import { getPeriodNames } from "@/composables/getPeriodNames";
-import { requestPermission } from "@/notifications";
+import { loadDialogs } from "@/composables/loadDialogs";
 
 export default defineComponent({
     props: {
@@ -120,10 +193,21 @@ export default defineComponent({
             },
         },
     },
-    components: { UtdsLayout, UtdsHeader, ScheduleSettings },
+    components: {
+        UtdsLayout,
+        UtdsHeader,
+        ScheduleSettings,
+        PeriodNamesEdit,
+        PeriodNamesExport,
+        PeriodNamesImport,
+        NotificationsEdit,
+        NotificationsImport,
+        NotificationsExport,
+    },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    setup(props: any, context: any) {
+    setup(props: any, context: SetupContext) {
         const scheduleId = context.root.$route.params.id;
+        const toast = useToast();
 
         if (typeof props.schedules[scheduleId] === "undefined") {
             context.root.$router.push({
@@ -159,6 +243,17 @@ export default defineComponent({
 
         // Dialogs
         const settingsDialog = ref(false);
+        const {
+            periodNamesEditDialog,
+            periodNamesEditDialogForceRender,
+            periodNamesExportDialog,
+            periodNamesImportDialog,
+
+            notificationsEditDialog,
+            notificationsEditDialogForceRender,
+            notificationsExportDialog,
+            notificationsImportDialog,
+        } = loadDialogs();
 
         // Notifications
         const notifications = ref({
@@ -231,6 +326,20 @@ export default defineComponent({
                 dayTime.value.userOverridenDay = dayOverride;
             } else {
                 dayTime.value.userOverridenDay = null;
+            }
+        };
+
+        const updatePeriodNames = (newPeriodNames: PeriodNames) => {
+            periodNames.value = newPeriodNames;
+            periodNamesEditDialogForceRender.value += 1;
+        };
+        const updateAllowedNotifications = (
+            newAllowedNotifications: AllowedNotifications,
+            rerender = false
+        ) => {
+            allowedNotifications.value = newAllowedNotifications;
+            if (rerender) {
+                notificationsEditDialogForceRender.value += 1;
             }
         };
 
@@ -378,7 +487,16 @@ export default defineComponent({
         onMounted(() => {
             mainInterval.value = setInterval(main, 1000);
 
-            if (Notification.permission === "default") {
+            if (getPermission() !== "granted") {
+                toast.warning(
+                    'To receive notifications, click "Allow" on the notification permission pop-up'
+                );
+            }
+
+            if (getPermission() === "default") {
+                toast.warning(
+                    'To receive notifications, click "Allow" on the notification permission pop-up'
+                );
                 requestPermission();
             }
         });
@@ -398,9 +516,28 @@ export default defineComponent({
 
             // Functions
             toggleDebugMode,
+            updatePeriodNames,
+            updateAllowedNotifications,
 
             // Dialogs
             settingsDialog,
+
+            periodNamesEditDialog,
+            periodNamesExportDialog,
+            periodNamesImportDialog,
+
+            notificationsEditDialog,
+            notificationsExportDialog,
+            notificationsImportDialog,
+
+            periodNamesEditDialogForceRender,
+            notificationsEditDialogForceRender,
+
+            // Metadata
+            scheduleId,
+            schedule,
+            periodNames,
+            allowedNotifications,
 
             // Icons
             mdiConsoleLine,

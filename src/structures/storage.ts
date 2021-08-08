@@ -3,6 +3,7 @@ export enum StorageKeyType {
     DAY_OVERRIDE = "dayOverride",
     ALLOWED_NOTIFICATIONS = "allowedNotifications",
     TWENTY_FOUR_HOUR_STATUS = "twentyFourHourStatus",
+    ANALYTICS_STATUS = "analyticsStatus",
 }
 
 /*

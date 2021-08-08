@@ -1,5 +1,5 @@
 <template>
-    <v-card class="mx-auto">
+    <v-card>
         <v-card-title>
             Settings
 
@@ -29,13 +29,23 @@
                     Period Names
                 </h3>
 
-                <v-btn block color="primary" class="mb-3">
+                <v-btn
+                    block
+                    color="primary"
+                    class="mb-3"
+                    @click="openPeriodNamesEdit"
+                >
                     Edit
                 </v-btn>
-                <v-btn block color="primary" class="mb-3">
+                <v-btn
+                    block
+                    color="primary"
+                    class="mb-3"
+                    @click="openPeriodNamesImport"
+                >
                     Import
                 </v-btn>
-                <v-btn block color="primary">
+                <v-btn block color="primary" @click="openPeriodNamesExport">
                     Export
                 </v-btn>
             </div>
@@ -47,13 +57,23 @@
                     Notifications
                 </h3>
 
-                <v-btn block color="primary" class="mb-3">
+                <v-btn
+                    block
+                    color="primary"
+                    class="mb-3"
+                    @click="openNotificationsEdit"
+                >
                     Edit
                 </v-btn>
-                <v-btn block color="primary" class="mb-3">
+                <v-btn
+                    block
+                    color="primary"
+                    class="mb-3"
+                    @click="openNotificationsImport"
+                >
                     Import
                 </v-btn>
-                <v-btn block color="primary">
+                <v-btn block color="primary" @click="openNotificationsExport">
                     Export
                 </v-btn>
             </div>
@@ -71,7 +91,27 @@ export default defineComponent({
         const closeDialog = () => emit("close");
         const { twentyFourHourStatus, setTFHStatus } = loadDatetime();
 
-        return { twentyFourHourStatus, setTFHStatus, closeDialog, mdiClose };
+        const openPeriodNamesEdit = () => emit("openPeriodNamesEdit");
+        const openPeriodNamesImport = () => emit("openPeriodNamesImport");
+        const openPeriodNamesExport = () => emit("openPeriodNamesExport");
+        const openNotificationsEdit = () => emit("openNotificationsEdit");
+        const openNotificationsImport = () => emit("openNotificationsImport");
+        const openNotificationsExport = () => emit("openNotificationsExport");
+
+        return {
+            twentyFourHourStatus,
+            setTFHStatus,
+            closeDialog,
+            openPeriodNamesEdit,
+            openPeriodNamesImport,
+            openPeriodNamesExport,
+            openNotificationsEdit,
+            openNotificationsImport,
+            openNotificationsExport,
+
+            // Icons
+            mdiClose,
+        };
     },
 });
 </script>

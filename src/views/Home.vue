@@ -49,31 +49,43 @@
         </v-card>
 
         <v-card
-            title="Privacy notice"
-            aria-label="Privacy notice"
+            title="About"
+            aria-label="About"
             class="mx-auto schedule-card text-wrap--break"
             outlined
-            @click="dialogs.privacy = true"
+            @click="dialogs.about = true"
         >
             <v-card-title>
-                Privacy Notice
+                About
             </v-card-title>
         </v-card>
 
-        <v-dialog v-model="dialogs.releaseNotes" width="750" scrollable>
+        <v-card
+            title="Analytics notice"
+            aria-label="Analytics notice"
+            class="mx-auto schedule-card text-wrap--break"
+            outlined
+            @click="dialogs.analytics = true"
+        >
+            <v-card-title>
+                Analytics Notice
+            </v-card-title>
+        </v-card>
+
+        <v-dialog v-model="dialogs.releaseNotes" width="500" scrollable>
             <utds-release-notes
                 :currentVersion="currentVersion"
                 :rawReleaseNotes="releaseNotes"
                 githubRepository="hkamran80/schedules"
+                :markdown="true"
                 @close="dialogs.releaseNotes = false"
             />
         </v-dialog>
-        <v-dialog v-model="dialogs.privacy" width="750" scrollable>
-            <privacy
-                @installUmami="installUmami"
-                @uninstallUmami="uninstallUmami"
-                @close="closeDialogs"
-            />
+        <v-dialog v-model="dialogs.analytics" width="500" scrollable>
+            <analytics-notice @close="dialogs.analytics = false" />
+        </v-dialog>
+        <v-dialog v-model="dialogs.about" width="500" scrollable>
+            <about @close="dialogs.about = false" />
         </v-dialog>
     </utds-layout>
 </template>
@@ -89,7 +101,8 @@ import { mdiPlus, mdiSchoolOutline, mdiTimerSand } from "@mdi/js";
 import { version as currentVersion } from "../../package.json";
 import releaseNotes from "@/releaseNotes.json";
 
-const Privacy = () => import("@/components/dialogs/Privacy.vue");
+const AnalyticsNotice = () => import("@/components/AnalyticsNotice.vue");
+const About = () => import("@/components/About.vue");
 
 export default Vue.extend({
     props: {
@@ -101,25 +114,26 @@ export default Vue.extend({
             },
         },
     },
-    components: { UtdsLayout, UtdsHeader, UtdsReleaseNotes, Privacy },
+    components: {
+        UtdsLayout,
+        UtdsHeader,
+        UtdsReleaseNotes,
+        AnalyticsNotice,
+        About,
+    },
     data() {
         return {
             currentVersion,
             releaseNotes,
             dialogs: {
                 releaseNotes: false,
-                privacy: false,
+                analytics: false,
+                about: false,
             },
             mdiPlus,
             mdiSchoolOutline,
             mdiTimerSand,
         };
-    },
-    methods: {
-        closeDialogs(): void {
-            this.dialogs.releaseNotes = false;
-            this.dialogs.privacy = false;
-        },
     },
 });
 </script>

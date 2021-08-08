@@ -4,9 +4,9 @@ import "@/registerServiceWorker";
 import router from "@/router";
 import vuetify from "@/plugins/vuetify";
 import VueCompositionAPI from "@vue/composition-api";
-import VueToastification from "vue-toastification";
-import "vue-toastification/dist/index.css";
-import pkg from "../package.json";
+// import VueToastification from "vue-toastification";
+// import "vue-toastification/dist/index.css";
+import { version as pkgVersion } from "../package.json";
 
 // Sentry Tracking
 // import * as Sentry from "@sentry/vue";
@@ -20,11 +20,11 @@ Vue.prototype.$developmentMode = process.env.NODE_ENV === "development";
 Vue.prototype.$edgeMode = process.env.VUE_APP_EDGE_MODE === "true";
 
 Vue.use(VueCompositionAPI);
-Vue.use(VueToastification, {
-    transition: "Vue-Toastification__bounce",
-    maxToasts: 5,
-    newestOnTop: true,
-});
+// Vue.use(VueToastification, {
+//     transition: "Vue-Toastification__bounce",
+//     maxToasts: 5,
+//     newestOnTop: true,
+// });
 
 // Sentry.io Tracking
 if (!Vue.prototype.$developmentMode) {
@@ -32,7 +32,7 @@ if (!Vue.prototype.$developmentMode) {
         Vue,
         dsn: process.env.VUE_APP_SENTRY_DSN,
         integrations: [new BrowserTracing()],
-        release: `schedules@${pkg.version}`,
+        release: `schedules@${pkgVersion}`,
         environment: process.env.VUE_APP_SENTRY_ENVIRONMENT,
         tracesSampleRate: 0.25,
         tracingOptions: {

@@ -116,7 +116,7 @@ import { mdiCogOutline, mdiPencilOutline } from "@mdi/js";
 
 import CountdownSettings from "@/components/CountdownSettings.vue";
 
-import { requestPermission } from "@/notifications";
+import { getPermission, requestPermission } from "@/notifications";
 
 import {
     calculateTimeDifference,
@@ -307,7 +307,7 @@ export default defineComponent({
         onMounted(() => {
             mainInterval.value = setInterval(main, 1000);
 
-            if (Notification.permission === "default") {
+            if (getPermission() === "default") {
                 requestPermission();
             }
         });

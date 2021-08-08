@@ -589,7 +589,7 @@ import {
 
 const Timetable = () => import("@/components/dialogs/Schedule/Timetable.vue");
 const PeriodNamesExport = () =>
-    import("@/components/dialogs/Schedule/Settings/PeriodNamesExport.vue");
+    import("@/components/dialogs/Schedule/Settings/PeriodNamesExport1.vue");
 
 export default {
     props: {

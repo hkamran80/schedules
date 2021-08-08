@@ -4,10 +4,11 @@ import { ScheduleDays } from "@/structures/schedule";
 
 export function getPeriodNames(
     scheduleId: string,
-    schedule: ScheduleDays
+    schedule: ScheduleDays,
+    currentPeriodNames = {} as PeriodNames
 ): PeriodNames {
     const periodNames = loadPeriodNames(
-        {} as PeriodNames,
+        currentPeriodNames,
         scheduleId,
         schedule
     );

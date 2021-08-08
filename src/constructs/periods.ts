@@ -6,7 +6,7 @@ import {
 } from "@/structures/periods";
 import { ScheduleDays, ScheduleTimes } from "@/structures/schedule";
 import { padNumber } from "@/constructs/calculations";
-import { loadFromStorage } from "@/constructs/storage";
+import { loadFromStorage, saveToStorage } from "@/constructs/storage";
 import { StorageKeyType } from "@/structures/storage";
 
 export function getCurrentPeriod(
@@ -16,9 +16,9 @@ export function getCurrentPeriod(
     if (schedule === null) {
         return null;
     }
-    
+
     const time = splitTime.split("-").join("");
-    
+
     const periods = Object.keys(schedule)
         .map((periodName) => {
             const periodTimes = schedule[periodName];
@@ -144,6 +144,17 @@ export function loadPeriodNames(
     }
 
     return null;
+}
+
+export function savePeriodNames(
+    scheduleId: string,
+    periodNames: PeriodNames
+): void {
+    saveToStorage(
+        scheduleId,
+        StorageKeyType.PERIOD_NAMES,
+        JSON.stringify(periodNames)
+    );
 }
 
 // To check whether the return of the function is the period names or an error, do: `importPeriodNames(...).constructor === Object`. It will return `true` if the function returned the names

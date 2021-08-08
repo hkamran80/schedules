@@ -56,20 +56,28 @@
             "Move notification settings to separate dialogs"
         ]
     },
-    "3.0.0 (Edge - 0)": {
+    "3.0.0 (Edge-1)": {
         "releaseDate": "2021-07-15",
         "changelog": [
             "Change Umami domain to unisontech.org",
             "Add source maps with Sentry for enhanced error logging",
             "Switch to the UTDS header",
-            "Add a day override (issue #66)",
+            "Add a day override ([issue #66](https://github.com/hkamran80/schedules/issues/66))",
             "Make the day override persistent",
             "Dynamically generate the meta descriptive tags",
             "Add twenty-four hour time switch",
             "Increase padding around the icons",
-            "Switch to TypeScript (issue #118)",
-            "Add a countdown to any time (issue #120)",
-            "Switch to UTDS components (issue #117)"
+            "Switch to TypeScript ([issue #118](https://github.com/hkamran80/schedules/issues/118))",
+            "Add a countdown to any time ([issue #120](https://github.com/hkamran80/schedules/issues/120))",
+            "Switch to UTDS components ([issue #117](https://github.com/hkamran80/schedules/issues/117))",
+            "Fix theme issues ([issue #112](https://github.com/hkamran80/schedules/issues/112))",
+            "Switch the console link about service workers to a UT short link",
+            "Add an about page ([issue #115](https://github.com/hkamran80/schedules/issues/115))",
+            "Change \"Privacy Notice\" to \"Analytics Notice\"",
+            "Add the AUHSD First Week schedule",
+            "Update the AUHSD Standard schedule",
+            "Switch to the Clipboard API with the old execCommand method as a fallback for the period name exporting",
+            "Switch the Umami mixin to composables"
         ]
     }
 }

@@ -145,15 +145,19 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
 
+        <% if (htmlWebpackPlugin.options.developmentMode) { %>
         <link
             rel="preload"
             href="https://umami.unisontech.org/umami.js"
             as="script"
         />
+        <% } %>
 
         <title><%= htmlWebpackPlugin.options.title %></title>
     </head>
     <body>
+        <link rel="stylesheet" href="/css/scrollbars.css" />
+
         <!-- Lato Font -->
         <style>
             @font-face {

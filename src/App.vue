@@ -25,11 +25,15 @@
     </v-app>
 </template>
 
+<!--
 <script>
 import NavigationBar from "@/components/NavigationBar.vue";
 import update from "@/mixins/update";
 import umami from "@/mixins/umami";
 import schedules from "@/schedules.json";
+
+import { provideToast } from "vue-toastification/composition";
+import "vue-toastification/dist/index.css";
 
 export default {
     name: "App",
@@ -46,30 +50,102 @@ export default {
     created() {
         // Document title
         if (this.$edgeMode) {
-            this.baseDocumentTitle = "Schedules (edge)";
+            baseDocumentTitle.value = "Schedules (edge)";
         } else if (this.$developmentMode) {
-            this.baseDocumentTitle = "Schedules (dev)";
+            baseDocumentTitle.value = "Schedules (dev)";
         }
+
+        provideToast({
+            transition: "Vue-Toastification__bounce",
+            maxToasts: 3,
+            newestOnTop: true,
+        });
     },
     watch: {
         $route(to) {
-            if (to.name === "Home") {
-                document.title = this.baseDocumentTitle;
+            if (newName === "Home") {
+                document.title = baseDocumentTitle.value;
             } else if (
-                to.name === "Schedule" &&
+                newName === "Schedule" &&
                 typeof this.schedules[to.params.id] !== "undefined"
             ) {
-                document.title = `${this.baseDocumentTitle} | ${
+                document.title = `${baseDocumentTitle.value} | ${
                     this.schedules[to.params.id].name
                 }`;
-            } else if (to.name === "NotFound") {
-                document.title = `${this.baseDocumentTitle} | Page Not Found`;
+            } else if (newName === "NotFound") {
+                document.title = `${baseDocumentTitle.value} | Page Not Found`;
             } else {
-                document.title = this.baseDocumentTitle;
+                document.title = baseDocumentTitle.value;
             }
         },
     },
 };
+</script>
+-->
+<script lang="ts">
+import {
+    defineComponent,
+    ref,
+    SetupContext,
+    watch,
+} from "@vue/composition-api";
+import NavigationBar from "@/components/NavigationBar.vue";
+
+import { provideToast } from "vue-toastification/composition";
+import { POSITION } from "vue-toastification";
+import "vue-toastification/dist/index.css";
+
+import schedulesJson from "@/schedules.json";
+import { Schedule } from "@/structures/schedule";
+
+const schedules = schedulesJson as Schedule;
+
+export default defineComponent({
+    components: { NavigationBar },
+    setup(_, context: SetupContext) {
+        provideToast({
+            position: POSITION.BOTTOM_RIGHT,
+            transition: "Vue-Toastification__bounce",
+            maxToasts: 3,
+            newestOnTop: true,
+            timeout: 5000,
+            closeOnClick: true,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            draggable: false,
+            draggablePercent: 0.6,
+            showCloseButtonOnHover: false,
+            hideProgressBar: true,
+            closeButton: false,
+            icon: true,
+            rtl: false,
+        });
+
+        const baseDocumentTitle = ref("Schedules");
+        watch(
+            () => context.root.$route.name,
+            (newName) => {
+                if (newName === "Home") {
+                    document.title = baseDocumentTitle.value;
+                } else if (
+                    newName === "Schedule" &&
+                    typeof schedules[context.root.$route.params.id] !==
+                        "undefined"
+                ) {
+                    document.title = `${baseDocumentTitle.value} | ${
+                        schedules[context.root.$route.params.id].name
+                    }`;
+                } else if (newName === "NotFound") {
+                    document.title = `${baseDocumentTitle.value} | Page Not Found`;
+                } else {
+                    document.title = baseDocumentTitle.value;
+                }
+            }
+        );
+
+        return { schedules, baseDocumentTitle };
+    },
+});
 </script>
 
 <style>

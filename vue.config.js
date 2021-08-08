@@ -28,6 +28,7 @@ module.exports = {
             args[0].title = title;
             args[0].url = url;
             args[0].description = description;
+            args[0].developmentMode = process.env.NODE_ENV === "development";
 
             return args;
         });

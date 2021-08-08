@@ -6,7 +6,7 @@ import {
 } from "@/structures/notifications";
 import { ScheduleDays } from "@/structures/schedule";
 import { StorageKeyType } from "@/structures/storage";
-import { loadFromStorage } from "@/constructs/storage";
+import { loadFromStorage, saveToStorage } from "@/constructs/storage";
 import { showNotification, defaultEvents } from "@/notifications";
 
 export function notify(title: string, body: string): void {
@@ -14,8 +14,6 @@ export function notify(title: string, body: string): void {
         title,
         {
             body: body,
-            // icon: `/img/icons/${icon}.192.png`,
-            // badge: `/img/icons/${icon}.96.png`,
         },
         true,
         defaultEvents
@@ -134,6 +132,17 @@ export function loadAllowedNotifications(
     }
 
     return allowedNotifications as AllowedNotifications;
+}
+
+export function saveAllowedNotifications(
+    scheduleId: string,
+    notifications: AllowedNotifications
+): void {
+    saveToStorage(
+        scheduleId,
+        StorageKeyType.ALLOWED_NOTIFICATIONS,
+        JSON.stringify(notifications)
+    );
 }
 
 export function loadBasicAllowedNotifications(
