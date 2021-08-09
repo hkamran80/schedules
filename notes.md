@@ -6,8 +6,10 @@
     - [x] Edit
     - [x] Import
     - [x] Export
-- [ ] Fix Umami 
-- [ ] Fix update mechanism
+- [x] Add Umami
+    - [x] Globally
+    - [x] Analytics notice
+- [x] Add update mechanism
 - [ ] Day override settings
     - [ ] Day override
     - [ ] Persistent

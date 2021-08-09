@@ -1,6 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 const PreloadWebpackPlugin = require("@vue/preload-webpack-plugin");
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const schedules = require("./src/schedules.json");
 
 const title =

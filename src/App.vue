@@ -3,11 +3,12 @@
         <v-main>
             <v-container fluid>
                 <navigation-bar />
+
                 <router-view :schedules="schedules" />
 
                 <v-snackbar bottom right :value="updateExists" :timeout="-1">
                     An update is available for Schedules! Check out what's new
-                    on the homepage!
+                    on the homepage after the update!
 
                     <template v-slot:action="{ attrs }">
                         <v-btn
@@ -25,63 +26,6 @@
     </v-app>
 </template>
 
-<!--
-<script>
-import NavigationBar from "@/components/NavigationBar.vue";
-import update from "@/mixins/update";
-import umami from "@/mixins/umami";
-import schedules from "@/schedules.json";
-
-import { provideToast } from "vue-toastification/composition";
-import "vue-toastification/dist/index.css";
-
-export default {
-    name: "App",
-    data() {
-        return {
-            schedules: schedules,
-            baseDocumentTitle: "Schedules",
-        };
-    },
-    components: {
-        NavigationBar,
-    },
-    mixins: [update, umami],
-    created() {
-        // Document title
-        if (this.$edgeMode) {
-            baseDocumentTitle.value = "Schedules (edge)";
-        } else if (this.$developmentMode) {
-            baseDocumentTitle.value = "Schedules (dev)";
-        }
-
-        provideToast({
-            transition: "Vue-Toastification__bounce",
-            maxToasts: 3,
-            newestOnTop: true,
-        });
-    },
-    watch: {
-        $route(to) {
-            if (newName === "Home") {
-                document.title = baseDocumentTitle.value;
-            } else if (
-                newName === "Schedule" &&
-                typeof this.schedules[to.params.id] !== "undefined"
-            ) {
-                document.title = `${baseDocumentTitle.value} | ${
-                    this.schedules[to.params.id].name
-                }`;
-            } else if (newName === "NotFound") {
-                document.title = `${baseDocumentTitle.value} | Page Not Found`;
-            } else {
-                document.title = baseDocumentTitle.value;
-            }
-        },
-    },
-};
-</script>
--->
 <script lang="ts">
 import {
     defineComponent,
@@ -98,11 +42,19 @@ import "vue-toastification/dist/index.css";
 import schedulesJson from "@/schedules.json";
 import { Schedule } from "@/structures/schedule";
 
+import {
+    installUmami,
+    umamiInstallStatus,
+    uninstallUmami,
+} from "@/composables/umami";
+import { loadUpdateMechanism } from "@/composables/update";
+
 const schedules = schedulesJson as Schedule;
 
 export default defineComponent({
     components: { NavigationBar },
     setup(_, context: SetupContext) {
+        // Toast
         provideToast({
             position: POSITION.BOTTOM_RIGHT,
             transition: "Vue-Toastification__bounce",
@@ -121,6 +73,7 @@ export default defineComponent({
             rtl: false,
         });
 
+        // Page Title
         const baseDocumentTitle = ref("Schedules");
         watch(
             () => context.root.$route.name,
@@ -143,7 +96,21 @@ export default defineComponent({
             }
         );
 
-        return { schedules, baseDocumentTitle };
+        // Umami
+        const { allowed } = umamiInstallStatus();
+        switch (allowed.value) {
+            case true:
+                installUmami(context.root);
+                break;
+            case false:
+                uninstallUmami(context.root);
+                break;
+        }
+
+        // Update Mechanism
+        const { updateExists, refreshApp } = loadUpdateMechanism();
+
+        return { schedules, baseDocumentTitle, updateExists, refreshApp };
     },
 });
 </script>

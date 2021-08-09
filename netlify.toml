@@ -2,4 +2,4 @@
 package = "@sentry/netlify-build-plugin"
 
 [plugins.inputs]
-sentryRelease = "3.0.0-edge.1"
+sentryRelease = "3.0.0-edge.2"

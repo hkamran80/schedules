@@ -56,8 +56,8 @@
             "Move notification settings to separate dialogs"
         ]
     },
-    "3.0.0 (Edge-1)": {
-        "releaseDate": "2021-07-15",
+    "3.0.0 (Edge-2)": {
+        "releaseDate": "2021-08-08",
         "changelog": [
             "Change Umami domain to unisontech.org",
             "Add source maps with Sentry for enhanced error logging",
@@ -76,8 +76,9 @@
             "Change \"Privacy Notice\" to \"Analytics Notice\"",
             "Add the AUHSD First Week schedule",
             "Update the AUHSD Standard schedule",
-            "Switch to the Clipboard API with the old execCommand method as a fallback for the period name exporting",
-            "Switch the Umami mixin to composables"
+            "Switch to the Clipboard API with the `execCommand` method as a fallback for the period name exporting",
+            "Switch the Umami mixin to composables",
+            "Switch the update mechanism mixin to composables"
         ]
     }
 }

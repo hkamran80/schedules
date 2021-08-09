@@ -4,8 +4,6 @@ import "@/registerServiceWorker";
 import router from "@/router";
 import vuetify from "@/plugins/vuetify";
 import VueCompositionAPI from "@vue/composition-api";
-// import VueToastification from "vue-toastification";
-// import "vue-toastification/dist/index.css";
 import { version as pkgVersion } from "../package.json";
 
 // Sentry Tracking
@@ -20,11 +18,6 @@ Vue.prototype.$developmentMode = process.env.NODE_ENV === "development";
 Vue.prototype.$edgeMode = process.env.VUE_APP_EDGE_MODE === "true";
 
 Vue.use(VueCompositionAPI);
-// Vue.use(VueToastification, {
-//     transition: "Vue-Toastification__bounce",
-//     maxToasts: 5,
-//     newestOnTop: true,
-// });
 
 // Sentry.io Tracking
 if (!Vue.prototype.$developmentMode) {
