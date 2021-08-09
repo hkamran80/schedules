@@ -53,8 +53,9 @@ export function uninstallUmami(root: ComponentInstance) {
 
 export function umamiInstallStatus() {
     const allowed = ref(
-        localStorage.getItem("umamiTracking") === null ||
-            localStorage.getItem("umamiTracking") === "true"
+        localStorage.getItem("umamiTracking") === "true"
+            ? true
+            : localStorage.getItem("umamiTracking") === null
             ? true
             : false
     );
