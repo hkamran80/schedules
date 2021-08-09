@@ -6,6 +6,18 @@ function checkUmamiInstalled(): boolean {
     return document.getElementById("umami-script") ? true : false;
 }
 
+function checkAllowedStatus(): boolean {
+    if (localStorage.getItem("umamiTracking")) {
+        if (localStorage.getItem("umamiTracking") === "true") {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return true;
+    }
+}
+
 export function installUmami(root: ComponentInstance): void {
     if (!root.$developmentMode && !checkUmamiInstalled()) {
         const umamiScript = document.createElement("script"),
@@ -52,13 +64,7 @@ export function uninstallUmami(root: ComponentInstance) {
 }
 
 export function umamiInstallStatus() {
-    const allowed = ref(
-        localStorage.getItem("umamiTracking") === "true"
-            ? true
-            : localStorage.getItem("umamiTracking") === null
-            ? true
-            : false
-    );
+    const allowed = ref(checkAllowedStatus());
 
     const setStatus = ({ root }: { root: ComponentInstance }) => {
         if (loadFromStorage("", StorageKeyType.ANALYTICS_STATUS) === null) {
