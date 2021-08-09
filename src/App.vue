@@ -99,40 +99,37 @@ export default defineComponent({
 
         onMounted(() => {
             console.debug("Mounted");
-            setTimeout(() => {
-                console.debug("Mounting Umami...");
+            console.debug("Mounting Umami...");
 
-                // Umami
-                const { allowed } = umamiInstallStatus();
-                console.debug(`Current status: ${allowed.value}`);
-                console.debug(
-                    `Storage key: ${generateStorageKey(
-                        "",
-                        StorageKeyType.ANALYTICS_STATUS
-                    )}`
-                );
-                console.debug(
-                    `LS variable (loadFromStorage > localStorage.getItem): ${loadFromStorage(
-                        "",
-                        StorageKeyType.ANALYTICS_STATUS
-                    )}`
-                );
-                console.debug(
-                    `LS variable (localStorage.getItem): ${localStorage.getItem(
-                        "analyticsStatus"
-                    )}`
-                );
-                console.debug(
-                    `LS variable (localStorage.getItem + generateStorageKey): ${generateStorageKey(
-                        "",
-                        StorageKeyType.ANALYTICS_STATUS
-                    )}`
-                );
+            // Umami
+            const { allowed } = umamiInstallStatus();
+            console.debug(`Current status: ${allowed.value}`);
+            console.debug(
+                `Storage key: ${generateStorageKey(
+                    "",
+                    StorageKeyType.ANALYTICS_STATUS
+                )}`
+            );
+            console.debug(
+                `LS variable (loadFromStorage > localStorage.getItem): ${loadFromStorage(
+                    "",
+                    StorageKeyType.ANALYTICS_STATUS
+                )}`
+            );
+            console.debug(
+                `LS variable (localStorage.getItem): ${localStorage.getItem(
+                    "analyticsStatus"
+                )}`
+            );
+            console.debug(
+                `LS variable (localStorage.getItem + generateStorageKey): ${localStorage.getItem(
+                    generateStorageKey("", StorageKeyType.ANALYTICS_STATUS)
+                )}`
+            );
 
-                if (allowed.value === true) {
-                    installUmami(context.root);
-                }
-            }, 1500);
+            if (allowed.value === true) {
+                installUmami(context.root);
+            }
         });
 
         // Update Mechanism
