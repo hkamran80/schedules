@@ -1,11 +1,12 @@
 {
     "name": "schedules",
-    "version": "3.0.0-edge.3",
+    "version": "3.0.0-edge.4",
     "private": true,
     "scripts": {
-        "lint": "vue-cli-service lint",
         "serve": "vue-cli-service serve",
         "build": "cp src/schedules.json public/schedules.json; vue-cli-service build --modern",
+        "test:unit": "vue-cli-service test:unit",
+        "lint": "vue-cli-service lint",
         "build:report": "vue-cli-service build --report"
     },
     "dependencies": {

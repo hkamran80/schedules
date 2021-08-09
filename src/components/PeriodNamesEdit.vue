@@ -76,7 +76,6 @@ export default defineComponent({
             closeDialog();
         };
         const clearNames = () => {
-            console.debug(periodNames.value);
             const clearedPeriodNames = Object.fromEntries(
                 Object.entries(periodNames.value).map(([periodName]) => [
                     periodName,

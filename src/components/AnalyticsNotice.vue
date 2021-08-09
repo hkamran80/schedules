@@ -84,18 +84,12 @@ export default defineComponent({
         const { allowed, setStatus } = umamiInstallStatus();
         const setUmamiStatus = () => {
             if (!context.root.$developmentMode) {
-                console.debug("Setting Umami status...");
                 setStatus(context);
-                console.debug(`New status: ${allowed.value}`);
 
                 if (allowed.value === false) {
-                    console.debug("Uninstalling Umami...");
                     uninstallUmami(context.root);
-                    console.debug("Uninstalled Umami");
                 } else if (allowed.value === true) {
-                    console.debug("Installing Umami...");
                     installUmami(context.root);
-                    console.debug("Installed Umami");
                 }
             }
         };

@@ -29,9 +29,8 @@
 <script lang="ts">
 import {
     defineComponent,
-    onMounted,
-    ref,
     SetupContext,
+    onMounted,
     watch,
 } from "@vue/composition-api";
 import NavigationBar from "@/components/NavigationBar.vue";
@@ -45,10 +44,6 @@ import { Schedule } from "@/structures/schedule";
 
 import { installUmami, umamiInstallStatus } from "@/composables/umami";
 import { loadUpdateMechanism } from "@/composables/update";
-
-// Temporary
-import { generateStorageKey, loadFromStorage } from "@/constructs/storage";
-import { StorageKeyType } from "@/structures/storage";
 
 const schedules = schedulesJson as Schedule;
 
@@ -75,57 +70,31 @@ export default defineComponent({
         });
 
         // Page Title
-        const baseDocumentTitle = ref("Schedules");
+        const baseDocumentTitle = "Schedules";
         watch(
             () => context.root.$route.name,
             (newName) => {
                 if (newName === "Home") {
-                    document.title = baseDocumentTitle.value;
+                    document.title = baseDocumentTitle;
                 } else if (
                     newName === "Schedule" &&
                     typeof schedules[context.root.$route.params.id] !==
                         "undefined"
                 ) {
-                    document.title = `${baseDocumentTitle.value} | ${
+                    document.title = `${baseDocumentTitle} | ${
                         schedules[context.root.$route.params.id].name
                     }`;
                 } else if (newName === "NotFound") {
-                    document.title = `${baseDocumentTitle.value} | Page Not Found`;
+                    document.title = `${baseDocumentTitle} | Page Not Found`;
                 } else {
-                    document.title = baseDocumentTitle.value;
+                    document.title = baseDocumentTitle;
                 }
             }
         );
 
         onMounted(() => {
-            console.debug("Mounted");
-            console.debug("Mounting Umami...");
-
             // Umami
             const { allowed } = umamiInstallStatus();
-            console.debug(`Current status: ${allowed.value}`);
-            console.debug(
-                `Storage key: ${generateStorageKey(
-                    "",
-                    StorageKeyType.ANALYTICS_STATUS
-                )}`
-            );
-            console.debug(
-                `LS variable (loadFromStorage > localStorage.getItem): ${loadFromStorage(
-                    "",
-                    StorageKeyType.ANALYTICS_STATUS
-                )}`
-            );
-            console.debug(
-                `LS variable (localStorage.getItem): ${localStorage.getItem(
-                    "analyticsStatus"
-                )}`
-            );
-            console.debug(
-                `LS variable (localStorage.getItem + generateStorageKey): ${localStorage.getItem(
-                    generateStorageKey("", StorageKeyType.ANALYTICS_STATUS)
-                )}`
-            );
 
             if (allowed.value === true) {
                 installUmami(context.root);

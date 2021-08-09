@@ -56,14 +56,11 @@
             "Move notification settings to separate dialogs"
         ]
     },
-    "3.0.0 (Edge-3)": {
+    "3.0.0 (Edge-4)": {
         "releaseDate": "2021-08-09",
         "changelog": [
             "Change Umami domain to unisontech.org",
             "Add source maps with Sentry for enhanced error logging",
-            "Switch to the UTDS header",
-            "Add a day override ([issue #66](https://github.com/hkamran80/schedules/issues/66))",
-            "Make the day override persistent",
             "Dynamically generate the meta descriptive tags",
             "Add twenty-four hour time switch",
             "Increase padding around the icons",

@@ -267,9 +267,6 @@ export default defineComponent({
                 countdownTime.value =
                     timePickerTime.value.replace(":", "-") + "-00";
             }
-
-            console.debug(timePickerTime.value);
-            console.debug(countdownTime.value);
         };
 
         const main = () => {

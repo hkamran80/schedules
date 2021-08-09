@@ -1,5 +1,5 @@
 ## Possibilities
-- Add from clipboard to period name/notification imports?
+- Paste from clipboard to period name/notification imports?
 
 ## To Do
 ### Version 3.0 (scheduled release: August 15, 2021)

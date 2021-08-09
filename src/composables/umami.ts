@@ -14,6 +14,7 @@ function checkAllowedStatus(): boolean {
             return false;
         }
     } else {
+        saveToStorage("", StorageKeyType.ANALYTICS_STATUS, "true");
         return true;
     }
 }
