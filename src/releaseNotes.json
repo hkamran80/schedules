@@ -56,8 +56,8 @@
             "Move notification settings to separate dialogs"
         ]
     },
-    "3.0.0 (Edge-2)": {
-        "releaseDate": "2021-08-08",
+    "3.0.0 (Edge-3)": {
+        "releaseDate": "2021-08-09",
         "changelog": [
             "Change Umami domain to unisontech.org",
             "Add source maps with Sentry for enhanced error logging",

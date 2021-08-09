@@ -29,6 +29,7 @@
 <script lang="ts">
 import {
     defineComponent,
+    onMounted,
     ref,
     SetupContext,
     watch,
@@ -42,11 +43,7 @@ import "vue-toastification/dist/index.css";
 import schedulesJson from "@/schedules.json";
 import { Schedule } from "@/structures/schedule";
 
-import {
-    installUmami,
-    umamiInstallStatus,
-    uninstallUmami,
-} from "@/composables/umami";
+import { installUmami, umamiInstallStatus } from "@/composables/umami";
 import { loadUpdateMechanism } from "@/composables/update";
 
 const schedules = schedulesJson as Schedule;
@@ -96,16 +93,13 @@ export default defineComponent({
             }
         );
 
-        // Umami
-        const { allowed } = umamiInstallStatus();
-        switch (allowed.value) {
-            case true:
+        onMounted(() => {
+            // Umami
+            const { allowed } = umamiInstallStatus();
+            if (allowed.value === true) {
                 installUmami(context.root);
-                break;
-            case false:
-                uninstallUmami(context.root);
-                break;
-        }
+            }
+        });
 
         // Update Mechanism
         const { updateExists, refreshApp } = loadUpdateMechanism();
