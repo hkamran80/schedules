@@ -1,9 +1,14 @@
 import { StorageKeyType } from "@/structures/storage";
 
-function generateStorageKey(scheduleId: string, key: StorageKeyType): string {
+// TODO: Undo export
+export function generateStorageKey(
+    scheduleId: string,
+    key: StorageKeyType
+): string {
     if (
         key === StorageKeyType.TWENTY_FOUR_HOUR_STATUS ||
-        key === StorageKeyType.ANALYTICS_STATUS
+        key === StorageKeyType.ANALYTICS_STATUS ||
+        key === StorageKeyType.THEME_STATUS
     ) {
         return key;
     } else {

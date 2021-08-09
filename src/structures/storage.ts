@@ -4,6 +4,7 @@ export enum StorageKeyType {
     ALLOWED_NOTIFICATIONS = "allowedNotifications",
     TWENTY_FOUR_HOUR_STATUS = "twentyFourHourStatus",
     ANALYTICS_STATUS = "analyticsStatus",
+    THEME_STATUS = "darkTheme",
 }
 
 /*

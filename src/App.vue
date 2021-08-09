@@ -47,7 +47,7 @@ import { installUmami, umamiInstallStatus } from "@/composables/umami";
 import { loadUpdateMechanism } from "@/composables/update";
 
 // Temporary
-import { loadFromStorage } from "@/constructs/storage";
+import { generateStorageKey, loadFromStorage } from "@/constructs/storage";
 import { StorageKeyType } from "@/structures/storage";
 
 const schedules = schedulesJson as Schedule;
@@ -98,18 +98,41 @@ export default defineComponent({
         );
 
         onMounted(() => {
-            // Umami
-            const { allowed } = umamiInstallStatus();
-            console.debug(`Current status: ${allowed.value}`);
-            console.debug(
-                `LS variable: ${loadFromStorage(
-                    "",
-                    StorageKeyType.ANALYTICS_STATUS
-                )}`
-            );
-            if (allowed.value === true) {
-                installUmami(context.root);
-            }
+            console.debug("Mounted");
+            setTimeout(() => {
+                console.debug("Mounting Umami...");
+
+                // Umami
+                const { allowed } = umamiInstallStatus();
+                console.debug(`Current status: ${allowed.value}`);
+                console.debug(
+                    `Storage key: ${generateStorageKey(
+                        "",
+                        StorageKeyType.ANALYTICS_STATUS
+                    )}`
+                );
+                console.debug(
+                    `LS variable (loadFromStorage > localStorage.getItem): ${loadFromStorage(
+                        "",
+                        StorageKeyType.ANALYTICS_STATUS
+                    )}`
+                );
+                console.debug(
+                    `LS variable (localStorage.getItem): ${localStorage.getItem(
+                        "analyticsStatus"
+                    )}`
+                );
+                console.debug(
+                    `LS variable (localStorage.getItem + generateStorageKey): ${generateStorageKey(
+                        "",
+                        StorageKeyType.ANALYTICS_STATUS
+                    )}`
+                );
+
+                if (allowed.value === true) {
+                    installUmami(context.root);
+                }
+            }, 1500);
         });
 
         // Update Mechanism
