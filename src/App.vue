@@ -46,6 +46,10 @@ import { Schedule } from "@/structures/schedule";
 import { installUmami, umamiInstallStatus } from "@/composables/umami";
 import { loadUpdateMechanism } from "@/composables/update";
 
+// Temporary
+import { loadFromStorage } from "@/constructs/storage";
+import { StorageKeyType } from "@/structures/storage";
+
 const schedules = schedulesJson as Schedule;
 
 export default defineComponent({
@@ -96,7 +100,13 @@ export default defineComponent({
         onMounted(() => {
             // Umami
             const { allowed } = umamiInstallStatus();
-            console.debug(allowed.value);
+            console.debug(`Current status: ${allowed.value}`);
+            console.debug(
+                `LS variable: ${loadFromStorage(
+                    "",
+                    StorageKeyType.ANALYTICS_STATUS
+                )}`
+            );
             if (allowed.value === true) {
                 installUmami(context.root);
             }

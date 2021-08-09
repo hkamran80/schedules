@@ -7,8 +7,8 @@ function checkUmamiInstalled(): boolean {
 }
 
 function checkAllowedStatus(): boolean {
-    if (localStorage.getItem("umamiTracking")) {
-        if (localStorage.getItem("umamiTracking") === "true") {
+    if (loadFromStorage("", StorageKeyType.ANALYTICS_STATUS)) {
+        if (loadFromStorage("", StorageKeyType.ANALYTICS_STATUS) === "true") {
             return true;
         } else {
             return false;
@@ -54,7 +54,7 @@ export function uninstallUmami(root: ComponentInstance) {
             umamiScript.remove();
             saveToStorage("", StorageKeyType.ANALYTICS_STATUS, "false");
 
-            console.log("Deactivated Umami anonymous analytics");
+            console.log("Anonymous analytics deactivated");
         } else {
             console.error(
                 "An unknown error occurred when attempting to deactivate Umami"

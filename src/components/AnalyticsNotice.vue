@@ -86,7 +86,7 @@ export default defineComponent({
             if (!context.root.$developmentMode) {
                 console.debug("Setting Umami status...");
                 setStatus(context);
-                console.debug(`New status: ${status}`);
+                console.debug(`New status: ${allowed.value}`);
 
                 if (allowed.value === false) {
                     console.debug("Uninstalling Umami...");
