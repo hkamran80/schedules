@@ -96,6 +96,7 @@ export default defineComponent({
         onMounted(() => {
             // Umami
             const { allowed } = umamiInstallStatus();
+            console.debug(allowed.value);
             if (allowed.value === true) {
                 installUmami(context.root);
             }
