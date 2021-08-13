@@ -115,10 +115,15 @@ import {
 } from "@vue/composition-api";
 import { UtdsLayout, UtdsHeader } from "utds-component-library";
 import { mdiCogOutline, mdiPencilOutline } from "@mdi/js";
+import { useToast } from "vue-toastification/composition";
 
 import CountdownSettings from "@/components/CountdownSettings.vue";
 
-import { getPermission, requestPermission } from "@/notifications";
+import {
+    getPermission,
+    notificationsSupported,
+    requestPermission,
+} from "@/notifications";
 
 import {
     calculateTimeDifference,
@@ -144,6 +149,7 @@ export default defineComponent({
     components: { UtdsLayout, UtdsHeader, CountdownSettings },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setup(_, context: any) {
+        const toast = useToast();
         const { notifications } = loadNotifications();
         const allowedNotifications = ref(
             loadBasicAllowedNotifications(
@@ -322,8 +328,18 @@ export default defineComponent({
         onMounted(() => {
             mainInterval.value = setInterval(main, 1000);
 
-            if (getPermission() === "default") {
-                requestPermission();
+            if (notificationsSupported()) {
+                if (getPermission() !== "granted") {
+                    toast.warning(
+                        'To receive notifications, click "Allow" on the notification permission pop-up'
+                    );
+                } else if (getPermission() === "default") {
+                    toast.warning(
+                        'To receive notifications, click "Allow" on the notification permission pop-up'
+                    );
+
+                    requestPermission();
+                }
             }
         });
 

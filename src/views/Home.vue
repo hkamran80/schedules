@@ -61,6 +61,18 @@
         </v-card>
 
         <v-card
+            title="Help Center"
+            aria-label="Help Center"
+            class="mx-auto schedule-card text-wrap--break"
+            outlined
+            @click="dialogs.help = true"
+        >
+            <v-card-title>
+                Help Center
+            </v-card-title>
+        </v-card>
+
+        <v-card
             title="Analytics notice"
             aria-label="Analytics notice"
             class="mx-auto schedule-card text-wrap--break"
@@ -87,6 +99,19 @@
         <v-dialog v-model="dialogs.about" width="500" scrollable>
             <about :version="currentVersion" @close="dialogs.about = false" />
         </v-dialog>
+        <!-- <v-dialog v-model="dialogs.help" width="500" scrollable>
+            <help-center
+                @openHelpTopic="openHelpTopic"
+                @close="dialogs.help = false"
+            />
+        </v-dialog>
+        <v-dialog v-model="dialogs.helpTopic" width="800" scrollable>
+            <help-center-topic
+                :id="helpTopic.id"
+                :metadata="helpTopic.metadata"
+                @close="dialogs.helpTopic = false"
+            />
+        </v-dialog> -->
     </utds-layout>
 </template>
 
@@ -101,8 +126,13 @@ import { mdiPlus, mdiSchoolOutline, mdiTimerSand } from "@mdi/js";
 import { version as currentVersion } from "../../package.json";
 import releaseNotes from "@/releaseNotes.json";
 
+// import { Nullable } from "@/structures/types";
+// import { HelpCenterTopic as HelpCenterTopicInterface } from "@/structures/helpcenter";
+
 const AnalyticsNotice = () => import("@/components/AnalyticsNotice.vue");
 const About = () => import("@/components/About.vue");
+// const HelpCenter = () => import("@/components/HelpCenter.vue");
+// const HelpCenterTopic = () => import("@/components/HelpCenterTopic.vue");
 
 export default Vue.extend({
     props: {
@@ -120,6 +150,8 @@ export default Vue.extend({
         UtdsReleaseNotes,
         AnalyticsNotice,
         About,
+        // HelpCenter,
+        // HelpCenterTopic,
     },
     data() {
         return {
@@ -129,12 +161,25 @@ export default Vue.extend({
                 releaseNotes: false,
                 analytics: false,
                 about: false,
+                // help: false,
+                // helpTopic: false,
             },
+            // helpTopic: {
+            //     id: null as Nullable<string>,
+            //     metadata: null as Nullable<HelpCenterTopicInterface>,
+            // },
             mdiPlus,
             mdiSchoolOutline,
             mdiTimerSand,
         };
     },
+    // methods: {
+    //     openHelpTopic(id: string, metadata: HelpCenterTopicInterface): void {
+    //         this.helpTopic.id = id;
+    //         this.helpTopic.metadata = metadata;
+    //         this.dialogs.helpTopic = true;
+    //     },
+    // },
 });
 </script>
 

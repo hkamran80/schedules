@@ -22,7 +22,7 @@ export const defaultEvents = {
     onshow: (): void => {},
 };
 
-function notificationSupported(): boolean {
+export function notificationsSupported(): boolean {
     return (
         "Notification" in window &&
         "serviceWorker" in navigator &&
@@ -31,11 +31,11 @@ function notificationSupported(): boolean {
 }
 
 export function getPermission(): NotificationPermission {
-    return notificationSupported() ? Notification.permission : "denied";
+    return notificationsSupported() ? Notification.permission : "denied";
 }
 
 export function requestPermission(): Promise<NotificationPermission> {
-    return notificationSupported()
+    return notificationsSupported()
         ? Notification.requestPermission()
         : Promise.resolve().then(() => "denied");
 }
@@ -96,7 +96,7 @@ export function showNotification(
                     return e;
                 }
 
-                return notificationSupported()
+                return notificationsSupported()
                     ? navigator.serviceWorker.ready
                           .then((registration) =>
                               registration.showNotification(title, options)

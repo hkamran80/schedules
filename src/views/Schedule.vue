@@ -189,7 +189,11 @@ import {
     padNumber,
 } from "@/constructs/calculations";
 import { loadAllowedNotifications, notify } from "@/constructs/notifications";
-import { getPermission, requestPermission } from "@/notifications";
+import {
+    getPermission,
+    notificationsSupported,
+    requestPermission,
+} from "@/notifications";
 
 import { loadMetadata } from "@/composables/loadMetadata";
 import { loadDatetime } from "@/composables/dateTime";
@@ -502,17 +506,18 @@ export default defineComponent({
         onMounted(() => {
             mainInterval.value = setInterval(main, 1000);
 
-            if (getPermission() !== "granted") {
-                toast.warning(
-                    'To receive notifications, click "Allow" on the notification permission pop-up'
-                );
-            }
+            if (notificationsSupported()) {
+                if (getPermission() !== "granted") {
+                    toast.warning(
+                        'To receive notifications, click "Allow" on the notification permission pop-up'
+                    );
+                } else if (getPermission() === "default") {
+                    toast.warning(
+                        'To receive notifications, click "Allow" on the notification permission pop-up'
+                    );
 
-            if (getPermission() === "default") {
-                toast.warning(
-                    'To receive notifications, click "Allow" on the notification permission pop-up'
-                );
-                requestPermission();
+                    requestPermission();
+                }
             }
         });
 

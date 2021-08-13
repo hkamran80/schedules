@@ -14,7 +14,9 @@
     - Currently just forces the update
 - [x] Fix storage (switch to `loadFromStorage` globally)
 - [ ] Timetable
+
 ### Version 3.1
 - [ ] Day override settings
     - [ ] Day override
     - [ ] Persistent
+- [ ] Help center

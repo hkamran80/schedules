@@ -1,4 +1,4 @@
-import { ref } from "@vue/composition-api";
+import { onMounted, ref } from "@vue/composition-api";
 import { Nullable } from "@/structures/types";
 
 export function loadUpdateMechanism() {
@@ -7,27 +7,32 @@ export function loadUpdateMechanism() {
         updateExists = ref(false);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const updateAvailable = (event: any): void => {
-        serviceWorker.value = event.detail.waiting;
+    const updateAvailable = ({ detail }: any): void => {
+        serviceWorker.value = detail.waiting;
         updateExists.value = true;
     };
 
     const refreshApp = (): void => {
         updateExists.value = false;
 
-        if (serviceWorker.value === null) return;
-        serviceWorker.value.postMessage({ type: "SKIP_WAITING" });
+        if (serviceWorker.value !== null) {
+            serviceWorker.value.postMessage({ type: "SKIP_WAITING" });
+        }
     };
 
-    document.addEventListener("swUpdated", updateAvailable, {
-        once: true,
-    });
+    onMounted(() => {
+        console.debug("Service worker update monitoring now active");
 
-    navigator.serviceWorker.addEventListener("controllerchange", () => {
-        if (refreshing.value) return;
+        document.addEventListener("swUpdated", updateAvailable, {
+            once: true,
+        });
 
-        refreshing.value = true;
-        window.location.reload();
+        navigator.serviceWorker.addEventListener("controllerchange", () => {
+            if (!refreshing.value) {
+                refreshing.value = true;
+                window.location.reload();
+            }
+        });
     });
 
     return { updateExists, refreshApp };
