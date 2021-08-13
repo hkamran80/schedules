@@ -65,6 +65,8 @@
             <v-time-picker
                 v-model="timePickerTime"
                 :format="twentyFourHourStatus ? '24hr' : 'ampm'"
+                :min="minimumCountdownTime"
+                :max="maximumCountdownTime"
                 ampm-in-title
                 full-width
                 scrollable
@@ -127,6 +129,7 @@ import {
     loadBasicAllowedNotifications,
     notify,
 } from "@/constructs/notifications";
+import { splice } from "@/constructs/strings";
 import { HourConversionType } from "@/structures/calculations";
 import {
     BasicAllowedNotifications,
@@ -160,6 +163,21 @@ export default defineComponent({
         // Dialogs
         const timePickerDialog = ref(true);
         const settingsDialog = ref(false);
+
+        // Countdown Time Range
+        const minimumCountdownTime = computed(() => {
+            if (dayTime.value.time) {
+                const d = new Date(new Date().getTime() + 60000);
+
+                return splice(
+                    padNumber(d.getHours().toString()) +
+                        padNumber(d.getMinutes().toString()),
+                    2,
+                    ":"
+                );
+            }
+        });
+        const maximumCountdownTime = "23:59";
 
         // Countdown Time
         const countdownTime = ref(null as Nullable<string>);
@@ -322,6 +340,10 @@ export default defineComponent({
             closeTimePicker,
             saveTime,
             timePickerTime,
+
+            // Dialog Configuration
+            minimumCountdownTime,
+            maximumCountdownTime,
 
             // Settings Dialog
             settingsDialog,

@@ -75,7 +75,8 @@
             "Update the AUHSD Standard schedule",
             "Switch to the Clipboard API with the `execCommand` method as a fallback for the period name exporting",
             "Switch the Umami mixin to composables",
-            "Switch the update mechanism mixin to composables"
+            "Switch the update mechanism mixin to composables",
+            "Add minimum and maximum values to the countdown time picker"
         ]
     }
 }

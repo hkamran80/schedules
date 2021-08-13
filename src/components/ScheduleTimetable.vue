@@ -1,20 +1,33 @@
 <template>
-    <v-calendar
-        color="primary"
-        type="day"
-        :events="periods"
-        :first-time="firstEventStart"
-        :short-weekdays="false"
-        :event-ripple="false"
-        :event-height="60"
-        :event-margin-bottom="5"
-        :interval-count="intervalCount"
-        :interval-height="150"
-    />
+    <v-card>
+        <v-card-title>
+            <v-spacer />
+
+            <v-btn icon color="primary" @click="closeDialog">
+                <v-icon v-text="mdiClose" />
+            </v-btn>
+        </v-card-title>
+
+        <v-card-text>
+            <v-calendar
+                color="primary"
+                type="day"
+                :events="periods"
+                :first-time="firstEventStart"
+                :short-weekdays="false"
+                :event-ripple="false"
+                :event-height="70"
+                :event-margin-bottom="5"
+                :interval-count="intervalCount"
+                :interval-height="150"
+            />
+        </v-card-text>
+    </v-card>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "@vue/composition-api";
+import { computed, defineComponent, SetupContext } from "@vue/composition-api";
+import { mdiClose } from "@mdi/js";
 
 import { getTimetablePeriods } from "@/constructs/schedule";
 
@@ -46,7 +59,7 @@ export default defineComponent({
         },
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    setup(props: any) {
+    setup(props: any, { emit }: SetupContext) {
         const periods = getTimetablePeriods(
             props.daySchedule,
             props.periodNames,
@@ -83,7 +96,20 @@ export default defineComponent({
             }
         });
 
-        return { periods, firstEventStart, intervalCount };
+        const closeDialog = () => emit("close");
+
+        return {
+            // Timetable
+            periods,
+            firstEventStart,
+            intervalCount,
+
+            // Functions
+            closeDialog,
+
+            // Icons
+            mdiClose,
+        };
     },
 });
 </script>

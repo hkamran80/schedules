@@ -10,9 +10,10 @@
 - [x] Add Umami
     - [x] Globally
     - [x] Analytics notice
-- [x] Add update mechanism
-- [ ] Fix storage (switch to `loadFromStorage` globally)
-
+- [ ] Add update mechanism
+    - Currently just forces the update
+- [x] Fix storage (switch to `loadFromStorage` globally)
+- [ ] Timetable
 ### Version 3.1
 - [ ] Day override settings
     - [ ] Day override

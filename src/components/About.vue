@@ -10,6 +10,8 @@
             </v-btn>
         </v-card-title>
 
+        <v-card-subtitle v-text="version" />
+
         <v-card-text>
             <div>
                 <p>
@@ -63,7 +65,9 @@ import { defineComponent } from "@vue/composition-api";
 import { mdiClose } from "@mdi/js";
 
 export default defineComponent({
-    setup(_, { emit }) {
+    props: { version: { type: String, required: true, default: "x.x.x" } },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    setup(props: any, { emit }) {
         const closeDialog = () => emit("close");
 
         return {

@@ -85,7 +85,7 @@
             <analytics-notice @close="dialogs.analytics = false" />
         </v-dialog>
         <v-dialog v-model="dialogs.about" width="500" scrollable>
-            <about @close="dialogs.about = false" />
+            <about :version="currentVersion" @close="dialogs.about = false" />
         </v-dialog>
     </utds-layout>
 </template>

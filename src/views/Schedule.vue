@@ -25,6 +25,7 @@
                     color="primary"
                     title="Open Timetable"
                     aria-label="Open Timetable"
+                    @click="timetableDialog = true"
                 >
                     <v-icon v-text="mdiCalendarOutline" />
                 </v-btn>
@@ -73,6 +74,15 @@
                 @openNotificationsExport="notificationsExportDialog = true"
                 @openNotificationsImport="notificationsImportDialog = true"
                 @close="settingsDialog = false"
+            />
+        </v-dialog>
+
+        <v-dialog v-model="timetableDialog" width="750" scrollable>
+            <schedule-timetable
+                :daySchedule="daySchedule"
+                :periodNames="periodNames"
+                :color="color"
+                @close="timetableDialog = false"
             />
         </v-dialog>
 
@@ -143,7 +153,10 @@ import { UtdsLayout, UtdsHeader } from "utds-component-library";
 import { mdiConsoleLine, mdiCalendarOutline, mdiCogOutline } from "@mdi/js";
 import { useToast } from "vue-toastification/composition";
 
+import "utds-component-library/dist/utds-component-library.css";
+
 const ScheduleSettings = () => import("@/components/ScheduleSettings.vue");
+const ScheduleTimetable = () => import("@/components/ScheduleTimetable.vue");
 const PeriodNamesEdit = () => import("@/components/PeriodNamesEdit.vue");
 const PeriodNamesExport = () => import("@/components/PeriodNamesExport.vue");
 const PeriodNamesImport = () => import("@/components/PeriodNamesImport.vue");
@@ -197,6 +210,7 @@ export default defineComponent({
         UtdsLayout,
         UtdsHeader,
         ScheduleSettings,
+        ScheduleTimetable,
         PeriodNamesEdit,
         PeriodNamesExport,
         PeriodNamesImport,
@@ -243,6 +257,7 @@ export default defineComponent({
 
         // Dialogs
         const settingsDialog = ref(false);
+        const timetableDialog = ref(false);
         const {
             periodNamesEditDialog,
             periodNamesEditDialogForceRender,
@@ -512,8 +527,6 @@ export default defineComponent({
             prettyDateAndTime,
             overrideExpirationTime,
 
-            color,
-
             // Functions
             toggleDebugMode,
             updatePeriodNames,
@@ -521,6 +534,7 @@ export default defineComponent({
 
             // Dialogs
             settingsDialog,
+            timetableDialog,
 
             periodNamesEditDialog,
             periodNamesExportDialog,
@@ -538,6 +552,8 @@ export default defineComponent({
             schedule,
             periodNames,
             allowedNotifications,
+            daySchedule,
+            color,
 
             // Icons
             mdiConsoleLine,
