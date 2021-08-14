@@ -4,14 +4,14 @@
     "private": true,
     "scripts": {
         "serve": "vue-cli-service serve",
-        "build": "cp src/schedules.json public/schedules.json; vue-cli-service build --modern",
+        "build": "cp src/schedules.json public/schedules.json; vue-cli-service build --modern; ls dist | grep precache",
         "test:unit": "vue-cli-service test:unit",
         "lint": "vue-cli-service lint",
         "build:report": "vue-cli-service build --report"
     },
     "dependencies": {
-        "@sentry/tracing": "^6.10.0",
-        "@sentry/vue": "^6.10.0",
+        "@sentry/tracing": "^6.11.0",
+        "@sentry/vue": "^6.11.0",
         "@vue/composition-api": "^1.0.0-rc.13",
         "core-js": "^3.8.2",
         "register-service-worker": "^1.7.2",

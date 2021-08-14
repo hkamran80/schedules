@@ -54,10 +54,7 @@ module.exports = {
             swSrc: "src/service-worker.js",
             exclude: [
                 /\.map$/,
-                /img\/favicons\//,
                 /social_preview\.png/,
-                /favicon\.ico$/,
-                /^manifest.*\.js?$/,
                 /_redirects/,
                 /_headers/,
             ],

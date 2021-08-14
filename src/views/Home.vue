@@ -60,7 +60,7 @@
             </v-card-title>
         </v-card>
 
-        <v-card
+        <!-- <v-card
             title="Help Center"
             aria-label="Help Center"
             class="mx-auto schedule-card text-wrap--break"
@@ -70,7 +70,7 @@
             <v-card-title>
                 Help Center
             </v-card-title>
-        </v-card>
+        </v-card> -->
 
         <v-card
             title="Analytics notice"
