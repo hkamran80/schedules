@@ -49,5 +49,8 @@
     ],
     "2.3.1": [
         "Add the AUHSD First Week and the new AUHSD Standard schedules"
+    ],
+    "2.3.2": [
+        "Remove the AUHSD First Week schedule" 
     ]
 }
