@@ -2,6 +2,10 @@
     <utds-layout>
         <utds-header title="Welcome! Select a schedule to begin!" />
 
+        <v-alert type="error" color="#A80000" v-if="error">
+            {{ error }}
+        </v-alert>
+
         <v-card
             v-for="(schedule, id) in schedules"
             :key="id"
@@ -122,11 +126,17 @@ import {
     UtdsHeader,
     UtdsReleaseNotes,
 } from "utds-component-library";
-import { mdiPlus, mdiSchoolOutline, mdiTimerSand } from "@mdi/js";
+import {
+    mdiPlus,
+    mdiSchoolOutline,
+    mdiTimerSand,
+    mdiAlertOutline,
+} from "@mdi/js";
 import { version as currentVersion } from "../../package.json";
 import releaseNotes from "@/releaseNotes.json";
 
-// import { Nullable } from "@/structures/types";
+import { Nullable } from "@/structures/types";
+import { generateNotFoundMessage } from "@/constructs/strings";
 // import { HelpCenterTopic as HelpCenterTopicInterface } from "@/structures/helpcenter";
 
 const AnalyticsNotice = () => import("@/components/AnalyticsNotice.vue");
@@ -168,9 +178,13 @@ export default Vue.extend({
             //     id: null as Nullable<string>,
             //     metadata: null as Nullable<HelpCenterTopicInterface>,
             // },
+            error: (this.$route.query.notFound
+                ? generateNotFoundMessage(this.$route.query.notFound as string)
+                : null) as Nullable<string>,
             mdiPlus,
             mdiSchoolOutline,
             mdiTimerSand,
+            mdiAlertOutline,
         };
     },
     // methods: {

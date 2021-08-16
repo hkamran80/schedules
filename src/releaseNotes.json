@@ -76,7 +76,10 @@
             "Switch to the Clipboard API with the `execCommand` method as a fallback for the period name exporting",
             "Switch the Umami mixin to composables",
             "Switch the update mechanism mixin to composables",
-            "Add minimum and maximum values to the countdown time picker"
+            "Add minimum and maximum values to the countdown time picker",
+            "Update no JavaScript notice",
+            "Switch to `netlify.toml` from `_redirects` and `_headers`",
+            "Add some redirects to fix the `.map` and the precache manifests not being found"
         ]
     }
 }

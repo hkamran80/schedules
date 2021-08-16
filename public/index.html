@@ -222,49 +222,35 @@
         </style>
 
         <noscript>
-            <div id="container">
-                <div id="body">
-                    <h1>JavaScript</h1>
-                    <p>
-                        Schedules requires JavaScript to be enabled. Please
-                        enable it to continue. You can use
+            <link
+                href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css"
+                rel="stylesheet"
+            />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.js"></script>
+
+            <div
+                class="d-flex align-items-center justify-content-center"
+                style="height: 100vh"
+            >
+                <div class="card" style="width: 33%">
+                    <div class="card-body">
+                        <h5 class="card-title">JavaScript Notice</h5>
+                        <p class="card-text">
+                            Schedules requires JavaScript to be enabled. Please
+                            enable it to continue. Click the button below to
+                            learn how to enable JavaScript.
+                        </p>
                         <a
-                            href="https://support.google.com/adsense/answer/12654?hl=en"
-                            target="_blank"
-                            >this Google Support page</a
+                            class="btn btn-primary"
+                            href="https://go.unisontech.org/enable-js"
+                            title="Learn more about enabling JavaScript"
+                            aria-label="Learn more about enabling JavaScript"
                         >
-                        for instructions on how to enable JavaScript.
-                    </p>
-                    <p>
-                        We apologize for any inconveniences this may have
-                        caused.
-                    </p>
-                    <p>Thank you for using Schedules.</p>
+                            Learn How
+                        </a>
+                    </div>
                 </div>
             </div>
-
-            <style>
-                body,
-                html {
-                    height: 100%;
-                    margin: 0;
-                }
-
-                #container {
-                    height: 100%;
-                    background-position: center;
-                    background-size: cover;
-                    position: relative;
-                    font-family: Lato, sans-serif;
-                    font-size: 25px;
-                }
-                #body {
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                }
-            </style>
         </noscript>
 
         <div id="app" />

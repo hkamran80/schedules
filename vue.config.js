@@ -13,7 +13,8 @@ const title =
         process.env.NODE_ENV === "development"
             ? "http://127.0.0.1:8080"
             : process.env.VUE_APP_EDGE_MODE === "true"
-            ? "https://beta-schedules.unisontech.org"
+            ? // TODO: Reset to beta-schedules before 3.0 beta deployment
+              "https://edge-schedules.unisontech.org"
             : "https://schedules.unisontech.org",
     scheduleKeys = Object.keys(schedules),
     scheduleValues = Object.values(schedules);
