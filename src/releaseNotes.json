@@ -52,5 +52,8 @@
     ],
     "2.3.2": [
         "Remove the AUHSD First Week schedule" 
+    ],
+    "2.3.3": [
+        "Fix the AUHSD Standard schedule's Wednesday and Friday start times"
     ]
 }
