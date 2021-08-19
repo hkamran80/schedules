@@ -98,7 +98,7 @@
             "Add help center ([issue #121](https://github.com/hkamran80/schedules/issues/121))",
             "Change countdown button color to Schedules' primary light variant",
             "Prevent words breaking in the middle in dialog titles",
-            "Expanded click/tap area for help center topics"
+            "Expand click/tap area for help center topics"
         ]
     }
 }
