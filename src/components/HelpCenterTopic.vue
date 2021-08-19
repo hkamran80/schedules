@@ -5,11 +5,19 @@
 
             <v-spacer />
 
+            <v-btn
+                icon
+                color="primary"
+                target="_blank"
+                :href="metadata.videoLink"
+                v-if="metadata.videoLink"
+            >
+                <v-icon v-text="mdiYoutube" />
+            </v-btn>
             <v-btn icon color="primary" @click="closeDialog">
                 <v-icon v-text="mdiClose" />
             </v-btn>
         </v-card-title>
-        <v-card-subtitle v-text="metadata.description" />
 
         <v-card-text class="my-3">
             <v-progress-linear
@@ -19,7 +27,11 @@
                 v-if="!markdown && !error"
             />
 
-            <div v-else-if="markdown && !error" v-html="markdown" />
+            <div
+                id="markdown-content"
+                v-else-if="markdown && !error"
+                v-html="markdown"
+            />
             <span v-else-if="!markdown && error" v-text="error" />
             <span v-else>
                 An unknown error occurred. Please try again.
@@ -34,6 +46,7 @@ import { mdiClose, mdiYoutube } from "@mdi/js";
 import { HelpCenterTopic } from "@/structures/helpcenter";
 import { UtdsStringHelpers } from "utds-component-library";
 import { Nullable } from "@/structures/types";
+import marked from "marked";
 
 export default defineComponent({
     props: {
@@ -54,7 +67,22 @@ export default defineComponent({
 
         import(`raw-loader!@/help-center/${props.id}.md`)
             .then((data) => {
-                markdown.value = UtdsStringHelpers.renderMarkdown(data.default);
+                let count = 0;
+                markdown.value = marked(
+                    UtdsStringHelpers.sanitizeHTML(data.default)
+                )
+                    .replaceAll(
+                        UtdsStringHelpers.linkElementRegex,
+                        `<a$1 target="_blank" rel="noopener noreferrer" title="$2" aria-label="$2">$2</a>`
+                    )
+                    .replaceAll("<h3", (x: string) => {
+                        if (count === 0) {
+                            count++;
+                            return x;
+                        } else {
+                            return "<br /><h3";
+                        }
+                    });
             })
             .catch((loaderError) => {
                 error.value = loaderError;
@@ -75,3 +103,10 @@ export default defineComponent({
     },
 });
 </script>
+
+<style scoped>
+#markdown-content h3 {
+    display: block;
+    margin-top: 5px;
+}
+</style>

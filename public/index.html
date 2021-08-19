@@ -143,9 +143,10 @@
 
         <!-- Preconnect, prefetch, and preload -->
         <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link rel="dns-prefetch" href="https://o373497.ingest.sentry.io" />
 
-        <% if (htmlWebpackPlugin.options.developmentMode) { %>
+        <% if (!htmlWebpackPlugin.options.developmentMode) { %>
         <link
             rel="preload"
             href="https://umami.unisontech.org/umami.js"

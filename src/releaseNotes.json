@@ -79,7 +79,9 @@
             "Add minimum and maximum values to the countdown time picker",
             "Update no JavaScript notice",
             "Switch to `netlify.toml` from `_redirects` and `_headers`",
-            "Add some redirects to fix the `.map` and the precache manifests not being found"
+            "Add some redirects to fix the `.map` and the precache manifests not being found",
+            "Preconnect to Sentry",
+            "Add help center ([issue #121](https://github.com/hkamran80/schedules/issues/121))"
         ]
     }
 }

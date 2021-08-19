@@ -64,7 +64,7 @@
             </v-card-title>
         </v-card>
 
-        <!-- <v-card
+        <v-card
             title="Help Center"
             aria-label="Help Center"
             class="mx-auto schedule-card text-wrap--break"
@@ -74,7 +74,7 @@
             <v-card-title>
                 Help Center
             </v-card-title>
-        </v-card> -->
+        </v-card>
 
         <v-card
             title="Analytics notice"
@@ -103,7 +103,7 @@
         <v-dialog v-model="dialogs.about" width="500" scrollable>
             <about :version="currentVersion" @close="dialogs.about = false" />
         </v-dialog>
-        <!-- <v-dialog v-model="dialogs.help" width="500" scrollable>
+        <v-dialog v-model="dialogs.help" width="500" scrollable>
             <help-center
                 @openHelpTopic="openHelpTopic"
                 @close="dialogs.help = false"
@@ -115,7 +115,7 @@
                 :metadata="helpTopic.metadata"
                 @close="dialogs.helpTopic = false"
             />
-        </v-dialog> -->
+        </v-dialog>
     </utds-layout>
 </template>
 
@@ -137,12 +137,12 @@ import releaseNotes from "@/releaseNotes.json";
 
 import { Nullable } from "@/structures/types";
 import { generateNotFoundMessage } from "@/constructs/strings";
-// import { HelpCenterTopic as HelpCenterTopicInterface } from "@/structures/helpcenter";
+import { HelpCenterTopic as HelpCenterTopicInterface } from "@/structures/helpcenter";
 
 const AnalyticsNotice = () => import("@/components/AnalyticsNotice.vue");
 const About = () => import("@/components/About.vue");
-// const HelpCenter = () => import("@/components/HelpCenter.vue");
-// const HelpCenterTopic = () => import("@/components/HelpCenterTopic.vue");
+const HelpCenter = () => import("@/components/HelpCenter.vue");
+const HelpCenterTopic = () => import("@/components/HelpCenterTopic.vue");
 
 export default Vue.extend({
     props: {
@@ -160,8 +160,8 @@ export default Vue.extend({
         UtdsReleaseNotes,
         AnalyticsNotice,
         About,
-        // HelpCenter,
-        // HelpCenterTopic,
+        HelpCenter,
+        HelpCenterTopic,
     },
     data() {
         return {
@@ -171,13 +171,13 @@ export default Vue.extend({
                 releaseNotes: false,
                 analytics: false,
                 about: false,
-                // help: false,
-                // helpTopic: false,
+                help: false,
+                helpTopic: false,
             },
-            // helpTopic: {
-            //     id: null as Nullable<string>,
-            //     metadata: null as Nullable<HelpCenterTopicInterface>,
-            // },
+            helpTopic: {
+                id: null as Nullable<string>,
+                metadata: null as Nullable<HelpCenterTopicInterface>,
+            },
             error: (this.$route.query.notFound
                 ? generateNotFoundMessage(this.$route.query.notFound as string)
                 : null) as Nullable<string>,
@@ -187,13 +187,13 @@ export default Vue.extend({
             mdiAlertOutline,
         };
     },
-    // methods: {
-    //     openHelpTopic(id: string, metadata: HelpCenterTopicInterface): void {
-    //         this.helpTopic.id = id;
-    //         this.helpTopic.metadata = metadata;
-    //         this.dialogs.helpTopic = true;
-    //     },
-    // },
+    methods: {
+        openHelpTopic(id: string, metadata: HelpCenterTopicInterface): void {
+            this.helpTopic.id = id;
+            this.helpTopic.metadata = metadata;
+            this.dialogs.helpTopic = true;
+        },
+    },
 });
 </script>
 
