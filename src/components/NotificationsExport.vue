@@ -1,6 +1,6 @@
 <template>
     <v-card>
-        <v-card-title>
+        <v-card-title class="text-wrap--break">
             Export Notifications
 
             <v-spacer />

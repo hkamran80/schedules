@@ -16,8 +16,9 @@
                 outlined
                 v-for="(metadata, id) of helpCenterTopics"
                 :key="id"
+                @click="openHelpTopic(id, metadata)"
             >
-                <v-card-title>
+                <v-card-title class="text-wrap--break">
                     {{ metadata.name }}
 
                     <v-spacer />

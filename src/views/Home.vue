@@ -27,7 +27,7 @@
             to="/schedule/countdown"
             title="Countdown"
             aria-label="Countdown"
-            color="primary"
+            color="#C2185B"
             class="mx-auto schedule-card text-wrap--break"
             dark
             outlined

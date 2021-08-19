@@ -56,8 +56,24 @@
             "Move notification settings to separate dialogs"
         ]
     },
-    "3.0.0 (Edge-6)": {
-        "releaseDate": "2021-08-13",
+    "2.3.1": {
+        "releaseDate": "2021-08-04",
+        "changelog": [
+            "Add the AUHSD First Week and the new AUHSD Standard schedules"
+        ]
+    },
+    "2.3.2": {
+        "releaseDate": "2021-08-16",
+        "changelog": ["Remove the AUHSD First Week schedule"]
+    },
+    "2.3.3": {
+        "releaseDate": "2021-08-18",
+        "changelog": [
+            "Fix the AUHSD Standard schedule's Wednesday and Friday start times"
+        ]
+    },
+    "3.0.0 (Edge-8)": {
+        "releaseDate": "2021-08-18",
         "changelog": [
             "Change Umami domain to unisontech.org",
             "Add source maps with Sentry for enhanced error logging",
@@ -71,8 +87,6 @@
             "Switch the console link about service workers to a UT short link",
             "Add an about page ([issue #115](https://github.com/hkamran80/schedules/issues/115))",
             "Change \"Privacy Notice\" to \"Analytics Notice\"",
-            "Add the AUHSD First Week schedule",
-            "Update the AUHSD Standard schedule",
             "Switch to the Clipboard API with the `execCommand` method as a fallback for the period name exporting",
             "Switch the Umami mixin to composables",
             "Switch the update mechanism mixin to composables",
@@ -80,8 +94,11 @@
             "Update no JavaScript notice",
             "Switch to `netlify.toml` from `_redirects` and `_headers`",
             "Add some redirects to fix the `.map` and the precache manifests not being found",
-            "Preconnect to Sentry",
-            "Add help center ([issue #121](https://github.com/hkamran80/schedules/issues/121))"
+            "Add preconnect to Sentry",
+            "Add help center ([issue #121](https://github.com/hkamran80/schedules/issues/121))",
+            "Change countdown button color to Schedules' primary light variant",
+            "Prevent words breaking in the middle in dialog titles",
+            "Expanded click/tap area for help center topics"
         ]
     }
 }

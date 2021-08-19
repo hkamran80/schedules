@@ -1,6 +1,6 @@
 <template>
     <v-card class="mx-auto">
-        <v-card-title>
+        <v-card-title class="text-wrap--break">
             Settings
 
             <v-spacer />
