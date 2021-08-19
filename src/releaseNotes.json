@@ -72,7 +72,7 @@
             "Fix the AUHSD Standard schedule's Wednesday and Friday start times"
         ]
     },
-    "3.0.0 (Edge-8)": {
+    "3.0.0 (Edge-9)": {
         "releaseDate": "2021-08-18",
         "changelog": [
             "Change Umami domain to unisontech.org",
@@ -98,7 +98,8 @@
             "Add help center ([issue #121](https://github.com/hkamran80/schedules/issues/121))",
             "Change countdown button color to Schedules' primary light variant",
             "Prevent words breaking in the middle in dialog titles",
-            "Expand click/tap area for help center topics"
+            "Expand click/tap area for help center topics",
+            "Add the `Adding a Topic` help center topic"
         ]
     }
 }

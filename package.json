@@ -1,11 +1,12 @@
 {
     "name": "schedules",
-    "version": "3.0.0-edge.8",
+    "version": "3.0.0-edge.9",
     "private": true,
     "scripts": {
         "serve": "vue-cli-service serve",
-        "build": "cp src/schedules.json public/schedules.json; vue-cli-service build --modern; ls dist | grep precache; cat dist/service-worker.js | head -4",
+        "build": "cp src/schedules.json public/schedules.json; vue-cli-service build --modern",
         "lint": "vue-cli-service lint",
+        "build:validate-sw": "npm run build; ls dist | grep precache; cat dist/service-worker.js | head -4",
         "build:report": "vue-cli-service build --report"
     },
     "dependencies": {

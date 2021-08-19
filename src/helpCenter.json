@@ -3,5 +3,10 @@
         "name": "Installing Schedules",
         "description": "How to install Schedules to your device",
         "videoLink": null
+    },
+    "adding-a-topic": {
+        "name": "Adding a Help Topic",
+        "description": "How to create a help topic for Schedules",
+        "videoLink": null
     }
 }
