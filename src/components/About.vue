@@ -56,6 +56,26 @@
                     </li>
                 </ul>
             </div>
+
+            <v-divider class="my-5" />
+
+            <div>
+                <h4 class="mb-2">Legal</h4>
+                <p>
+                    This is a
+                    <a href="https://unisontech.org" target="_blank"
+                        >UNISON Technologies</a
+                    >
+                    project and is under the
+                    <a href="https://unisontech.org/terms" target="_blank"
+                        >UT Terms and Conditions</a
+                    >, as well as the
+                    <a href="https://unisontech.org/privacy" target="_blank"
+                        >UT Privacy Policy</a
+                    >. By using this service, you agree to the Terms and
+                    Conditions and the Privacy Policy.
+                </p>
+            </div>
         </v-card-text>
     </v-card>
 </template>

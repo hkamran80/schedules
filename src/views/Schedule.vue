@@ -154,8 +154,6 @@ import { UtdsLayout, UtdsHeader } from "utds-component-library";
 import { mdiConsoleLine, mdiCalendarOutline, mdiCogOutline } from "@mdi/js";
 import { useToast } from "vue-toastification/composition";
 
-import "utds-component-library/dist/utds-component-library.css";
-
 const ScheduleSettings = () => import("@/components/ScheduleSettings.vue");
 const ScheduleTimetable = () => import("@/components/ScheduleTimetable.vue");
 const PeriodNamesEdit = () => import("@/components/PeriodNamesEdit.vue");
@@ -423,13 +421,12 @@ export default defineComponent({
 
         const main = () => {
             getNewTimes();
+            loadDayOverride();
 
             currentPeriod.value.period = getCurrentPeriod(
                 daySchedule.value,
                 dayTime.value.splitTime || "13-05-00"
             );
-
-            loadDayOverride();
 
             if (currentPeriod.value.period) {
                 currentPeriod.value.name = checkForCustomPeriodName(
@@ -508,16 +505,16 @@ export default defineComponent({
             mainInterval.value = setInterval(main, 1000);
 
             if (notificationsSupported()) {
-                if (getPermission() !== "granted") {
-                    toast.warning(
-                        "To receive notifications, enable notifications for the site"
-                    );
-                } else if (getPermission() === "default") {
+                if (getPermission() === "default") {
                     toast.warning(
                         'To receive notifications, click "Allow" on the notification permission pop-up'
                     );
 
                     requestPermission();
+                } else if (getPermission() !== "granted") {
+                    toast.warning(
+                        "To receive notifications, enable notifications for the site"
+                    );
                 }
             }
         });
@@ -571,6 +568,8 @@ export default defineComponent({
 </script>
 
 <style scoped>
+@import "~utds-component-library/dist/utds-component-library.css";
+
 div.v-card {
     padding: 0 5px;
     margin: 10px 0;

@@ -59,6 +59,6 @@ export function hourConversion(
 
         return `${hours}:${padNumber(minutes)} ${hourEnding}`;
     } else {
-        return `${hours}:${padNumber(minutes)}`;
+        return `${padNumber(hours)}:${padNumber(minutes)}`;
     }
 }
