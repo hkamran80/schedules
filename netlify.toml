@@ -36,12 +36,6 @@ to = "/js/:splat.js.map"
 status = 200
 
 [[redirects]]
-from = "/cors/*"
-to = ":splat"
-status = 200
-force = true
-
-[[redirects]]
 from = "/*"
 to = "/index.html"
 status = 200
@@ -51,4 +45,4 @@ status = 200
 package = "@sentry/netlify-build-plugin"
 
 [plugins.inputs]
-sentryRelease = "3.0.0-edge.9"
+sentryRelease = "3.0.0-edge.10"

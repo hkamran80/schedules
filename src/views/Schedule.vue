@@ -60,6 +60,7 @@
 
         <div v-if="debugMode">
             <v-divider />
+
             <v-btn text block>
                 Debug Function
             </v-btn>
@@ -509,7 +510,7 @@ export default defineComponent({
             if (notificationsSupported()) {
                 if (getPermission() !== "granted") {
                     toast.warning(
-                        'To receive notifications, click "Allow" on the notification permission pop-up'
+                        "To receive notifications, enable notifications for the site"
                     );
                 } else if (getPermission() === "default") {
                     toast.warning(

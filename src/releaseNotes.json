@@ -99,7 +99,9 @@
             "Change countdown button color to Schedules' primary light variant",
             "Prevent words breaking in the middle in dialog titles",
             "Expand click/tap area for help center topics",
-            "Add the `Adding a Topic` help center topic"
+            "Add the `Adding a Topic` help center topic",
+            "Remove `window.PushManager` from the notifications supported check",
+            "Remove the CORS bypass endpoint"
         ]
     }
 }

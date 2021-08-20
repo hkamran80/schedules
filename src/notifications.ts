@@ -23,11 +23,7 @@ export const defaultEvents = {
 };
 
 export function notificationsSupported(): boolean {
-    return (
-        "Notification" in window &&
-        "serviceWorker" in navigator &&
-        "PushManager" in window
-    );
+    return "Notification" in window && "serviceWorker" in navigator;
 }
 
 export function getPermission(): NotificationPermission {
