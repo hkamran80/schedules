@@ -7,7 +7,7 @@ import {
 import { ScheduleDays, ScheduleTimes } from "@/structures/schedule";
 import { padNumber } from "@/constructs/calculations";
 import { loadFromStorage, saveToStorage } from "@/constructs/storage";
-import { StorageKeyType } from "@/structures/storage";
+import { StorageKeys } from "@/structures/storage";
 
 export function getCurrentPeriod(
     schedule: ScheduleTimes,
@@ -126,7 +126,7 @@ export function loadPeriodNames(
     if (Object.keys(currentPeriodNames).length === 0) {
         const storageSchedule = loadFromStorage(
             scheduleId,
-            StorageKeyType.PERIOD_NAMES
+            StorageKeys.PERIOD_NAMES
         );
         let periodNames: PeriodNames;
 
@@ -152,7 +152,7 @@ export function savePeriodNames(
 ): void {
     saveToStorage(
         scheduleId,
-        StorageKeyType.PERIOD_NAMES,
+        StorageKeys.PERIOD_NAMES,
         JSON.stringify(periodNames)
     );
 }

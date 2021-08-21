@@ -37,10 +37,12 @@ import NavigationBar from "@/components/NavigationBar.vue";
 
 import { provideToast } from "vue-toastification/composition";
 import { POSITION } from "vue-toastification";
-import "vue-toastification/dist/index.css";
 
 import schedulesJson from "@/schedules.json";
 import { Schedule } from "@/structures/schedule";
+import { OldStorageItems } from "@/structures/storage";
+
+import { checkExistence, convertAnalytics } from "@/constructs/update";
 
 import { installUmami, umamiInstallStatus } from "@/composables/umami";
 import { loadUpdateMechanism } from "@/composables/update";
@@ -94,6 +96,12 @@ export default defineComponent({
 
         onMounted(() => {
             // Umami
+
+            const oldKeysCheck = checkExistence(null);
+            if (oldKeysCheck.indexOf(OldStorageItems.ANALYTICS_STATUS) !== -1) {
+                convertAnalytics();
+            }
+
             const { allowed } = umamiInstallStatus();
 
             if (allowed.value === true) {
@@ -110,6 +118,9 @@ export default defineComponent({
 </script>
 
 <style>
+@import "~vue-toastification/dist/index.css";
+@import "~utds-component-library/dist/utds-component-library.css";
+
 #app {
     font-family: Lato, sans-serif;
     -webkit-font-smoothing: antialiased;

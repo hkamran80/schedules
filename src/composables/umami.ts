@@ -1,20 +1,20 @@
 import { ComponentInstance, ref } from "@vue/composition-api";
 import { loadFromStorage, saveToStorage } from "@/constructs/storage";
-import { StorageKeyType } from "@/structures/storage";
+import { StorageKeys } from "@/structures/storage";
 
 function checkUmamiInstalled(): boolean {
     return document.getElementById("umami-script") ? true : false;
 }
 
 function checkAllowedStatus(): boolean {
-    if (loadFromStorage("", StorageKeyType.ANALYTICS_STATUS)) {
-        if (loadFromStorage("", StorageKeyType.ANALYTICS_STATUS) === "true") {
+    if (loadFromStorage("", StorageKeys.ANALYTICS_STATUS)) {
+        if (loadFromStorage("", StorageKeys.ANALYTICS_STATUS) === "true") {
             return true;
         } else {
             return false;
         }
     } else {
-        saveToStorage("", StorageKeyType.ANALYTICS_STATUS, "true");
+        saveToStorage("", StorageKeys.ANALYTICS_STATUS, "true");
         return true;
     }
 }
@@ -53,7 +53,7 @@ export function uninstallUmami(root: ComponentInstance) {
 
         if (umamiScript) {
             umamiScript.remove();
-            saveToStorage("", StorageKeyType.ANALYTICS_STATUS, "false");
+            saveToStorage("", StorageKeys.ANALYTICS_STATUS, "false");
 
             console.log("Anonymous analytics deactivated");
         } else {
@@ -68,20 +68,20 @@ export function umamiInstallStatus() {
     const allowed = ref(checkAllowedStatus());
 
     const setStatus = ({ root }: { root: ComponentInstance }) => {
-        if (loadFromStorage("", StorageKeyType.ANALYTICS_STATUS) === null) {
-            saveToStorage("", StorageKeyType.ANALYTICS_STATUS, "true");
+        if (loadFromStorage("", StorageKeys.ANALYTICS_STATUS) === null) {
+            saveToStorage("", StorageKeys.ANALYTICS_STATUS, "true");
             allowed.value = true;
             installUmami(root);
         } else {
             const inverseStorageState =
-                loadFromStorage("", StorageKeyType.ANALYTICS_STATUS) === "true"
+                loadFromStorage("", StorageKeys.ANALYTICS_STATUS) === "true"
                     ? false
                     : true;
 
             allowed.value = inverseStorageState;
             saveToStorage(
                 "",
-                StorageKeyType.ANALYTICS_STATUS,
+                StorageKeys.ANALYTICS_STATUS,
                 inverseStorageState.toString()
             );
         }

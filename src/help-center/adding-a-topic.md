@@ -16,7 +16,6 @@ You must be on a computer to follow these instructions. You cannot follow these 
 8. Go into the main `src` folder and click on `helpCenter.json` and click the pencil icon (edit)
 9. At the bottom of the file, before the last curly brace (`}`), add the following:
     ```javascript
-    ,
     "[topic ID]": {
         "name": "[topic name]",
         "description": "[topic description]",
@@ -25,7 +24,7 @@ You must be on a computer to follow these instructions. You cannot follow these 
     ```
 
     - Replace `[topic ID]` with the ID you created in step 4, and come up with a name and description for your topic
-    - Make sure to leave the comma there! Otherwise, Schedules will throw an error.
+    - Make sure to put a comma and the end of the previous curly brace
 10. Commit your changes at the bottom
 11. Click on the `Pull requests` tab
 12. Click `New pull request`

@@ -1,10 +1,10 @@
-import { StorageKeyType } from "@/structures/storage";
+import { StorageKeys } from "@/structures/storage";
 
-function generateStorageKey(scheduleId: string, key: StorageKeyType): string {
+function generateStorageKey(scheduleId: string, key: StorageKeys): string {
     if (
-        key === StorageKeyType.TWENTY_FOUR_HOUR_STATUS ||
-        key === StorageKeyType.ANALYTICS_STATUS ||
-        key === StorageKeyType.THEME_STATUS
+        key === StorageKeys.TWENTY_FOUR_HOUR_STATUS ||
+        key === StorageKeys.ANALYTICS_STATUS ||
+        key === StorageKeys.THEME_STATUS
     ) {
         return key;
     } else {
@@ -14,7 +14,7 @@ function generateStorageKey(scheduleId: string, key: StorageKeyType): string {
 
 export function saveToStorage(
     scheduleId: string,
-    key: StorageKeyType,
+    key: StorageKeys,
     value: string
 ): void {
     localStorage.setItem(generateStorageKey(scheduleId, key), value);
@@ -22,14 +22,14 @@ export function saveToStorage(
 
 export function loadFromStorage(
     scheduleId: string,
-    key: StorageKeyType
+    key: StorageKeys
 ): string | null {
     return localStorage.getItem(generateStorageKey(scheduleId, key));
 }
 
 export function deleteFromStorage(
     scheduleId: string,
-    key: StorageKeyType
+    key: StorageKeys
 ): void {
     localStorage.removeItem(generateStorageKey(scheduleId, key));
 }

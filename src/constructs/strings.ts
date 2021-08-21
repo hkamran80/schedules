@@ -13,7 +13,7 @@ export function splice(
 }
 
 export function generateNotFoundMessage(queryParameter: string): string {
-    if (queryParameter.indexOf("/schedule/") >= -1) {
+    if (queryParameter.indexOf("/schedule/") !== -1) {
         return `The schedule with the ID "${queryParameter.replace(
             "/schedule/",
             ""

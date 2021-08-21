@@ -8,13 +8,21 @@
             <v-btn
                 icon
                 color="primary"
+                title="YouTube link to topic"
+                aria-label="YouTube link to topic"
                 target="_blank"
                 :href="metadata.videoLink"
                 v-if="metadata.videoLink"
             >
                 <v-icon v-text="mdiYoutube" />
             </v-btn>
-            <v-btn icon color="primary" @click="closeDialog">
+            <v-btn
+                icon
+                color="primary"
+                title="Close dialog"
+                aria-label="Close dialog"
+                @click="closeDialog"
+            >
                 <v-icon v-text="mdiClose" />
             </v-btn>
         </v-card-title>
@@ -29,6 +37,7 @@
 
             <div
                 id="markdown-content"
+                class="text-wrap--break"
                 v-else-if="markdown && !error"
                 v-html="markdown"
             />
@@ -55,7 +64,11 @@ export default defineComponent({
             type: Object as () => HelpCenterTopic,
             required: true,
             default: function() {
-                return { name: "", description: "", videoLink: null };
+                return {
+                    name: "Help Center Demo",
+                    description: "This is a demo for the help center",
+                    videoLink: null,
+                };
             },
         },
     },
@@ -69,7 +82,7 @@ export default defineComponent({
             .then((data) => {
                 let count = 0;
                 markdown.value = marked(
-                    UtdsStringHelpers.sanitizeHTML(data.default)
+                    data.default.replace(/</g, "&lt;").replace(/>/g, "&gt;")
                 )
                     .replaceAll(
                         UtdsStringHelpers.linkElementRegex,

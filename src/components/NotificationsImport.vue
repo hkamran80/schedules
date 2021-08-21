@@ -16,7 +16,13 @@
             >
                 <v-icon v-text="mdiCalendarImport" />
             </v-btn>
-            <v-btn icon color="primary" @click="closeDialog">
+            <v-btn
+                icon
+                color="primary"
+                title="Close dialog"
+                aria-label="Close dialog"
+                @click="closeDialog"
+            >
                 <v-icon v-text="mdiClose" />
             </v-btn>
         </v-card-title>

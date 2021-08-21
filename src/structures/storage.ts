@@ -1,10 +1,20 @@
-export enum StorageKeyType {
+export enum StorageKeys {
     PERIOD_NAMES = "periodNames",
     DAY_OVERRIDE = "dayOverride",
     ALLOWED_NOTIFICATIONS = "allowedNotifications",
     TWENTY_FOUR_HOUR_STATUS = "twentyFourHourStatus",
     ANALYTICS_STATUS = "analyticsStatus",
     THEME_STATUS = "darkTheme",
+}
+
+export enum OldStorageKeys {
+    ANALYTICS_STATUS = "umamiTracking",
+}
+
+export enum OldStorageItems {
+    PERIOD_NAMES,
+    ALLOWED_NOTIFICATIONS,
+    ANALYTICS_STATUS,
 }
 
 /*

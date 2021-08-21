@@ -72,7 +72,7 @@
             "Fix the AUHSD Standard schedule's Wednesday and Friday start times"
         ]
     },
-    "3.0.0 (Edge-9)": {
+    "3.0.0 (Edge-11)": {
         "releaseDate": "2021-08-18",
         "changelog": [
             "Change Umami domain to unisontech.org",
@@ -101,7 +101,12 @@
             "Expand click/tap area for help center topics",
             "Add the `Adding a Topic` help center topic",
             "Remove `window.PushManager` from the notifications supported check",
-            "Remove the CORS bypass endpoint"
+            "Remove the CORS bypass endpoint",
+            "Add unit tests",
+            "Fix help center spacing",
+            "Fix help center glitches",
+            "Add conversion code (for Schedules 2 to Schedules 3)",
+            "Add legal section to the about dialog"
         ]
     }
 }

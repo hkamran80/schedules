@@ -5,7 +5,7 @@ import {
     RootKeyMatch,
 } from "@/structures/notifications";
 import { ScheduleDays } from "@/structures/schedule";
-import { StorageKeyType } from "@/structures/storage";
+import { StorageKeys } from "@/structures/storage";
 import { loadFromStorage, saveToStorage } from "@/constructs/storage";
 import { showNotification, defaultEvents } from "@/notifications";
 
@@ -85,7 +85,7 @@ export function loadAllowedNotifications(
 ): AllowedNotifications {
     const storageAllowedNotifications = loadFromStorage(
         scheduleId,
-        StorageKeyType.ALLOWED_NOTIFICATIONS
+        StorageKeys.ALLOWED_NOTIFICATIONS
     );
     let allowedNotifications = {
         intervals: {},
@@ -140,7 +140,7 @@ export function saveAllowedNotifications(
 ): void {
     saveToStorage(
         scheduleId,
-        StorageKeyType.ALLOWED_NOTIFICATIONS,
+        StorageKeys.ALLOWED_NOTIFICATIONS,
         JSON.stringify(notifications)
     );
 }
@@ -150,7 +150,7 @@ export function loadBasicAllowedNotifications(
 ): BasicAllowedNotifications {
     const storageAllowedNotifications = loadFromStorage(
         scheduleId,
-        StorageKeyType.ALLOWED_NOTIFICATIONS
+        StorageKeys.ALLOWED_NOTIFICATIONS
     );
     let allowedNotifications = {
         intervals: {},

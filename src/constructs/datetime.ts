@@ -12,7 +12,7 @@ import {
     loadFromStorage,
     saveToStorage,
 } from "@/constructs/storage";
-import { StorageKeyType } from "@/structures/storage";
+import { StorageKeys } from "@/structures/storage";
 import { getValueFromObjectSearch } from "./objects";
 
 export function getShortDay(): string {
@@ -93,7 +93,7 @@ export function setDayOverride(
             if (Number(currentTime) <= Number(time.replace(":", ""))) {
                 saveToStorage(
                     scheduleId,
-                    StorageKeyType.DAY_OVERRIDE,
+                    StorageKeys.DAY_OVERRIDE,
                     JSON.stringify({
                         day: shortDayCode,
                         expirationDate: getISODate(),
@@ -108,7 +108,7 @@ export function setDayOverride(
             return DayOverrideError.ELEMENT_ERROR;
         }
     } else {
-        deleteFromStorage(scheduleId, StorageKeyType.DAY_OVERRIDE);
+        deleteFromStorage(scheduleId, StorageKeys.DAY_OVERRIDE);
         return true;
     }
 }
@@ -120,7 +120,7 @@ export function getDayOverride(
 ): string | DayOverrideError {
     const storageOverrideStatus = loadFromStorage(
         scheduleId,
-        StorageKeyType.DAY_OVERRIDE
+        StorageKeys.DAY_OVERRIDE
     );
     if (storageOverrideStatus && currentOverrideStatus === null) {
         const overrideData = JSON.parse(storageOverrideStatus);
@@ -131,7 +131,7 @@ export function getDayOverride(
         ) {
             return overrideData.day;
         } else {
-            deleteFromStorage(scheduleId, StorageKeyType.DAY_OVERRIDE);
+            deleteFromStorage(scheduleId, StorageKeys.DAY_OVERRIDE);
             return DayOverrideError.INVALID_DATA_ERROR;
         }
     } else {
@@ -140,7 +140,7 @@ export function getDayOverride(
 }
 
 export function getTwentyFourHourStatus(): boolean {
-    const state = loadFromStorage("", StorageKeyType.TWENTY_FOUR_HOUR_STATUS);
+    const state = loadFromStorage("", StorageKeys.TWENTY_FOUR_HOUR_STATUS);
 
     if (state && state === "true") {
         return true;
@@ -152,7 +152,7 @@ export function getTwentyFourHourStatus(): boolean {
 export function setTwentyFourHourStatus(newState: boolean): void {
     saveToStorage(
         "",
-        StorageKeyType.TWENTY_FOUR_HOUR_STATUS,
+        StorageKeys.TWENTY_FOUR_HOUR_STATUS,
         newState.toString()
     );
 }

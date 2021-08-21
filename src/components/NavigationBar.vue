@@ -19,8 +19,6 @@ import {
 } from "utds-component-library";
 import { mdiThemeLightDark, mdiCommentMultipleOutline } from "@mdi/js";
 
-import "utds-component-library/dist/utds-component-library.css";
-
 export default {
     name: "NavigationBar",
     components: { UtdsNavigationBar },

@@ -166,15 +166,22 @@ const NotificationsImport = () =>
     import("@/components/NotificationsImport.vue");
 
 import { Schedule } from "@/structures/schedule";
-import { Period, PeriodNames } from "@/structures/periods";
+import { Period, PeriodNames, PeriodNamesError } from "@/structures/periods";
 import { Nullable } from "@/structures/types";
 import {
     AllowedNotifications,
     NotificationContent,
     NotificationIntervals,
+    NotificationSettingsError,
 } from "@/structures/notifications";
 import { HourConversionType } from "@/structures/calculations";
+import { OldStorageItems } from "@/structures/storage";
 
+import {
+    checkExistence,
+    convertPeriodNames,
+    convertAllowedNotifications,
+} from "@/constructs/update";
 import { getDayOverride } from "@/constructs/datetime";
 import { getValueFromObjectSearch } from "@/constructs/objects";
 import {
@@ -189,8 +196,8 @@ import {
 } from "@/constructs/calculations";
 import { loadAllowedNotifications, notify } from "@/constructs/notifications";
 import {
-    getPermission,
     notificationsSupported,
+    getPermission,
     requestPermission,
 } from "@/notifications";
 
@@ -237,6 +244,8 @@ export default defineComponent({
             scheduleId,
             props.schedules
         );
+
+        const oldKeysCheck = checkExistence(scheduleId);
 
         // Period-specific
         const currentPeriod = ref({
@@ -358,6 +367,38 @@ export default defineComponent({
             allowedNotifications.value = newAllowedNotifications;
             if (rerender) {
                 notificationsEditDialogForceRender.value += 1;
+            }
+        };
+
+        const conversion = (existences: OldStorageItems[]) => {
+            if (existences.indexOf(OldStorageItems.PERIOD_NAMES)) {
+                if (convertPeriodNames(scheduleId) !== null) {
+                    if (
+                        (convertPeriodNames(scheduleId) as
+                            | PeriodNames
+                            | PeriodNamesError).constructor === Object
+                    ) {
+                        updatePeriodNames(
+                            convertPeriodNames(scheduleId) as PeriodNames
+                        );
+                    }
+                }
+            }
+
+            if (existences.indexOf(OldStorageItems.ALLOWED_NOTIFICATIONS)) {
+                if (convertAllowedNotifications(scheduleId) !== null) {
+                    if (
+                        (convertAllowedNotifications(scheduleId) as
+                            | AllowedNotifications
+                            | NotificationSettingsError).constructor === Object
+                    ) {
+                        updateAllowedNotifications(
+                            convertAllowedNotifications(
+                                scheduleId
+                            ) as AllowedNotifications
+                        );
+                    }
+                }
             }
         };
 
@@ -502,6 +543,8 @@ export default defineComponent({
         };
 
         onMounted(() => {
+            conversion(oldKeysCheck);
+
             mainInterval.value = setInterval(main, 1000);
 
             if (notificationsSupported()) {
@@ -568,8 +611,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-@import "~utds-component-library/dist/utds-component-library.css";
-
 div.v-card {
     padding: 0 5px;
     margin: 10px 0;

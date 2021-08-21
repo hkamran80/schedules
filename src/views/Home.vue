@@ -111,9 +111,10 @@
         </v-dialog>
         <v-dialog v-model="dialogs.helpTopic" width="800" scrollable>
             <help-center-topic
+                :key="helpTopic.id"
                 :id="helpTopic.id"
                 :metadata="helpTopic.metadata"
-                @close="dialogs.helpTopic = false"
+                @close="closeHelpTopic"
             />
         </v-dialog>
     </utds-layout>
@@ -192,6 +193,11 @@ export default Vue.extend({
             this.helpTopic.id = id;
             this.helpTopic.metadata = metadata;
             this.dialogs.helpTopic = true;
+        },
+        closeHelpTopic(): void {
+            this.helpTopic.id = null;
+            this.helpTopic.metadata = null;
+            this.dialogs.helpTopic = false;
         },
     },
 });

@@ -5,14 +5,20 @@
 
             <v-spacer />
 
-            <v-btn icon color="primary" @click="closeDialog">
+            <v-btn
+                icon
+                color="primary"
+                title="Close dialog"
+                aria-label="Close dialog"
+                @click="closeDialog"
+            >
                 <v-icon v-text="mdiClose" />
             </v-btn>
         </v-card-title>
 
         <v-card-text class="my-3">
             <v-card
-                class="mx-auto"
+                class="mx-auto help-center-topic"
                 outlined
                 v-for="(metadata, id) of helpCenterTopics"
                 :key="id"
@@ -63,3 +69,9 @@ export default defineComponent({
     },
 });
 </script>
+
+<style scoped>
+.v-card.help-center-topic:not(:last-child) {
+    margin-bottom: 10px;
+}
+</style>
