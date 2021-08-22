@@ -20,12 +20,12 @@ export enum OldStorageItems {
 /*
 ===== STORAGE KEYS =====
 
--- CURRENT --
+-- Version 2 --
 schedule.[id] - period names
 schedule.[id].override - day override
 allowedNotifications.[id] - allowed notifications
 
--- NEW --
+-- Version 3 --
 schedule.[id].periodNames
 schedule.[id].dayOverride
 schedule.[id].allowedNotifications

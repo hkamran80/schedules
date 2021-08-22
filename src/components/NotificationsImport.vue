@@ -116,7 +116,7 @@ export default defineComponent({
                     );
                 } else {
                     toast.error(
-                        "Unable to import period names due to an unknown error. Please try again."
+                        "Unable to import notification settings due to an unknown error. Please try again."
                     );
                 }
             }

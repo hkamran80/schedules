@@ -27,9 +27,6 @@ export function loadFromStorage(
     return localStorage.getItem(generateStorageKey(scheduleId, key));
 }
 
-export function deleteFromStorage(
-    scheduleId: string,
-    key: StorageKeys
-): void {
+export function deleteFromStorage(scheduleId: string, key: StorageKeys): void {
     localStorage.removeItem(generateStorageKey(scheduleId, key));
 }

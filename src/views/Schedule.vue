@@ -372,30 +372,64 @@ export default defineComponent({
 
         const conversion = (existences: OldStorageItems[]) => {
             if (existences.indexOf(OldStorageItems.PERIOD_NAMES)) {
-                if (convertPeriodNames(scheduleId) !== null) {
+                const convertedPeriodNames = convertPeriodNames(scheduleId);
+                if (convertedPeriodNames !== null) {
                     if (
-                        (convertPeriodNames(scheduleId) as
-                            | PeriodNames
-                            | PeriodNamesError).constructor === Object
+                        (convertedPeriodNames as PeriodNames | PeriodNamesError)
+                            .constructor === Object
                     ) {
-                        updatePeriodNames(
-                            convertPeriodNames(scheduleId) as PeriodNames
+                        updatePeriodNames(convertedPeriodNames as PeriodNames);
+                    } else if (
+                        convertedPeriodNames === PeriodNamesError.KEY_ERROR
+                    ) {
+                        toast.error(
+                            "An error occurred trying to convert your old period names. Please manually add them via the settings menu."
+                        );
+                    } else {
+                        toast.error(
+                            "Unable to convert period names due to an unknown error. Please manually add your period names via the settings menu."
                         );
                     }
                 }
             }
 
             if (existences.indexOf(OldStorageItems.ALLOWED_NOTIFICATIONS)) {
-                if (convertAllowedNotifications(scheduleId) !== null) {
+                const convertedAllowedNotifications = convertAllowedNotifications(
+                    scheduleId
+                );
+                if (convertedAllowedNotifications !== null) {
                     if (
-                        (convertAllowedNotifications(scheduleId) as
+                        (convertedAllowedNotifications as
                             | AllowedNotifications
                             | NotificationSettingsError).constructor === Object
                     ) {
                         updateAllowedNotifications(
-                            convertAllowedNotifications(
-                                scheduleId
-                            ) as AllowedNotifications
+                            convertedAllowedNotifications as AllowedNotifications
+                        );
+                    } else if (
+                        convertedAllowedNotifications ===
+                        NotificationSettingsError.KV_PAIR_ERROR
+                    ) {
+                        toast.error(
+                            "One of the key/value pairs is incorrect in your notification settings. Please manually add edit your notification settings via the settings menu."
+                        );
+                    } else if (
+                        convertedAllowedNotifications ===
+                        NotificationSettingsError.ROOT_KEY_ERROR
+                    ) {
+                        toast.error(
+                            "One of the root keys is incorrect in your notification settings. Please manually add edit your notification settings via the settings menu."
+                        );
+                    } else if (
+                        convertedAllowedNotifications ===
+                        NotificationSettingsError.IMPORT_ERROR
+                    ) {
+                        toast.error(
+                            "Unable to convert notification settings due to a parsing error. Please manually add edit your notification settings via the settings menu."
+                        );
+                    } else {
+                        toast.error(
+                            "Unable to convert notification settigns due to an unknown error. Please manually add edit your notification settings via the settings menu."
                         );
                     }
                 }

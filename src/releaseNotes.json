@@ -107,7 +107,8 @@
             "Fix help center glitches",
             "Add conversion code (for Schedules 2 to Schedules 3)",
             "Add legal section to the about dialog",
-            "Fix the conversion code"
+            "Fix the conversion code",
+            "Add error handling to conversion code"
         ]
     }
 }
