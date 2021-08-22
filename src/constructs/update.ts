@@ -36,7 +36,7 @@ export function checkExistence(scheduleId: string | null): OldStorageItems[] {
 export function convertAnalytics(): void {
     const oldStatus = localStorage.getItem(OldStorageKeys.ANALYTICS_STATUS);
     if (oldStatus) {
-        localStorage.delete(OldStorageKeys.ANALYTICS_STATUS);
+        localStorage.removeItem(OldStorageKeys.ANALYTICS_STATUS);
         saveToStorage("", StorageKeys.ANALYTICS_STATUS, oldStatus);
     }
 }
@@ -46,7 +46,7 @@ export function convertPeriodNames(
 ): PeriodNames | PeriodNamesError | null {
     const storageItem = localStorage.getItem(`schedule.${scheduleId}`);
     if (storageItem !== null) {
-        localStorage.delete(`schedule.${scheduleId}`);
+        localStorage.removeItem(`schedule.${scheduleId}`);
         return importPeriodNames(storageItem, {} as PeriodNames);
     }
 
@@ -60,7 +60,7 @@ export function convertAllowedNotifications(
         `allowedNotifications.${scheduleId}`
     );
     if (storageItem !== null) {
-        localStorage.delete(`allowedNotifications.${scheduleId}`);
+        localStorage.removeItem(`allowedNotifications.${scheduleId}`);
         return importNotificationSettings(
             storageItem,
             {} as AllowedNotifications
