@@ -1,4 +1,14 @@
 {
+    "period-names": {
+        "name": "Period Names",
+        "description": "How to edit, clear, import, and export period names",
+        "videoLink": null
+    },
+    "notification-settings": {
+        "name": "Notification Settings",
+        "description": "How to edit, reset, import, and export notification settings",
+        "videoLink": null
+    },
     "installing-schedules": {
         "name": "Installing Schedules",
         "description": "How to install Schedules to your device",

@@ -25,6 +25,7 @@
                     color="primary"
                     title="Open Timetable"
                     aria-label="Open Timetable"
+                    :disabled="daySchedule === null"
                     @click="timetableDialog = true"
                 >
                     <v-icon v-text="mdiCalendarOutline" />
@@ -61,7 +62,7 @@
         <div v-if="debugMode">
             <v-divider />
 
-            <v-btn text block>
+            <v-btn text block @click="debugFunction">
                 Debug Function
             </v-btn>
         </div>
@@ -342,6 +343,10 @@ export default defineComponent({
                 });
             }
         };
+        const debugFunction = () => {
+            console.debug("Debug function");
+        };
+
         const loadDayOverride = () => {
             const dayOverride = getDayOverride(
                 scheduleId,
@@ -609,6 +614,7 @@ export default defineComponent({
 
             // Functions
             toggleDebugMode,
+            debugFunction,
             updatePeriodNames,
             updateAllowedNotifications,
 
