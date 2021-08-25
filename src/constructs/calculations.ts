@@ -13,15 +13,9 @@ export function calculateTimeDifference(
     const firstTimeString = firstTime.replace(/-/g, ":"),
         secondTimeString = secondTime.replace(/-/g, ":");
 
-    console.debug(firstTimeString);
-    console.debug(secondTimeString);
-
     const startTime = new Date("01/01/2021 " + firstTimeString),
         endTime = new Date("01/01/2021 " + secondTimeString);
     const millisecondDifference = +endTime - +startTime;
-    console.debug(startTime);
-    console.debug(endTime);
-    console.debug(millisecondDifference);
 
     let seconds = millisecondDifference / 1000;
     const hours = Math.floor(seconds / 3600);
@@ -30,8 +24,6 @@ export function calculateTimeDifference(
     seconds = seconds % 60;
 
     // Percentage remaining: (startTime / endTime) * 100)
-
-    console.debug([hours, minutes, seconds]);
 
     return [hours, minutes, seconds];
 }
