@@ -72,8 +72,8 @@
             "Fix the AUHSD Standard schedule's Wednesday and Friday start times"
         ]
     },
-    "3.0.0 (Edge-13)": {
-        "releaseDate": "2021-08-22",
+    "3.0.0 (Edge-15)": {
+        "releaseDate": "2021-08-25",
         "changelog": [
             "Change Umami domain to unisontech.org",
             "Add source maps with Sentry for enhanced error logging",
@@ -109,7 +109,10 @@
             "Add legal section to the about dialog",
             "Fix the conversion code",
             "Add error handling to conversion code",
-            "Disable timetable when no schedule is available"
+            "Disable timetable when no schedule is available",
+            "Add compability for older browsers",
+            "Fix theming",
+            "Fix schedule page on Safari"
         ]
     }
 }

@@ -2,7 +2,21 @@
     <v-app id="app">
         <v-main>
             <v-container fluid>
-                <navigation-bar />
+                <utds-navigation-bar
+                    :title="
+                        `Schedules ${
+                            $edgeMode
+                                ? '(edge)'
+                                : $developmentMode
+                                ? '(dev)'
+                                : ''
+                        }`.trim()
+                    "
+                    :vueRouterInstalled="true"
+                    homeLinkColor="primary"
+                    :buttons="navigationButtons"
+                    @toggleTheme="toggleTheme"
+                />
 
                 <router-view :schedules="schedules" />
 
@@ -33,7 +47,11 @@ import {
     onMounted,
     watch,
 } from "@vue/composition-api";
-import NavigationBar from "@/components/NavigationBar.vue";
+import { mdiThemeLightDark, mdiCommentMultipleOutline } from "@mdi/js";
+import {
+    UtdsNavigationBar,
+    UtdsNavigationBarStructures,
+} from "utds-component-library";
 
 import { provideToast } from "vue-toastification/composition";
 import { POSITION } from "vue-toastification";
@@ -46,11 +64,12 @@ import { checkExistence, convertAnalytics } from "@/constructs/update";
 
 import { installUmami, umamiInstallStatus } from "@/composables/umami";
 import { loadUpdateMechanism } from "@/composables/update";
+import { initializeThemeState, toggleThemeState } from "@/composables/theme";
 
 const schedules = schedulesJson as Schedule;
 
 export default defineComponent({
-    components: { NavigationBar },
+    components: { UtdsNavigationBar },
     setup(_, context: SetupContext) {
         // Toast
         provideToast({
@@ -72,7 +91,13 @@ export default defineComponent({
         });
 
         // Page Title
-        const baseDocumentTitle = "Schedules";
+        const baseDocumentTitle = `Schedules ${
+            context.root.$edgeMode
+                ? "(edge)"
+                : context.root.$developmentMode
+                ? "(dev)"
+                : ""
+        }`.trim();
         watch(
             () => context.root.$route.name,
             (newName) => {
@@ -95,13 +120,13 @@ export default defineComponent({
         );
 
         onMounted(() => {
-            // Umami
-
+            // Conversion
             const oldKeysCheck = checkExistence(null);
             if (oldKeysCheck.indexOf(OldStorageItems.ANALYTICS_STATUS) !== -1) {
                 convertAnalytics();
             }
 
+            // Umami
             const { allowed } = umamiInstallStatus();
 
             if (allowed.value === true) {
@@ -112,7 +137,46 @@ export default defineComponent({
         // Update Mechanism
         const { updateExists, refreshApp } = loadUpdateMechanism();
 
-        return { schedules, baseDocumentTitle, updateExists, refreshApp };
+        // Theming
+        initializeThemeState(context.root);
+        const toggleTheme = () => toggleThemeState(context.root);
+
+        // Navigation Bar
+        const navigationButtons = [
+            {
+                type: UtdsNavigationBarStructures.ButtonType.Link,
+                assistanceLabel: "Open Feedback Form",
+                color: "primary",
+                icon: mdiCommentMultipleOutline,
+                visibleType: UtdsNavigationBarStructures.ButtonVisibleType.Icon,
+                href: "https://form.typeform.com/to/g0MlHGXj",
+                target: UtdsNavigationBarStructures.LinkTarget.NewTab,
+                linkType:
+                    UtdsNavigationBarStructures.LinkButtonLinkType.External,
+            },
+            {
+                type: UtdsNavigationBarStructures.ButtonType.Function,
+                assistanceLabel: "Toggle Theme",
+                color: "primary",
+                icon: mdiThemeLightDark,
+                visibleType: UtdsNavigationBarStructures.ButtonVisibleType.Icon,
+                callbackName: "toggleTheme",
+            },
+        ];
+
+        return {
+            schedules,
+            baseDocumentTitle,
+            updateExists,
+            refreshApp,
+            navigationButtons,
+
+            toggleTheme,
+
+            // Icons
+            mdiThemeLightDark,
+            mdiCommentMultipleOutline,
+        };
     },
 });
 </script>

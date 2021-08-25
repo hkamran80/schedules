@@ -150,9 +150,5 @@ export function getTwentyFourHourStatus(): boolean {
 }
 
 export function setTwentyFourHourStatus(newState: boolean): void {
-    saveToStorage(
-        "",
-        StorageKeys.TWENTY_FOUR_HOUR_STATUS,
-        newState.toString()
-    );
+    saveToStorage("", StorageKeys.TWENTY_FOUR_HOUR_STATUS, newState.toString());
 }
