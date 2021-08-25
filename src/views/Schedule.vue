@@ -347,6 +347,22 @@ export default defineComponent({
             console.debug("Debug function");
         };
 
+        const tipsPeriodNames = () => {
+            const values = Object.values(periodNames.value);
+            if (values.map((name) => name === "").length === values.length) {
+                // Two minutes
+                setTimeout(() => {
+                    toast.info(
+                        "Tip: Name periods by clicking the settings icon, then clicking Edit under the Period Names header."
+                    );
+                    notify(
+                        "Schedules - Tips and Tricks",
+                        "Tip: Name periods by clicking the settings icon, then clicking Edit under the Period Names header."
+                    );
+                }, 120000);
+            }
+        };
+
         const loadDayOverride = () => {
             const dayOverride = getDayOverride(
                 scheduleId,
@@ -586,6 +602,10 @@ export default defineComponent({
 
             mainInterval.value = setInterval(main, 1000);
 
+            // Tips
+            tipsPeriodNames();
+
+            // Notifications
             if (notificationsSupported()) {
                 if (getPermission() === "default") {
                     toast.warning(
