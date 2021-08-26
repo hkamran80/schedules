@@ -5,10 +5,33 @@
 
             <v-spacer />
 
-            <v-btn icon color="primary" @click="clearNames">
+            <v-btn
+                icon
+                color="primary"
+                title="Undo period name changes"
+                aria-label="Undo period name changes"
+                @click="restoreNames"
+                v-if="!sameNames"
+            >
+                <v-icon v-text="mdiRestore" />
+            </v-btn>
+            <v-btn
+                icon
+                color="primary"
+                title="Clear period names"
+                aria-label="Clear period names"
+                @click="clearNames"
+            >
                 <v-icon v-text="mdiDeleteForeverOutline" />
             </v-btn>
-            <v-btn icon color="primary" @click="saveNames">
+            <v-btn
+                icon
+                color="primary"
+                title="Save period names"
+                aria-label="Save period names"
+                @click="saveNames"
+                :disabled="sameNames"
+            >
                 <v-icon v-text="mdiContentSaveOutline" />
             </v-btn>
             <v-btn
@@ -17,6 +40,7 @@
                 title="Close dialog"
                 aria-label="Close dialog"
                 @click="closeDialog"
+                :disabled="!sameNames"
             >
                 <v-icon v-text="mdiClose" />
             </v-btn>
@@ -43,8 +67,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, SetupContext } from "@vue/composition-api";
 import {
+    computed,
+    defineComponent,
+    ref,
+    SetupContext,
+} from "@vue/composition-api";
+import {
+    mdiRestore,
     mdiDeleteForeverOutline,
     mdiContentSaveOutline,
     mdiClose,
@@ -72,7 +102,7 @@ export default defineComponent({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setup(props: any, { emit }: SetupContext) {
         const toast = useToast();
-        const periodNames = ref(props.currentPeriodNames);
+        const periodNames = ref(Object.assign({}, props.currentPeriodNames));
 
         const closeDialog = () => emit("close");
         const saveNames = () => {
@@ -81,6 +111,11 @@ export default defineComponent({
             toast.success("Saved period names!");
             closeDialog();
         };
+
+        const restoreNames = () => {
+            periodNames.value = Object.assign({}, props.currentPeriodNames);
+        };
+
         const clearNames = () => {
             const clearedPeriodNames = Object.fromEntries(
                 Object.entries(periodNames.value).map(([periodName]) => [
@@ -93,14 +128,27 @@ export default defineComponent({
             toast.success("Cleared period names!");
         };
 
+        const sameNames = computed(() => {
+            const periodNameValues = Object.values(periodNames.value);
+            return (
+                Object.values(props.currentPeriodNames)
+                    .map((name, index) => [name, periodNameValues[index]])
+                    .map(([original, user]) => original === user)
+                    .filter((result) => result === false).length === 0
+            );
+        });
+
         return {
             periodNames,
 
+            sameNames,
             closeDialog,
             saveNames,
+            restoreNames,
             clearNames,
 
             // Icons
+            mdiRestore,
             mdiDeleteForeverOutline,
             mdiContentSaveOutline,
             mdiClose,

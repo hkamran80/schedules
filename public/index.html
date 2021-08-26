@@ -223,35 +223,144 @@
         </style>
 
         <noscript>
-            <link
-                href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css"
-                rel="stylesheet"
-            />
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.js"></script>
-
-            <div
-                class="d-flex align-items-center justify-content-center"
-                style="height: 100vh"
-            >
-                <div class="card" style="width: 33%">
-                    <div class="card-body">
-                        <h5 class="card-title">JavaScript Notice</h5>
-                        <p class="card-text">
-                            Schedules requires JavaScript to be enabled. Please
-                            enable it to continue. Click the button below to
-                            learn how to enable JavaScript.
-                        </p>
+            <div id="js-error">
+                <div class="wrapper">
+                    <h1>Hmm.</h1>
+                    <p>
+                        It appears that you don't have JavaScript on. Click
+                        below to learn how to enable JavaScript.
+                    </p>
+                    <div class="buttons">
                         <a
-                            class="btn btn-primary"
                             href="https://go.unisontech.org/enable-js"
                             title="Learn more about enabling JavaScript"
                             aria-label="Learn more about enabling JavaScript"
                         >
-                            Learn How
+                            Enable JavaScript
                         </a>
                     </div>
                 </div>
+                <div class="space">
+                    <div class="blackhole" />
+                </div>
             </div>
+
+            <style>
+                *,
+                :before,
+                :after {
+                    box-sizing: border-box;
+                }
+
+                body {
+                    background: #c2185b;
+                    color: #ffffff;
+                }
+
+                #js-error {
+                    display: flex;
+                    align-items: center;
+                    min-width: 275px;
+                    height: 100vh;
+                    margin: 0 10vw;
+                    overflow: hidden;
+                    font-family: Lato;
+                }
+                .wrapper {
+                    flex-grow: 2;
+                    width: 40vw;
+                    max-width: 500px;
+                    margin: 0 auto;
+                }
+                h1 {
+                    margin: 0;
+                    font-size: 6em;
+                    font-weight: 300;
+                }
+                p {
+                    width: 95%;
+                    font-size: 1.5em;
+                    line-height: 1.4;
+                }
+                .buttons {
+                    white-space: nowrap;
+                    display: inline-block;
+                }
+                span {
+                    display: block;
+                    text-transform: uppercase;
+                    color: #b9ddfb;
+                    letter-spacing: 1.5px;
+                    text-align: center;
+                }
+                a {
+                    display: inline-block;
+                    padding: 0.8em 1em;
+                    margin-right: 1em;
+                    margin-bottom: 1em;
+                    border: 3px solid #f06292;
+                    color: #ffffff;
+                    font-weight: 500;
+                    text-transform: uppercase;
+                    text-decoration: none;
+                    letter-spacing: 0.2em;
+                    position: relative;
+                    overflow: hidden;
+                    transition: 0.3s;
+                }
+                a:hover {
+                    color: #000000;
+                }
+                a:hover:before {
+                    top: 0;
+                }
+                a:before {
+                    content: "";
+                    background: #f06292;
+                    height: 100%;
+                    width: 100%;
+                    position: absolute;
+                    top: -100%;
+                    left: 0;
+                    transition: 0.3s;
+                    z-index: -1;
+                }
+                .space {
+                    width: 75px;
+                    height: calc(50vh + 37.5px);
+                    border-top-left-radius: 37.5px;
+                    border-top-right-radius: 37.5px;
+                    overflow: hidden;
+                    margin: calc(50vh - 37.5px) auto 0 auto;
+                    position: relative;
+                    pointer-events: none;
+                    transform: translateZ(0);
+                    -webkit-transform: translateZ(0);
+                }
+                .blackhole {
+                    border: 5px solid #ffffff;
+                    height: 75px;
+                    width: 75px;
+                    border-radius: 50%;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                }
+                .blackhole:after {
+                    content: "";
+                    height: calc(100% + 10px);
+                    width: calc(100% + 10px);
+                    border: 5px solid #ffffff;
+                    border-right-color: transparent;
+                    border-bottom-color: transparent;
+                    border-radius: 50%;
+                    position: absolute;
+                    top: -5px;
+                    left: -5px;
+                    z-index: 5;
+                    transform: rotate(45deg);
+                }
+            </style>
         </noscript>
 
         <div id="app" />

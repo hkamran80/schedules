@@ -49,7 +49,7 @@
                 "Passing (Brunch / Fifth Period)": ["11-15-01", "11-25-00"],
                 "Fifth Period": ["11-25-01", "12-55-00"],
                 "Lunch": ["12-55-01", "13-25-00"],
-                "Passing (Lunch / Sixth Period": ["13-25-01", "13-35-00"],
+                "Passing (Lunch / Sixth Period)": ["13-25-01", "13-35-00"],
                 "Sixth Period": ["13-35-01", "15-05-00"]
             },
             "THU": {
@@ -78,7 +78,7 @@
                 "Passing (Brunch / Fifth Period)": ["11-15-01", "11-25-00"],
                 "Fifth Period": ["11-25-01", "12-55-00"],
                 "Lunch": ["12-55-01", "13-25-00"],
-                "Passing (Lunch / Sixth Period": ["13-25-01", "13-35-00"],
+                "Passing (Lunch / Sixth Period)": ["13-25-01", "13-35-00"],
                 "Sixth Period": ["13-35-01", "15-05-00"]
             }
         }

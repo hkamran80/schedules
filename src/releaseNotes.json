@@ -72,7 +72,7 @@
             "Fix the AUHSD Standard schedule's Wednesday and Friday start times"
         ]
     },
-    "3.0.0 (Edge-16)": {
+    "3.0.0 (Edge-17)": {
         "releaseDate": "2021-08-25",
         "changelog": [
             "Change Umami domain to unisontech.org",
@@ -113,7 +113,13 @@
             "Add compability for older browsers",
             "Fix theming",
             "Fix schedule page on Safari",
-            "Add tips"
+            "Add tips",
+            "Move debug mode button",
+            "Make timetable periods bigger",
+            "Prevent closing edit period names dialog if names are not saved",
+            "Fix typos in period names (AUHSD Standard)",
+            "Fix tips notifications",
+            "Change no JavaScript message (again)"
         ]
     }
 }

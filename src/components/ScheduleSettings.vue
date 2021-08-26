@@ -28,8 +28,24 @@
                 />
             </div>
 
+            <div v-if="$edgeMode || $developmentMode">
+                <v-divider class="my-4" />
+
+                <v-btn
+                    block
+                    color="primary"
+                    class="mb-3"
+                    title="Toggle Debug Mode"
+                    aria-label="Toggle Debug Mode"
+                    @click="toggleDebugMode"
+                >
+                    Toggle Debug Mode
+                </v-btn>
+            </div>
+
             <v-divider class="my-4" />
 
+            <!-- Period Names -->
             <div class="mb-5">
                 <h3 class="mb-5">
                     Period Names
@@ -58,6 +74,7 @@
 
             <v-divider class="my-4" />
 
+            <!-- Notifications -->
             <div class="mb-5">
                 <h3 class="mb-5">
                     Notifications
@@ -103,6 +120,7 @@ export default defineComponent({
         const openNotificationsEdit = () => emit("openNotificationsEdit");
         const openNotificationsImport = () => emit("openNotificationsImport");
         const openNotificationsExport = () => emit("openNotificationsExport");
+        const toggleDebugMode = () => emit("toggleDebugMode");
 
         return {
             twentyFourHourStatus,
@@ -114,6 +132,8 @@ export default defineComponent({
             openNotificationsEdit,
             openNotificationsImport,
             openNotificationsExport,
+
+            toggleDebugMode,
 
             // Icons
             mdiClose,

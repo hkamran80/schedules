@@ -22,10 +22,10 @@
                 :first-time="firstEventStart"
                 :short-weekdays="false"
                 :event-ripple="false"
-                :event-height="70"
+                :event-height="75"
                 :event-margin-bottom="5"
                 :interval-count="intervalCount"
-                :interval-height="150"
+                :interval-height="200"
             />
         </v-card-text>
     </v-card>

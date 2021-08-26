@@ -13,16 +13,6 @@
                 <v-btn
                     icon
                     color="primary"
-                    title="Toggle Debug Mode"
-                    aria-label="Toggle Debug Mode"
-                    v-if="$edgeMode || $developmentMode"
-                    @click="toggleDebugMode"
-                >
-                    <v-icon v-text="mdiConsoleLine" />
-                </v-btn>
-                <v-btn
-                    icon
-                    color="primary"
                     title="Open Timetable"
                     aria-label="Open Timetable"
                     :disabled="daySchedule === null"
@@ -75,6 +65,7 @@
                 @openNotificationsEdit="notificationsEditDialog = true"
                 @openNotificationsExport="notificationsExportDialog = true"
                 @openNotificationsImport="notificationsImportDialog = true"
+                @toggleDebugMode="toggleDebugMode"
                 @close="settingsDialog = false"
             />
         </v-dialog>
@@ -88,7 +79,12 @@
             />
         </v-dialog>
 
-        <v-dialog v-model="periodNamesEditDialog" width="750" scrollable>
+        <v-dialog
+            v-model="periodNamesEditDialog"
+            width="750"
+            scrollable
+            persistent
+        >
             <period-names-edit
                 :key="periodNamesEditDialogForceRender"
                 :scheduleId="scheduleId"
@@ -327,6 +323,15 @@ export default defineComponent({
         const overrideExpirationTime = computed(() => "TBA");
 
         // Functions
+
+        const checkPeriodNamesNotFilled = () => {
+            const periodNameValues = Object.values(periodNames.value);
+            return (
+                periodNameValues.filter((name) => name === "").length ===
+                periodNameValues.length
+            );
+        };
+
         const toggleDebugMode = () => {
             debugMode.value = !debugMode.value;
 
@@ -344,22 +349,26 @@ export default defineComponent({
             }
         };
         const debugFunction = () => {
-            console.debug("Debug function");
+            console.debug("=== DEBUG ===");
+            console.debug(checkPeriodNamesNotFilled());
+            console.debug(Object.values(periodNames.value));
         };
 
         const tipsPeriodNames = () => {
-            const values = Object.values(periodNames.value);
-            if (values.map((name) => name === "").length === values.length) {
-                // Two minutes
+            if (checkPeriodNamesNotFilled()) {
+                // Two minute timeout
                 setTimeout(() => {
-                    toast.info(
-                        "Tip: Name periods by clicking the settings icon, then clicking Edit under the Period Names header."
-                    );
-                    notify(
-                        "Schedules - Tips and Tricks",
-                        "Tip: Name periods by clicking the settings icon, then clicking Edit under the Period Names header."
-                    );
-                }, 120000);
+                    if (checkPeriodNamesNotFilled()) {
+                        toast.info(
+                            "Tip: Name periods by clicking the settings icon, then clicking Edit under the Period Names header."
+                        );
+
+                        notify(
+                            "Schedules - Tips and Tricks",
+                            "Tip: Name periods by clicking the settings icon, then clicking Edit under the Period Names header. For more info, go to the help center on the homepage."
+                        );
+                    }
+                }, 180000);
             }
         };
 
