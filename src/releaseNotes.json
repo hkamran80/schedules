@@ -110,7 +110,7 @@
             "Fix the conversion code",
             "Add error handling to conversion code",
             "Disable timetable when no schedule is available",
-            "Add compability for older browsers",
+            "Add compatibility for older browsers",
             "Fix theming",
             "Fix schedule page on Safari",
             "Add tips",
@@ -125,7 +125,8 @@
             "Switch the homepage to the Composition API",
             "Add the new logo (thanks to J. Quam)",
             "Add an updated social preview",
-            "Fix bug with schedule icon"
+            "Fix bug with schedule icon",
+            "Fix spelling mistakes"
         ]
     }
 }

@@ -458,7 +458,7 @@ export default defineComponent({
                         );
                     } else {
                         toast.error(
-                            "Unable to convert notification settigns due to an unknown error. Please manually add edit your notification settings via the settings menu."
+                            "Unable to convert notification settings due to an unknown error. Please manually add edit your notification settings via the settings menu."
                         );
                     }
                 }

@@ -82,7 +82,7 @@ export default defineComponent({
                 );
 
                 if (allowedNotifications.constructor === Object) {
-                    toast.success("Succesfully imported period names!");
+                    toast.success("Successfully imported period names!");
                     saveAllowedNotifications(
                         props.scheduleId,
                         allowedNotifications as AllowedNotifications

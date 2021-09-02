@@ -76,7 +76,7 @@ export default defineComponent({
                 );
 
                 if (periodNames.constructor === Object) {
-                    toast.success("Succesfully imported period names!");
+                    toast.success("Successfully imported period names!");
                     savePeriodNames(
                         props.scheduleId,
                         periodNames as PeriodNames
