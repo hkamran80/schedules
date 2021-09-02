@@ -33,7 +33,7 @@
             outlined
         >
             <v-card-title>
-                <v-icon medium left v-text="$data[schedule.icon]" />
+                <v-icon medium left v-text="scheduleIcons[schedule.icon]" />
                 <span v-text="schedule.name" />
             </v-card-title>
         </v-card>
@@ -235,9 +235,9 @@ export default defineComponent({
 
             // Icons
             mdiPlus,
-            mdiSchoolOutline,
             mdiTimerSand,
             mdiAlertOutline,
+            scheduleIcons: { mdiSchoolOutline },
         };
     },
 });

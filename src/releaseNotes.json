@@ -124,7 +124,8 @@
             "Add message to homepage about using edge version",
             "Switch the homepage to the Composition API",
             "Add the new logo (thanks to J. Quam)",
-            "Add an updated social preview"
+            "Add an updated social preview",
+            "Fix bug with schedule icon"
         ]
     }
 }
