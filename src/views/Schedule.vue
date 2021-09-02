@@ -323,7 +323,6 @@ export default defineComponent({
         const overrideExpirationTime = computed(() => "TBA");
 
         // Functions
-
         const checkPeriodNamesNotFilled = () => {
             const periodNameValues = Object.values(periodNames.value);
             return (
@@ -354,7 +353,7 @@ export default defineComponent({
             console.debug(Object.values(periodNames.value));
         };
 
-        const tipsPeriodNames = () => {
+        const periodNamesTips = () => {
             if (checkPeriodNamesNotFilled()) {
                 // Two minute timeout
                 setTimeout(() => {
@@ -612,7 +611,7 @@ export default defineComponent({
             mainInterval.value = setInterval(main, 1000);
 
             // Tips
-            tipsPeriodNames();
+            periodNamesTips();
 
             // Notifications
             if (notificationsSupported()) {

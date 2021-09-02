@@ -49,7 +49,7 @@
                             rel="noopener noreferrer"
                             >J. Quam</a
                         >
-                        - Design and Testing
+                        - Design, Testing, and Logo
                     </li>
                     <li>
                         <a

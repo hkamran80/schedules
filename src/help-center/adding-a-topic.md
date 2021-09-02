@@ -24,7 +24,7 @@ You must be on a computer to follow these instructions. You cannot follow these 
     ```
 
     - Replace `[topic ID]` with the ID you created in step 4, and come up with a name and description for your topic
-    - Make sure to put a comma and the end of the previous curly brace
+    - Make sure to put a comma at the end of the previous curly brace
 10. Commit your changes at the bottom
 11. Click on the `Pull requests` tab
 12. Click `New pull request`

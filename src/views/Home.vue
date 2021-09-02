@@ -6,6 +6,21 @@
             {{ error }}
         </v-alert>
 
+        <a
+            href="https://schedules.unisontech.org"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-wrap--break"
+            style="width: 100%"
+            v-if="$edgeMode"
+        >
+            <v-alert type="info">
+                You're using the edge (beta) version of Schedules. To go to the
+                tried and tested release site, click anywhere in this box or go
+                to https://schedules.unisontech.org.
+            </v-alert>
+        </a>
+
         <v-card
             v-for="(schedule, id) in schedules"
             :key="id"
@@ -45,7 +60,7 @@
             aria-label="Release notes"
             class="mx-auto schedule-card text-wrap--break"
             outlined
-            @click="dialogs.releaseNotes = true"
+            @click="releaseNotesDialog = true"
         >
             <v-card-title>
                 Release Notes
@@ -57,7 +72,7 @@
             aria-label="About"
             class="mx-auto schedule-card text-wrap--break"
             outlined
-            @click="dialogs.about = true"
+            @click="aboutDialog = true"
         >
             <v-card-title>
                 About
@@ -69,7 +84,7 @@
             aria-label="Help Center"
             class="mx-auto schedule-card text-wrap--break"
             outlined
-            @click="dialogs.help = true"
+            @click="helpDialog = true"
         >
             <v-card-title>
                 Help Center
@@ -81,39 +96,39 @@
             aria-label="Analytics notice"
             class="mx-auto schedule-card text-wrap--break"
             outlined
-            @click="dialogs.analytics = true"
+            @click="analyticsNotice = true"
         >
             <v-card-title>
                 Analytics Notice
             </v-card-title>
         </v-card>
 
-        <v-dialog v-model="dialogs.releaseNotes" width="500" scrollable>
+        <v-dialog v-model="releaseNotesDialog" width="500" scrollable>
             <utds-release-notes
                 :currentVersion="currentVersion"
                 :rawReleaseNotes="releaseNotes"
                 githubRepository="hkamran80/schedules"
                 :markdown="true"
-                @close="dialogs.releaseNotes = false"
+                @close="releaseNotesDialog = false"
             />
         </v-dialog>
-        <v-dialog v-model="dialogs.analytics" width="500" scrollable>
-            <analytics-notice @close="dialogs.analytics = false" />
+        <v-dialog v-model="analyticsNotice" width="500" scrollable>
+            <analytics-notice @close="analyticsNotice = false" />
         </v-dialog>
-        <v-dialog v-model="dialogs.about" width="500" scrollable>
-            <about :version="currentVersion" @close="dialogs.about = false" />
+        <v-dialog v-model="aboutDialog" width="500" scrollable>
+            <about :version="currentVersion" @close="aboutDialog = false" />
         </v-dialog>
-        <v-dialog v-model="dialogs.help" width="500" scrollable>
+        <v-dialog v-model="helpDialog" width="500" scrollable>
             <help-center
                 @openHelpTopic="openHelpTopic"
-                @close="dialogs.help = false"
+                @close="helpDialog = false"
             />
         </v-dialog>
-        <v-dialog v-model="dialogs.helpTopic" width="800" scrollable>
+        <v-dialog v-model="helpTopicDialog" width="800" scrollable>
             <help-center-topic
-                :key="helpTopic.id"
-                :id="helpTopic.id"
-                :metadata="helpTopic.metadata"
+                :key="helpTopicId"
+                :id="helpTopicId"
+                :metadata="helpTopicMetadata"
                 @close="closeHelpTopic"
             />
         </v-dialog>
@@ -121,7 +136,7 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { defineComponent, ref, SetupContext } from "@vue/composition-api";
 import {
     UtdsLayout,
     UtdsHeader,
@@ -145,7 +160,7 @@ const About = () => import("@/components/About.vue");
 const HelpCenter = () => import("@/components/HelpCenter.vue");
 const HelpCenterTopic = () => import("@/components/HelpCenterTopic.vue");
 
-export default Vue.extend({
+export default defineComponent({
     props: {
         schedules: {
             type: Object,
@@ -164,41 +179,66 @@ export default Vue.extend({
         HelpCenter,
         HelpCenterTopic,
     },
-    data() {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    setup(_: any, context: SetupContext) {
+        const releaseNotesDialog = ref(false);
+        const analyticsNotice = ref(false);
+        const aboutDialog = ref(false);
+        const helpDialog = ref(false);
+        const helpTopicDialog = ref(false);
+
+        const helpTopicId = ref(null as Nullable<string>);
+        const helpTopicMetadata = ref(
+            null as Nullable<HelpCenterTopicInterface>
+        );
+
+        const error = (context.root.$route.query.notFound
+            ? generateNotFoundMessage(
+                  context.root.$route.query.notFound as string
+              )
+            : null) as Nullable<string>;
+
+        const openHelpTopic = (
+            id: string,
+            metadata: HelpCenterTopicInterface
+        ) => {
+            helpTopicId.value = id;
+            helpTopicMetadata.value = metadata;
+            helpTopicDialog.value = true;
+        };
+        const closeHelpTopic = () => {
+            helpTopicId.value = null;
+            helpTopicMetadata.value = null;
+            helpTopicDialog.value = false;
+        };
+
         return {
+            // Versions
             currentVersion,
             releaseNotes,
-            dialogs: {
-                releaseNotes: false,
-                analytics: false,
-                about: false,
-                help: false,
-                helpTopic: false,
-            },
-            helpTopic: {
-                id: null as Nullable<string>,
-                metadata: null as Nullable<HelpCenterTopicInterface>,
-            },
-            error: (this.$route.query.notFound
-                ? generateNotFoundMessage(this.$route.query.notFound as string)
-                : null) as Nullable<string>,
+
+            // Dialogs
+            releaseNotesDialog,
+            analyticsNotice,
+            aboutDialog,
+            helpDialog,
+            helpTopicDialog,
+
+            // Help Topic
+            helpTopicId,
+            helpTopicMetadata,
+            openHelpTopic,
+            closeHelpTopic,
+
+            // General Information
+            error,
+
+            // Icons
             mdiPlus,
             mdiSchoolOutline,
             mdiTimerSand,
             mdiAlertOutline,
         };
-    },
-    methods: {
-        openHelpTopic(id: string, metadata: HelpCenterTopicInterface): void {
-            this.helpTopic.id = id;
-            this.helpTopic.metadata = metadata;
-            this.dialogs.helpTopic = true;
-        },
-        closeHelpTopic(): void {
-            this.helpTopic.id = null;
-            this.helpTopic.metadata = null;
-            this.dialogs.helpTopic = false;
-        },
     },
 });
 </script>

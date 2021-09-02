@@ -19,7 +19,7 @@ const title =
     scheduleValues = Object.values(schedules);
 
 const description =
-    "An app for schedules. Find out exactly how much time is remaining in a period or what the period is.";
+    "The app for all your schedules. Select a schedule and keep track of how much time there is remaining in a period.";
 
 module.exports = {
     transpileDependencies: ["vuetify"],

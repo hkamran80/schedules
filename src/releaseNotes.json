@@ -72,8 +72,8 @@
             "Fix the AUHSD Standard schedule's Wednesday and Friday start times"
         ]
     },
-    "3.0.0 (Edge-17)": {
-        "releaseDate": "2021-08-25",
+    "3.0.0 (Edge-18)": {
+        "releaseDate": "2021-09-01",
         "changelog": [
             "Change Umami domain to unisontech.org",
             "Add source maps with Sentry for enhanced error logging",
@@ -119,7 +119,12 @@
             "Prevent closing edit period names dialog if names are not saved",
             "Fix typos in period names (AUHSD Standard)",
             "Fix tips notifications",
-            "Change no JavaScript message (again)"
+            "Change no JavaScript message (again)",
+            "Add more help center topics",
+            "Add message to homepage about using edge version",
+            "Switch the homepage to the Composition API",
+            "Add the new logo (thanks to J. Quam)",
+            "Add an updated social preview"
         ]
     }
 }
