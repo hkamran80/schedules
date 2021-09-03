@@ -3,7 +3,7 @@
 for = "/*"
 
 [headers.value]
-Cache-Control = "public, max-age=2592000"
+cache-control = "public, max-age=2592000"
 X-Frame-Options = "DENY"
 X-XSS-Protection = "1; mode=block"
 X-Content-Type-Options = "nosniff"
