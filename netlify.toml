@@ -1,5 +1,32 @@
+# Redirects
+[[redirects]]
+from = "/robots.txt"
+to = "/robots.txt"
+status = 200
+
+[[redirects]]
+from = "/schedules.json"
+to = "/schedules.json"
+status = 200
+
+[[redirects]]
+from = "/precache-manifest.*.js"
+to = "/precache-manifest.:splat.js"
+status = 200
+
+[[redirects]]
+from = "/js/*.js.map"
+to = "/js/:splat.js.map"
+status = 200
+
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200
+
+# Plugins
 [[plugins]]
 package = "@sentry/netlify-build-plugin"
 
 [plugins.inputs]
-sentryRelease = "2.3.1-edge.6"
+sentryRelease = "3.0.0-edge.18"

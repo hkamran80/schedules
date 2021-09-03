@@ -1,12 +1,24 @@
 module.exports = {
     root: true,
+
     env: {
-        node: true
+        node: true,
     },
-    extends: ["plugin:vue/essential", "eslint:recommended", "@vue/prettier"],
+
+    extends: [
+        "plugin:vue/essential",
+        "eslint:recommended",
+        "@vue/typescript/recommended",
+        "@vue/prettier",
+        "@vue/prettier/@typescript-eslint",
+        "plugin:vuejs-accessibility/recommended",
+    ],
+
     parserOptions: {
-        ecmaVersion: 2020
+        ecmaVersion: 2020,
+        parser: "@typescript-eslint/parser",
     },
+
     rules: {
         "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
         "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
@@ -14,8 +26,22 @@ module.exports = {
             "warn",
             {
                 tabWidth: 4,
-                singleQuote: false
-            }
-        ]
-    }
+                singleQuote: false,
+                arrowParens: "always",
+                trailingComma: "es5",
+            },
+        ],
+    },
+
+    overrides: [
+        {
+            files: [
+                "**/__tests__/*.{j,t}s?(x)",
+                "**/tests/unit/**/*.spec.{j,t}s?(x)",
+            ],
+            env: {
+                jest: true,
+            },
+        },
+    ],
 };
