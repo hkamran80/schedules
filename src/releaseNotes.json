@@ -72,8 +72,8 @@
             "Fix the AUHSD Standard schedule's Wednesday and Friday start times"
         ]
     },
-    "3.0.0 (Edge-18)": {
-        "releaseDate": "2021-09-01",
+    "3.0.0": {
+        "releaseDate": "2021-09-03",
         "changelog": [
             "Change Umami domain to unisontech.org",
             "Add source maps with Sentry for enhanced error logging",
