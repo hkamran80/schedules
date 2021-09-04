@@ -1,0 +1,52 @@
+{
+    "using-the-help-center": {
+        "name": "Using the Help Center",
+        "description": "How to use the Schedules help center",
+        "videoLink": null
+    },
+    "giving-feedback": {
+        "name": "Giving Feedback",
+        "description": "How to use the Schedules feedback form",
+        "videoLink": null
+    },
+    "viewing-schedules": {
+        "name": "Viewing Schedules",
+        "description": "How to view schedules",
+        "videoLink": null
+    },
+    "using-the-countdown": {
+        "name": "Using the Countdown",
+        "description": "How to use the countdown",
+        "videoLink": null
+    },
+    "period-names": {
+        "name": "Period Names",
+        "description": "How to edit, clear, import, and export period names",
+        "videoLink": null
+    },
+    "notification-settings": {
+        "name": "Notification Settings",
+        "description": "How to edit, reset, import, and export notification settings",
+        "videoLink": null
+    },
+    "installing-schedules": {
+        "name": "Installing Schedules",
+        "description": "How to install Schedules to your device",
+        "videoLink": null
+    },
+    "updating-schedules": {
+        "name": "Updating Schedules",
+        "description": "How to update Schedules",
+        "videoLink": null
+    },
+    "understanding-analytics": {
+        "name": "Understanding Analytics in Schedules",
+        "description": "Understand analytics in Schedules",
+        "videoLink": null
+    },
+    "adding-a-topic": {
+        "name": "Adding a Help Topic",
+        "description": "How to create a help topic for Schedules",
+        "videoLink": null
+    }
+}

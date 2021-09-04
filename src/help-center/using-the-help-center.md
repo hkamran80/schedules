@@ -1,0 +1,1 @@
+Welcome to the help center! In the main view, you can see different help topics, such as period names, notification settings, and viewing schedules. Click a topic and read or watch. To watch, click the video button next to the close button, if it's available.

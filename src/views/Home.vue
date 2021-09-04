@@ -1,8 +1,25 @@
 <template>
-    <center-layout>
-        <header class="pb-4">
-            <h2>Welcome! Select a schedule to begin!</h2>
-        </header>
+    <utds-layout>
+        <utds-header title="Welcome! Select a schedule to begin!" />
+
+        <v-alert type="error" color="#A80000" v-if="error">
+            {{ error }}
+        </v-alert>
+
+        <a
+            href="https://schedules.unisontech.org"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-wrap--break"
+            style="width: 100%"
+            v-if="$edgeMode"
+        >
+            <v-alert type="info">
+                You're using the edge (beta) version of Schedules. To go to the
+                tried and tested release site, click anywhere in this box or go
+                to https://schedules.unisontech.org.
+            </v-alert>
+        </a>
 
         <v-card
             v-for="(schedule, id) in schedules"
@@ -16,27 +33,25 @@
             outlined
         >
             <v-card-title>
-                <v-icon medium left v-text="$data[schedule.icon]" />
+                <v-icon medium left v-text="scheduleIcons[schedule.icon]" />
                 <span v-text="schedule.name" />
             </v-card-title>
         </v-card>
 
-        <div v-if="$developmentMode">
-            <v-divider class="my-5" />
-
-            <v-card
-                :to="{ name: 'NewSchedule' }"
-                title="Create a new schedule"
-                aria-label="Create a new schedule"
-                class="mx-auto schedule-card text-wrap--break"
-                outlined
-            >
-                <v-card-title>
-                    <v-icon medium left v-text="mdiPlus" />
-                    New Schedule
-                </v-card-title>
-            </v-card>
-        </div>
+        <v-card
+            to="/schedule/countdown"
+            title="Countdown"
+            aria-label="Countdown"
+            color="#C2185B"
+            class="mx-auto schedule-card text-wrap--break"
+            dark
+            outlined
+        >
+            <v-card-title>
+                <v-icon medium left v-text="mdiTimerSand" />
+                <span>Countdown</span>
+            </v-card-title>
+        </v-card>
 
         <v-divider class="my-5" />
 
@@ -45,7 +60,7 @@
             aria-label="Release notes"
             class="mx-auto schedule-card text-wrap--break"
             outlined
-            @click="dialogs.releaseNotes = true"
+            @click="releaseNotesDialog = true"
         >
             <v-card-title>
                 Release Notes
@@ -53,66 +68,179 @@
         </v-card>
 
         <v-card
-            title="Privacy notice"
-            aria-label="Privacy notice"
+            title="About"
+            aria-label="About"
             class="mx-auto schedule-card text-wrap--break"
             outlined
-            @click="dialogs.privacy = true"
+            @click="aboutDialog = true"
         >
             <v-card-title>
-                Privacy Notice
+                About
             </v-card-title>
         </v-card>
 
-        <v-dialog v-model="dialogs.releaseNotes" width="750" scrollable>
-            <release-notes @close="closeDialogs" />
-        </v-dialog>
-        <v-dialog v-model="dialogs.privacy" width="750" scrollable>
-            <privacy
-                @installUmami="installUmami"
-                @uninstallUmami="uninstallUmami"
-                @close="closeDialogs"
+        <v-card
+            title="Help Center"
+            aria-label="Help Center"
+            class="mx-auto schedule-card text-wrap--break"
+            outlined
+            @click="helpDialog = true"
+        >
+            <v-card-title>
+                Help Center
+            </v-card-title>
+        </v-card>
+
+        <v-card
+            title="Analytics notice"
+            aria-label="Analytics notice"
+            class="mx-auto schedule-card text-wrap--break"
+            outlined
+            @click="analyticsNotice = true"
+        >
+            <v-card-title>
+                Analytics Notice
+            </v-card-title>
+        </v-card>
+
+        <v-dialog v-model="releaseNotesDialog" width="500" scrollable>
+            <utds-release-notes
+                :currentVersion="currentVersion"
+                :rawReleaseNotes="releaseNotes"
+                githubRepository="hkamran80/schedules"
+                :markdown="true"
+                @close="releaseNotesDialog = false"
             />
         </v-dialog>
-    </center-layout>
+        <v-dialog v-model="analyticsNotice" width="500" scrollable>
+            <analytics-notice @close="analyticsNotice = false" />
+        </v-dialog>
+        <v-dialog v-model="aboutDialog" width="500" scrollable>
+            <about :version="currentVersion" @close="aboutDialog = false" />
+        </v-dialog>
+        <v-dialog v-model="helpDialog" width="500" scrollable>
+            <help-center
+                @openHelpTopic="openHelpTopic"
+                @close="helpDialog = false"
+            />
+        </v-dialog>
+        <v-dialog v-model="helpTopicDialog" width="800" scrollable>
+            <help-center-topic
+                :key="helpTopicId"
+                :id="helpTopicId"
+                :metadata="helpTopicMetadata"
+                @close="closeHelpTopic"
+            />
+        </v-dialog>
+    </utds-layout>
 </template>
 
-<script>
-import CenterLayout from "@/components/CenterLayout.vue";
-const ReleaseNotes = () => import("@/components/dialogs/ReleaseNotes.vue");
-const Privacy = () => import("@/components/dialogs/Privacy.vue");
+<script lang="ts">
+import { defineComponent, ref, SetupContext } from "@vue/composition-api";
+import {
+    UtdsLayout,
+    UtdsHeader,
+    UtdsReleaseNotes,
+} from "utds-component-library";
+import {
+    mdiPlus,
+    mdiSchoolOutline,
+    mdiTimerSand,
+    mdiAlertOutline,
+} from "@mdi/js";
+import { version as currentVersion } from "../../package.json";
+import releaseNotes from "@/releaseNotes.json";
 
-import { mdiPlus, mdiSchoolOutline } from "@mdi/js";
+import { Nullable } from "@/structures/types";
+import { generateNotFoundMessage } from "@/constructs/strings";
+import { HelpCenterTopic as HelpCenterTopicInterface } from "@/structures/helpcenter";
 
-export default {
-    name: "Home",
+const AnalyticsNotice = () => import("@/components/AnalyticsNotice.vue");
+const About = () => import("@/components/About.vue");
+const HelpCenter = () => import("@/components/HelpCenter.vue");
+const HelpCenterTopic = () => import("@/components/HelpCenterTopic.vue");
+
+export default defineComponent({
     props: {
         schedules: {
             type: Object,
             required: true,
             default: function() {
                 return {};
-            }
-        }
-    },
-    components: { CenterLayout, ReleaseNotes, Privacy },
-    data: function() {
-        return {
-            dialogs: {
-                releaseNotes: false,
-                privacy: false
             },
-            mdiPlus: mdiPlus,
-            mdiSchoolOutline: mdiSchoolOutline
+        },
+    },
+    components: {
+        UtdsLayout,
+        UtdsHeader,
+        UtdsReleaseNotes,
+        AnalyticsNotice,
+        About,
+        HelpCenter,
+        HelpCenterTopic,
+    },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    setup(_: any, context: SetupContext) {
+        const releaseNotesDialog = ref(false);
+        const analyticsNotice = ref(false);
+        const aboutDialog = ref(false);
+        const helpDialog = ref(false);
+        const helpTopicDialog = ref(false);
+
+        const helpTopicId = ref(null as Nullable<string>);
+        const helpTopicMetadata = ref(
+            null as Nullable<HelpCenterTopicInterface>
+        );
+
+        const error = (context.root.$route.query.notFound
+            ? generateNotFoundMessage(
+                  context.root.$route.query.notFound as string
+              )
+            : null) as Nullable<string>;
+
+        const openHelpTopic = (
+            id: string,
+            metadata: HelpCenterTopicInterface
+        ) => {
+            helpTopicId.value = id;
+            helpTopicMetadata.value = metadata;
+            helpTopicDialog.value = true;
+        };
+        const closeHelpTopic = () => {
+            helpTopicId.value = null;
+            helpTopicMetadata.value = null;
+            helpTopicDialog.value = false;
+        };
+
+        return {
+            // Versions
+            currentVersion,
+            releaseNotes,
+
+            // Dialogs
+            releaseNotesDialog,
+            analyticsNotice,
+            aboutDialog,
+            helpDialog,
+            helpTopicDialog,
+
+            // Help Topic
+            helpTopicId,
+            helpTopicMetadata,
+            openHelpTopic,
+            closeHelpTopic,
+
+            // General Information
+            error,
+
+            // Icons
+            mdiPlus,
+            mdiTimerSand,
+            mdiAlertOutline,
+            scheduleIcons: { mdiSchoolOutline },
         };
     },
-    methods: {
-        closeDialogs: function() {
-            this.dialogs.releaseNotes = false;
-            this.dialogs.privacy = false;
-        }
-    }
-};
+});
 </script>
 
 <style scoped>
@@ -120,8 +248,6 @@ export default {
     padding: 0 5px;
     margin: 10px 0;
     text-align: center;
-    word-break: break-word;
-    word-wrap: break-word;
 }
 .v-card.schedule-card i.v-icon {
     margin-right: 15px;
