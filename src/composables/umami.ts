@@ -47,7 +47,7 @@ export function installUmami(root: ComponentInstance): void {
     }
 }
 
-export function uninstallUmami(root: ComponentInstance) {
+export function uninstallUmami(root: ComponentInstance): void {
     if (!root.$developmentMode && checkUmamiInstalled()) {
         const umamiScript = document.getElementById("umami-script");
 

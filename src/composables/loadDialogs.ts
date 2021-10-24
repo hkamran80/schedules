@@ -1,6 +1,6 @@
 import { ref } from "@vue/composition-api";
 
-export function loadDialogs() {
+export function loadDialogs(): any {
     const periodNamesEditDialog = ref(false);
     const periodNamesEditDialogForceRender = ref(0);
     const periodNamesExportDialog = ref(false);

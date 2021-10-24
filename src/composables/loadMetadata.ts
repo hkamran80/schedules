@@ -1,7 +1,7 @@
 import { Schedule } from "@/structures/schedule";
 import { computed } from "@vue/composition-api";
 
-export function loadMetadata(scheduleId: string, schedules: Schedule) {
+export function loadMetadata(scheduleId: string, schedules: Schedule): any {
     const currentSchedule = schedules[scheduleId];
 
     const name = currentSchedule.name;
