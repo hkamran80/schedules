@@ -4,7 +4,7 @@ import {
     AllowedNotifications,
 } from "@/structures/notifications";
 
-export function loadNotifications() {
+export function loadNotifications(): any {
     const notifications = ref({
         oneHour: false,
         thirtyMinute: false,

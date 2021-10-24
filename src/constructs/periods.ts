@@ -140,7 +140,7 @@ export function loadPeriodNames(
                 .forEach((period) => (periodNames[period] = ""));
         }
 
-        return periodNames as PeriodNames;
+        return periodNames;
     }
 
     return null;
