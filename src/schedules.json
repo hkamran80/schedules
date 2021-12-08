@@ -82,5 +82,55 @@
                 "Sixth Period": ["13-35-01", "15-05-00"]
             }
         }
+    },
+    "ca-auhsd-fss": {
+        "name": "AUHSD Finals Schedule",
+        "shortName": "AUHSD Finals",
+        "icon": "mdiSchoolOutline",
+        "color": "#343254",
+        "schedule": {
+            "MON": {
+                "Zero Period": ["07-15-00", "08-30-00"],
+                "Passing (Zero / First Periods)": ["08-30-01", "08-35-00"],
+                "First Period": ["08-35-01", "09-20-00"],
+                "Passing (First / Second Periods)": ["09-20-01", "09-25-00"],
+                "Second Period": ["09-25-01", "10-10-00"],
+                "Passing (Second / Third Periods)": ["10-10-01", "10-15-00"],
+                "Third Period": ["10-15-01", "11-00-00"],
+                "Brunch": ["11-00-01", "11-15-00"],
+                "Fourth Period": ["11-15-01", "12-00-00"],
+                "Passing (Fourth / Fifth Periods)": ["12-00-01", "12-05-00"],
+                "Fifth Period": ["12-05-01", "12-50-00"],
+                "Lunch": ["12-50-01", "13-25-00"],
+                "Passing (Lunch / Sixth Period)": ["13-25-01", "13-30-00"],
+                "Sixth Period": ["13-30-01", "14-15-00"],
+                "Passing (Sixth / Seventh Periods)": ["14-15-01", "14-20-00"],
+                "Seventh Period": ["14-20-01", "15-05-00"]
+            },
+            "TUE": {
+                "Zero Period": ["08-00-00", "10-00-00"],
+                "Brunch": ["10-00-01", "10-15-00"],
+                "Passing (Brunch / Fourth Period)": ["10-15-01", "10-20-00"],
+                "Fourth Period": ["10-20-01", "12-20-00"]
+            },
+            "WED": {
+                "First Period": ["08-00-00", "10-00-00"],
+                "Brunch": ["10-00-01", "10-15-00"],
+                "Passing (Brunch / Fifth Period)": ["10-15-01", "10-20-00"],
+                "Fifth Period": ["10-20-01", "12-20-00"]
+            },
+            "THU": {
+                "Second Period": ["08-00-00", "10-00-00"],
+                "Brunch": ["10-00-01", "10-15-00"],
+                "Passing (Brunch / Seventh Period)": ["10-15-01", "10-20-00"],
+                "Seventh Period": ["10-20-01", "12-20-00"]
+            },
+            "FRI": {
+                "Third Period": ["08-00-00", "10-00-00"],
+                "Brunch": ["10-00-01", "10-15-00"],
+                "Passing (Brunch / Sixth Period)": ["10-15-01", "10-20-00"],
+                "Sixth Period": ["10-20-01", "12-20-00"]
+            }
+        }
     }
 }
