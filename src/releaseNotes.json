@@ -132,5 +132,9 @@
     "3.0.1": {
         "releaseDate": "2021-12-07",
         "changelog": ["Add the AUHSD Finals schedule"]
+    },
+    "3.0.2": {
+        "releaseDate": "2022-01-04",
+        "changelog": ["Remove the AUHSD Finals schedule"]
     }
 }
