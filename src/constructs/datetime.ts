@@ -5,7 +5,7 @@ import {
     PrettyDayTime,
 } from "@/structures/datetime";
 import { hourConversion, padNumber } from "@/constructs/calculations";
-import { ScheduleTimes } from "@/structures/schedule";
+import { OffDays, ScheduleTimes } from "@/structures/schedule";
 import { HourConversionType } from "@/structures/calculations";
 import {
     deleteFromStorage,
@@ -71,8 +71,74 @@ export function getTimes(useTwentyFourHourTime = false): NewTimes {
     } as NewTimes;
 }
 
+function addDays(date: Date, days: number): Date {
+    const newDate = new Date(date.valueOf());
+    newDate.setDate(newDate.getDate() + days);
+
+    return newDate;
+}
+
+function getDates(startDate: Date, stopDate: Date): Date[] {
+    const dateArray = [];
+    let currentDate = startDate;
+
+    while (currentDate <= stopDate) {
+        dateArray.push(currentDate);
+        currentDate = addDays(currentDate, 1);
+    }
+
+    return dateArray;
+}
+
+export function checkOffDay(offDays: OffDays): boolean {
+    const date = new Date();
+    const tzOffset = date.getTimezoneOffset() / 60;
+    const finalTzOffset = (tzOffset > 0 ? "+" : "-") + padNumber(tzOffset);
+    const dateString =
+        date.getFullYear() +
+        "-" +
+        padNumber(date.getMonth() + 1) +
+        "-" +
+        padNumber(date.getDate());
+
+    return (
+        Object.values(offDays)
+            .flatMap((offDayPeriod) =>
+                offDayPeriod.length > 1
+                    ? getDates(
+                          addDays(
+                              new Date(
+                                  offDayPeriod[0] +
+                                      "T12:00:00" +
+                                      finalTzOffset +
+                                      ":00"
+                              ),
+                              1
+                          ),
+                          addDays(
+                              new Date(
+                                  offDayPeriod[1] +
+                                      "T12:00:00" +
+                                      finalTzOffset +
+                                      ":00"
+                              ),
+                              1
+                          )
+                      ).map(
+                          (date) =>
+                              date.getFullYear() +
+                              "-" +
+                              padNumber(date.getMonth() + 1) +
+                              "-" +
+                              padNumber(date.getDate())
+                      )
+                    : offDayPeriod
+            )
+            .indexOf(dateString) !== -1
+    );
+}
+
 export function getLongDayFromShort(shortenedDay: string): string | null {
-    // return Object.values(days)[Object.keys(days).indexOf(shortenedDay)] || null;
     return getValueFromObjectSearch(shortenedDay, days);
 }
 

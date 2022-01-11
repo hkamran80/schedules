@@ -32,21 +32,28 @@
             </template>
         </utds-header>
 
-        <v-card class="mx-auto" outlined>
-            <v-card-title
-                class="title font-weight-regular"
-                v-text="
-                    currentPeriod.period !== null
-                        ? `${currentPeriod.name} - ${currentPeriod.remainingTime}`
-                        : 'No Period'
-                "
-            />
-        </v-card>
-        <v-card class="mx-auto" outlined v-if="nextPeriod.period !== null">
-            <v-card-title
-                class="title font-weight-regular"
-                v-text="`${nextPeriod.name} - ${nextPeriod.startTime}`"
-            />
+        <div v-if="!offDay">
+            <v-card class="mx-auto" outlined>
+                <v-card-title
+                    class="title font-weight-regular"
+                    v-text="
+                        currentPeriod.period !== null
+                            ? `${currentPeriod.name} - ${currentPeriod.remainingTime}`
+                            : 'No Period'
+                    "
+                />
+            </v-card>
+            <v-card class="mx-auto" outlined v-if="nextPeriod.period !== null">
+                <v-card-title
+                    class="title font-weight-regular"
+                    v-text="`${nextPeriod.name} - ${nextPeriod.startTime}`"
+                />
+            </v-card>
+        </div>
+        <v-card class="mx-auto" outlined v-else>
+            <v-card-title class="title font-weight-regular">
+                Enjoy your break!
+            </v-card-title>
         </v-card>
 
         <div v-if="debugMode">
@@ -179,7 +186,7 @@ import {
     convertPeriodNames,
     convertAllowedNotifications,
 } from "@/constructs/update";
-import { getDayOverride } from "@/constructs/datetime";
+import { getDayOverride, checkOffDay } from "@/constructs/datetime";
 import { getValueFromObjectSearch } from "@/constructs/objects";
 import {
     checkForCustomPeriodName,
@@ -237,7 +244,7 @@ export default defineComponent({
             });
         }
 
-        const { name, shortName, schedule, color } = loadMetadata(
+        const { name, shortName, schedule, color, offDays } = loadMetadata(
             scheduleId,
             props.schedules
         );
@@ -304,6 +311,7 @@ export default defineComponent({
             twentyFourHourStatus,
             getNewTimes,
         } = loadDatetime();
+        const offDay = ref<boolean>(false);
 
         // Other
         const debugMode = ref(context.root.$route.query.debug === "true");
@@ -527,81 +535,87 @@ export default defineComponent({
             getNewTimes();
             loadDayOverride();
 
-            currentPeriod.value.period = getCurrentPeriod(
-                daySchedule.value,
-                dayTime.value.splitTime || "13-05-00"
-            );
+            if (!checkOffDay(offDays)) {
+                offDay.value = false;
 
-            if (currentPeriod.value.period) {
-                currentPeriod.value.name = checkForCustomPeriodName(
-                    currentPeriod.value.period.name,
-                    periodNames.value,
-                    true
+                currentPeriod.value.period = getCurrentPeriod(
+                    daySchedule.value,
+                    dayTime.value.splitTime || "13-05-00"
                 );
 
-                periodDifferences.value.different =
-                    currentPeriod.value.period.name ===
-                    periodDifferences.value.previousName;
-                periodDifferences.value.previousName =
-                    currentPeriod.value.period.name;
-
-                if (currentPeriod.value.period.times) {
-                    nextPeriod.value.period = getNextPeriod(
-                        daySchedule.value,
-                        currentPeriod.value.period.times.end || "13-05-00"
+                if (currentPeriod.value.period) {
+                    currentPeriod.value.name = checkForCustomPeriodName(
+                        currentPeriod.value.period.name,
+                        periodNames.value,
+                        true
                     );
-                    if (nextPeriod.value.period) {
-                        nextPeriod.value.name = checkForCustomPeriodName(
-                            nextPeriod.value.period.name,
-                            periodNames.value,
-                            true
-                        );
 
-                        if (nextPeriod.value.period.times) {
-                            nextPeriod.value.startTime = hourConversion(
-                                twentyFourHourStatus.value
-                                    ? HourConversionType.TwentyFourHour
-                                    : HourConversionType.TwelveHour,
-                                nextPeriod.value.period.times.start
+                    periodDifferences.value.different =
+                        currentPeriod.value.period.name ===
+                        periodDifferences.value.previousName;
+                    periodDifferences.value.previousName =
+                        currentPeriod.value.period.name;
+
+                    if (currentPeriod.value.period.times) {
+                        nextPeriod.value.period = getNextPeriod(
+                            daySchedule.value,
+                            currentPeriod.value.period.times.end || "13-05-00"
+                        );
+                        if (nextPeriod.value.period) {
+                            nextPeriod.value.name = checkForCustomPeriodName(
+                                nextPeriod.value.period.name,
+                                periodNames.value,
+                                true
                             );
+
+                            if (nextPeriod.value.period.times) {
+                                nextPeriod.value.startTime = hourConversion(
+                                    twentyFourHourStatus.value
+                                        ? HourConversionType.TwentyFourHour
+                                        : HourConversionType.TwelveHour,
+                                    nextPeriod.value.period.times.start
+                                );
+                            } else {
+                                nextPeriod.value.period = null;
+                            }
                         } else {
                             nextPeriod.value.period = null;
                         }
-                    } else {
-                        nextPeriod.value.period = null;
-                    }
 
-                    const [
-                        rtHour,
-                        rtMinute,
-                        rtSecond,
-                    ] = calculateTimeDifference(
-                        dayTime.value.splitTime || "13-05-00",
-                        currentPeriod.value.period.times.end || "13-05-00"
-                    );
-                    currentPeriod.value.remainingTime =
-                        padNumber(rtHour) +
-                        ":" +
-                        padNumber(rtMinute) +
-                        ":" +
-                        padNumber(rtSecond);
+                        const [
+                            rtHour,
+                            rtMinute,
+                            rtSecond,
+                        ] = calculateTimeDifference(
+                            dayTime.value.splitTime || "13-05-00",
+                            currentPeriod.value.period.times.end || "13-05-00"
+                        );
+                        currentPeriod.value.remainingTime =
+                            padNumber(rtHour) +
+                            ":" +
+                            padNumber(rtMinute) +
+                            ":" +
+                            padNumber(rtSecond);
 
-                    if (periodDifferences.value.different) {
-                        periodDifferences.value.different = false;
+                        if (periodDifferences.value.different) {
+                            periodDifferences.value.different = false;
 
-                        notifications.value.oneHour = false;
-                        notifications.value.thirtyMinute = false;
-                        notifications.value.fifteenMinute = false;
-                        notifications.value.tenMinute = false;
-                        notifications.value.fiveMinute = false;
-                        notifications.value.oneMinute = false;
-                        notifications.value.thirtySecond = false;
-                    }
+                            notifications.value.oneHour = false;
+                            notifications.value.thirtyMinute = false;
+                            notifications.value.fifteenMinute = false;
+                            notifications.value.tenMinute = false;
+                            notifications.value.fiveMinute = false;
+                            notifications.value.oneMinute = false;
+                            notifications.value.thirtySecond = false;
+                        }
 
-                    if (rtHour && rtMinute && rtSecond) {
-                        notifySchedule(rtHour, rtMinute, rtSecond);
+                        if (rtHour && rtMinute && rtSecond) {
+                            notifySchedule(rtHour, rtMinute, rtSecond);
+                        }
                     }
                 }
+            } else {
+                offDay.value = true;
             }
         };
 
@@ -639,6 +653,7 @@ export default defineComponent({
 
             prettyDateAndTime,
             overrideExpirationTime,
+            offDay,
 
             // Functions
             toggleDebugMode,
