@@ -81,6 +81,14 @@
                 "Passing (Lunch / Sixth Period)": ["13-25-01", "13-35-00"],
                 "Sixth Period": ["13-35-01", "15-05-00"]
             }
+        },
+        "offDays": {
+            "Winter Break": ["2021-12-20", "2022-01-03"],
+            "Martin Luther King Jr. Day": ["2022-01-17"],
+            "Presidents' Day Weekend": ["2022-02-18", "2022-02-21"],
+            "Staff Development Day": ["2022-03-18"],
+            "Spring Break": ["2022-04-04", "2022-04-08"],
+            "Memorial Day": ["2022-05-30"]
         }
     },
     "tx-conroeisd-twcp-a": {
@@ -249,7 +257,8 @@
                 ],
                 "Seventh Period": ["13-49-01", "14-35-00"]
             }
-        }
+        },
+        "offDays": {}
     },
     "tx-conroeisd-twcp-b": {
         "name": "The Woodlands College Park High School (B-Lunch)",
@@ -422,7 +431,8 @@
                 ],
                 "Seventh Period": ["13-49-01", "14-35-00"]
             }
-        }
+        },
+        "offDays": {}
     },
     "tx-conroeisd-twcp-c": {
         "name": "The Woodlands College Park High School (C-Lunch)",
@@ -595,7 +605,8 @@
                 ],
                 "Seventh Period": ["13-49-01", "14-35-00"]
             }
-        }
+        },
+        "offDays": {}
     },
     "tx-conroeisd-twcp-d": {
         "name": "The Woodlands College Park High School (D-Lunch)",
@@ -763,6 +774,7 @@
                 ],
                 "Seventh Period": ["13-49-01", "14-35-00"]
             }
-        }
+        },
+        "offDays": {}
     }
 }

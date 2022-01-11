@@ -140,5 +140,9 @@
     "3.0.3": {
         "releaseDate": "2022-01-10",
         "changelog": ["Add the College Park High School schedule"]
+    },
+    "3.1.0-edge.0": {
+        "releaseDate": "2022-01-11",
+        "changelog": ["Add off days to all schedules"]
     }
 }
