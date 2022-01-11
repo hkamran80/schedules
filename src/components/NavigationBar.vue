@@ -1,52 +1,63 @@
 <template>
-    <div>
-        <v-row id="navigation" no-gutters>
-            <v-col align-self="center" justify="center">
-                <router-link to="/" title="Home" aria-label="Home">
-                    <h1 color="primary">
-                        Schedules <span v-if="$edgeMode">(edge)</span>
-                        <span v-if="$developmentMode">(dev)</span>
-                    </h1>
-                </router-link>
-            </v-col>
-            <v-col align-self="center" cols="2" class="text-right">
-                <v-btn
-                    href="https://form.typeform.com/to/g0MlHGXj"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    icon
-                    class="navigation-item"
-                    title="Open Feedback Form"
-                    aria-label="Open Feedback Form"
-                    color="primary"
-                >
-                    <v-icon v-text="mdiCommentMultipleOutline" />
-                </v-btn>
-                <v-btn
-                    icon
-                    class="navigation-item"
-                    title="Toggle Theme"
-                    aria-label="Toggle Theme"
-                    color="primary"
-                    @click="toggleTheme"
-                >
-                    <v-icon v-text="mdiThemeLightDark" />
-                </v-btn>
-            </v-col>
-        </v-row>
-    </div>
+    <utds-navigation-bar
+        :title="
+            `Schedules ${
+                $edgeMode ? '(edge)' : $developmentMode ? '(dev)' : ''
+            }`.trim()
+        "
+        :vueRouterInstalled="true"
+        homeLinkColor="primary"
+        :buttons="buttons"
+        @toggleTheme="toggleTheme"
+    />
 </template>
 
 <script>
+import {
+    UtdsNavigationBar,
+    UtdsNavigationBarStructures,
+} from "utds-component-library";
 import { mdiThemeLightDark, mdiCommentMultipleOutline } from "@mdi/js";
 
 export default {
     name: "NavigationBar",
+    components: { UtdsNavigationBar },
     data: function() {
         return {
-            mdiThemeLightDark: mdiThemeLightDark,
-            mdiCommentMultipleOutline: mdiCommentMultipleOutline
+            buttons: [
+                {
+                    type: UtdsNavigationBarStructures.ButtonType.Link,
+                    assistanceLabel: "Open Feedback Form",
+                    color: "primary",
+                    icon: mdiCommentMultipleOutline,
+                    visibleType:
+                        UtdsNavigationBarStructures.ButtonVisibleType.Icon,
+                    href: "https://form.typeform.com/to/g0MlHGXj",
+                    target: UtdsNavigationBarStructures.LinkTarget.NewTab,
+                    linkType:
+                        UtdsNavigationBarStructures.LinkButtonLinkType.External,
+                },
+                {
+                    type: UtdsNavigationBarStructures.ButtonType.Function,
+                    assistanceLabel: "Toggle Theme",
+                    color: "primary",
+                    icon: mdiThemeLightDark,
+                    visibleType:
+                        UtdsNavigationBarStructures.ButtonVisibleType.Icon,
+                    callbackName: "toggleTheme",
+                },
+            ],
+            mdiThemeLightDark,
+            mdiCommentMultipleOutline,
         };
+    },
+    created() {
+        if (this.$vuetify.breakpoint.mobile) {
+            document.documentElement.style.setProperty(
+                "--header-icons-margin-left",
+                "0px"
+            );
+        }
     },
     mounted() {
         // Set theme
@@ -69,16 +80,22 @@ export default {
         }
     },
     methods: {
-        toggleTheme: function() {
+        toggleTheme() {
             this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
             localStorage.setItem(
                 "darkTheme",
                 this.$vuetify.theme.dark.toString()
             );
-        }
-    }
+        },
+    },
 };
 </script>
+
+<style>
+:root {
+    --header-icons-margin-left: 10px;
+}
+</style>
 
 <style scoped>
 #navigation {
@@ -90,10 +107,10 @@ export default {
 }
 
 #navigation a.router-link-exact-active {
-    color: #e91e63;
+    color: var(--v-primary-base);
 }
 
 #navigation .navigation-item {
-    margin-right: 8px;
+    margin: 0 var(--header-icons-margin-left);
 }
 </style>

@@ -1,59 +1,144 @@
 {
-    "2.2.0": [
-        "Added a timetable view to the schedule view",
-        "Added this modal for informing users what's new in Schedules",
-        "Improve next period calculation",
-        "Update custom period name display",
-        "Rename beta to edge",
-        "Change developer mode to debug mode",
-        "Add toggle for debug mode",
-        "Add anonymous analytics through Umami",
-        "Add privacy notice for analytics",
-        "Rename beta versioning (X.X.X-beta) to use edge (X.X.X-edge)",
-        "Switch to JSON object for the schedule in schedules.json",
-        "The beginnings of adding a new schedule in the app",
-        "Switch font to Lato",
-        "Add settings panel to manage period names and notifications",
-        "Add notification interval, day, and period toggles",
-        "Add AUHSD Hybrid schedule",
-        "Add security headers"
-    ],
-    "2.2.1": [
-        "Fix Umami analytics activation",
-        "Fix duplicate divider issue with feature coming soon (currently in alpha)"
-    ],
-    "2.3.0": [
-        "Add Sentry.io error and performance monitoring",
-        "Remove the AUHSD Distance Learning schedule",
-        "Reverse the order of the What's New panel",
-        "Change the expansion panel look from accordion",
-        "Automatically open latest version's what's new",
-        "Change What's New to Release Notes",
-        "Add tooltips to the buttons on the schedule page",
-        "Make the space occupied by the theme toggle button smaller",
-        "Add caching headers",
-        "Switch to @mdi/js rather than the stylesheet for improved performance",
-        "Remove the new schedule button from edge",
-        "Switch the AUHSD schedules' icons to the outlined version",
-        "Switch to modern build system (module + nomodule)",
-        "Add Typeform feedback form",
-        "Add icons (favicons and app)",
-        "Add Open Graph and Twitter social meta tags",
-        "Fix CSP policy for the service worker",
-        "Improve performance",
-        "Add icon and badge to notifications",
-        "Add a close button to the timetable",
-        "Change \"Intervals\" to \"Time Remaining\" in notification settings",
-        "Fix the time remaining notifications naming",
-        "Move notification settings to separate dialogs"
-    ],
-    "2.3.1": [
-        "Add the AUHSD First Week and the new AUHSD Standard schedules"
-    ],
-    "2.3.2": [
-        "Remove the AUHSD First Week schedule" 
-    ],
-    "2.3.3": [
-        "Fix the AUHSD Standard schedule's Wednesday and Friday start times"
-    ]
+    "2.2.0": {
+        "releaseDate": "2021-01-11",
+        "changelog": [
+            "Added a timetable view to the schedule view",
+            "Added this modal for informing users what's new in Schedules",
+            "Improve next period calculation",
+            "Update custom period name display",
+            "Rename beta to edge",
+            "Change developer mode to debug mode",
+            "Add toggle for debug mode",
+            "Add anonymous analytics through Umami",
+            "Add privacy notice for analytics",
+            "Rename beta versioning (X.X.X-beta) to use edge (X.X.X-edge)",
+            "Switch to JSON object for the schedule in schedules.json",
+            "The beginnings of adding a new schedule in the app",
+            "Switch font to Lato",
+            "Add settings panel to manage period names and notifications",
+            "Add notification interval, day, and period toggles",
+            "Add AUHSD Hybrid schedule",
+            "Add security headers"
+        ]
+    },
+    "2.2.1": {
+        "releaseDate": "2021-03-24",
+        "changelog": [
+            "Fix Umami analytics activation",
+            "Fix duplicate divider issue with feature coming soon (currently in alpha)"
+        ]
+    },
+    "2.3.0": {
+        "releaseDate": "2021-04-21",
+        "changelog": [
+            "Add Sentry.io error and performance monitoring",
+            "Remove the AUHSD Distance Learning schedule",
+            "Reverse the order of the What's New panel",
+            "Change the expansion panel look from accordion",
+            "Automatically open latest version's what's new",
+            "Change What's New to Release Notes",
+            "Add tooltips to the buttons on the schedule page",
+            "Make the space occupied by the theme toggle button smaller",
+            "Add caching headers",
+            "Switch to @mdi/js rather than the stylesheet for improved performance",
+            "Remove the new schedule button from edge",
+            "Switch the AUHSD schedules' icons to the outlined version",
+            "Switch to modern build system (module + nomodule)",
+            "Add Typeform feedback form",
+            "Add icons (favicons and app)",
+            "Add Open Graph and Twitter social meta tags",
+            "Fix CSP policy for the service worker",
+            "Improve performance",
+            "Add icon and badge to notifications",
+            "Add a close button to the timetable",
+            "Change \"Intervals\" to \"Time Remaining\" in notification settings",
+            "Fix the time remaining notifications naming",
+            "Move notification settings to separate dialogs"
+        ]
+    },
+    "2.3.1": {
+        "releaseDate": "2021-08-04",
+        "changelog": [
+            "Add the AUHSD First Week and the new AUHSD Standard schedules"
+        ]
+    },
+    "2.3.2": {
+        "releaseDate": "2021-08-16",
+        "changelog": ["Remove the AUHSD First Week schedule"]
+    },
+    "2.3.3": {
+        "releaseDate": "2021-08-18",
+        "changelog": [
+            "Fix the AUHSD Standard schedule's Wednesday and Friday start times"
+        ]
+    },
+    "3.0.0": {
+        "releaseDate": "2021-09-03",
+        "changelog": [
+            "Change Umami domain to unisontech.org",
+            "Add source maps with Sentry for enhanced error logging",
+            "Dynamically generate the meta descriptive tags",
+            "Add twenty-four hour time switch",
+            "Increase padding around the icons",
+            "Switch to TypeScript ([issue #118](https://github.com/hkamran80/schedules/issues/118))",
+            "Add a countdown to any time ([issue #120](https://github.com/hkamran80/schedules/issues/120))",
+            "Switch to UTDS components ([issue #117](https://github.com/hkamran80/schedules/issues/117))",
+            "Fix theme issues ([issue #112](https://github.com/hkamran80/schedules/issues/112))",
+            "Switch the console link about service workers to a UT short link",
+            "Add an about page ([issue #115](https://github.com/hkamran80/schedules/issues/115))",
+            "Change \"Privacy Notice\" to \"Analytics Notice\"",
+            "Switch to the Clipboard API with the `execCommand` method as a fallback for the period name exporting",
+            "Switch the Umami mixin to composables",
+            "Switch the update mechanism mixin to composables",
+            "Add minimum and maximum values to the countdown time picker",
+            "Update no JavaScript notice",
+            "Switch to `netlify.toml` from `_redirects` and `_headers`",
+            "Add some redirects to fix the `.map` and the precache manifests not being found",
+            "Add preconnect to Sentry",
+            "Add help center ([issue #121](https://github.com/hkamran80/schedules/issues/121))",
+            "Change countdown button color to Schedules' primary light variant",
+            "Prevent words breaking in the middle in dialog titles",
+            "Expand click/tap area for help center topics",
+            "Add the `Adding a Topic` help center topic",
+            "Remove `window.PushManager` from the notifications supported check",
+            "Remove the CORS bypass endpoint",
+            "Add unit tests",
+            "Fix help center spacing",
+            "Fix help center glitches",
+            "Add conversion code (for Schedules 2 to Schedules 3)",
+            "Add legal section to the about dialog",
+            "Fix the conversion code",
+            "Add error handling to conversion code",
+            "Disable timetable when no schedule is available",
+            "Add compatibility for older browsers",
+            "Fix theming",
+            "Fix schedule page on Safari",
+            "Add tips",
+            "Move debug mode button",
+            "Make timetable periods bigger",
+            "Prevent closing edit period names dialog if names are not saved",
+            "Fix typos in period names (AUHSD Standard)",
+            "Fix tips notifications",
+            "Change no JavaScript message (again)",
+            "Add more help center topics",
+            "Add message to homepage about using edge version",
+            "Switch the homepage to the Composition API",
+            "Add the new logo (thanks to J. Quam)",
+            "Add an updated social preview",
+            "Fix bug with schedule icon",
+            "Fix spelling mistakes"
+        ]
+    },
+    "3.0.1": {
+        "releaseDate": "2021-12-07",
+        "changelog": ["Add the AUHSD Finals schedule"]
+    },
+    "3.0.2": {
+        "releaseDate": "2022-01-04",
+        "changelog": ["Remove the AUHSD Finals schedule"]
+    },
+    "3.0.3": {
+        "releaseDate": "2022-01-10",
+        "changelog": ["Add the College Park High School schedule"]
+    }
 }

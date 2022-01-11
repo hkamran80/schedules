@@ -1,0 +1,3 @@
+To view a schedule, go to the homepage of Schedules and select one of the schedules. They are the cards above the "Countdown" card.
+
+On the schedule page, underneath the schedule name is the current day and time. To the right of that, is the button to view the timetable and access settings. Underneath the header, there are two cards. The first is the current period and time remaining. The second is the next period and when that starts. If no period is available, only one card will be shown and it will say "No Period".

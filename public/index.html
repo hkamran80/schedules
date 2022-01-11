@@ -7,34 +7,45 @@
         <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 
         <!-- Descriptive Tags -->
-        <meta name="title" content="Schedules" />
-        <meta name="description" content="An app for schedules" />
+        <meta name="title" content="<%= htmlWebpackPlugin.options.title %>" />
+        <meta
+            name="description"
+            content="<%= htmlWebpackPlugin.options.description %>"
+        />
 
         <!-- Open Graph / Facebook -->
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://schedules.unisontech.org/" />
-        <meta property="og:title" content="Schedules" />
+        <meta
+            property="og:url"
+            content="<%= htmlWebpackPlugin.options.url %>"
+        />
+        <meta
+            property="og:title"
+            content="<%= htmlWebpackPlugin.options.title %>"
+        />
         <meta
             property="og:description"
-            content="An app for schedules. Find out exactly how much time is remaining in a period or what the period is."
+            content="<%= htmlWebpackPlugin.options.description %>"
         />
-        <meta property="og:image" content="/img/social_preview.png" />
+        <meta property="og:image" content="/img/social-preview.png" />
 
         <!-- Twitter -->
         <meta property="twitter:card" content="summary_large_image" />
         <meta
             property="twitter:url"
-            content="https://schedules.unisontech.org/"
+            content="<%= htmlWebpackPlugin.options.url %>"
         />
-        <meta property="twitter:title" content="Schedules" />
+        <meta
+            property="twitter:title"
+            content="<%= htmlWebpackPlugin.options.title %>"
+        />
         <meta
             property="twitter:description"
-            content="An app for schedules. Find out exactly how much time is remaining in a period or what the period is."
+            content="<%= htmlWebpackPlugin.options.description %>"
         />
-        <meta property="twitter:image" content="/img/social_preview.png" />
+        <meta property="twitter:image" content="/img/social-preview.png" />
 
         <!--  Supporting Tags -->
-        <meta property="og:site_name" content="Schedules" />
         <meta
             name="twitter:image:alt"
             content="The Schedules logo on a background comprised of the light and dark variants of Schedules' primary color"
@@ -132,17 +143,22 @@
 
         <!-- Preconnect, prefetch, and preload -->
         <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link rel="dns-prefetch" href="https://o373497.ingest.sentry.io" />
 
+        <% if (!htmlWebpackPlugin.options.developmentMode) { %>
         <link
             rel="preload"
-            href="https://umami-sepia.vercel.app/umami.js"
+            href="https://umami.unisontech.org/umami.js"
             as="script"
         />
+        <% } %>
 
         <title><%= htmlWebpackPlugin.options.title %></title>
     </head>
     <body>
+        <link rel="stylesheet" href="/css/scrollbars.css" />
+
         <!-- Lato Font -->
         <style>
             @font-face {
@@ -207,47 +223,142 @@
         </style>
 
         <noscript>
-            <div id="container">
-                <div id="body">
-                    <h1>JavaScript</h1>
+            <div id="js-error">
+                <div class="wrapper">
+                    <h1>Hmm.</h1>
                     <p>
-                        Schedules requires JavaScript to be enabled. Please
-                        enable it to continue. You can use
+                        It appears that you don't have JavaScript on. Click
+                        below to learn how to enable JavaScript.
+                    </p>
+                    <div class="buttons">
                         <a
-                            href="https://support.google.com/adsense/answer/12654?hl=en"
-                            target="_blank"
-                            >this Google Support page</a
+                            href="https://go.unisontech.org/enable-js"
+                            title="Learn more about enabling JavaScript"
+                            aria-label="Learn more about enabling JavaScript"
                         >
-                        for instructions on how to enable JavaScript.
-                    </p>
-                    <p>
-                        We apologize for any inconveniences this may have
-                        caused.
-                    </p>
-                    <p>Thank you for using Schedules.</p>
+                            Enable JavaScript
+                        </a>
+                    </div>
+                </div>
+                <div class="space">
+                    <div class="blackhole" />
                 </div>
             </div>
 
             <style>
-                body,
-                html {
-                    height: 100%;
-                    margin: 0;
+                *,
+                :before,
+                :after {
+                    box-sizing: border-box;
                 }
 
-                #container {
-                    height: 100%;
-                    background-position: center;
-                    background-size: cover;
-                    position: relative;
-                    font-family: Lato, sans-serif;
-                    font-size: 25px;
+                body {
+                    background: #c2185b;
+                    color: #ffffff;
                 }
-                #body {
+
+                #js-error {
+                    display: flex;
+                    align-items: center;
+                    min-width: 275px;
+                    height: 100vh;
+                    margin: 0 10vw;
+                    overflow: hidden;
+                    font-family: Lato;
+                }
+                .wrapper {
+                    flex-grow: 2;
+                    width: 40vw;
+                    max-width: 500px;
+                    margin: 0 auto;
+                }
+                h1 {
+                    margin: 0;
+                    font-size: 6em;
+                    font-weight: 300;
+                }
+                p {
+                    width: 95%;
+                    font-size: 1.5em;
+                    line-height: 1.4;
+                }
+                .buttons {
+                    white-space: nowrap;
+                    display: inline-block;
+                }
+                span {
+                    display: block;
+                    text-transform: uppercase;
+                    color: #b9ddfb;
+                    letter-spacing: 1.5px;
+                    text-align: center;
+                }
+                a {
+                    display: inline-block;
+                    padding: 0.8em 1em;
+                    margin-right: 1em;
+                    margin-bottom: 1em;
+                    border: 3px solid #f06292;
+                    color: #ffffff;
+                    font-weight: 500;
+                    text-transform: uppercase;
+                    text-decoration: none;
+                    letter-spacing: 0.2em;
+                    position: relative;
+                    overflow: hidden;
+                    transition: 0.3s;
+                }
+                a:hover {
+                    color: #000000;
+                }
+                a:hover:before {
+                    top: 0;
+                }
+                a:before {
+                    content: "";
+                    background: #f06292;
+                    height: 100%;
+                    width: 100%;
                     position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
+                    top: -100%;
+                    left: 0;
+                    transition: 0.3s;
+                    z-index: -1;
+                }
+                .space {
+                    width: 75px;
+                    height: calc(50vh + 37.5px);
+                    border-top-left-radius: 37.5px;
+                    border-top-right-radius: 37.5px;
+                    overflow: hidden;
+                    margin: calc(50vh - 37.5px) auto 0 auto;
+                    position: relative;
+                    pointer-events: none;
+                    transform: translateZ(0);
+                    -webkit-transform: translateZ(0);
+                }
+                .blackhole {
+                    border: 5px solid #ffffff;
+                    height: 75px;
+                    width: 75px;
+                    border-radius: 50%;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                }
+                .blackhole:after {
+                    content: "";
+                    height: calc(100% + 10px);
+                    width: calc(100% + 10px);
+                    border: 5px solid #ffffff;
+                    border-right-color: transparent;
+                    border-bottom-color: transparent;
+                    border-radius: 50%;
+                    position: absolute;
+                    top: -5px;
+                    left: -5px;
+                    z-index: 5;
+                    transform: rotate(45deg);
                 }
             </style>
         </noscript>

@@ -2,8 +2,8 @@
 node_modules
 /dist
 
-
 # Local environment variables
+.env
 .env.local
 .env.*.local
 
@@ -23,12 +23,6 @@ pnpm-debug.log*
 *.sw?
 .dccache
 
-changes/
-changes.txt
 audits/
 
 tmp*
-
-# Temporary - Alpha feature
-src/views/NewSchedule.vue
-src/components/dialogs/NewSchedule/

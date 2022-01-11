@@ -1,0 +1,23 @@
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 7px;
+}
+
+div#app.theme--light ::-webkit-scrollbar-thumb {
+    background: #cccccc;
+}
+
+div#app.theme--light ::-webkit-scrollbar-thumb:hover {
+    background: #e8e8e8;
+}
+
+div#app.theme--dark ::-webkit-scrollbar-thumb {
+    background: #3e3e3e;
+}
+
+div#app.theme--dark ::-webkit-scrollbar-thumb:hover {
+    background: #545454;
+}
