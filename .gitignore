@@ -2,7 +2,6 @@
 node_modules
 /dist
 
-
 # Local environment variables
 .env.local
 .env.*.local
@@ -22,7 +21,10 @@ pnpm-debug.log*
 *.sln
 *.sw?
 .dccache
+.env
 
 audits/
 
 tmp*
+
+*.schema.json
