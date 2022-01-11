@@ -90,5 +90,691 @@
             "Spring Break": ["2022-04-04", "2022-04-08"],
             "Memorial Day": ["2022-05-30"]
         }
+    },
+    "tx-conroeisd-twcp-a": {
+        "name": "The Woodlands College Park High School (A-Lunch)",
+        "shortName": "College Park (A)",
+        "icon": "mdiSchoolOutline",
+        "color": "#002868",
+        "schedule": {
+            "MON": {
+                "First Period": ["07-20-00", "08-07-00"],
+                "Passing (First Period / Second Period)": [
+                    "08-07-01",
+                    "08-14-00"
+                ],
+                "Second Period": ["08-14-01", "09-00-00"],
+                "Passing (Second Period / Third Period)": [
+                    "09-00-01",
+                    "09-07-00"
+                ],
+                "Third Period": ["09-07-01", "09-53-00"],
+                "Passing (Third Period / Fourth Period)": [
+                    "09-53-01",
+                    "10-00-00"
+                ],
+                "Fourth Period": ["10-00-01", "10-46-00"],
+                "Lunch": ["10-46-01", "11-17-00"],
+                "Passing (Lunch / Advisory)": ["11-17-01", "11-24-00"],
+                "Advisory": ["11-24-01", "11-52-00"],
+                "Fifth Period": ["11-52-01", "12-49-00"],
+                "Passing (Fifth Period / Sixth Period)": [
+                    "12-49-01",
+                    "12-56-00"
+                ],
+                "Sixth Period": ["12-56-01", "13-42-00"],
+                "Passing (Sixth Period / Seventh Period)": [
+                    "13-42-01",
+                    "13-49-00"
+                ],
+                "Seventh Period": ["13-49-01", "14-35-00"]
+            },
+            "TUE": {
+                "First Period": ["07-20-00", "08-07-00"],
+                "Passing (First Period / Second Period)": [
+                    "08-07-01",
+                    "08-14-00"
+                ],
+                "Second Period": ["08-14-01", "09-00-00"],
+                "Passing (Second Period / Third Period)": [
+                    "09-00-01",
+                    "09-07-00"
+                ],
+                "Third Period": ["09-07-01", "09-53-00"],
+                "Passing (Third Period / Fourth Period)": [
+                    "09-53-01",
+                    "10-00-00"
+                ],
+                "Fourth Period": ["10-00-01", "10-46-00"],
+                "Lunch": ["10-46-01", "11-17-00"],
+                "Passing (Lunch / Advisory)": ["11-17-01", "11-24-00"],
+                "Advisory": ["11-24-01", "11-52-00"],
+                "Fifth Period": ["11-52-01", "12-49-00"],
+                "Passing (Fifth Period / Sixth Period)": [
+                    "12-49-01",
+                    "12-56-00"
+                ],
+                "Sixth Period": ["12-56-01", "13-42-00"],
+                "Passing (Sixth Period / Seventh Period)": [
+                    "13-42-01",
+                    "13-49-00"
+                ],
+                "Seventh Period": ["13-49-01", "14-35-00"]
+            },
+            "WED": {
+                "First Period": ["07-20-00", "08-07-00"],
+                "Passing (First Period / Second Period)": [
+                    "08-07-01",
+                    "08-14-00"
+                ],
+                "Second Period": ["08-14-01", "09-00-00"],
+                "Passing (Second Period / Third Period)": [
+                    "09-00-01",
+                    "09-07-00"
+                ],
+                "Third Period": ["09-07-01", "09-53-00"],
+                "Passing (Third Period / Fourth Period)": [
+                    "09-53-01",
+                    "10-00-00"
+                ],
+                "Fourth Period": ["10-00-01", "10-46-00"],
+                "Lunch": ["10-46-01", "11-17-00"],
+                "Passing (Lunch / Advisory)": ["11-17-01", "11-24-00"],
+                "Advisory": ["11-24-01", "11-52-00"],
+                "Fifth Period": ["11-52-01", "12-49-00"],
+                "Passing (Fifth Period / Sixth Period)": [
+                    "12-49-01",
+                    "12-56-00"
+                ],
+                "Sixth Period": ["12-56-01", "13-42-00"],
+                "Passing (Sixth Period / Seventh Period)": [
+                    "13-42-01",
+                    "13-49-00"
+                ],
+                "Seventh Period": ["13-49-01", "14-35-00"]
+            },
+            "THU": {
+                "First Period": ["07-20-00", "08-07-00"],
+                "Passing (First Period / Second Period)": [
+                    "08-07-01",
+                    "08-14-00"
+                ],
+                "Second Period": ["08-14-01", "09-00-00"],
+                "Passing (Second Period / Third Period)": [
+                    "09-00-01",
+                    "09-07-00"
+                ],
+                "Third Period": ["09-07-01", "09-53-00"],
+                "Passing (Third Period / Fourth Period)": [
+                    "09-53-01",
+                    "10-00-00"
+                ],
+                "Fourth Period": ["10-00-01", "10-46-00"],
+                "Lunch": ["10-46-01", "11-17-00"],
+                "Passing (Lunch / Advisory)": ["11-17-01", "11-24-00"],
+                "Advisory": ["11-24-01", "11-52-00"],
+                "Fifth Period": ["11-52-01", "12-49-00"],
+                "Passing (Fifth Period / Sixth Period)": [
+                    "12-49-01",
+                    "12-56-00"
+                ],
+                "Sixth Period": ["12-56-01", "13-42-00"],
+                "Passing (Sixth Period / Seventh Period)": [
+                    "13-42-01",
+                    "13-49-00"
+                ],
+                "Seventh Period": ["13-49-01", "14-35-00"]
+            },
+            "FRI": {
+                "First Period": ["07-20-00", "08-07-00"],
+                "Passing (First Period / Second Period)": [
+                    "08-07-01",
+                    "08-14-00"
+                ],
+                "Second Period": ["08-14-01", "09-00-00"],
+                "Passing (Second Period / Third Period)": [
+                    "09-00-01",
+                    "09-07-00"
+                ],
+                "Third Period": ["09-07-01", "09-53-00"],
+                "Passing (Third Period / Fourth Period)": [
+                    "09-53-01",
+                    "10-00-00"
+                ],
+                "Fourth Period": ["10-00-01", "10-46-00"],
+                "Lunch": ["10-46-01", "11-17-00"],
+                "Passing (Lunch / Advisory)": ["11-17-01", "11-24-00"],
+                "Advisory": ["11-24-01", "11-52-00"],
+                "Fifth Period": ["11-52-01", "12-49-00"],
+                "Passing (Fifth Period / Sixth Period)": [
+                    "12-49-01",
+                    "12-56-00"
+                ],
+                "Sixth Period": ["12-56-01", "13-42-00"],
+                "Passing (Sixth Period / Seventh Period)": [
+                    "13-42-01",
+                    "13-49-00"
+                ],
+                "Seventh Period": ["13-49-01", "14-35-00"]
+            }
+        },
+        "offDays": {}
+    },
+    "tx-conroeisd-twcp-b": {
+        "name": "The Woodlands College Park High School (B-Lunch)",
+        "shortName": "College Park (B)",
+        "icon": "mdiSchoolOutline",
+        "color": "#002868",
+        "schedule": {
+            "MON": {
+                "First Period": ["07-20-00", "08-07-00"],
+                "Passing (First Period / Second Period)": [
+                    "08-07-01",
+                    "08-14-00"
+                ],
+                "Second Period": ["08-14-01", "09-00-00"],
+                "Passing (Second Period / Third Period)": [
+                    "09-00-01",
+                    "09-07-00"
+                ],
+                "Third Period": ["09-07-01", "09-53-00"],
+                "Passing (Third Period / Fourth Period)": [
+                    "09-53-01",
+                    "10-00-00"
+                ],
+                "Fourth Period": ["10-00-01", "10-46-00"],
+                "Passing (Fourth Period / Advisory)": ["10-46-01", "10-53-00"],
+                "Advisory": ["10-53-01", "11-17-00"],
+                "Lunch": ["11-17-01", "11-47-00"],
+                "Passing (Lunch / Fifth Period)": ["11-47-01", "11-52-00"],
+                "Fifth Period": ["11-52-01", "12-49-00"],
+                "Passing (Fifth Period / Sixth Period)": [
+                    "12-49-01",
+                    "12-56-00"
+                ],
+                "Sixth Period": ["12-56-01", "13-42-00"],
+                "Passing (Sixth Period / Seventh Period)": [
+                    "13-42-01",
+                    "13-49-00"
+                ],
+                "Seventh Period": ["13-49-01", "14-35-00"]
+            },
+            "TUE": {
+                "First Period": ["07-20-00", "08-07-00"],
+                "Passing (First Period / Second Period)": [
+                    "08-07-01",
+                    "08-14-00"
+                ],
+                "Second Period": ["08-14-01", "09-00-00"],
+                "Passing (Second Period / Third Period)": [
+                    "09-00-01",
+                    "09-07-00"
+                ],
+                "Third Period": ["09-07-01", "09-53-00"],
+                "Passing (Third Period / Fourth Period)": [
+                    "09-53-01",
+                    "10-00-00"
+                ],
+                "Fourth Period": ["10-00-01", "10-46-00"],
+                "Passing (Fourth Period / Advisory)": ["10-46-01", "10-53-00"],
+                "Advisory": ["10-53-01", "11-17-00"],
+                "Lunch": ["11-17-01", "11-47-00"],
+                "Passing (Lunch / Fifth Period)": ["11-47-01", "11-52-00"],
+                "Fifth Period": ["11-52-01", "12-49-00"],
+                "Passing (Fifth Period / Sixth Period)": [
+                    "12-49-01",
+                    "12-56-00"
+                ],
+                "Sixth Period": ["12-56-01", "13-42-00"],
+                "Passing (Sixth Period / Seventh Period)": [
+                    "13-42-01",
+                    "13-49-00"
+                ],
+                "Seventh Period": ["13-49-01", "14-35-00"]
+            },
+            "WED": {
+                "First Period": ["07-20-00", "08-07-00"],
+                "Passing (First Period / Second Period)": [
+                    "08-07-01",
+                    "08-14-00"
+                ],
+                "Second Period": ["08-14-01", "09-00-00"],
+                "Passing (Second Period / Third Period)": [
+                    "09-00-01",
+                    "09-07-00"
+                ],
+                "Third Period": ["09-07-01", "09-53-00"],
+                "Passing (Third Period / Fourth Period)": [
+                    "09-53-01",
+                    "10-00-00"
+                ],
+                "Fourth Period": ["10-00-01", "10-46-00"],
+                "Passing (Fourth Period / Advisory)": ["10-46-01", "10-53-00"],
+                "Advisory": ["10-53-01", "11-17-00"],
+                "Lunch": ["11-17-01", "11-47-00"],
+                "Passing (Lunch / Fifth Period)": ["11-47-01", "11-52-00"],
+                "Fifth Period": ["11-52-01", "12-49-00"],
+                "Passing (Fifth Period / Sixth Period)": [
+                    "12-49-01",
+                    "12-56-00"
+                ],
+                "Sixth Period": ["12-56-01", "13-42-00"],
+                "Passing (Sixth Period / Seventh Period)": [
+                    "13-42-01",
+                    "13-49-00"
+                ],
+                "Seventh Period": ["13-49-01", "14-35-00"]
+            },
+            "THU": {
+                "First Period": ["07-20-00", "08-07-00"],
+                "Passing (First Period / Second Period)": [
+                    "08-07-01",
+                    "08-14-00"
+                ],
+                "Second Period": ["08-14-01", "09-00-00"],
+                "Passing (Second Period / Third Period)": [
+                    "09-00-01",
+                    "09-07-00"
+                ],
+                "Third Period": ["09-07-01", "09-53-00"],
+                "Passing (Third Period / Fourth Period)": [
+                    "09-53-01",
+                    "10-00-00"
+                ],
+                "Fourth Period": ["10-00-01", "10-46-00"],
+                "Passing (Fourth Period / Advisory)": ["10-46-01", "10-53-00"],
+                "Advisory": ["10-53-01", "11-17-00"],
+                "Lunch": ["11-17-01", "11-47-00"],
+                "Passing (Lunch / Fifth Period)": ["11-47-01", "11-52-00"],
+                "Fifth Period": ["11-52-01", "12-49-00"],
+                "Passing (Fifth Period / Sixth Period)": [
+                    "12-49-01",
+                    "12-56-00"
+                ],
+                "Sixth Period": ["12-56-01", "13-42-00"],
+                "Passing (Sixth Period / Seventh Period)": [
+                    "13-42-01",
+                    "13-49-00"
+                ],
+                "Seventh Period": ["13-49-01", "14-35-00"]
+            },
+            "FRI": {
+                "First Period": ["07-20-00", "08-07-00"],
+                "Passing (First Period / Second Period)": [
+                    "08-07-01",
+                    "08-14-00"
+                ],
+                "Second Period": ["08-14-01", "09-00-00"],
+                "Passing (Second Period / Third Period)": [
+                    "09-00-01",
+                    "09-07-00"
+                ],
+                "Third Period": ["09-07-01", "09-53-00"],
+                "Passing (Third Period / Fourth Period)": [
+                    "09-53-01",
+                    "10-00-00"
+                ],
+                "Fourth Period": ["10-00-01", "10-46-00"],
+                "Passing (Fourth Period / Advisory)": ["10-46-01", "10-53-00"],
+                "Advisory": ["10-53-01", "11-17-00"],
+                "Lunch": ["11-17-01", "11-47-00"],
+                "Passing (Lunch / Fifth Period)": ["11-47-01", "11-52-00"],
+                "Fifth Period": ["11-52-01", "12-49-00"],
+                "Passing (Fifth Period / Sixth Period)": [
+                    "12-49-01",
+                    "12-56-00"
+                ],
+                "Sixth Period": ["12-56-01", "13-42-00"],
+                "Passing (Sixth Period / Seventh Period)": [
+                    "13-42-01",
+                    "13-49-00"
+                ],
+                "Seventh Period": ["13-49-01", "14-35-00"]
+            }
+        },
+        "offDays": {}
+    },
+    "tx-conroeisd-twcp-c": {
+        "name": "The Woodlands College Park High School (C-Lunch)",
+        "shortName": "College Park (C)",
+        "icon": "mdiSchoolOutline",
+        "color": "#002868",
+        "schedule": {
+            "MON": {
+                "First Period": ["07-20-00", "08-07-00"],
+                "Passing (First Period / Second Period)": [
+                    "08-07-01",
+                    "08-14-00"
+                ],
+                "Second Period": ["08-14-01", "09-00-00"],
+                "Passing (Second Period / Third Period)": [
+                    "09-00-01",
+                    "09-07-00"
+                ],
+                "Third Period": ["09-07-01", "09-53-00"],
+                "Passing (Third Period / Fourth Period)": [
+                    "09-53-01",
+                    "10-00-00"
+                ],
+                "Fourth Period": ["10-00-01", "10-46-00"],
+                "Passing (Fourth Period / Fifth Period)": [
+                    "10-46-01",
+                    "10-53-00"
+                ],
+                "Fifth Period": ["10-53-01", "11-48-00"],
+                "Lunch": ["11-48-01", "12-18-00"],
+                "Passing (Lunch / Advisory)": ["12-18-01", "12-23-00"],
+                "Advisory": ["12-23-01", "12-49-00"],
+                "Passing (Advisory / Sixth Period)": ["12-49-01", "12-56-00"],
+                "Sixth Period": ["12-56-01", "13-42-00"],
+                "Passing (Sixth Period / Seventh Period)": [
+                    "13-42-01",
+                    "13-49-00"
+                ],
+                "Seventh Period": ["13-49-01", "14-35-00"]
+            },
+            "TUE": {
+                "First Period": ["07-20-00", "08-07-00"],
+                "Passing (First Period / Second Period)": [
+                    "08-07-01",
+                    "08-14-00"
+                ],
+                "Second Period": ["08-14-01", "09-00-00"],
+                "Passing (Second Period / Third Period)": [
+                    "09-00-01",
+                    "09-07-00"
+                ],
+                "Third Period": ["09-07-01", "09-53-00"],
+                "Passing (Third Period / Fourth Period)": [
+                    "09-53-01",
+                    "10-00-00"
+                ],
+                "Fourth Period": ["10-00-01", "10-46-00"],
+                "Passing (Fourth Period / Fifth Period)": [
+                    "10-46-01",
+                    "10-53-00"
+                ],
+                "Fifth Period": ["10-53-01", "11-48-00"],
+                "Lunch": ["11-48-01", "12-18-00"],
+                "Passing (Lunch / Advisory)": ["12-18-01", "12-23-00"],
+                "Advisory": ["12-23-01", "12-49-00"],
+                "Passing (Advisory / Sixth Period)": ["12-49-01", "12-56-00"],
+                "Sixth Period": ["12-56-01", "13-42-00"],
+                "Passing (Sixth Period / Seventh Period)": [
+                    "13-42-01",
+                    "13-49-00"
+                ],
+                "Seventh Period": ["13-49-01", "14-35-00"]
+            },
+            "WED": {
+                "First Period": ["07-20-00", "08-07-00"],
+                "Passing (First Period / Second Period)": [
+                    "08-07-01",
+                    "08-14-00"
+                ],
+                "Second Period": ["08-14-01", "09-00-00"],
+                "Passing (Second Period / Third Period)": [
+                    "09-00-01",
+                    "09-07-00"
+                ],
+                "Third Period": ["09-07-01", "09-53-00"],
+                "Passing (Third Period / Fourth Period)": [
+                    "09-53-01",
+                    "10-00-00"
+                ],
+                "Fourth Period": ["10-00-01", "10-46-00"],
+                "Passing (Fourth Period / Fifth Period)": [
+                    "10-46-01",
+                    "10-53-00"
+                ],
+                "Fifth Period": ["10-53-01", "11-48-00"],
+                "Lunch": ["11-48-01", "12-18-00"],
+                "Passing (Lunch / Advisory)": ["12-18-01", "12-23-00"],
+                "Advisory": ["12-23-01", "12-49-00"],
+                "Passing (Advisory / Sixth Period)": ["12-49-01", "12-56-00"],
+                "Sixth Period": ["12-56-01", "13-42-00"],
+                "Passing (Sixth Period / Seventh Period)": [
+                    "13-42-01",
+                    "13-49-00"
+                ],
+                "Seventh Period": ["13-49-01", "14-35-00"]
+            },
+            "THU": {
+                "First Period": ["07-20-00", "08-07-00"],
+                "Passing (First Period / Second Period)": [
+                    "08-07-01",
+                    "08-14-00"
+                ],
+                "Second Period": ["08-14-01", "09-00-00"],
+                "Passing (Second Period / Third Period)": [
+                    "09-00-01",
+                    "09-07-00"
+                ],
+                "Third Period": ["09-07-01", "09-53-00"],
+                "Passing (Third Period / Fourth Period)": [
+                    "09-53-01",
+                    "10-00-00"
+                ],
+                "Fourth Period": ["10-00-01", "10-46-00"],
+                "Passing (Fourth Period / Fifth Period)": [
+                    "10-46-01",
+                    "10-53-00"
+                ],
+                "Fifth Period": ["10-53-01", "11-48-00"],
+                "Lunch": ["11-48-01", "12-18-00"],
+                "Passing (Lunch / Advisory)": ["12-18-01", "12-23-00"],
+                "Advisory": ["12-23-01", "12-49-00"],
+                "Passing (Advisory / Sixth Period)": ["12-49-01", "12-56-00"],
+                "Sixth Period": ["12-56-01", "13-42-00"],
+                "Passing (Sixth Period / Seventh Period)": [
+                    "13-42-01",
+                    "13-49-00"
+                ],
+                "Seventh Period": ["13-49-01", "14-35-00"]
+            },
+            "FRI": {
+                "First Period": ["07-20-00", "08-07-00"],
+                "Passing (First Period / Second Period)": [
+                    "08-07-01",
+                    "08-14-00"
+                ],
+                "Second Period": ["08-14-01", "09-00-00"],
+                "Passing (Second Period / Third Period)": [
+                    "09-00-01",
+                    "09-07-00"
+                ],
+                "Third Period": ["09-07-01", "09-53-00"],
+                "Passing (Third Period / Fourth Period)": [
+                    "09-53-01",
+                    "10-00-00"
+                ],
+                "Fourth Period": ["10-00-01", "10-46-00"],
+                "Passing (Fourth Period / Fifth Period)": [
+                    "10-46-01",
+                    "10-53-00"
+                ],
+                "Fifth Period": ["10-53-01", "11-48-00"],
+                "Lunch": ["11-48-01", "12-18-00"],
+                "Passing (Lunch / Advisory)": ["12-18-01", "12-23-00"],
+                "Advisory": ["12-23-01", "12-49-00"],
+                "Passing (Advisory / Sixth Period)": ["12-49-01", "12-56-00"],
+                "Sixth Period": ["12-56-01", "13-42-00"],
+                "Passing (Sixth Period / Seventh Period)": [
+                    "13-42-01",
+                    "13-49-00"
+                ],
+                "Seventh Period": ["13-49-01", "14-35-00"]
+            }
+        },
+        "offDays": {}
+    },
+    "tx-conroeisd-twcp-d": {
+        "name": "The Woodlands College Park High School (D-Lunch)",
+        "shortName": "College Park (D)",
+        "icon": "mdiSchoolOutline",
+        "color": "#002868",
+        "schedule": {
+            "MON": {
+                "First Period": ["07-20-00", "08-07-00"],
+                "Passing (First Period / Second Period)": [
+                    "08-07-01",
+                    "08-14-00"
+                ],
+                "Second Period": ["08-14-01", "09-00-00"],
+                "Passing (Second Period / Third Period)": [
+                    "09-00-01",
+                    "09-07-00"
+                ],
+                "Third Period": ["09-07-01", "09-53-00"],
+                "Passing (Third Period / Fourth Period)": [
+                    "09-53-01",
+                    "10-00-00"
+                ],
+                "Fourth Period": ["10-00-01", "10-46-00"],
+                "Passing (Fourth Period / Fifth Period)": [
+                    "10-46-01",
+                    "10-53-00"
+                ],
+                "Fifth Period": ["10-53-01", "11-51-00"],
+                "Advisory": ["11-51-01", "12-19-00"],
+                "Lunch": ["12-19-01", "12-49-00"],
+                "Passing (Lunch / Sixth Period)": ["12-49-01", "12-56-00"],
+                "Sixth Period": ["12-56-01", "13-42-00"],
+                "Passing (Sixth Period / Seventh Period)": [
+                    "13-42-01",
+                    "13-49-00"
+                ],
+                "Seventh Period": ["13-49-01", "14-35-00"]
+            },
+            "TUE": {
+                "First Period": ["07-20-00", "08-07-00"],
+                "Passing (First Period / Second Period)": [
+                    "08-07-01",
+                    "08-14-00"
+                ],
+                "Second Period": ["08-14-01", "09-00-00"],
+                "Passing (Second Period / Third Period)": [
+                    "09-00-01",
+                    "09-07-00"
+                ],
+                "Third Period": ["09-07-01", "09-53-00"],
+                "Passing (Third Period / Fourth Period)": [
+                    "09-53-01",
+                    "10-00-00"
+                ],
+                "Fourth Period": ["10-00-01", "10-46-00"],
+                "Passing (Fourth Period / Fifth Period)": [
+                    "10-46-01",
+                    "10-53-00"
+                ],
+                "Fifth Period": ["10-53-01", "11-51-00"],
+                "Advisory": ["11-51-01", "12-19-00"],
+                "Lunch": ["12-19-01", "12-49-00"],
+                "Passing (Lunch / Sixth Period)": ["12-49-01", "12-56-00"],
+                "Sixth Period": ["12-56-01", "13-42-00"],
+                "Passing (Sixth Period / Seventh Period)": [
+                    "13-42-01",
+                    "13-49-00"
+                ],
+                "Seventh Period": ["13-49-01", "14-35-00"]
+            },
+            "WED": {
+                "First Period": ["07-20-00", "08-07-00"],
+                "Passing (First Period / Second Period)": [
+                    "08-07-01",
+                    "08-14-00"
+                ],
+                "Second Period": ["08-14-01", "09-00-00"],
+                "Passing (Second Period / Third Period)": [
+                    "09-00-01",
+                    "09-07-00"
+                ],
+                "Third Period": ["09-07-01", "09-53-00"],
+                "Passing (Third Period / Fourth Period)": [
+                    "09-53-01",
+                    "10-00-00"
+                ],
+                "Fourth Period": ["10-00-01", "10-46-00"],
+                "Passing (Fourth Period / Fifth Period)": [
+                    "10-46-01",
+                    "10-53-00"
+                ],
+                "Fifth Period": ["10-53-01", "11-51-00"],
+                "Advisory": ["11-51-01", "12-19-00"],
+                "Lunch": ["12-19-01", "12-49-00"],
+                "Passing (Lunch / Sixth Period)": ["12-49-01", "12-56-00"],
+                "Sixth Period": ["12-56-01", "13-42-00"],
+                "Passing (Sixth Period / Seventh Period)": [
+                    "13-42-01",
+                    "13-49-00"
+                ],
+                "Seventh Period": ["13-49-01", "14-35-00"]
+            },
+            "THU": {
+                "First Period": ["07-20-00", "08-07-00"],
+                "Passing (First Period / Second Period)": [
+                    "08-07-01",
+                    "08-14-00"
+                ],
+                "Second Period": ["08-14-01", "09-00-00"],
+                "Passing (Second Period / Third Period)": [
+                    "09-00-01",
+                    "09-07-00"
+                ],
+                "Third Period": ["09-07-01", "09-53-00"],
+                "Passing (Third Period / Fourth Period)": [
+                    "09-53-01",
+                    "10-00-00"
+                ],
+                "Fourth Period": ["10-00-01", "10-46-00"],
+                "Passing (Fourth Period / Fifth Period)": [
+                    "10-46-01",
+                    "10-53-00"
+                ],
+                "Fifth Period": ["10-53-01", "11-51-00"],
+                "Advisory": ["11-51-01", "12-19-00"],
+                "Lunch": ["12-19-01", "12-49-00"],
+                "Passing (Lunch / Sixth Period)": ["12-49-01", "12-56-00"],
+                "Sixth Period": ["12-56-01", "13-42-00"],
+                "Passing (Sixth Period / Seventh Period)": [
+                    "13-42-01",
+                    "13-49-00"
+                ],
+                "Seventh Period": ["13-49-01", "14-35-00"]
+            },
+            "FRI": {
+                "First Period": ["07-20-00", "08-07-00"],
+                "Passing (First Period / Second Period)": [
+                    "08-07-01",
+                    "08-14-00"
+                ],
+                "Second Period": ["08-14-01", "09-00-00"],
+                "Passing (Second Period / Third Period)": [
+                    "09-00-01",
+                    "09-07-00"
+                ],
+                "Third Period": ["09-07-01", "09-53-00"],
+                "Passing (Third Period / Fourth Period)": [
+                    "09-53-01",
+                    "10-00-00"
+                ],
+                "Fourth Period": ["10-00-01", "10-46-00"],
+                "Passing (Fourth Period / Fifth Period)": [
+                    "10-46-01",
+                    "10-53-00"
+                ],
+                "Fifth Period": ["10-53-01", "11-51-00"],
+                "Advisory": ["11-51-01", "12-19-00"],
+                "Lunch": ["12-19-01", "12-49-00"],
+                "Passing (Lunch / Sixth Period)": ["12-49-01", "12-56-00"],
+                "Sixth Period": ["12-56-01", "13-42-00"],
+                "Passing (Sixth Period / Seventh Period)": [
+                    "13-42-01",
+                    "13-49-00"
+                ],
+                "Seventh Period": ["13-49-01", "14-35-00"]
+            }
+        },
+        "offDays": {}
     }
 }

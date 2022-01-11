@@ -535,7 +535,7 @@ export default defineComponent({
             getNewTimes();
             loadDayOverride();
 
-            if (!checkOffDay(offDays)) {
+            if (!checkOffDay(offDays.value)) {
                 offDay.value = false;
 
                 currentPeriod.value.period = getCurrentPeriod(

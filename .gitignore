@@ -3,6 +3,7 @@ node_modules
 /dist
 
 # Local environment variables
+.env
 .env.local
 .env.*.local
 
