@@ -8,6 +8,7 @@ import { ScheduleDays, SchedulePeriodTimes } from "@/structures/schedule";
 import { padNumber } from "@/constructs/calculations";
 import { loadFromStorage, saveToStorage } from "@/constructs/storage";
 import { StorageKeys } from "@/structures/storage";
+import { getPeriodTimes } from "./schedule";
 
 export function getCurrentPeriod(
     schedule: SchedulePeriodTimes,
@@ -22,7 +23,7 @@ export function getCurrentPeriod(
     const periods = Object.keys(schedule)
         .map((periodName) => {
             const period = schedule[periodName];
-            const periodTimes = Array.isArray(period) ? period : period.times;
+            const periodTimes = getPeriodTimes(period);
 
             const start = periodTimes[0].replaceAll("-", ""),
                 end = periodTimes[1].replaceAll("-", "");
@@ -82,7 +83,7 @@ export function getNextPeriod(
     const periods = Object.keys(schedule)
         .map((periodName) => {
             const period = schedule[periodName];
-            const periodTimes = Array.isArray(period) ? period : period.times;
+            const periodTimes = getPeriodTimes(period);
 
             const start = periodTimes[0].replaceAll("-", "");
             const previousEndTime = getPreviousEndTime(currentPeriodEndTime);
@@ -144,6 +145,23 @@ export function loadPeriodNames(
             periodNames = JSON.parse(storageSchedule) as PeriodNames;
         } else {
             periodNames = {} as PeriodNames;
+
+            console.debug(
+                Object.keys(schedule)
+                    .flatMap((day) => Object.entries(schedule[day]))
+                    .map((period) => [
+                        period[0],
+                        Array.isArray(period[1])
+                            ? true
+                            : period[1].allowEditing,
+                    ])
+                    .filter(
+                        (period) =>
+                            period[1] === true &&
+                            (period[0] as string).indexOf("Passing (") === -1
+                    )
+                    .map((period) => period[0] as string)
+            );
 
             Object.keys(schedule)
                 .flatMap((day) => Object.entries(schedule[day]))

@@ -1,7 +1,17 @@
-import { SchedulePeriodTimes, TimetablePeriod } from "@/structures/schedule";
+import {
+    SchedulePeriodDetails,
+    SchedulePeriodTimes,
+    TimetablePeriod,
+} from "@/structures/schedule";
 import { getISODate } from "@/constructs/datetime";
 import { checkForCustomPeriodName } from "@/constructs/periods";
 import { PeriodNames } from "@/structures/periods";
+
+export function getPeriodTimes(
+    period: string[] | SchedulePeriodDetails
+): string[] {
+    return Array.isArray(period) ? period : period.times;
+}
 
 export function getTimetablePeriods(
     schedule: SchedulePeriodTimes,
