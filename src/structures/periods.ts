@@ -1,6 +1,7 @@
 export interface Period {
     name: string;
     times: PeriodTimes | null;
+    allowEditing: boolean;
 }
 
 export interface PeriodTimes {

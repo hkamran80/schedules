@@ -141,8 +141,11 @@
         "releaseDate": "2022-01-10",
         "changelog": ["Add the College Park High School schedule"]
     },
-    "3.1.0-edge.0": {
+    "3.1.0-edge.1": {
         "releaseDate": "2022-01-11",
-        "changelog": ["Add off days to all schedules"]
+        "changelog": [
+            "Add off days to all schedules",
+            "Restrict period name editing (disallows editing passing periods, break/lunch periods, etc.)"
+        ]
     }
 }
