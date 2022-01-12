@@ -14,10 +14,15 @@ export interface ScheduleDetails {
 }
 
 export interface ScheduleDays {
-    [shortDay: string]: ScheduleTimes;
+    [shortDay: string]: SchedulePeriodTimes;
 }
-export interface ScheduleTimes {
-    [periodName: string]: string[];
+export interface SchedulePeriodTimes {
+    [periodName: string]: string[] | SchedulePeriodDetails;
+}
+
+export interface SchedulePeriodDetails {
+    times: string[];
+    allowEditing: boolean;
 }
 
 export interface OffDays {

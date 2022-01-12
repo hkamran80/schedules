@@ -1,10 +1,10 @@
-import { ScheduleTimes, TimetablePeriod } from "@/structures/schedule";
+import { SchedulePeriodTimes, TimetablePeriod } from "@/structures/schedule";
 import { getISODate } from "@/constructs/datetime";
 import { checkForCustomPeriodName } from "@/constructs/periods";
 import { PeriodNames } from "@/structures/periods";
 
 export function getTimetablePeriods(
-    schedule: ScheduleTimes,
+    schedule: SchedulePeriodTimes,
     currentPeriodNames: PeriodNames,
     color: string,
     withPeriod = false
@@ -14,16 +14,23 @@ export function getTimetablePeriods(
     if (typeof schedule !== "undefined") {
         const date = getISODate();
 
-        periods = Object.keys(schedule).map((period) => {
+        periods = Object.keys(schedule).map((periodName) => {
+            const period = schedule[periodName];
+            const periodTimes = Array.isArray(period) ? period : period.times;
+
             return {
                 name: checkForCustomPeriodName(
-                    period,
+                    periodName,
                     currentPeriodNames,
                     withPeriod
                 ),
-                start: `${date} ${schedule[period][0].replaceAll("-", ":")}`,
-                end: `${date} ${schedule[period][1].replaceAll("-", ":")}`,
-                color: period.indexOf("Passing") === -1 ? color : "primary",
+                start: `${date} ${periodTimes[0].replaceAll("-", ":")}`,
+                end: `${date} ${periodTimes[1].replaceAll("-", ":")}`,
+                color:
+                    periodName.indexOf("Passing") === -1 &&
+                    (Array.isArray(period) || period.allowEditing)
+                        ? color
+                        : "primary",
             };
         });
     }

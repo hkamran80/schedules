@@ -5,7 +5,7 @@ import {
     PrettyDayTime,
 } from "@/structures/datetime";
 import { hourConversion, padNumber } from "@/constructs/calculations";
-import { OffDays, ScheduleTimes } from "@/structures/schedule";
+import { OffDays, SchedulePeriodTimes } from "@/structures/schedule";
 import { HourConversionType } from "@/structures/calculations";
 import {
     deleteFromStorage,
@@ -146,14 +146,16 @@ export function setDayOverride(
     shortDayCode: string | null,
     scheduleId: string,
     currentTime: string,
-    schedule: ScheduleTimes
+    schedule: SchedulePeriodTimes
 ): boolean | DayOverrideError {
     if (shortDayCode !== null) {
         const lastElement = Object.keys(schedule).pop();
         if (lastElement) {
+            const lastPeriod = schedule[lastElement];
+
             const time = hourConversion(
                 HourConversionType.TwentyFourHour,
-                schedule[lastElement][1]
+                Array.isArray(lastPeriod) ? lastPeriod[1] : lastPeriod.times[1]
             );
 
             if (Number(currentTime) <= Number(time.replace(":", ""))) {
