@@ -46,3 +46,5 @@ N/A
 - [ ] Day override settings
     - [ ] Day override
     - [ ] Persistent
+- [ ] Restrict period names
+- [x] Off days
