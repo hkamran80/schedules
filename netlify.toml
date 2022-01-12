@@ -29,4 +29,4 @@ status = 200
 package = "@sentry/netlify-build-plugin"
 
 [plugins.inputs]
-sentryRelease = "3.1.0-edge.0"
+sentryRelease = "3.1.0-edge.1"
