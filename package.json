@@ -16,7 +16,7 @@
         "@vue/composition-api": "^1.0.0-rc.13",
         "core-js": "^3.8.2",
         "googleapis": "^39.2.0",
-        "marked": "^3.0.0",
+        "marked": "^4.0.10",
         "register-service-worker": "^1.7.2",
         "utds-component-library": "^1.0.9",
         "vue": "^2.6.11",
