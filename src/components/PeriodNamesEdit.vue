@@ -81,7 +81,7 @@ import {
 } from "@mdi/js";
 import { useToast } from "vue-toastification/composition";
 
-import { PeriodNames } from "@/structures/periods";
+import { PeriodNames } from "@/models/periods";
 import { savePeriodNames } from "@/constructs/periods";
 
 export default defineComponent({

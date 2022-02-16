@@ -36,7 +36,7 @@ import { computed, defineComponent, SetupContext } from "@vue/composition-api";
 import { mdiContentCopy, mdiClose } from "@mdi/js";
 import { useToast } from "vue-toastification/composition";
 
-import { AllowedNotifications } from "@/structures/notifications";
+import { AllowedNotifications } from "@/models/notifications";
 
 export default defineComponent({
     props: {

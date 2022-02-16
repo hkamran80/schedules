@@ -169,17 +169,17 @@ const NotificationsExport = () =>
 const NotificationsImport = () =>
     import("@/components/NotificationsImport.vue");
 
-import { Schedule } from "@/structures/schedule";
-import { Period, PeriodNames, PeriodNamesError } from "@/structures/periods";
-import { Nullable } from "@/structures/types";
+import { Schedule } from "@/models/schedule";
+import { Period, PeriodNames, PeriodNamesError } from "@/models/periods";
+import { Nullable } from "@/models/types";
 import {
     AllowedNotifications,
     NotificationContent,
     NotificationIntervals,
     NotificationSettingsError,
-} from "@/structures/notifications";
-import { HourConversionType } from "@/structures/calculations";
-import { OldStorageItems } from "@/structures/storage";
+} from "@/models/notifications";
+import { HourConversionType } from "@/models/calculations";
+import { OldStorageItems } from "@/models/storage";
 
 import {
     checkExistence,

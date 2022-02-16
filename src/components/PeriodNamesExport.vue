@@ -36,7 +36,7 @@ import { computed, defineComponent, SetupContext } from "@vue/composition-api";
 import { mdiContentCopy, mdiClose } from "@mdi/js";
 import { useToast } from "vue-toastification/composition";
 
-import { PeriodNames } from "@/structures/periods";
+import { PeriodNames } from "@/models/periods";
 
 export default defineComponent({
     props: {

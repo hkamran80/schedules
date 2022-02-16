@@ -52,9 +52,9 @@
 <script lang="ts">
 import { defineComponent, ref, SetupContext } from "@vue/composition-api";
 import { mdiClose, mdiYoutube } from "@mdi/js";
-import { HelpCenterTopic } from "@/structures/helpcenter";
+import { HelpCenterTopic } from "@/models/helpcenter";
 import { UtdsStringHelpers } from "utds-component-library";
-import { Nullable } from "@/structures/types";
+import { Nullable } from "@/models/types";
 import marked from "marked";
 
 export default defineComponent({

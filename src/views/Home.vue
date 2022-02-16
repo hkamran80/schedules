@@ -16,8 +16,8 @@
         >
             <v-alert type="info">
                 You're using the edge (beta) version of Schedules. To go to the
-                tried and tested release site, click anywhere in this box or go
-                to https://schedules.unisontech.org.
+                main site, click this alert or go to
+                https://schedules.unisontech.org.
             </v-alert>
         </a>
 
@@ -151,9 +151,9 @@ import {
 import { version as currentVersion } from "../../package.json";
 import releaseNotes from "@/releaseNotes.json";
 
-import { Nullable } from "@/structures/types";
+import { Nullable } from "@/models/types";
 import { generateNotFoundMessage } from "@/constructs/strings";
-import { HelpCenterTopic as HelpCenterTopicInterface } from "@/structures/helpcenter";
+import { HelpCenterTopic as HelpCenterTopicInterface } from "@/models/helpcenter";
 
 const AnalyticsNotice = () => import("@/components/AnalyticsNotice.vue");
 const About = () => import("@/components/About.vue");

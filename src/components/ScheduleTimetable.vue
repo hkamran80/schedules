@@ -37,8 +37,8 @@ import { mdiClose } from "@mdi/js";
 
 import { getPeriodTimes, getTimetablePeriods } from "@/constructs/schedule";
 
-import { SchedulePeriodTimes } from "@/structures/schedule";
-import { PeriodNames } from "@/structures/periods";
+import { SchedulePeriodTimes } from "@/models/schedule";
+import { PeriodNames } from "@/models/periods";
 
 export default defineComponent({
     props: {

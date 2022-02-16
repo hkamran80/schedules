@@ -120,7 +120,7 @@ import {
     AllowedNotifications,
     NotificationPeriods,
     NotificationType,
-} from "@/structures/notifications";
+} from "@/models/notifications";
 
 export default defineComponent({
     props: {

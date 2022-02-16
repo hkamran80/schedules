@@ -45,7 +45,7 @@
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
 import { mdiClose, mdiChevronRight } from "@mdi/js";
-import { HelpCenterTopic, HelpCenterTopics } from "@/structures/helpcenter";
+import { HelpCenterTopic, HelpCenterTopics } from "@/models/helpcenter";
 import helpCenterTopics from "@/helpCenter.json";
 
 export default defineComponent({

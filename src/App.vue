@@ -57,8 +57,8 @@ import { provideToast } from "vue-toastification/composition";
 import { POSITION } from "vue-toastification";
 
 import schedulesJson from "@/schedules.json";
-import { Schedule } from "@/structures/schedule";
-import { OldStorageItems } from "@/structures/storage";
+import { Schedule } from "@/models/schedule";
+import { OldStorageItems } from "@/models/storage";
 
 import { checkExistence, convertAnalytics } from "@/constructs/update";
 
