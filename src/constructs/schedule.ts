@@ -2,10 +2,10 @@ import {
     SchedulePeriodDetails,
     SchedulePeriodTimes,
     TimetablePeriod,
-} from "@/structures/schedule";
+} from "@/models/schedule";
 import { getISODate } from "@/constructs/datetime";
 import { checkForCustomPeriodName } from "@/constructs/periods";
-import { PeriodNames } from "@/structures/periods";
+import { PeriodNames } from "@/models/periods";
 
 export function getPeriodTimes(
     period: string[] | SchedulePeriodDetails

@@ -1,4 +1,4 @@
-import { Schedule, ScheduleMetadata } from "@/structures/schedule";
+import { Schedule, ScheduleMetadata } from "@/models/schedule";
 import { computed } from "@vue/composition-api";
 
 export function loadMetadata(

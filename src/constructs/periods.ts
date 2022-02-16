@@ -3,11 +3,11 @@ import {
     PeriodTimes,
     PeriodNames,
     PeriodNamesError,
-} from "@/structures/periods";
-import { ScheduleDays, SchedulePeriodTimes } from "@/structures/schedule";
+} from "@/models/periods";
+import { ScheduleDays, SchedulePeriodTimes } from "@/models/schedule";
 import { padNumber } from "@/constructs/calculations";
 import { loadFromStorage, saveToStorage } from "@/constructs/storage";
-import { StorageKeys } from "@/structures/storage";
+import { StorageKeys } from "@/models/storage";
 import { getPeriodTimes } from "./schedule";
 
 export function getCurrentPeriod(

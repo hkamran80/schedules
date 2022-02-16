@@ -1,5 +1,5 @@
 import { onMounted, ref } from "@vue/composition-api";
-import { Nullable } from "@/structures/types";
+import { Nullable } from "@/models/types";
 
 export function loadUpdateMechanism() {
     const refreshing = ref(false),

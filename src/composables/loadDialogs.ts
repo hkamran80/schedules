@@ -1,4 +1,4 @@
-import { LoadDialogsOutput } from "@/structures/dialogs";
+import { LoadDialogsOutput } from "@/models/dialogs";
 import { ref } from "@vue/composition-api";
 
 export function loadDialogs(): LoadDialogsOutput {

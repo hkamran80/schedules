@@ -2,14 +2,14 @@ import {
     StorageKeys,
     OldStorageKeys,
     OldStorageItems,
-} from "@/structures/storage";
+} from "@/models/storage";
 import { saveToStorage } from "@/constructs/storage";
-import { PeriodNames, PeriodNamesError } from "@/structures/periods";
+import { PeriodNames, PeriodNamesError } from "@/models/periods";
 import { importPeriodNames } from "@/constructs/periods";
 import {
     AllowedNotifications,
     NotificationSettingsError,
-} from "@/structures/notifications";
+} from "@/models/notifications";
 import { importNotificationSettings } from "@/constructs/notifications";
 
 export function checkExistence(scheduleId: string | null): OldStorageItems[] {

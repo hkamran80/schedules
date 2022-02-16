@@ -3,16 +3,16 @@ import {
     days,
     NewTimes,
     PrettyDayTime,
-} from "@/structures/datetime";
+} from "@/models/datetime";
 import { hourConversion, padNumber } from "@/constructs/calculations";
-import { OffDays, SchedulePeriodTimes } from "@/structures/schedule";
-import { HourConversionType } from "@/structures/calculations";
+import { OffDays, SchedulePeriodTimes } from "@/models/schedule";
+import { HourConversionType } from "@/models/calculations";
 import {
     deleteFromStorage,
     loadFromStorage,
     saveToStorage,
 } from "@/constructs/storage";
-import { StorageKeys } from "@/structures/storage";
+import { StorageKeys } from "@/models/storage";
 import { getValueFromObjectSearch } from "./objects";
 
 export function getShortDay(): string {

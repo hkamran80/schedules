@@ -1,4 +1,4 @@
-import { StorageKeys } from "@/structures/storage";
+import { StorageKeys } from "@/models/storage";
 
 function generateStorageKey(scheduleId: string, key: StorageKeys): string {
     if (

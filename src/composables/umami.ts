@@ -1,6 +1,6 @@
 import { ComponentInstance, ref } from "@vue/composition-api";
 import { loadFromStorage, saveToStorage } from "@/constructs/storage";
-import { StorageKeys } from "@/structures/storage";
+import { StorageKeys } from "@/models/storage";
 
 function checkUmamiInstalled(): boolean {
     return document.getElementById("umami-script") ? true : false;

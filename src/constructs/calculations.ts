@@ -1,4 +1,4 @@
-import { HourConversionType } from "@/structures/calculations";
+import { HourConversionType } from "@/models/calculations";
 
 export function padNumber(number: number | string): string {
     return Number(number < 10)

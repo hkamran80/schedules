@@ -1,4 +1,4 @@
-import { Nullable } from "@/structures/types";
+import { Nullable } from "@/models/types";
 
 export interface HelpCenterTopic {
     name: string;

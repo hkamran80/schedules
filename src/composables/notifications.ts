@@ -2,7 +2,7 @@ import { Ref, ref } from "@vue/composition-api";
 import {
     NotificationIntervals,
     AllowedNotifications,
-} from "@/structures/notifications";
+} from "@/models/notifications";
 
 export function loadNotifications(): {
     notifications: Ref<NotificationIntervals>;

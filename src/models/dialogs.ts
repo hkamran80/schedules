@@ -1,4 +1,4 @@
-import { ConfirmationButtonType } from "@/structures/types";
+import { ConfirmationButtonType } from "@/models/types";
 import { Ref } from "@vue/composition-api";
 
 export interface LoadDialogsOutput {

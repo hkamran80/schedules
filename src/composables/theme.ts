@@ -1,5 +1,5 @@
 import { loadFromStorage, saveToStorage } from "@/constructs/storage";
-import { StorageKeys } from "@/structures/storage";
+import { StorageKeys } from "@/models/storage";
 import { ComponentInstance } from "@vue/composition-api";
 
 export function initializeThemeState(root: ComponentInstance): void {
