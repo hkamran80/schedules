@@ -32,7 +32,7 @@
                 @click="saveNames"
                 :disabled="sameNames"
             >
-                <v-icon v-text="mdiContentSaveOutline" />
+                <v-icon v-text="mdiCheck" />
             </v-btn>
             <v-btn
                 icon
@@ -76,7 +76,7 @@ import {
 import {
     mdiRestore,
     mdiDeleteForeverOutline,
-    mdiContentSaveOutline,
+    mdiCheck,
     mdiClose,
 } from "@mdi/js";
 import { useToast } from "vue-toastification/composition";
@@ -150,7 +150,7 @@ export default defineComponent({
             // Icons
             mdiRestore,
             mdiDeleteForeverOutline,
-            mdiContentSaveOutline,
+            mdiCheck,
             mdiClose,
         };
     },
