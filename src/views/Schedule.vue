@@ -1,6 +1,7 @@
 <template>
     <utds-layout>
         <utds-header
+            class="header"
             :title="name"
             :subtitle="prettyDateAndTime"
             :subtitleTooltip="
@@ -698,5 +699,11 @@ div.v-card {
     padding: 0 5px;
     margin: 10px 0;
     overflow-wrap: break-word;
+}
+</style>
+
+<style>
+header div div.col h3 {
+    font-weight: 400;
 }
 </style>

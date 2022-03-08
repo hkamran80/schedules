@@ -1,8 +1,4 @@
-import {
-    StorageKeys,
-    OldStorageKeys,
-    OldStorageItems,
-} from "@/models/storage";
+import { StorageKeys, OldStorageKeys, OldStorageItems } from "@/models/storage";
 import { saveToStorage } from "@/constructs/storage";
 import { PeriodNames, PeriodNamesError } from "@/models/periods";
 import { importPeriodNames } from "@/constructs/periods";

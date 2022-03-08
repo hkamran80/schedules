@@ -3,6 +3,7 @@
         <v-main>
             <v-container fluid>
                 <utds-navigation-bar
+                    class="navigation-bar"
                     :title="
                         `Schedules ${
                             $edgeMode
@@ -186,7 +187,7 @@ export default defineComponent({
 @import "~utds-component-library/dist/utds-component-library.css";
 
 #app {
-    font-family: Lato, sans-serif;
+    font-family: Barlow, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: left;
@@ -195,6 +196,10 @@ export default defineComponent({
 
 a {
     text-decoration: none;
+}
+
+.navigation-bar h1 {
+    font-weight: 600;
 }
 
 /* Global Styles */

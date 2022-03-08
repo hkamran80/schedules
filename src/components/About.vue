@@ -68,18 +68,20 @@
             <div>
                 <h4 class="mb-2">Legal</h4>
                 <p>
-                    This is a
-                    <a href="https://unisontech.org" target="_blank"
-                        >UNISON Technologies</a
+                    By using this service, you agree to the
+                    <a
+                        href="https://unisontech.org/legal/terms"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >Terms of Service</a
                     >
-                    project and is under the
-                    <a href="https://unisontech.org/terms" target="_blank"
-                        >UT Terms and Conditions</a
-                    >, as well as the
-                    <a href="https://unisontech.org/privacy" target="_blank"
-                        >UT Privacy Policy</a
-                    >. By using this service, you agree to the Terms and
-                    Conditions and the Privacy Policy.
+                    and the
+                    <a
+                        href="https://unisontech.org/legal/privacy"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >Privacy Policy</a
+                    >.
                 </p>
             </div>
         </v-card-text>

@@ -32,10 +32,7 @@
             dark
             outlined
         >
-            <v-card-title>
-                <v-icon medium left v-text="scheduleIcons[schedule.icon]" />
-                <span v-text="schedule.name" />
-            </v-card-title>
+            <v-card-title v-text="schedule.name" />
         </v-card>
 
         <v-card
@@ -48,8 +45,7 @@
             outlined
         >
             <v-card-title>
-                <v-icon medium left v-text="mdiTimerSand" />
-                <span>Countdown</span>
+                Countdown
             </v-card-title>
         </v-card>
 
