@@ -148,7 +148,10 @@
             "Restrict period name editing (disallows editing passing periods, break/lunch periods, etc.)",
             "Switch the save button to a check in the notification and period name editing dialogs",
             "Update edge alert message on the homepage",
-            "Rename the \"structures\" folder to \"models\""
+            "Rename the \"structures\" folder to \"models\"",
+            "Switch font from Lato to Barlow",
+            "Remove icons from schedule cards",
+            "Update terms of service and privacy policy notice"
         ]
     }
 }
