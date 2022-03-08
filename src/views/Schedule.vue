@@ -703,6 +703,10 @@ div.v-card {
 </style>
 
 <style>
+div.v-card__title {
+    word-spacing: 1px;
+}
+
 header div div.col h3 {
     font-weight: 400;
 }
