@@ -11,6 +11,7 @@ export interface ScheduleDetails {
     color: string;
     schedule: ScheduleDays;
     offDays: OffDays;
+    overrides: ScheduleOverrides
 }
 
 export interface ScheduleDays {
@@ -28,6 +29,11 @@ export interface SchedulePeriodDetails {
 export interface OffDays {
     [offDayName: string]: string[];
 }
+
+export interface ScheduleOverrides {
+    [date: string]: string;
+}
+
 export interface TimetablePeriod {
     name: string;
     start: string;
@@ -42,4 +48,5 @@ export interface ScheduleMetadata {
     color: ComputedRef<string>;
     icon: ComputedRef<string>;
     offDays: ComputedRef<OffDays>;
+    overrides: ComputedRef<ScheduleOverrides>;
 }

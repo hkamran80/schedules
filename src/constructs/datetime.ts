@@ -5,7 +5,11 @@ import {
     PrettyDayTime,
 } from "@/models/datetime";
 import { hourConversion, padNumber } from "@/constructs/calculations";
-import { OffDays, SchedulePeriodTimes } from "@/models/schedule";
+import {
+    OffDays,
+    ScheduleOverrides,
+    SchedulePeriodTimes,
+} from "@/models/schedule";
 import { HourConversionType } from "@/models/calculations";
 import {
     deleteFromStorage,
@@ -136,6 +140,23 @@ export function checkOffDay(offDays: OffDays): boolean {
             )
             .indexOf(dateString) !== -1
     );
+}
+
+export function checkOverrideDay(overrides: ScheduleOverrides): string | null {
+    const date = new Date();
+    const dateString =
+        date.getFullYear() +
+        "-" +
+        padNumber(date.getMonth() + 1) +
+        "-" +
+        padNumber(date.getDate());
+
+    const dates = Object.keys(overrides);
+    if (dates.indexOf(dateString) !== -1) {
+        return overrides[dateString];
+    } else {
+        return null;
+    }
 }
 
 export function getLongDayFromShort(shortenedDay: string): string | null {

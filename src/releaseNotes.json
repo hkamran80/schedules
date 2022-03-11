@@ -141,8 +141,8 @@
         "releaseDate": "2022-01-10",
         "changelog": ["Add the College Park High School schedule"]
     },
-    "3.1.0-edge.2": {
-        "releaseDate": "2022-02-15",
+    "3.1.0-edge.4": {
+        "releaseDate": "2022-03-11",
         "changelog": [
             "Add off days to all schedules",
             "Restrict period name editing (disallows editing passing periods, break/lunch periods, etc.)",
@@ -151,7 +151,8 @@
             "Rename the \"structures\" folder to \"models\"",
             "Switch font from Lato to Barlow",
             "Remove icons from schedule cards",
-            "Update terms of service and privacy policy notice"
+            "Update terms of service and privacy policy notice",
+            "Add schedule overrides (not currently uesr-editable)"
         ]
     }
 }

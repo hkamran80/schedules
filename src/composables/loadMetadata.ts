@@ -13,6 +13,7 @@ export function loadMetadata(
     const color = computed(() => currentSchedule.color);
     const icon = computed(() => currentSchedule.icon);
     const offDays = computed(() => currentSchedule.offDays);
+    const overrides = computed(() => currentSchedule.overrides);
 
-    return { name, shortName, schedule, color, icon, offDays };
+    return { name, shortName, schedule, color, icon, offDays, overrides };
 }
