@@ -146,23 +146,6 @@ export function loadPeriodNames(
         } else {
             periodNames = {} as PeriodNames;
 
-            console.debug(
-                Object.keys(schedule)
-                    .flatMap((day) => Object.entries(schedule[day]))
-                    .map((period) => [
-                        period[0],
-                        Array.isArray(period[1])
-                            ? true
-                            : period[1].allowEditing,
-                    ])
-                    .filter(
-                        (period) =>
-                            period[1] === true &&
-                            (period[0] as string).indexOf("Passing (") === -1
-                    )
-                    .map((period) => period[0] as string)
-            );
-
             Object.keys(schedule)
                 .flatMap((day) => Object.entries(schedule[day]))
                 .map((period) => [
