@@ -1,7 +1,10 @@
-import { Schedule } from "@/structures/schedule";
+import { Schedule, ScheduleMetadata } from "@/models/schedule";
 import { computed } from "@vue/composition-api";
 
-export function loadMetadata(scheduleId: string, schedules: Schedule): any {
+export function loadMetadata(
+    scheduleId: string,
+    schedules: Schedule
+): ScheduleMetadata {
     const currentSchedule = schedules[scheduleId];
 
     const name = currentSchedule.name;
@@ -9,6 +12,8 @@ export function loadMetadata(scheduleId: string, schedules: Schedule): any {
     const schedule = computed(() => currentSchedule.schedule);
     const color = computed(() => currentSchedule.color);
     const icon = computed(() => currentSchedule.icon);
+    const offDays = computed(() => currentSchedule.offDays);
+    const overrides = computed(() => currentSchedule.overrides);
 
-    return { name, shortName, schedule, color, icon };
+    return { name, shortName, schedule, color, icon, offDays, overrides };
 }

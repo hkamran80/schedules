@@ -42,8 +42,8 @@ import { defineComponent, ref, SetupContext } from "@vue/composition-api";
 import { mdiCalendarImport, mdiClose } from "@mdi/js";
 import { useToast } from "vue-toastification/composition";
 
-import { PeriodNames, PeriodNamesError } from "@/structures/periods";
-import { Nullable } from "@/structures/types";
+import { PeriodNames, PeriodNamesError } from "@/models/periods";
+import { Nullable } from "@/models/types";
 import { importPeriodNames, savePeriodNames } from "@/constructs/periods";
 
 export default defineComponent({

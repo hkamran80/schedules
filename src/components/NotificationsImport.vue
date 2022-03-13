@@ -42,11 +42,11 @@ import { defineComponent, ref, SetupContext } from "@vue/composition-api";
 import { mdiCalendarImport, mdiClose } from "@mdi/js";
 import { useToast } from "vue-toastification/composition";
 
-import { Nullable } from "@/structures/types";
+import { Nullable } from "@/models/types";
 import {
     AllowedNotifications,
     NotificationSettingsError,
-} from "@/structures/notifications";
+} from "@/models/notifications";
 import {
     importNotificationSettings,
     saveAllowedNotifications,

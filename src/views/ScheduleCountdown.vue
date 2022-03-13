@@ -135,12 +135,12 @@ import {
     notify,
 } from "@/constructs/notifications";
 import { splice } from "@/constructs/strings";
-import { HourConversionType } from "@/structures/calculations";
+import { HourConversionType } from "@/models/calculations";
 import {
     BasicAllowedNotifications,
     NotificationContent,
-} from "@/structures/notifications";
-import { Nullable } from "@/structures/types";
+} from "@/models/notifications";
+import { Nullable } from "@/models/types";
 
 import { loadNotifications } from "@/composables/notifications";
 import { loadDatetime } from "@/composables/dateTime";

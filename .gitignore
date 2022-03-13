@@ -22,7 +22,10 @@ pnpm-debug.log*
 *.sln
 *.sw?
 .dccache
+.env
 
 audits/
 
 tmp*
+
+*.schema.json

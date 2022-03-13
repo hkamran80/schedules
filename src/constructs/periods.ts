@@ -3,14 +3,15 @@ import {
     PeriodTimes,
     PeriodNames,
     PeriodNamesError,
-} from "@/structures/periods";
-import { ScheduleDays, ScheduleTimes } from "@/structures/schedule";
+} from "@/models/periods";
+import { ScheduleDays, SchedulePeriodTimes } from "@/models/schedule";
 import { padNumber } from "@/constructs/calculations";
 import { loadFromStorage, saveToStorage } from "@/constructs/storage";
-import { StorageKeys } from "@/structures/storage";
+import { StorageKeys } from "@/models/storage";
+import { getPeriodTimes } from "./schedule";
 
 export function getCurrentPeriod(
-    schedule: ScheduleTimes,
+    schedule: SchedulePeriodTimes,
     splitTime: string
 ): Period | null {
     if (schedule === null) {
@@ -21,7 +22,9 @@ export function getCurrentPeriod(
 
     const periods = Object.keys(schedule)
         .map((periodName) => {
-            const periodTimes = schedule[periodName];
+            const period = schedule[periodName];
+            const periodTimes = getPeriodTimes(period);
+
             const start = periodTimes[0].replaceAll("-", ""),
                 end = periodTimes[1].replaceAll("-", "");
 
@@ -32,6 +35,9 @@ export function getCurrentPeriod(
                         start: periodTimes[0],
                         end: periodTimes[1],
                     } as PeriodTimes,
+                    allowEditing: Array.isArray(period)
+                        ? true
+                        : period.allowEditing,
                 } as Period;
             }
 
@@ -71,12 +77,14 @@ function getPreviousEndTime(endTime: string): string {
 }
 
 export function getNextPeriod(
-    schedule: ScheduleTimes,
+    schedule: SchedulePeriodTimes,
     currentPeriodEndTime: string
 ): Period | null {
     const periods = Object.keys(schedule)
         .map((periodName) => {
-            const periodTimes = schedule[periodName];
+            const period = schedule[periodName];
+            const periodTimes = getPeriodTimes(period);
+
             const start = periodTimes[0].replaceAll("-", "");
             const previousEndTime = getPreviousEndTime(currentPeriodEndTime);
 
@@ -87,6 +95,9 @@ export function getNextPeriod(
                         start: periodTimes[0],
                         end: periodTimes[1],
                     } as PeriodTimes,
+                    allowEditing: Array.isArray(period)
+                        ? true
+                        : period.allowEditing,
                 } as Period;
             }
 
@@ -136,8 +147,18 @@ export function loadPeriodNames(
             periodNames = {} as PeriodNames;
 
             Object.keys(schedule)
-                .flatMap((day) => Object.keys(schedule[day]))
-                .forEach((period) => (periodNames[period] = ""));
+                .flatMap((day) => Object.entries(schedule[day]))
+                .map((period) => [
+                    period[0],
+                    Array.isArray(period[1]) ? true : period[1].allowEditing,
+                ])
+                .filter(
+                    (period) =>
+                        period[1] === true &&
+                        (period[0] as string).indexOf("Passing (") === -1
+                )
+                .map((period) => period[0] as string)
+                .forEach((period: string) => (periodNames[period] = ""));
         }
 
         return periodNames;

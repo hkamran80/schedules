@@ -112,7 +112,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, SetupContext } from "@vue/composition-api";
-import { mdiBackupRestore, mdiContentSaveOutline, mdiClose } from "@mdi/js";
+import { mdiBackupRestore, mdiCheck, mdiClose } from "@mdi/js";
 import { useToast } from "vue-toastification/composition";
 
 import { saveAllowedNotifications } from "@/constructs/notifications";
@@ -120,7 +120,7 @@ import {
     AllowedNotifications,
     NotificationPeriods,
     NotificationType,
-} from "@/structures/notifications";
+} from "@/models/notifications";
 
 export default defineComponent({
     props: {
@@ -209,7 +209,7 @@ export default defineComponent({
 
             // Icons
             mdiBackupRestore,
-            mdiContentSaveOutline,
+            mdiCheck,
             mdiClose,
         };
     },

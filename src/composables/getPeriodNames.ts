@@ -1,6 +1,6 @@
 import { loadPeriodNames } from "@/constructs/periods";
-import { PeriodNames } from "@/structures/periods";
-import { ScheduleDays } from "@/structures/schedule";
+import { PeriodNames } from "@/models/periods";
+import { ScheduleDays } from "@/models/schedule";
 
 export function getPeriodNames(
     scheduleId: string,

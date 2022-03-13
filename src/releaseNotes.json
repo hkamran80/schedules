@@ -140,5 +140,19 @@
     "3.0.3": {
         "releaseDate": "2022-01-10",
         "changelog": ["Add the College Park High School schedule"]
+    },
+    "3.1.0": {
+        "releaseDate": "2022-03-13",
+        "changelog": [
+            "Add off days to all schedules",
+            "Restrict period name editing (disallows editing passing periods, break/lunch periods, etc.)",
+            "Switch the save button to a check in the notification and period name editing dialogs",
+            "Update edge alert message on the homepage",
+            "Rename the \"structures\" folder to \"models\"",
+            "Switch font from Lato to Barlow",
+            "Remove icons from schedule cards",
+            "Update terms of service and privacy policy notice",
+            "Add schedule overrides (not currently user-editable)"
+        ]
     }
 }

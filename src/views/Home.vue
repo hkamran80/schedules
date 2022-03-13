@@ -16,8 +16,8 @@
         >
             <v-alert type="info">
                 You're using the edge (beta) version of Schedules. To go to the
-                tried and tested release site, click anywhere in this box or go
-                to https://schedules.unisontech.org.
+                main site, click this alert or go to
+                https://schedules.unisontech.org.
             </v-alert>
         </a>
 
@@ -32,10 +32,7 @@
             dark
             outlined
         >
-            <v-card-title>
-                <v-icon medium left v-text="scheduleIcons[schedule.icon]" />
-                <span v-text="schedule.name" />
-            </v-card-title>
+            <v-card-title v-text="schedule.name" />
         </v-card>
 
         <v-card
@@ -48,8 +45,7 @@
             outlined
         >
             <v-card-title>
-                <v-icon medium left v-text="mdiTimerSand" />
-                <span>Countdown</span>
+                Countdown
             </v-card-title>
         </v-card>
 
@@ -142,18 +138,12 @@ import {
     UtdsHeader,
     UtdsReleaseNotes,
 } from "utds-component-library";
-import {
-    mdiPlus,
-    mdiSchoolOutline,
-    mdiTimerSand,
-    mdiAlertOutline,
-} from "@mdi/js";
+import { mdiPlus, mdiAlertOutline } from "@mdi/js";
 import { version as currentVersion } from "../../package.json";
 import releaseNotes from "@/releaseNotes.json";
 
-import { Nullable } from "@/structures/types";
 import { generateNotFoundMessage } from "@/constructs/strings";
-import { HelpCenterTopic as HelpCenterTopicInterface } from "@/structures/helpcenter";
+import { HelpCenterTopic as HelpCenterTopicInterface } from "@/models/helpcenter";
 
 const AnalyticsNotice = () => import("@/components/AnalyticsNotice.vue");
 const About = () => import("@/components/About.vue");
@@ -181,32 +171,30 @@ export default defineComponent({
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setup(_: any, context: SetupContext) {
-        const releaseNotesDialog = ref(false);
-        const analyticsNotice = ref(false);
-        const aboutDialog = ref(false);
-        const helpDialog = ref(false);
-        const helpTopicDialog = ref(false);
+        const releaseNotesDialog = ref<boolean>(false);
+        const analyticsNotice = ref<boolean>(false);
+        const aboutDialog = ref<boolean>(false);
+        const helpDialog = ref<boolean>(false);
+        const helpTopicDialog = ref<boolean>(false);
 
-        const helpTopicId = ref(null as Nullable<string>);
-        const helpTopicMetadata = ref(
-            null as Nullable<HelpCenterTopicInterface>
-        );
+        const helpTopicId = ref<string | null>(null);
+        const helpTopicMetadata = ref<HelpCenterTopicInterface | null>(null);
 
-        const error = (context.root.$route.query.notFound
+        const error: string | null = context.root.$route.query.notFound
             ? generateNotFoundMessage(
                   context.root.$route.query.notFound as string
               )
-            : null) as Nullable<string>;
+            : null;
 
         const openHelpTopic = (
             id: string,
             metadata: HelpCenterTopicInterface
-        ) => {
+        ): void => {
             helpTopicId.value = id;
             helpTopicMetadata.value = metadata;
             helpTopicDialog.value = true;
         };
-        const closeHelpTopic = () => {
+        const closeHelpTopic = (): void => {
             helpTopicId.value = null;
             helpTopicMetadata.value = null;
             helpTopicDialog.value = false;
@@ -235,9 +223,7 @@ export default defineComponent({
 
             // Icons
             mdiPlus,
-            mdiTimerSand,
             mdiAlertOutline,
-            scheduleIcons: { mdiSchoolOutline },
         };
     },
 });
@@ -248,8 +234,5 @@ export default defineComponent({
     padding: 0 5px;
     margin: 10px 0;
     text-align: center;
-}
-.v-card.schedule-card i.v-icon {
-    margin-right: 15px;
 }
 </style>

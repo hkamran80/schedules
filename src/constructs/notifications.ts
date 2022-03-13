@@ -3,9 +3,9 @@ import {
     BasicAllowedNotifications,
     NotificationSettingsError,
     RootKeyMatch,
-} from "@/structures/notifications";
-import { ScheduleDays } from "@/structures/schedule";
-import { StorageKeys } from "@/structures/storage";
+} from "@/models/notifications";
+import { ScheduleDays } from "@/models/schedule";
+import { StorageKeys } from "@/models/storage";
 import { loadFromStorage, saveToStorage } from "@/constructs/storage";
 import { showNotification, defaultEvents } from "@/notifications";
 

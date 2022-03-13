@@ -6,8 +6,8 @@ import {
     setTwentyFourHourStatus,
 } from "@/constructs/datetime";
 
-import { PrettyDayTime } from "@/structures/datetime";
-import { Nullable } from "@/structures/types";
+import { PrettyDayTime } from "@/models/datetime";
+import { Nullable } from "@/models/types";
 
 export function loadDatetime(override = false) {
     let dayTime: Ref;

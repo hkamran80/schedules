@@ -52,7 +52,7 @@ module.exports = {
         workboxPluginMode: "InjectManifest",
         workboxOptions: {
             swSrc: "src/service-worker.js",
-            exclude: [/\.map$/, /social-preview\.png/],
+            exclude: [/\.map$/, /social-preview\.png/, /_headers/],
         },
         manifestOptions: {
             icons: [

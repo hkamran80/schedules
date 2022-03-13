@@ -3,7 +3,7 @@ import {
     hourConversion,
 } from "../../src/constructs/calculations";
 
-import { HourConversionType } from "../../src/structures/calculations";
+import { HourConversionType } from "../../src/models/calculations";
 
 describe("Time Calculations", () => {
     it("returns the correct time difference", () => {
