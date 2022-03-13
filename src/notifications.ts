@@ -68,7 +68,6 @@ export function showNotification(
                 "use strict";
                 event.preventDefault();
                 window.focus();
-                // if (event.target) event.target.close();
                 e.onclick(event);
             };
             const bindOnClose = function(event: Event) {

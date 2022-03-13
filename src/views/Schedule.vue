@@ -170,7 +170,7 @@ const NotificationsExport = () =>
 const NotificationsImport = () =>
     import("@/components/NotificationsImport.vue");
 
-import { Schedule } from "@/models/schedule";
+import { Schedule, SchedulePeriodTimes } from "@/models/schedule";
 import { Period, PeriodNames, PeriodNamesError } from "@/models/periods";
 import { Nullable } from "@/models/types";
 import {
@@ -187,7 +187,11 @@ import {
     convertPeriodNames,
     convertAllowedNotifications,
 } from "@/constructs/update";
-import { getDayOverride, checkOffDay } from "@/constructs/datetime";
+import {
+    getDayOverride,
+    checkOffDay,
+    checkOverrideDay,
+} from "@/constructs/datetime";
 import { getValueFromObjectSearch } from "@/constructs/objects";
 import {
     checkForCustomPeriodName,
@@ -245,10 +249,14 @@ export default defineComponent({
             });
         }
 
-        const { name, shortName, schedule, color, offDays } = loadMetadata(
-            scheduleId,
-            props.schedules
-        );
+        const {
+            name,
+            shortName,
+            schedule,
+            color,
+            offDays,
+            overrides,
+        } = loadMetadata(scheduleId, props.schedules);
 
         const oldKeysCheck = checkExistence(scheduleId);
 
@@ -288,7 +296,7 @@ export default defineComponent({
         } = loadDialogs();
 
         // Notifications
-        const notifications = ref({
+        const notifications = ref<NotificationIntervals>({
             oneHour: false,
             thirtyMinute: false,
             fifteenMinute: false,
@@ -296,8 +304,8 @@ export default defineComponent({
             fiveMinute: false,
             oneMinute: false,
             thirtySecond: false,
-        } as NotificationIntervals);
-        const allowedNotifications = ref(
+        });
+        const allowedNotifications = ref<AllowedNotifications>(
             loadAllowedNotifications(scheduleId, schedule.value, {
                 intervals: {},
                 days: {},
@@ -313,26 +321,33 @@ export default defineComponent({
             getNewTimes,
         } = loadDatetime();
         const offDay = ref<boolean>(false);
+        const overrideDay = computed<string | null>(() =>
+            checkOverrideDay(overrides.value)
+        );
 
         // Other
         const debugMode = ref(context.root.$route.query.debug === "true");
-        const mainInterval = ref(null as Nullable<number>);
+        const mainInterval = ref<number | null>(null);
 
         // Computed
-        const currentDay = computed(() =>
-            dayTime.value.userOverridenDay
-                ? dayTime.value.userOverridenDay
-                : dayTime.value.day
-                ? dayTime.value.day
-                : "MON"
-        );
-        const daySchedule = computed(() =>
+        const currentDay = computed<string>(() => {
+            if (overrideDay.value !== null) {
+                return overrideDay.value as string;
+            } else if (dayTime.value.userOverridenDay) {
+                return dayTime.value.userOverridenDay;
+            } else if (dayTime.value.day) {
+                return dayTime.value.day;
+            } else {
+                return "MON";
+            }
+        });
+        const daySchedule = computed<SchedulePeriodTimes>(() =>
             getValueFromObjectSearch(currentDay.value, schedule.value)
         );
         const overrideExpirationTime = computed(() => "TBA");
 
         // Functions
-        const checkPeriodNamesNotFilled = () => {
+        const checkPeriodNamesNotFilled = (): boolean => {
             const periodNameValues = Object.values(periodNames.value);
             return (
                 periodNameValues.filter((name) => name === "").length ===
@@ -340,7 +355,7 @@ export default defineComponent({
             );
         };
 
-        const toggleDebugMode = () => {
+        const toggleDebugMode = (): void => {
             debugMode.value = !debugMode.value;
 
             if (debugMode.value === true) {
@@ -356,13 +371,13 @@ export default defineComponent({
                 });
             }
         };
-        const debugFunction = () => {
+        const debugFunction = (): void => {
             console.debug("=== DEBUG ===");
             console.debug(checkPeriodNamesNotFilled());
             console.debug(Object.values(periodNames.value));
         };
 
-        const periodNamesTips = () => {
+        const periodNamesTips = (): void => {
             if (checkPeriodNamesNotFilled()) {
                 // Two minute timeout
                 setTimeout(() => {
@@ -380,7 +395,7 @@ export default defineComponent({
             }
         };
 
-        const loadDayOverride = () => {
+        const loadDayOverride = (): void => {
             const dayOverride = getDayOverride(
                 scheduleId,
                 dayTime.value.time || "130400",
@@ -394,21 +409,21 @@ export default defineComponent({
             }
         };
 
-        const updatePeriodNames = (newPeriodNames: PeriodNames) => {
+        const updatePeriodNames = (newPeriodNames: PeriodNames): void => {
             periodNames.value = newPeriodNames;
             periodNamesEditDialogForceRender.value += 1;
         };
         const updateAllowedNotifications = (
             newAllowedNotifications: AllowedNotifications,
             rerender = false
-        ) => {
+        ): void => {
             allowedNotifications.value = newAllowedNotifications;
             if (rerender) {
                 notificationsEditDialogForceRender.value += 1;
             }
         };
 
-        const conversion = (existences: OldStorageItems[]) => {
+        const conversion = (existences: OldStorageItems[]): void => {
             if (existences.indexOf(OldStorageItems.PERIOD_NAMES)) {
                 const convertedPeriodNames = convertPeriodNames(scheduleId);
                 if (convertedPeriodNames !== null) {
@@ -478,7 +493,7 @@ export default defineComponent({
             rtHour: number,
             rtMinute: number,
             rtSecond: number
-        ) => {
+        ): void => {
             const title = `${shortName} - ${currentPeriod.value.name}`;
             if (rtHour === 0 && rtSecond === 0) {
                 if (
@@ -532,7 +547,7 @@ export default defineComponent({
             }
         };
 
-        const main = () => {
+        const main = (): void => {
             getNewTimes();
             loadDayOverride();
 

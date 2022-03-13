@@ -34,7 +34,7 @@ if (!Vue.prototype.$developmentMode) {
         integrations: [new BrowserTracing()],
         release: `schedules@${pkgVersion}`,
         environment: process.env.VUE_APP_SENTRY_ENVIRONMENT,
-        tracesSampleRate: 0.25,
+        tracesSampleRate: 0.75,
         tracingOptions: {
             trackComponents: true,
         },
