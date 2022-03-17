@@ -1,0 +1,14 @@
+- [ ] Notifications
+- Settings
+  - [ ] Twenty-four hour time
+  - Notifications
+    - [ ] Import
+    - [ ] Export
+    - [ ] Edit
+  - Period names
+    - [ ] Import
+    - [ ] Export
+    - [ ] Edit
+- [ ] Help center
+- [ ] Countdown (to port or not to port, that is the question)
+- [ ] Release notes
