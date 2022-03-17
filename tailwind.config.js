@@ -11,6 +11,10 @@ module.exports = {
                 serif: [...defaultTheme.fontFamily.serif],
                 mono: [...defaultTheme.fontFamily.mono],
             },
+            spacing: {
+                256: "48rem",
+                128: "32rem",
+            },
         },
     },
     plugins: [require("@tailwindcss/typography")],

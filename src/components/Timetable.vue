@@ -62,11 +62,10 @@ const validLongDays = computed(() => {
     <TransitionRoot appear :show="props.show" as="template">
         <Dialog as="div" @close="emit('hide')">
             <div
-                class="fixed inset-0 z-10 overflow-y-auto bg-black bg-opacity-60"
+                class="fixed inset-0 z-10 overflow-clip bg-black bg-opacity-60"
             >
                 <div class="min-h-screen px-4 text-center">
                     <TransitionChild
-                        as="template"
                         enter="duration-300 ease-out"
                         enter-from="opacity-0"
                         enter-to="opacity-100"
@@ -85,7 +84,7 @@ const validLongDays = computed(() => {
                     </span>
 
                     <TransitionChild
-                        as="template"
+                        as="span"
                         enter="duration-300 ease-out"
                         enter-from="opacity-0 scale-95"
                         enter-to="opacity-100 scale-100"
@@ -95,11 +94,11 @@ const validLongDays = computed(() => {
                     >
                         <!-- TODO: Set max height -->
                         <div
-                            class="inline-block w-full max-w-lg p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white dark:bg-black shadow-xl rounded-lg"
+                            class="inline-block w-full max-w-md max-h-256 p-6 my-8 overflow-none text-left align-middle transition-all transform bg-white dark:bg-black shadow-xl rounded-lg"
                         >
                             <DialogTitle
                                 as="h3"
-                                class="text-xl font-medium leading-6 text-gray-900 dark:text-gray-100 flex space-x-3 items-center"
+                                class="text-xl font-medium leading-6 text-gray-900 dark:text-gray-100 bg-white dark:bg-black flex space-x-3 items-center pb-2"
                             >
                                 <div class="flex-1 flex flex-col space-y-1">
                                     <span> Timetable </span>
@@ -205,7 +204,7 @@ const validLongDays = computed(() => {
                                 />
                             </DialogTitle>
 
-                            <div class="mt-2">
+                            <div class="mt-2 max-h-128 overflow-y-auto">
                                 <ul
                                     v-if="periods"
                                     class="divide-y divide-gray-200"

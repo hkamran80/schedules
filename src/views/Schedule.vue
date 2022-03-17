@@ -1,5 +1,12 @@
 <script setup lang="ts">
-import { useTitle, useNow, useDateFormat, useIntervalFn } from "@vueuse/core";
+import {
+    useTitle,
+    useNow,
+    useDateFormat,
+    useIntervalFn,
+    useWebNotification,
+    usePermission,
+} from "@vueuse/core";
 import { useMainStore } from "../stores/main";
 import { computed, onBeforeMount, onBeforeUnmount, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
@@ -19,6 +26,7 @@ import type { SchedulePeriodTimes } from "../types/schedule";
 import NavigationBar from "../components/NavigationBar.vue";
 import Card from "../components/Card.vue";
 import Timetable from "../components/Timetable.vue";
+import NotificationPermissionDialog from "../components/NotificationPermissionDialog.vue";
 
 useTitle("Schedule | Schedules");
 const { params } = useRoute();
@@ -44,6 +52,15 @@ store.$subscribe(() => {
 });
 
 const timetableDialog = ref<boolean>(false);
+const notificationsPermissionsDialog = ref<boolean>(false);
+
+const notificationPermission = usePermission("notifications");
+const { isSupported, notification, show } = useWebNotification({
+    title: "Schedules",
+    body: "If you see this, perfect! Notifications are enabled for Schedules!",
+    lang: "en",
+    tag: "demo",
+});
 
 const currentDateTime = useNow();
 const currentTime = useDateFormat(currentDateTime);
@@ -197,5 +214,16 @@ onBeforeUnmount(() => {
         :current-period-name="currentPeriod?.name"
         :next-period-name="nextPeriod?.name"
         @hide="timetableDialog = false"
+    />
+
+    <NotificationPermissionDialog
+        v-if="isSupported && notificationPermission !== 'granted'"
+        :show="notificationsPermissionsDialog"
+        @hide="notificationsPermissionsDialog = false"
+        @enable="
+            notificationsPermissionsDialog = false;
+            show();
+        "
+        @disable="notificationsPermissionsDialog = false"
     />
 </template>

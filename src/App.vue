@@ -9,13 +9,13 @@ onBeforeMount(async () => await store.loadSchedules());
 
 <template>
     <div
-        class="min-h-screen max-w-7xl mx-auto pt-16 md:pt-12 px-12 md:px-10 lg:px-0 pb-20 text-black dark:text-white"
+        class="min-h-screen max-w-7xl mx-auto pt-16 md:pt-12 px-12 md:px-10 2xl:px-0 pb-20 text-black dark:text-white"
     >
         <router-view />
     </div>
 
     <footer
-        class="text-gray-600 text-center text-sm -mt-16 px-6 sm:px-0 max-w-2xl mx-auto flex flex-col sm:flex-row space-y-2 sm:space-y-0 pb-12 sm:pb-0 items-center"
+        class="text-gray-600 text-center text-sm -mt-32 md:-mt-16 px-6 sm:px-0 max-w-2xl mx-auto flex flex-col sm:flex-row space-y-2 sm:space-y-0 pb-12 sm:pb-0 items-center"
     >
         <span class="flex-1 text-center sm:text-left">
             Copyright &copy; {{ new Date().getFullYear() }} UNISON Technologies
