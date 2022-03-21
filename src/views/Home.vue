@@ -12,11 +12,13 @@ import {
     DialogOverlay,
     DialogTitle,
 } from "@headlessui/vue";
+import ReleaseNotes from "../components/ReleaseNotes.vue";
 
 useTitle("Schedules");
 
 const store = useMainStore();
 const aboutDialog = ref<boolean>(false);
+const releaseNotesDialog = ref<boolean>(false);
 
 const pickTextColorBasedOnBgColorAdvanced = (
     bgColor: string,
@@ -76,7 +78,7 @@ const pickTextColorBasedOnBgColorAdvanced = (
                 </button>
 
                 <router-link
-                    to="/about"
+                    to="/help"
                     class="w-full px-6 py-4 rounded-lg text-left ring-2 dark:ring-0 ring-gray-100 dark:bg-gray-900"
                 >
                     Help Center
@@ -85,7 +87,7 @@ const pickTextColorBasedOnBgColorAdvanced = (
                 <button
                     type="button"
                     class="w-full px-6 py-4 rounded-lg text-left ring-2 dark:ring-0 ring-gray-100 dark:bg-gray-900"
-                    @click="aboutDialog = true"
+                    @click="releaseNotesDialog = true"
                 >
                     Release Notes
                 </button>
@@ -136,7 +138,9 @@ const pickTextColorBasedOnBgColorAdvanced = (
                             >
                                 <div class="flex-1 flex flex-col space-y-1">
                                     <span> About </span>
-                                    <span class="text-sm"> Version 4.0.0 </span>
+                                    <span class="text-sm">
+                                        Version {{ store.version }}
+                                    </span>
                                 </div>
 
                                 <button
@@ -146,7 +150,9 @@ const pickTextColorBasedOnBgColorAdvanced = (
                                 />
                             </DialogTitle>
 
-                            <div class="mt-6 prose dark:prose-invert max-w-none">
+                            <div
+                                class="mt-6 prose dark:prose-invert max-w-none"
+                            >
                                 <p>
                                     Schedules is an app for schedules. It tells
                                     you exactly what the current period is and
@@ -184,4 +190,9 @@ const pickTextColorBasedOnBgColorAdvanced = (
             </div>
         </Dialog>
     </TransitionRoot>
+
+    <ReleaseNotes
+        :show="releaseNotesDialog"
+        @hide="releaseNotesDialog = false"
+    />
 </template>

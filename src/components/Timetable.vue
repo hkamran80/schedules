@@ -92,7 +92,6 @@ const validLongDays = computed(() => {
                         leave-from="opacity-100 scale-100"
                         leave-to="opacity-0 scale-95"
                     >
-                        <!-- TODO: Set max height -->
                         <div
                             class="inline-block w-full max-w-md max-h-256 p-6 my-8 overflow-none text-left align-middle transition-all transform bg-white dark:bg-black shadow-xl rounded-lg"
                         >

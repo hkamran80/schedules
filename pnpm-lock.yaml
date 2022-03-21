@@ -10,6 +10,7 @@ specifiers:
   '@typescript-eslint/parser': ^5.15.0
   '@vitejs/plugin-vue': ^2.2.0
   '@vueuse/core': ^8.0.1
+  array-keyed-map: ^2.1.2
   autoprefixer: ^10.4.2
   eslint: ^8.11.0
   eslint-config-prettier: ^8.5.0
@@ -33,6 +34,7 @@ dependencies:
   '@headlessui/vue': 1.5.0_vue@3.2.31
   '@hkamran/utility-strings': 1.0.0-beta.2
   '@vueuse/core': 8.0.1_vue@3.2.31
+  array-keyed-map: 2.1.2
   feather-icons: 4.28.0
   pinia: 2.0.12_typescript@4.6.2+vue@3.2.31
   vue: 3.2.31
@@ -602,6 +604,10 @@ packages:
     resolution: {integrity: sha512-V+SM7AbUwJ+EBnB8+DXs0hPZHO0W6pqBcc0dW90OwtVG02PswOu/teuARoLQjdDOH+t9pJgGnW5/Qmouf3gPJg==}
     engines: {node: '>=6.0'}
     dev: true
+
+  /array-keyed-map/2.1.2:
+    resolution: {integrity: sha512-e8jWcUl2hD0kbRaxm4u6BSAcOsug6LL+C9w0QrG/v2K4I0KBiObUbAPQMp5TMj65MWslz3OstENAIalBEOl+hg==}
+    dev: false
 
   /array-union/2.1.0:
     resolution: {integrity: sha512-HGyxoOTYUyCM6stUe6EJgnd4EoewAI7zMdfqO+kGjnlZmBDz/cR5pf8r/cR4Wq60sL/p0IkcjUEEPwS3GFrIyw==}

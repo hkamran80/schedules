@@ -13,6 +13,7 @@
         "@headlessui/vue": "^1.5.0",
         "@hkamran/utility-strings": "^1.0.0-beta.2",
         "@vueuse/core": "^8.0.1",
+        "array-keyed-map": "^2.1.2",
         "feather-icons": "^4.28.0",
         "pinia": "^2.0.12",
         "vue": "^3.2.25",

@@ -12,7 +12,6 @@ import { computed, onBeforeMount, onBeforeUnmount, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import feather from "feather-icons";
 import { setPeriods, currentPeriod, nextPeriod } from "../composables/periods";
-import { useTimer } from "vue-timer-hook";
 import { padNumber } from "@hkamran/utility-strings";
 import {
     setOffDays,
@@ -21,12 +20,20 @@ import {
     lastOffDay,
     timezoneOffset,
 } from "../composables/overrides";
+import {
+    timer,
+    scheduleId,
+    scheduleShortName,
+} from "../composables/scheduleState";
+import "../composables/notifications";
+import { setDaySchedule } from "../composables/storage";
 import type { SchedulePeriodTimes } from "../types/schedule";
 
 import NavigationBar from "../components/NavigationBar.vue";
 import Card from "../components/Card.vue";
 import Timetable from "../components/Timetable.vue";
 import NotificationPermissionDialog from "../components/NotificationPermissionDialog.vue";
+import Settings from "../components/Settings.vue";
 
 useTitle("Schedule | Schedules");
 const { params } = useRoute();
@@ -34,6 +41,7 @@ const { push } = useRouter();
 
 const store = useMainStore();
 const schedule = computed(() => store.getSchedule(params.id as string));
+scheduleId.value = params.id as string;
 
 // Check if the schedule exists
 let keys = Object.keys(store.schedules);
@@ -52,10 +60,11 @@ store.$subscribe(() => {
 });
 
 const timetableDialog = ref<boolean>(false);
+const settingsDialog = ref<boolean>(false);
 const notificationsPermissionsDialog = ref<boolean>(false);
 
 const notificationPermission = usePermission("notifications");
-const { isSupported, notification, show } = useWebNotification({
+const { isSupported, show } = useWebNotification({
     title: "Schedules",
     body: "If you see this, perfect! Notifications are enabled for Schedules!",
     lang: "en",
@@ -73,7 +82,6 @@ const currentDay = computed(() =>
         .toLocaleDateString(undefined, { weekday: "short" })
         .toUpperCase(),
 );
-const timer = useTimer();
 
 const daySchedule = computed(() => {
     if (
@@ -89,6 +97,8 @@ const daySchedule = computed(() => {
 const { pause, resume } = useIntervalFn(
     () => {
         if (schedule.value) {
+            scheduleShortName.value = schedule.value.shortName;
+            setDaySchedule(schedule.value.schedule);
             setOffDays(schedule.value.offDays);
             setScheduleOverrides(schedule.value.overrides);
         }
@@ -97,7 +107,11 @@ const { pause, resume } = useIntervalFn(
             setPeriods(daySchedule.value);
         }
 
-        if (currentPeriod.value && currentPeriod.value.times) {
+        if (
+            currentPeriod.value &&
+            currentPeriod.value.times &&
+            (timer.isExpired.value || !timer.isRunning.value)
+        ) {
             let [hours, minutes, seconds] = currentPeriod.value.times.end
                 .split("-")
                 .map((time) => Number(time));
@@ -148,6 +162,7 @@ onBeforeUnmount(() => {
                     type="button"
                     class="rounded-lg text-gray-700 dark:text-gray-300 hover:text-pink-700 dark:hover:text-pink-500 p-2"
                     title="Open settings"
+                    @click="settingsDialog = true"
                     v-html="feather.icons.settings.toSvg()"
                 />
             </div>
@@ -222,8 +237,10 @@ onBeforeUnmount(() => {
         @hide="notificationsPermissionsDialog = false"
         @enable="
             notificationsPermissionsDialog = false;
-            show();
+            isSupported && notificationPermission === 'granted' ? show() : null;
         "
         @disable="notificationsPermissionsDialog = false"
     />
+
+    <Settings :show="settingsDialog" @hide="settingsDialog = false" />
 </template>
