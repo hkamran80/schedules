@@ -11,12 +11,11 @@ import {
 const props = defineProps<{
     show: boolean;
 }>();
-const emit =
-    defineEmits<{
-        (e: "hide"): void;
-        (e: "enable"): void;
-        (e: "disable"): void;
-    }>();
+const emit = defineEmits<{
+    (e: "hide"): void;
+    (e: "enable"): void;
+    (e: "disable"): void;
+}>();
 </script>
 
 <template>

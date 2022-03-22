@@ -19,7 +19,7 @@ import { generateSchedulePeriods } from "../composables/periods";
 import {
     convertShortWeekdayToLong,
     convertLongWeekdayToShort,
-} from "../util/datetime";
+} from "@hkamran/utility-datetime";
 
 const props = defineProps<{
     show: boolean;
@@ -224,6 +224,8 @@ const validLongDays = computed(() => {
 
                                                 <p
                                                     v-if="
+                                                        selectedDay ===
+                                                            props.day &&
                                                         props.currentPeriodName &&
                                                         period.name ===
                                                             props.currentPeriodName
@@ -234,6 +236,8 @@ const validLongDays = computed(() => {
                                                 </p>
                                                 <p
                                                     v-if="
+                                                        selectedDay ===
+                                                            props.day &&
                                                         props.nextPeriodName &&
                                                         period.name ===
                                                             props.nextPeriodName

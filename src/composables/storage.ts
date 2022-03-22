@@ -1,5 +1,5 @@
 import { computed, ref } from "vue";
-import { convertShortWeekdayToLong } from "../util/datetime";
+import { convertShortWeekdayToLong } from "@hkamran/utility-datetime";
 import { generateSchedulePeriods } from "./periods";
 import type { ScheduleDays } from "../types/schedule";
 import { useStorage } from "@vueuse/core";
@@ -59,4 +59,3 @@ export const emptyAllowedNotifications = computed(() => {
 });
 
 export const hour24 = useStorage("hour24", false);
-

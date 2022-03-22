@@ -1,14 +1,15 @@
-- [ ] Notifications
-- Settings
-  - [ ] Twenty-four hour time
-  - Notifications
-    - [ ] Import
-    - [ ] Export
-    - [ ] Edit
-  - Period names
-    - [ ] Import
-    - [ ] Export
-    - [ ] Edit
-- [ ] Help center
-- [ ] Countdown (to port or not to port, that is the question)
-- [ ] Release notes
+-   [x] Notifications
+-   Settings
+    -   [x] Twenty-four hour time
+    -   Notifications
+        -   [ ] Enable/disable
+        -   [ ] Import
+        -   [ ] Export
+        -   [ ] Edit
+    -   Period names
+        -   [ ] Import
+        -   [ ] Export
+        -   [ ] Edit
+-   [ ] Help center
+-   [ ] Countdown (to port or not to port, that is the question)
+-   [x] Release notes

@@ -44,6 +44,7 @@ const schedule = computed(() => store.getSchedule(params.id as string));
 scheduleId.value = params.id as string;
 
 // Check if the schedule exists
+// TODO: Show loading indicator while schedule is loading
 let keys = Object.keys(store.schedules);
 if (keys.length > 0 && keys.indexOf(params.id as string) === -1) {
     push({ name: "Home" });
@@ -64,12 +65,17 @@ const settingsDialog = ref<boolean>(false);
 const notificationsPermissionsDialog = ref<boolean>(false);
 
 const notificationPermission = usePermission("notifications");
-const { isSupported, show } = useWebNotification({
-    title: "Schedules",
-    body: "If you see this, perfect! Notifications are enabled for Schedules!",
-    lang: "en",
-    tag: "demo",
-});
+const notificationsSupported = !!window && "Notification" in window;
+const demoNotification = () => {
+    const { show } = useWebNotification({
+        title: "Schedules",
+        body: "If you see this, perfect! Notifications are enabled for Schedules!",
+        lang: "en",
+        tag: "demo",
+    });
+
+    show();
+};
 
 const currentDateTime = useNow();
 const currentTime = useDateFormat(currentDateTime);
@@ -94,6 +100,7 @@ const daySchedule = computed(() => {
     }
 });
 
+// TODO: Figure out a way to load the current/next periods immediately
 const { pause, resume } = useIntervalFn(
     () => {
         if (schedule.value) {
@@ -232,12 +239,14 @@ onBeforeUnmount(() => {
     />
 
     <NotificationPermissionDialog
-        v-if="isSupported && notificationPermission !== 'granted'"
+        v-if="notificationsSupported && notificationPermission !== 'granted'"
         :show="notificationsPermissionsDialog"
         @hide="notificationsPermissionsDialog = false"
         @enable="
             notificationsPermissionsDialog = false;
-            isSupported && notificationPermission === 'granted' ? show() : null;
+            notificationsSupported && notificationPermission === 'granted'
+                ? demoNotification()
+                : null;
         "
         @disable="notificationsPermissionsDialog = false"
     />

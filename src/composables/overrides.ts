@@ -1,7 +1,7 @@
 import { useDateFormat, useNow } from "@vueuse/core";
 import { computed, ref } from "vue";
 import type { OffDays, ScheduleOverrides } from "../types/overrides";
-import { dateRange } from "../util/datetime";
+import { dateRange } from "@hkamran/utility-datetime";
 
 const datetime = useNow();
 const date = useDateFormat(datetime, "YYYY-MM-DD");
@@ -45,7 +45,7 @@ export const offDay = computed(() =>
 
 export const lastOffDay = computed(() => {
     if (offDay.value) {
-        const lastDay = offDay.value[0].dates[offDay.value[0].dates.length - 1]
+        const lastDay = offDay.value[0].dates[offDay.value[0].dates.length - 1];
         return lastDay === offDay.value[0].dates[0] ? null : lastDay;
     }
 

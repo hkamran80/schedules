@@ -98,7 +98,9 @@ onBeforeMount(async () => {
                                         <div
                                             class="flex-1 flex flex-col text-sm text-left"
                                         >
-                                            <span class="font-medium text-black dark:text-white">
+                                            <span
+                                                class="font-medium text-black dark:text-white"
+                                            >
                                                 Version {{ release.version }}
                                             </span>
                                             <span

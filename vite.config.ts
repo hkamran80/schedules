@@ -4,8 +4,10 @@ import htmlConfig from "vite-plugin-html-config";
 
 const name = "Schedules";
 const keywords = "schedule schedules auhsd twcp time";
-const description = "The app for all your schedules. Select a schedule and keep track of how much time there is remaining in a period.";
-const faviconUrl = "https://next-schedules.unisontech.org/assets/images/favicons/favicon-192.png";
+const description =
+    "The app for all your schedules. Select a schedule and keep track of how much time there is remaining in a period.";
+const faviconUrl =
+    "https://next-schedules.unisontech.org/assets/images/favicons/favicon-192.png";
 const twitterUsername = "@unisontechorg";
 
 // https://vitejs.dev/config/
@@ -53,7 +55,11 @@ export default defineConfig({
                 },
             ],
             links: [
-                { rel: "icon", type: "image/png", href: "/assets/images/favicons/favicon-192.png" },
+                {
+                    rel: "icon",
+                    type: "image/png",
+                    href: "/assets/images/favicons/favicon-192.png",
+                },
                 { rel: "preconnect", href: "https://fonts.googleapis.com/" },
                 {
                     rel: "preconnect",
