@@ -1,10 +1,10 @@
 import {
-    RemovableRef,
     useNow,
     usePermission,
     useStorage,
     useWebNotification,
     watchDebounced,
+    type RemovableRef,
 } from "@vueuse/core";
 import { timer, scheduleShortName, scheduleId } from "./scheduleState";
 import ArrayKeyedMap from "array-keyed-map";
@@ -52,11 +52,17 @@ let storage: RemovableRef<{
     periods: { [periodName: string]: boolean };
 } | null> | null = null;
 
+let enabledStorage: RemovableRef<boolean> | null = null;
+
 watchDebounced(
     [timer.days, timer.hours, timer.minutes, timer.seconds],
     () => {
         if (scheduleId.value) {
-            if (!storage) {
+            if (!storage || !enabledStorage) {
+                enabledStorage = useStorage(
+                    `schedule.${scheduleId.value}.notifications`,
+                    true,
+                );
                 storage = useStorage(
                     `schedule.${scheduleId.value}.allowedNotifications`,
                     emptyAllowedNotifications.value,
@@ -72,6 +78,7 @@ watchDebounced(
 
             if (
                 currentPeriod.value &&
+                enabledStorage.value &&
                 availableNotifications.has(notificationArray) &&
                 offDay.value.length === 0 &&
                 storage.value

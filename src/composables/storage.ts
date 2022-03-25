@@ -58,4 +58,5 @@ export const emptyAllowedNotifications = computed(() => {
     return null;
 });
 
+// Global storage interfaces
 export const hour24 = useStorage("hour24", false);

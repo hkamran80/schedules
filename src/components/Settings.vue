@@ -12,14 +12,43 @@ import {
     Switch,
     SwitchLabel,
 } from "@headlessui/vue";
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import { useStorage, watchOnce, type RemovableRef } from "@vueuse/core";
+import { scheduleId } from "../composables/scheduleState";
 
 const props = defineProps<{
     show: boolean;
 }>();
-const emit = defineEmits<{ (e: "hide"): void }>();
+const emit = defineEmits<{
+    (e: "hide"): void;
+    (e: "editNotifications"): void;
+    (e: "editPeriodNames"): void;
+}>();
 
-const notificationsEnabled = ref<boolean>(false);
+let notificationsEnabledModel = ref<boolean>(false);
+let notificationsEnabled: RemovableRef<boolean> | null = null;
+
+if (scheduleId.value) {
+    notificationsEnabled = useStorage(
+        `schedule.${scheduleId.value}.notifications`,
+        true,
+    );
+    notificationsEnabledModel.value = notificationsEnabled.value;
+} else {
+    watchOnce(scheduleId, (newScheduleId) => {
+        notificationsEnabled = useStorage(
+            `schedule.${newScheduleId}.notifications`,
+            true,
+        );
+        notificationsEnabledModel.value = notificationsEnabled.value;
+    });
+}
+
+watch(notificationsEnabledModel, (change) => {
+    if (notificationsEnabled !== null) {
+        notificationsEnabled.value = change;
+    }
+});
 </script>
 
 <template>
@@ -116,54 +145,51 @@ const notificationsEnabled = ref<boolean>(false);
                                     </div>
                                 </SwitchGroup>
 
+                                <SwitchGroup
+                                    v-if="notificationsEnabled !== null"
+                                >
+                                    <div class="flex items-center">
+                                        <SwitchLabel
+                                            class="mr-4 flex-1 text-black dark:text-white"
+                                        >
+                                            Enable Notifications
+                                        </SwitchLabel>
+                                        <Switch
+                                            v-model="notificationsEnabledModel"
+                                            :class="
+                                                notificationsEnabledModel
+                                                    ? 'bg-pink-700 dark:bg-pink-500'
+                                                    : 'bg-gray-200 dark:bg-gray-900'
+                                            "
+                                            class="relative inline-flex items-center h-6 transition-colors rounded-full w-11 focus:outline-none"
+                                        >
+                                            <span
+                                                :class="
+                                                    notificationsEnabledModel
+                                                        ? 'translate-x-6'
+                                                        : 'translate-x-1'
+                                                "
+                                                class="inline-block w-4 h-4 transition-transform transform bg-white dark:bg-gray-200 rounded-full"
+                                            />
+                                        </Switch>
+                                    </div>
+                                </SwitchGroup>
+
                                 <button
                                     type="button"
                                     class="w-full text-left px-4 py-2 ring-2 ring-gray-200 dark:ring-gray-800 ring-inset hover:bg-gray-200 dark:hover:bg-gray-800 transition rounded-lg text-black dark:text-white"
+                                    @click="emit('editNotifications')"
+                                >
+                                    Edit Notifications
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="w-full text-left px-4 py-2 ring-2 ring-gray-200 dark:ring-gray-800 ring-inset hover:bg-gray-200 dark:hover:bg-gray-800 transition rounded-lg text-black dark:text-white"
+                                    @click="emit('editPeriodNames')"
                                 >
                                     Edit Period Names
                                 </button>
-
-                                <div class="space-y-2">
-                                    <h3
-                                        class="font-semibold tracking-tight text-black dark:text-white"
-                                    >
-                                        Notifications
-                                    </h3>
-                                    <SwitchGroup>
-                                        <div class="flex items-center">
-                                            <SwitchLabel
-                                                class="mr-4 flex-1 text-black dark:text-white"
-                                            >
-                                                Enabled
-                                            </SwitchLabel>
-                                            <Switch
-                                                v-model="notificationsEnabled"
-                                                :class="
-                                                    notificationsEnabled
-                                                        ? 'bg-pink-700 dark:bg-pink-500'
-                                                        : 'bg-gray-200 dark:bg-gray-900'
-                                                "
-                                                class="relative inline-flex items-center h-6 transition-colors rounded-full w-11 focus:outline-none"
-                                            >
-                                                <span
-                                                    :class="
-                                                        notificationsEnabled
-                                                            ? 'translate-x-6'
-                                                            : 'translate-x-1'
-                                                    "
-                                                    class="inline-block w-4 h-4 transition-transform transform bg-white dark:bg-gray-200 rounded-full"
-                                                />
-                                            </Switch>
-                                        </div>
-                                    </SwitchGroup>
-
-                                    <button
-                                        type="button"
-                                        class="w-full text-left px-4 py-2 ring-2 ring-gray-200 dark:ring-gray-800 ring-inset hover:bg-gray-200 dark:hover:bg-gray-800 transition rounded-lg text-black dark:text-white"
-                                    >
-                                        Edit
-                                    </button>
-                                </div>
                             </div>
                         </div>
                     </TransitionChild>

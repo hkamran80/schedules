@@ -1,7 +1,7 @@
 import { useDateFormat, useNow } from "@vueuse/core";
 import { computed, ref } from "vue";
-import type { OffDays, ScheduleOverrides } from "../types/overrides";
 import { dateRange } from "@hkamran/utility-datetime";
+import type { OffDays, ScheduleOverrides } from "../types/overrides";
 
 const datetime = useNow();
 const date = useDateFormat(datetime, "YYYY-MM-DD");

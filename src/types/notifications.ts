@@ -2,9 +2,26 @@ export type BasicAllowedNotifications = {
     intervals: NotificationIntervals;
 };
 
-export type AllowedNotifications = BasicAllowedNotifications & {
-    days: NotificationDays;
-    periods: NotificationPeriods;
+export type AllowedNotifications = {
+    intervals: {
+        oneHour: boolean;
+        thirtyMinutes: boolean;
+        fifteenMinutes: boolean;
+        tenMinutes: boolean;
+        fiveMinutes: boolean;
+        oneMinute: boolean;
+        thirtySeconds: boolean;
+    };
+    days: {
+        sunday?: boolean;
+        monday?: boolean;
+        tuesday?: boolean;
+        wednesday?: boolean;
+        thursday?: boolean;
+        friday?: boolean;
+        saturday?: boolean;
+    };
+    periods: { [periodName: string]: boolean };
 };
 
 export type NotificationDays = {

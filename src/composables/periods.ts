@@ -2,9 +2,21 @@ import { padNumber } from "@hkamran/utility-strings";
 import { useDateFormat, useNow } from "@vueuse/core";
 import { computed, ref } from "vue";
 import type { Period, PeriodTimes } from "../types/periods";
-import type { SchedulePeriodTimes } from "../types/schedule";
+import type {
+    SchedulePeriodDetails,
+    SchedulePeriodTimes,
+} from "../types/schedule";
+import { periodNames } from "./scheduleState";
 
 const currentTime = useDateFormat(useNow(), "HHmmss");
+
+const getCustomPeriodName = (originalName: string): string => {
+    if (periodNames && periodNames.value && periodNames.value[originalName]) {
+        return periodNames.value[originalName] + ` (${originalName})`;
+    } else {
+        return originalName;
+    }
+};
 
 export const currentPeriod = computed<Period | null>(() => {
     if (schedulePeriods.value) {
@@ -16,7 +28,10 @@ export const currentPeriod = computed<Period | null>(() => {
         );
 
         if (currentPeriods) {
-            return currentPeriods[0];
+            return {
+                ...currentPeriods[0],
+                name: getCustomPeriodName(currentPeriods[0].name),
+            };
         } else {
             return null;
         }
@@ -34,7 +49,10 @@ export const nextPeriod = computed<Period | null>(() => {
         });
 
         if (nextPeriods) {
-            return nextPeriods[0];
+            return {
+                ...nextPeriods[0],
+                name: getCustomPeriodName(nextPeriods[0].name),
+            };
         } else {
             return null;
         }
@@ -59,12 +77,15 @@ export const generateSchedulePeriods = (schedulePeriods: SchedulePeriodTimes) =>
         const periodTimes = Array.isArray(period) ? period : period.times;
 
         return {
-            name: periodName,
+            name: getCustomPeriodName(periodName),
             times: {
                 start: periodTimes[0],
                 end: periodTimes[1],
             } as PeriodTimes,
-            allowEditing: Array.isArray(period) ? true : period.allowEditing,
+            allowEditing:
+                periodName.indexOf("Passing (") === -1 && Array.isArray(period)
+                    ? true
+                    : (period as SchedulePeriodDetails).allowEditing,
         } as Period;
     });
 
