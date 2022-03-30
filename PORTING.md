@@ -10,9 +10,9 @@
     - ~~[ ] Import~~
     - ~~[ ] Export~~
     - [x] Edit
-  - [ ] Import
+  - [x] Import
   - [x] Export
-- [ ] Help center
+- [x] Help center
 - ~~[ ] Countdown (to port or not to port, that is the question)~~
    - Not being ported
 - [x] Release notes

@@ -3,6 +3,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import Home from "../views/Home.vue";
 import Schedule from "../views/Schedule.vue";
 import HelpCenter from "../views/HelpCenter.vue";
+import HelpCenterTopic from "../views/HelpCenterTopic.vue";
 
 const routes = [
     {
@@ -20,6 +21,12 @@ const routes = [
         name: "HelpCenter",
         component: HelpCenter,
     },
+    {
+        path: "/help/:id",
+        name: "HelpCenterTopic",
+        component: HelpCenterTopic,
+    },
+    // TODO: Add 404 page (use `Head` component from `@vueuse/head`)
 ];
 
 const router = createRouter({

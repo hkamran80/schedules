@@ -112,7 +112,7 @@ watchEffect(() => {
                                             .replace(/\s\s/gm, ' ')
                                             .replace(/\s/gm, '-')
                                             .toLowerCase()}`"
-                                        class="block text-sm font-medium text-gray-700"
+                                        class="block text-sm font-medium text-gray-700 dark:text-gray-300"
                                         v-text="defaultName"
                                     />
                                     <input
@@ -123,7 +123,7 @@ watchEffect(() => {
                                             .toLowerCase()}`"
                                         v-model="modelStorage[defaultName]"
                                         type="text"
-                                        class="mt-1 block rounded-lg w-full sm:text-sm ring-inset ring-2 ring-gray-200 focus:outline-none focus:ring-pink-700 dark:focus:ring-pink-500 py-2 px-4"
+                                        class="mt-1 block rounded-lg w-full sm:text-sm dark:text-white dark:bg-black ring-inset ring-2 ring-gray-200 dark:ring-gray-800 focus:outline-none focus:ring-pink-700 dark:focus:ring-pink-500 py-2 px-4"
                                         :placeholder="(defaultName as string)"
                                     />
                                 </div>

@@ -26,10 +26,7 @@ import {
     type RemovableRef,
 } from "@vueuse/core";
 import { scheduleId } from "../composables/scheduleState";
-import {
-    generateSchedulePeriods,
-    schedulePeriods,
-} from "../composables/periods";
+import { generateSchedulePeriods } from "../composables/periods";
 import { ScheduleDays } from "../types/schedule";
 
 const props = defineProps<{
