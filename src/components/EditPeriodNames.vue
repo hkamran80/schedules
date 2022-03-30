@@ -10,8 +10,8 @@ import {
 } from "@headlessui/vue";
 import { ref, toRef, watch, watchEffect } from "vue";
 import { watchOnce } from "@vueuse/core";
-import { scheduleId, periodNames } from "../composables/scheduleState";
-import { emptyPeriodNames } from "../composables/storage";
+import { scheduleId } from "../composables/scheduleState";
+import { emptyPeriodNames, periodNames } from "../composables/storage";
 import type { PeriodNames } from "../types/periods";
 
 const props = defineProps<{
@@ -28,7 +28,7 @@ watch(showProp, () => {
     if (scheduleId.value && periodNames) {
         modelStorage.value = periodNames.value;
     } else {
-        watchOnce(scheduleId, (newScheduleId) => {
+        watchOnce(scheduleId, () => {
             if (periodNames) {
                 modelStorage.value = periodNames.value;
             }

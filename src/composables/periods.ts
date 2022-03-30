@@ -6,7 +6,7 @@ import type {
     SchedulePeriodDetails,
     SchedulePeriodTimes,
 } from "../types/schedule";
-import { periodNames } from "./scheduleState";
+import { periodNames } from "./storage";
 
 const currentTime = useDateFormat(useNow(), "HHmmss");
 
@@ -27,10 +27,11 @@ export const currentPeriod = computed<Period | null>(() => {
                 currentTime.value <= times.end.replace(/-/gm, ""),
         );
 
-        if (currentPeriods) {
+        if (currentPeriods.length > 0) {
             return {
                 ...currentPeriods[0],
                 name: getCustomPeriodName(currentPeriods[0].name),
+                originalName: currentPeriods[0].name,
             };
         } else {
             return null;
@@ -48,10 +49,11 @@ export const nextPeriod = computed<Period | null>(() => {
             );
         });
 
-        if (nextPeriods) {
+        if (nextPeriods.length > 0) {
             return {
                 ...nextPeriods[0],
                 name: getCustomPeriodName(nextPeriods[0].name),
+                originalName: nextPeriods[0].name,
             };
         } else {
             return null;
@@ -78,6 +80,7 @@ export const generateSchedulePeriods = (schedulePeriods: SchedulePeriodTimes) =>
 
         return {
             name: getCustomPeriodName(periodName),
+            originalName: periodName,
             times: {
                 start: periodTimes[0],
                 end: periodTimes[1],

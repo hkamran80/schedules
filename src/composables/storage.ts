@@ -1,8 +1,11 @@
-import { computed, ref } from "vue";
+import { computed, ref, watchEffect } from "vue";
 import { convertShortWeekdayToLong } from "@hkamran/utility-datetime";
 import { generateSchedulePeriods } from "./periods";
+import { type RemovableRef, useStorage } from "@vueuse/core";
+import { scheduleId } from "./scheduleState";
 import type { ScheduleDays } from "../types/schedule";
-import { useStorage } from "@vueuse/core";
+import type { PeriodNames } from "../types/periods";
+import type { AllowedNotifications } from "../types/notifications";
 
 const schedule = ref<ScheduleDays | null>(null);
 export const setDaySchedule = (newDaySchedule: ScheduleDays) =>
@@ -60,3 +63,20 @@ export const emptyAllowedNotifications = computed(() => {
 
 // Global storage interfaces
 export const hour24 = useStorage("hour24", false);
+export let periodNames: RemovableRef<PeriodNames | null> | null = null;
+export let allowedNotifications: RemovableRef<AllowedNotifications | null> | null =
+    null;
+
+watchEffect(() => {
+    if (scheduleId.value) {
+        periodNames = useStorage(
+            `schedule.${scheduleId.value}.periodNames`,
+            emptyPeriodNames.value,
+        );
+
+        allowedNotifications = useStorage(
+            `schedule.${scheduleId.value}.allowedNotifications`,
+            emptyAllowedNotifications.value,
+        );
+    }
+});

@@ -11,7 +11,7 @@
     },
     "dependencies": {
         "@headlessui/vue": "^1.5.0",
-        "@hkamran/utility-datetime": "^1.0.0",
+        "@hkamran/utility-datetime": "^1.0.3",
         "@hkamran/utility-strings": "^1.0.1",
         "@vueuse/core": "^8.0.1",
         "array-keyed-map": "^2.1.2",

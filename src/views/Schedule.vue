@@ -13,6 +13,7 @@ import { useRoute, useRouter } from "vue-router";
 import feather from "feather-icons";
 import { setPeriods, currentPeriod, nextPeriod } from "../composables/periods";
 import { padNumber } from "@hkamran/utility-strings";
+import { convert24HourTo12Hour } from "@hkamran/utility-datetime";
 import {
     setOffDays,
     setScheduleOverrides,
@@ -141,13 +142,7 @@ const nextPeriodTime = computed(() => {
         if (hour24.value) {
             return baseTime.join(":");
         } else {
-            return (
-                (Number(baseTime[0]) > 12
-                    ? Number(baseTime[0]) - 12
-                    : baseTime[0]) +
-                `:${baseTime[1]} ` +
-                (Number(baseTime[0]) > 12 ? "PM" : "AM")
-            );
+            return convert24HourTo12Hour(baseTime.join(":"));
         }
     }
 
@@ -320,7 +315,9 @@ onBeforeUnmount(() => {
     />
 
     <Settings
+        v-if="schedule && schedule.schedule"
         :show="settingsDialog"
+        :schedule="schedule.schedule"
         @hide="settingsDialog = false"
         @edit-notifications="openEditNotificationsDialog"
         @edit-period-names="openEditPeriodNamesDialog"

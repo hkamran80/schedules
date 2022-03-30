@@ -3,7 +3,7 @@ lockfileVersion: 5.3
 specifiers:
   '@headlessui/vue': ^1.5.0
   '@hkamran/prettier-config': ^1.1.1
-  '@hkamran/utility-datetime': ^1.0.0
+  '@hkamran/utility-datetime': ^1.0.3
   '@hkamran/utility-strings': ^1.0.1
   '@tailwindcss/typography': ^0.5.2
   '@types/feather-icons': ^4.7.0
@@ -33,7 +33,7 @@ specifiers:
 
 dependencies:
   '@headlessui/vue': 1.5.0_vue@3.2.31
-  '@hkamran/utility-datetime': 1.0.0
+  '@hkamran/utility-datetime': 1.0.3
   '@hkamran/utility-strings': 1.0.1
   '@vueuse/core': 8.0.1_vue@3.2.31
   array-keyed-map: 2.1.2
@@ -146,8 +146,8 @@ packages:
     resolution: {integrity: sha512-VLAWG2W19Wonwl+uEz1qNgQINxCd5igOH1gUb+OsW46WEZlDOcFapTQyI/Mi/mB4NvTz2hd2hxUiAPAztH/xuA==}
     dev: true
 
-  /@hkamran/utility-datetime/1.0.0:
-    resolution: {integrity: sha512-hGXHEo1szVGTSucqMeQEOBsoTA/I9vRMWzqvPwRw9iWsnxLjSHM+76b9E1v0wlusNmNpIXOqh1hNNp1ELvJmqw==}
+  /@hkamran/utility-datetime/1.0.3:
+    resolution: {integrity: sha512-QibjKNEuTnCJ78zwP/j24PnI7Juqbxo3lr0VKIU4VD616j5rpDy5boPTiJ3ZRIZPZlZtNVvp5DwrFke7au0V5w==}
     dev: false
 
   /@hkamran/utility-strings/1.0.1:

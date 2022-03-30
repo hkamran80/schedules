@@ -1,5 +1,6 @@
 export interface Period {
     name: string;
+    originalName?: string;
     times: PeriodTimes | null;
     allowEditing: boolean;
 }

@@ -1,8 +1,16 @@
 <script setup lang="ts">
 import feather from "feather-icons";
 import { computed, ref } from "vue";
+import { generateSchedulePeriods } from "../composables/periods";
+import {
+    convertShortWeekdayToLong,
+    convertLongWeekdayToShort,
+    convert24HourTo12Hour,
+} from "@hkamran/utility-datetime";
+import { hour24 } from "../composables/storage";
 import type { ScheduleDays, SchedulePeriodTimes } from "../types/schedule";
 import type { LongDay } from "../types/datetime";
+import type { Period } from "../types/periods";
 
 import {
     TransitionRoot,
@@ -15,11 +23,6 @@ import {
     ListboxOptions,
     ListboxOption,
 } from "@headlessui/vue";
-import { generateSchedulePeriods } from "../composables/periods";
-import {
-    convertShortWeekdayToLong,
-    convertLongWeekdayToShort,
-} from "@hkamran/utility-datetime";
 
 const props = defineProps<{
     show: boolean;
@@ -41,7 +44,35 @@ const periods = computed(() => {
     ) {
         return generateSchedulePeriods(
             props.schedule[shortWeekday] as SchedulePeriodTimes,
-        );
+        )
+            .map((period) => {
+                if (period.times) {
+                    return {
+                        ...period,
+                        times: {
+                            start: hour24.value
+                                ? period.times.start
+                                      .split("-")
+                                      .slice(0, 2)
+                                      .join(":")
+                                : convert24HourTo12Hour(
+                                      period.times.start.replace(/-/g, ":"),
+                                  ),
+                            end: hour24.value
+                                ? period.times.end
+                                      .split("-")
+                                      .slice(0, 2)
+                                      .join(":")
+                                : convert24HourTo12Hour(
+                                      period.times.end.replace(/-/g, ":"),
+                                  ),
+                        },
+                    };
+                }
+            })
+            .filter(
+                (period) => period !== undefined && period !== null,
+            ) as Period[];
     } else {
         return null;
     }
@@ -250,19 +281,9 @@ const validLongDays = computed(() => {
                                             <p
                                                 class="text-sm text-gray-500 dark:text-gray-400"
                                             >
-                                                {{
-                                                    period.times?.start
-                                                        .split("-")
-                                                        .slice(0, 2)
-                                                        .join(":")
-                                                }}
+                                                {{ period.times?.start }}
                                                 -
-                                                {{
-                                                    period.times?.end
-                                                        .split("-")
-                                                        .slice(0, 2)
-                                                        .join(":")
-                                                }}
+                                                {{ period.times?.end }}
                                             </p>
                                         </div>
                                     </li>

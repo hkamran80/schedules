@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import feather from "feather-icons";
-import { hour24 } from "../composables/storage";
+import {
+    allowedNotifications,
+    hour24,
+    periodNames,
+} from "../composables/storage";
 
 import {
     TransitionRoot,
@@ -12,12 +16,25 @@ import {
     Switch,
     SwitchLabel,
 } from "@headlessui/vue";
-import { ref, watch } from "vue";
-import { useStorage, watchOnce, type RemovableRef } from "@vueuse/core";
+import { computed, ref, watchEffect } from "vue";
+import {
+    useClipboard,
+    usePermission,
+    useStorage,
+    useTimeoutFn,
+    watchOnce,
+    type RemovableRef,
+} from "@vueuse/core";
 import { scheduleId } from "../composables/scheduleState";
+import {
+    generateSchedulePeriods,
+    schedulePeriods,
+} from "../composables/periods";
+import { ScheduleDays } from "../types/schedule";
 
 const props = defineProps<{
     show: boolean;
+    schedule: ScheduleDays;
 }>();
 const emit = defineEmits<{
     (e: "hide"): void;
@@ -25,7 +42,7 @@ const emit = defineEmits<{
     (e: "editPeriodNames"): void;
 }>();
 
-let notificationsEnabledModel = ref<boolean>(false);
+const notificationsEnabledModel = ref<boolean>(false);
 let notificationsEnabled: RemovableRef<boolean> | null = null;
 
 if (scheduleId.value) {
@@ -44,9 +61,93 @@ if (scheduleId.value) {
     });
 }
 
-watch(notificationsEnabledModel, (change) => {
-    if (notificationsEnabled !== null) {
-        notificationsEnabled.value = change;
+const settingsImported = ref<boolean>(false);
+const settingsImport = async () => {
+    if (!settingsImported.value) {
+        const rawSettings = await readClipboard();
+        if (rawSettings) {
+            try {
+                const settings = JSON.parse(rawSettings);
+
+                if (
+                    "hour24" in settings &&
+                    typeof settings.hour24 === "boolean"
+                ) {
+                    hour24.value = settings.hour24;
+                }
+
+                if (
+                    "notifications" in settings &&
+                    typeof settings.notifications === "boolean"
+                ) {
+                    notificationsEnabledModel.value = settings.notifications;
+                }
+
+                if (
+                    "periodNames" in settings &&
+                    typeof settings.periodNames === "object" &&
+                    props.schedule &&
+                    periodNames
+                ) {
+                    let importPeriods = Object.keys(
+                        settings.periodNames,
+                    ).sort();
+                    let schedulePeriods = Array.from(
+                        new Set(
+                            Object.values(props.schedule)
+                                .flatMap((day) => generateSchedulePeriods(day))
+                                .filter(({ allowEditing }) => !!allowEditing)
+                                .map(({ originalName }) => originalName)
+                                .sort(),
+                        ),
+                    );
+
+                    if (importPeriods.join(",") === schedulePeriods.join(",")) {
+                        periodNames.value = Object.fromEntries(
+                            schedulePeriods.map((periodName) => [
+                                periodName,
+                                settings.periodNames[periodName as string],
+                            ]),
+                        );
+                    }
+                }
+
+                settingsImported.value = true;
+                useTimeoutFn(() => (settingsImported.value = false), 1500, {
+                    immediate: true,
+                });
+                // eslint-disable-next-line no-empty
+            } catch {
+                console.error("An error occurred while loading your settings");
+            }
+        }
+    }
+};
+
+const readClipboard = async () =>
+    readPermission.value !== "denied"
+        ? await navigator.clipboard.readText()
+        : null;
+
+const settingsExport = computed(() =>
+    JSON.stringify({
+        hour24: hour24.value,
+        periodNames: periodNames ? periodNames.value : null,
+        notifications: notificationsEnabledModel.value,
+        allowedNotifications:
+            allowedNotifications && allowedNotifications.value
+                ? allowedNotifications.value
+                : null,
+    }),
+);
+const { isSupported: writeSupported, copy, copied } = useClipboard();
+const writePermission = usePermission("clipboard-write");
+const readSupported = Boolean(navigator && "clipboard" in navigator);
+const readPermission = usePermission("clipboard-read");
+
+watchEffect(() => {
+    if (notificationsEnabled && notificationsEnabledModel.value) {
+        notificationsEnabled.value = notificationsEnabledModel.value;
     }
 });
 </script>
@@ -95,17 +196,33 @@ watch(notificationsEnabledModel, (change) => {
                                 <span class="flex-1"> Settings </span>
 
                                 <button
+                                    v-if="
+                                        readPermission !== 'denied' &&
+                                        readSupported
+                                    "
                                     type="button"
-                                    class="focus:outline-none"
-                                    @click="emit('hide')"
+                                    class="focus:outline-none transition-colors ease-in-out duration-200"
+                                    :class="{
+                                        'text-green-600': settingsImported,
+                                    }"
+                                    :disabled="settingsImported"
+                                    @click="settingsImport()"
                                     v-html="feather.icons.upload.toSvg()"
                                 />
+
                                 <button
+                                    v-if="
+                                        writePermission !== 'denied' &&
+                                        writeSupported
+                                    "
                                     type="button"
-                                    class="focus:outline-none"
-                                    @click="emit('hide')"
+                                    :class="{ 'text-green-600': copied }"
+                                    class="focus:outline-none transition-colors ease-in-out duration-200"
+                                    :disabled="copied"
+                                    @click="copy(settingsExport)"
                                     v-html="feather.icons.download.toSvg()"
                                 />
+
                                 <button
                                     type="button"
                                     class="focus:outline-none"

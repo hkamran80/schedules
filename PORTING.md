@@ -3,13 +3,15 @@
   - [x] Twenty-four hour time
   - Notifications
     - [x] Enable/disable
-    - [ ] Import
-    - [ ] Export
+    - ~~[ ] Import~~
+    - ~~[ ] Export~~
     - [x] Edit
   - Period names
-    - [ ] Import
-    - [ ] Export
-    - [ ] Edit
+    - ~~[ ] Import~~
+    - ~~[ ] Export~~
+    - [x] Edit
+  - [ ] Import
+  - [x] Export
 - [ ] Help center
 - ~~[ ] Countdown (to port or not to port, that is the question)~~
    - Not being ported

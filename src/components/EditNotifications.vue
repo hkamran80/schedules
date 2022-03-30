@@ -11,10 +11,13 @@ import {
     Switch,
     SwitchLabel,
 } from "@headlessui/vue";
-import { ref, toRef, watch } from "vue";
-import { useStorage, watchOnce, type RemovableRef } from "@vueuse/core";
+import { ref, toRef, watch, watchEffect } from "vue";
+import { watchOnce } from "@vueuse/core";
 import { scheduleId } from "../composables/scheduleState";
-import { emptyAllowedNotifications } from "../composables/storage";
+import {
+    emptyAllowedNotifications,
+    allowedNotifications,
+} from "../composables/storage";
 import { AllowedNotifications } from "../types/notifications";
 import { notificationMap } from "../composables/notifications";
 import { capitalizeFirstLetter } from "@hkamran/utility-strings";
@@ -37,31 +40,22 @@ const modelStorage = ref<AllowedNotifications | null>(
     emptyAllowedNotifications.value,
 );
 
-let storage: RemovableRef<AllowedNotifications | null> | null = null;
-
 const showProp = toRef(props, "show");
 watch(showProp, () => {
-    if (scheduleId.value) {
-        storage = useStorage(
-            `schedule.${scheduleId.value}.allowedNotifications`,
-            emptyAllowedNotifications.value,
-        );
-
-        modelStorage.value = storage.value;
+    if (scheduleId.value && allowedNotifications) {
+        modelStorage.value = allowedNotifications.value;
     } else {
-        watchOnce(scheduleId, (newScheduleId) => {
-            storage = useStorage(
-                `schedule.${newScheduleId}.allowedNotifications`,
-                emptyAllowedNotifications.value,
-            );
-
-            modelStorage.value = storage.value;
+        watchOnce(scheduleId, () => {
+            if (allowedNotifications) {
+                modelStorage.value = allowedNotifications.value;
+            }
         });
     }
 });
-watch(modelStorage, (change) => {
-    if (storage && change) {
-        storage.value = change;
+
+watchEffect(() => {
+    if (allowedNotifications && modelStorage.value) {
+        allowedNotifications.value = modelStorage.value;
     }
 });
 </script>
