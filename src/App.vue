@@ -2,6 +2,7 @@
 import { onBeforeMount } from "vue";
 import { useMainStore } from "./stores/main";
 import { useHelpCenterStore } from "./stores/helpCenter";
+import ReloadPWA from "./components/ReloadPWA.vue";
 
 const store = useMainStore();
 const helpCenterStore = useHelpCenterStore();
@@ -13,6 +14,8 @@ onBeforeMount(async () => {
 </script>
 
 <template>
+    <ReloadPWA />
+    
     <div
         class="min-h-screen max-w-7xl mx-auto pt-16 md:pt-12 px-12 md:px-10 2xl:px-0 pb-20 text-black dark:text-white"
     >

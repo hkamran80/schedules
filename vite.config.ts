@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import htmlConfig from "vite-plugin-html-config";
+import { VitePWA, VitePWAOptions } from "vite-plugin-pwa";
 
 const name = "Schedules";
 const keywords = "schedule schedules auhsd twcp time";
@@ -86,6 +87,29 @@ export default defineConfig({
               unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
             }
             `,
+        }),
+        // TOOO: Cache latest schedules file
+        VitePWA({
+            mode: "development",
+            base: "/",
+            srcDir: "src",
+            strategies: "injectManifest",
+            filename: "sw.ts",
+            manifest: {
+                id: "https://next-schedules.unisontech.org",
+                name: "Schedules",
+                short_name: "Schedules",
+                theme_color: "#BE185D",
+                start_url: "/",
+                display: "standalone",
+                background_color: "#000000",
+                orientation: "natural",
+            },
+            devOptions: {
+                enabled: true,
+                type: "module",
+                navigateFallback: "index.html",
+            },
         }),
         vue(),
     ],

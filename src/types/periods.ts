@@ -13,8 +13,3 @@ export interface PeriodTimes {
 export interface PeriodNames {
     [originalName: string]: string;
 }
-
-export enum PeriodNamesError {
-    KEY_ERROR,
-    IMPORT_ERROR,
-}

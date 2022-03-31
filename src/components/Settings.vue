@@ -126,6 +126,7 @@ const readClipboard = async () =>
         ? await navigator.clipboard.readText()
         : null;
 
+// TODO: Fix `periodNames` export
 const settingsExport = computed(() =>
     JSON.stringify({
         hour24: hour24.value,

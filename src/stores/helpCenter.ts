@@ -46,4 +46,5 @@ export const useHelpCenterStore = defineStore("helpCenter", {
                     : content;
         },
     },
+    persist: { key: "schedules.helpCenter" },
 });

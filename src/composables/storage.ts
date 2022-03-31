@@ -21,7 +21,7 @@ export const emptyPeriodNames = computed(() => {
                         .flatMap((day) => generateSchedulePeriods(day))
                         .filter(({ allowEditing }) => allowEditing === true),
                 ),
-            ).map(({ name }) => [name, ""]),
+            ).map(({ originalName }) => [originalName, ""]),
         );
     }
 

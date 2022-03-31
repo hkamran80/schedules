@@ -62,9 +62,3 @@ export enum NotificationType {
     DAY,
     PERIOD,
 }
-
-export enum NotificationSettingsError {
-    KV_PAIR_ERROR,
-    ROOT_KEY_ERROR,
-    IMPORT_ERROR,
-}
