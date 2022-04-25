@@ -263,6 +263,10 @@ onBeforeUnmount(() => {
                         description="There's no active period right now"
                     />
                 </div>
+
+                <!-- <p class="mt-5 md:mt-10 text-center">
+                    In honor of Natalie Hiatt
+                </p> -->
             </div>
         </div>
 

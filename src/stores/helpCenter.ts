@@ -32,13 +32,11 @@ export const useHelpCenterStore = defineStore("helpCenter", {
             ).json()) as HelpCenterTopic[];
         },
         async loadTopicContent(topicId: string) {
-            const content = (
-                await (
-                    await fetch(
-                        `https://raw.githubusercontent.com/hkamran80/schedules-helpcenter/main/topics/${topicId}.md`,
-                    )
-                ).text()
-            );
+            const content = await (
+                await fetch(
+                    `https://raw.githubusercontent.com/hkamran80/schedules-helpcenter/main/topics/${topicId}.md`,
+                )
+            ).text();
 
             this.markdown[topicId] =
                 content === "404: Not Found"
@@ -46,5 +44,4 @@ export const useHelpCenterStore = defineStore("helpCenter", {
                     : content;
         },
     },
-    persist: { key: "schedules.helpCenter" },
 });

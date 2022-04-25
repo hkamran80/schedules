@@ -51,5 +51,4 @@ export const useMainStore = defineStore("main", {
             });
         },
     },
-    persist: { key: "schedules.main" },
 });

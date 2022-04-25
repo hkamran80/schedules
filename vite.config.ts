@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import htmlConfig from "vite-plugin-html-config";
-import { VitePWA, VitePWAOptions } from "vite-plugin-pwa";
+import { VitePWA } from "vite-plugin-pwa";
 
 const name = "Schedules";
 const keywords = "schedule schedules auhsd twcp time";
@@ -10,6 +10,9 @@ const description =
 const faviconUrl =
     "https://next-schedules.unisontech.org/assets/images/favicons/favicon-192.png";
 const twitterUsername = "@unisontechorg";
+
+// TODO: Cache raw.unisontech.org and raw.githubusercontent.com
+// TODO: Split into chunks (see HK)
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -88,7 +91,6 @@ export default defineConfig({
             }
             `,
         }),
-        // TOOO: Cache latest schedules file
         VitePWA({
             mode: "development",
             base: "/",
@@ -96,7 +98,7 @@ export default defineConfig({
             strategies: "injectManifest",
             filename: "sw.ts",
             manifest: {
-                id: "https://next-schedules.unisontech.org",
+                id: "https://localhost",
                 name: "Schedules",
                 short_name: "Schedules",
                 theme_color: "#BE185D",

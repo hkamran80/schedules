@@ -57,7 +57,7 @@ const content = computed(() => {
 <template>
     <NavigationBar />
 
-    <div v-if="topic" class="mt-10 md:mt-16 max-w-2xl mx-auto">
+    <div v-if="topic" class="mt-10 md:mt-12 max-w-2xl mx-auto">
         <header class="flex-1 flex flex-col space-y-2">
             <nav class="flex mb-6" aria-label="Breadcrumb">
                 <ol class="flex items-center space-x-4">

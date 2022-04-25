@@ -141,7 +141,7 @@ const validLongDays = computed(() => {
                                 <Listbox v-model="selectedDay">
                                     <div class="relative mt-1">
                                         <ListboxButton
-                                            class="relative w-full py-1 pl-4 pr-1 text-left bg-white dark:bg-gray-900 rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 text-sm items-center"
+                                            class="relative w-full py-1 pl-4 pr-1 text-left ring-2 dark:ring-0 ring-gray-100 dark:bg-ut-grey rounded-lg cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 text-sm items-center"
                                         >
                                             <div
                                                 class="flex items-center"
@@ -173,7 +173,7 @@ const validLongDays = computed(() => {
                                             leave-to-class="opacity-0"
                                         >
                                             <ListboxOptions
-                                                class="absolute w-full py-1 mt-1 overflow-auto text-base bg-white dark:bg-gray-900 rounded-lg shadow-lg max-h-60 ring-1 ring-black dark:ring-white ring-opacity-5 focus:outline-none sm:text-sm"
+                                                class="absolute w-full py-1 mt-1 overflow-auto text-base bg-white dark:bg-ut-grey rounded-lg shadow-lg max-h-60 ring-1 ring-black dark:ring-white ring-opacity-5 focus:outline-none sm:text-sm"
                                             >
                                                 <ListboxOption
                                                     v-for="dayOption in validLongDays"

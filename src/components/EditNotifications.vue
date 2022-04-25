@@ -152,7 +152,7 @@ watchEffect(() => {
                                                         interval
                                                     ]
                                                         ? 'bg-pink-700 dark:bg-pink-500'
-                                                        : 'bg-gray-200 dark:bg-gray-900'
+                                                        : 'bg-gray-200 dark:bg-ut-grey'
                                                 "
                                                 class="relative inline-flex items-center h-6 transition-colors rounded-full w-11 focus:outline-none"
                                             >
@@ -194,7 +194,7 @@ watchEffect(() => {
                                                 :class="
                                                     modelStorage.days[day]
                                                         ? 'bg-pink-700 dark:bg-pink-500'
-                                                        : 'bg-gray-200 dark:bg-gray-900'
+                                                        : 'bg-gray-200 dark:bg-ut-grey'
                                                 "
                                                 class="relative inline-flex items-center h-6 transition-colors rounded-full w-11 focus:outline-none"
                                             >
@@ -242,7 +242,7 @@ watchEffect(() => {
                                                 :class="
                                                     modelStorage.periods[period]
                                                         ? 'bg-pink-700 dark:bg-pink-500'
-                                                        : 'bg-gray-200 dark:bg-gray-900'
+                                                        : 'bg-gray-200 dark:bg-ut-grey'
                                                 "
                                                 class="relative inline-flex items-center h-6 transition-colors rounded-full w-11 focus:outline-none"
                                             >

@@ -11,6 +11,10 @@ module.exports = {
                 serif: [...defaultTheme.fontFamily.serif],
                 mono: [...defaultTheme.fontFamily.mono],
             },
+            colors: {
+                "ut-grey": "#151515",
+                "ut-grey-lighter": "#1e1e1e",
+            },
             spacing: {
                 256: "48rem",
                 128: "32rem",

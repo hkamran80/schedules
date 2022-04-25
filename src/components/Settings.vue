@@ -100,6 +100,7 @@ const settingsImport = async () => {
                     );
 
                     if (importPeriods.join(",") === schedulePeriods.join(",")) {
+                        // TODO: Fix period names order
                         periodNames.value = Object.fromEntries(
                             schedulePeriods.map((periodName) => [
                                 periodName,
@@ -110,23 +111,37 @@ const settingsImport = async () => {
                 }
 
                 settingsImported.value = true;
+                if (fallbackClipboardRead.value) {
+                    fallbackClipboardRead.value = false;
+                }
+
                 useTimeoutFn(() => (settingsImported.value = false), 1500, {
                     immediate: true,
                 });
-                // eslint-disable-next-line no-empty
             } catch {
-                console.error("An error occurred while loading your settings");
+                console.error("An error occurred while loading settings");
             }
         }
     }
 };
 
-const readClipboard = async () =>
-    readPermission.value !== "denied"
-        ? await navigator.clipboard.readText()
-        : null;
+const readClipboard = async () => {
+    try {
+        return await navigator.clipboard.readText();
+    } catch (error) {
+        console.error(error);
 
-// TODO: Fix `periodNames` export
+        if (fallbackClipboardRead.value === false) {
+            fallbackClipboardRead.value = true;
+            return null;
+        } else {
+            if (fallbackClipboardContent.value.trim()) {
+                return fallbackClipboardContent.value;
+            }
+        }
+    }
+};
+
 const settingsExport = computed(() =>
     JSON.stringify({
         hour24: hour24.value,
@@ -138,10 +153,12 @@ const settingsExport = computed(() =>
                 : null,
     }),
 );
-const { isSupported: writeSupported, copy, copied } = useClipboard();
+
+const { isSupported: clipboardSupported, copy, copied } = useClipboard();
 const writePermission = usePermission("clipboard-write");
-const readSupported = Boolean(navigator && "clipboard" in navigator);
-const readPermission = usePermission("clipboard-read");
+
+const fallbackClipboardRead = ref<boolean>(false);
+const fallbackClipboardContent = ref<string>("");
 
 watchEffect(() => {
     if (notificationsEnabled && notificationsEnabledModel.value) {
@@ -194,24 +211,21 @@ watchEffect(() => {
                                 <span class="flex-1"> Settings </span>
 
                                 <button
-                                    v-if="
-                                        readPermission !== 'denied' &&
-                                        readSupported
-                                    "
+                                    v-if="clipboardSupported"
                                     type="button"
                                     class="focus:outline-none transition-colors ease-in-out duration-200"
                                     :class="{
                                         'text-green-600': settingsImported,
                                     }"
                                     :disabled="settingsImported"
-                                    @click="settingsImport()"
+                                    @click="settingsImport"
                                     v-html="feather.icons.upload.toSvg()"
                                 />
 
                                 <button
                                     v-if="
                                         writePermission !== 'denied' &&
-                                        writeSupported
+                                        clipboardSupported
                                     "
                                     type="button"
                                     :class="{ 'text-green-600': copied }"
@@ -232,6 +246,49 @@ watchEffect(() => {
                             <div
                                 class="mt-4 max-h-128 overflow-y-auto space-y-4"
                             >
+                                <div
+                                    v-if="fallbackClipboardRead"
+                                    class="space-y-2"
+                                >
+                                    <!-- eslint-disable-next-line vuejs-accessibility/label-has-for -->
+                                    <label
+                                        for="clipboard-read-fallback"
+                                        class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                                    >
+                                        Import Settings
+                                    </label>
+                                    <textarea
+                                        id="clipboard-read-fallback"
+                                        v-model="fallbackClipboardContent"
+                                        class="rounded-lg w-full text-xs dark:text-white dark:bg-black ring-inset ring-2 ring-gray-200 dark:ring-gray-800 focus:outline-none focus:ring-pink-700 dark:focus:ring-pink-500 py-4 px-4 resize-y"
+                                        placeholder="Settings"
+                                        autocomplete="off"
+                                        autocapitalize="none"
+                                        autocorrect="off"
+                                        spellcheck="false"
+                                        rows="10"
+                                    ></textarea>
+
+                                    <button
+                                        type="button"
+                                        class="w-full text-left px-4 py-2 ring-2 ring-gray-200 dark:ring-gray-800 ring-inset hover:bg-gray-200 dark:hover:bg-gray-800 disabled:hover:bg-white disabled:dark:hover:bg-black transition rounded-lg text-black dark:text-white"
+                                        :disabled="
+                                            !fallbackClipboardContent.trim()
+                                        "
+                                        @click="settingsImport"
+                                    >
+                                        Import
+                                    </button>
+
+                                    <p
+                                        class="text-gray-500 text-xs leading-normal"
+                                    >
+                                        Your browser doesn't support reading the
+                                        clipboard, so you have to paste your
+                                        settings into the text field above.
+                                    </p>
+                                </div>
+
                                 <SwitchGroup>
                                     <div class="flex items-center">
                                         <SwitchLabel
@@ -244,7 +301,7 @@ watchEffect(() => {
                                             :class="
                                                 hour24
                                                     ? 'bg-pink-700 dark:bg-pink-500'
-                                                    : 'bg-gray-200 dark:bg-gray-900'
+                                                    : 'bg-gray-200 dark:bg-ut-grey'
                                             "
                                             class="relative inline-flex items-center h-6 transition-colors rounded-full w-11 focus:outline-none"
                                         >
@@ -274,7 +331,7 @@ watchEffect(() => {
                                             :class="
                                                 notificationsEnabledModel
                                                     ? 'bg-pink-700 dark:bg-pink-500'
-                                                    : 'bg-gray-200 dark:bg-gray-900'
+                                                    : 'bg-gray-200 dark:bg-ut-grey'
                                             "
                                             class="relative inline-flex items-center h-6 transition-colors rounded-full w-11 focus:outline-none"
                                         >
