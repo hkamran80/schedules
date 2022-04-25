@@ -88,7 +88,7 @@ onBeforeMount(async () => {
                                 class="mt-2 space-y-3 max-h-128 overflow-y-auto"
                             >
                                 <Disclosure
-                                    v-for="release in store.releaseNotes"
+                                    v-for="release in store.releaseNotes.reverse()"
                                     :key="release.version"
                                     v-slot="{ open }"
                                 >
