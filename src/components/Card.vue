@@ -9,7 +9,7 @@ const props = defineProps<{
 
 <template>
     <div
-        class="w-full bg-white dark:bg-ut-grey dark:hover:bg-ut-grey-lighter rounded-lg shadow dark:shadow-none ring-2 ring-gray-100 dark:ring-0 transition-colors duration-300 ease-in-out"
+        class="w-full bg-white dark:bg-ut-grey rounded-lg shadow dark:shadow-none ring-2 ring-gray-100 dark:ring-0"
     >
         <div
             class="w-full flex items-center justify-between p-6"

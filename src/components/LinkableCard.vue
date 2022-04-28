@@ -13,7 +13,7 @@ const props = defineProps<{
 <template>
     <router-link v-if="link && link.startsWith('/')" :to="props.link">
         <Card
-            class="hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+            class="hover:bg-gray-100 dark:hover:bg-ut-grey-lighter transition-colors duration-300 ease-in-out"
             :header="props.header"
             :title="props.title"
             :description="props.description"
@@ -29,7 +29,7 @@ const props = defineProps<{
         rel="noopener noreferrer"
     >
         <Card
-            class="hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+            class="hover:bg-gray-100 dark:hover:bg-ut-grey-lighter transition-colors duration-300 ease-in-out"
             :header="props.header"
             :title="props.title"
             :description="props.description"
