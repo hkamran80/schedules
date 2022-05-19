@@ -141,8 +141,8 @@
         "releaseDate": "2022-01-10",
         "changelog": ["Add the College Park High School schedule"]
     },
-    "3.1.0": {
-        "releaseDate": "2022-03-13",
+    "3.1.1": {
+        "releaseDate": "2022-05-19",
         "changelog": [
             "Add off days to all schedules",
             "Restrict period name editing (disallows editing passing periods, break/lunch periods, etc.)",
@@ -152,7 +152,8 @@
             "Switch font from Lato to Barlow",
             "Remove icons from schedule cards",
             "Update terms of service and privacy policy notice",
-            "Add schedule overrides (not currently user-editable)"
+            "Add schedule overrides (not currently user-editable)",
+            "Add the AUHSD finals schedule"
         ]
     }
 }
