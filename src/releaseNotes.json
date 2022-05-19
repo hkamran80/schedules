@@ -141,7 +141,7 @@
         "releaseDate": "2022-01-10",
         "changelog": ["Add the College Park High School schedule"]
     },
-    "3.1.0-edge.4": {
+    "3.1.1": {
         "releaseDate": "2022-03-11",
         "changelog": [
             "Add off days to all schedules",
@@ -152,7 +152,8 @@
             "Switch font from Lato to Barlow",
             "Remove icons from schedule cards",
             "Update terms of service and privacy policy notice",
-            "Add schedule overrides (not currently uesr-editable)"
+            "Add schedule overrides (not currently uesr-editable)",
+            "Add the AUHSD finals schedule"
         ]
     }
 }
