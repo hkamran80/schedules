@@ -325,6 +325,88 @@
             "2022-03-14": "FRI"
         }
     },
+    "ca-auhsd-finals": {
+        "name": "AUHSD Finals Schedule",
+        "shortName": "AUHSD Finals",
+        "icon": "mdiSchoolOutline",
+        "color": "#343254",
+        "schedule": {
+            "MON": {
+                "Zero Period": [
+                    "08-00-00",
+                    "10-00-00"
+                ],
+                "Brunch": [
+                    "10-00-01",
+                    "10-15-00"
+                ],
+                "Passing (Brunch / Second Period)": [
+                    "10-15-01",
+                    "10-20-00"
+                ],
+                "Second Period": [
+                    "10-20-01",
+                    "12-20-00"
+                ]
+            },
+            "TUE": {
+                "Fifth": [
+                    "08-00-00",
+                    "10-00-00"
+                ],
+                "Brunch": [
+                    "10-00-01",
+                    "10-15-00"
+                ],
+                "Passing (Brunch / First Period)": [
+                    "10-15-01",
+                    "10-20-00"
+                ],
+                "First Period": [
+                    "10-20-01",
+                    "12-20-00"
+                ]
+            },
+            "WED": {
+                "Fourth Period": [
+                    "08-00-00",
+                    "10-00-00"
+                ],
+                "Brunch": [
+                    "10-00-01",
+                    "10-15-00"
+                ],
+                "Passing (Brunch / Sixth Period)": [
+                    "10-15-01",
+                    "10-20-00"
+                ],
+                "Sixth Period": [
+                    "10-20-01",
+                    "12-20-00"
+                ]
+            },
+            "THU": {
+                "Seventh Period": [
+                    "08-00-00",
+                    "10-00-00"
+                ],
+                "Brunch": [
+                    "10-00-01",
+                    "10-15-00"
+                ],
+                "Passing (Brunch / Third Period)": [
+                    "10-15-01",
+                    "10-20-00"
+                ],
+                "Third Period": [
+                    "10-20-01",
+                    "12-20-00"
+                ]
+            }
+        },
+        "offDays": {},
+        "overrides": {}
+    },
     "tx-conroeisd-twcp-a": {
         "name": "The Woodlands College Park High School (A-Lunch)",
         "shortName": "College Park (A)",
