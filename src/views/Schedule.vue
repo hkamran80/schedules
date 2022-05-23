@@ -264,6 +264,14 @@ onBeforeUnmount(() => {
                     />
                 </div>
 
+                <p v-if="params.id === 'ca-auhsd-finals'" class="mt-5 md:mt-10 text-center">
+                    <i>
+                        And I knew exactly what to do. But in a much more real
+                        sense, I had no idea what to do.
+                    </i>
+                    <br />
+                    &mdash; Michael Scott
+                </p>
                 <!-- <p class="mt-5 md:mt-10 text-center">
                     In honor of Natalie Hiatt
                 </p> -->
