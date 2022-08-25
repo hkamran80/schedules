@@ -47,7 +47,7 @@ const pickTextColorBasedOnBgColorAdvanced = (
     <div class="mt-10 md:mt-16">
         <span class="text-2xl"> Select a schedule to begin! </span>
 
-        <div class="mt-6 flex flex-col space-y-8">
+        <a class="mt-6 flex flex-col space-y-8">
             <div class="flex flex-col space-y-4">
                 <router-link
                     v-for="(schedule, id) in store.schedules"
@@ -65,6 +65,24 @@ const pickTextColorBasedOnBgColorAdvanced = (
                     v-text="schedule.name"
                 />
             </div>
+
+            <a
+                href="https://play.google.com/store/apps/details?id=com.hkamran.schedules"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="my-5 w-full px-6 py-3 rounded-lg text-left bg-pink-700 hover:bg-pink-600 text-white transition-colors duration-300"
+            >
+                <span
+                    class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-blue-100 text-blue-800 float-right md:float-none md:mr-1"
+                >
+                    NEW
+                </span>
+
+                <span>
+                    Schedules now has an Android app! Click to open the Play
+                    Store!
+                </span>
+            </a>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <button
@@ -89,7 +107,7 @@ const pickTextColorBasedOnBgColorAdvanced = (
                     Release Notes
                 </router-link>
             </div>
-        </div>
+        </a>
     </div>
 
     <TransitionRoot appear :show="aboutDialog" as="template">

@@ -1,7 +1,7 @@
 {
     "name": "schedules",
     "private": true,
-    "version": "4.0.0-beta.0",
+    "version": "4.0.0-beta.1",
     "scripts": {
         "dev": "vite",
         "dev:https": "pnpm build; pnpx serve",
