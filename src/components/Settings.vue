@@ -219,7 +219,7 @@ watchEffect(() => {
                                     }"
                                     :disabled="settingsImported"
                                     @click="settingsImport"
-                                    v-html="feather.icons.upload.toSvg()"
+                                    v-html="feather.icons.download.toSvg()"
                                 />
 
                                 <button
@@ -232,7 +232,7 @@ watchEffect(() => {
                                     class="focus:outline-none transition-colors ease-in-out duration-200"
                                     :disabled="copied"
                                     @click="copy(settingsExport)"
-                                    v-html="feather.icons.download.toSvg()"
+                                    v-html="feather.icons.upload.toSvg()"
                                 />
 
                                 <button

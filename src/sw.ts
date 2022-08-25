@@ -4,6 +4,7 @@ import {
     createHandlerBoundToURL,
 } from "workbox-precaching";
 import { registerRoute, NavigationRoute } from "workbox-routing";
+import { NetworkFirst } from "workbox-strategies";
 
 declare let self: ServiceWorkerGlobalScope;
 
@@ -11,11 +12,23 @@ self.addEventListener("message", (event) => {
     if (event.data && event.data.type === "SKIP_WAITING") self.skipWaiting();
 });
 
-// self.__WB_MANIFEST is default injection point
+// `self.__WB_MANIFEST` is default injection point
 precacheAndRoute(self.__WB_MANIFEST);
 
-// clean old assets
+// Clean up old cache
 cleanupOutdatedCaches();
 
-// to allow work offline
+// Offline access
 registerRoute(new NavigationRoute(createHandlerBoundToURL("index.html")));
+registerRoute(
+    "https://raw.unisontech.org/schedules/latest",
+    new NetworkFirst({ networkTimeoutSeconds: 60 }),
+);
+registerRoute(
+    "https://raw.unisontech.org/schedules/changelog",
+    new NetworkFirst({ networkTimeoutSeconds: 60 }),
+);
+registerRoute(
+    "https://raw.githubusercontent.com/hkamran80/schedules-helpcenter/main/topics.json",
+    new NetworkFirst({ networkTimeoutSeconds: 60 }),
+);

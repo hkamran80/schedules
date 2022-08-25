@@ -12,13 +12,11 @@ import {
     DialogOverlay,
     DialogTitle,
 } from "@headlessui/vue";
-import ReleaseNotes from "../components/ReleaseNotes.vue";
 
 useTitle("Schedules");
 
 const store = useMainStore();
 const aboutDialog = ref<boolean>(false);
-const releaseNotesDialog = ref<boolean>(false);
 
 const pickTextColorBasedOnBgColorAdvanced = (
     bgColor: string,
@@ -84,13 +82,12 @@ const pickTextColorBasedOnBgColorAdvanced = (
                     Help Center
                 </router-link>
 
-                <button
-                    type="button"
+                <router-link
+                    to="/changelog"
                     class="w-full px-6 py-4 rounded-lg text-left ring-2 dark:ring-0 ring-gray-100 dark:bg-ut-grey dark:hover:bg-ut-grey-lighter transition-colors duration-300 ease-in-out"
-                    @click="releaseNotesDialog = true"
                 >
                     Release Notes
-                </button>
+                </router-link>
             </div>
         </div>
     </div>
@@ -190,9 +187,4 @@ const pickTextColorBasedOnBgColorAdvanced = (
             </div>
         </Dialog>
     </TransitionRoot>
-
-    <ReleaseNotes
-        :show="releaseNotesDialog"
-        @hide="releaseNotesDialog = false"
-    />
 </template>

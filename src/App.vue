@@ -15,7 +15,7 @@ onBeforeMount(async () => {
 
 <template>
     <ReloadPWA />
-    
+
     <div
         class="min-h-screen max-w-7xl mx-auto pt-16 md:pt-12 px-12 md:px-10 2xl:px-0 pb-20 text-black dark:text-white"
     >

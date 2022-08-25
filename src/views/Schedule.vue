@@ -138,7 +138,7 @@ const { pause, resume } = useIntervalFn(
 
 const nextPeriodTime = computed(() => {
     if (nextPeriod.value && nextPeriod.value.times) {
-        const baseTime = nextPeriod.value.times.end.split("-").slice(0, 2);
+        const baseTime = nextPeriod.value.times.start.split("-").slice(0, 2);
         if (hour24.value) {
             return baseTime.join(":");
         } else {
@@ -263,18 +263,6 @@ onBeforeUnmount(() => {
                         description="There's no active period right now"
                     />
                 </div>
-
-                <p v-if="params.id === 'ca-auhsd-finals'" class="mt-5 md:mt-10 text-center">
-                    <i>
-                        And I knew exactly what to do. But in a much more real
-                        sense, I had no idea what to do.
-                    </i>
-                    <br />
-                    &mdash; Michael Scott
-                </p>
-                <!-- <p class="mt-5 md:mt-10 text-center">
-                    In honor of Natalie Hiatt
-                </p> -->
             </div>
         </div>
 

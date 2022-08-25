@@ -42,6 +42,24 @@ export const currentPeriod = computed<Period | null>(() => {
 });
 
 export const nextPeriod = computed<Period | null>(() => {
+    // if (schedulePeriods.value) {
+    //     const nextPeriods = schedulePeriods.value.filter(({ times }) => {
+    //         return (
+    //             times && times.start.replace(/-/gm, "") === getPreviousEndTime()
+    //         );
+    //     });
+
+    //     if (nextPeriods.length > 0) {
+    //         return {
+    //             ...nextPeriods[0],
+    //             name: getCustomPeriodName(nextPeriods[0].name),
+    //             originalName: nextPeriods[0].name,
+    //         };
+    //     } else {
+    //         return null;
+    //     }
+    // }
+
     if (schedulePeriods.value) {
         const nextPeriods = schedulePeriods.value.filter(({ times }) => {
             return (
