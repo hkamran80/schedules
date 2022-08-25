@@ -11,11 +11,29 @@ const faviconUrl =
     "https://next-schedules.unisontech.org/assets/images/favicons/favicon-192.png";
 const twitterUsername = "@unisontechorg";
 
-// TODO: Cache raw.unisontech.org and raw.githubusercontent.com
-// TODO: Split into chunks (see HK)
-
 // https://vitejs.dev/config/
 export default defineConfig({
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    helpCenter: [
+                        "./src/views/HelpCenter.vue",
+                        "./src/views/HelpCenterTopic.vue",
+                    ],
+                    releaseNotes: [
+                        "./src/views/ReleaseNotes.vue",
+                        "./src/components/ReleaseNotes.vue",
+                    ],
+                    scheduleSettings: [
+                        "./src/components/Settings.vue",
+                        "./src/components/EditNotifications.vue",
+                        "./src/components/EditPeriodNames.vue",
+                    ],
+                },
+            },
+        },
+    },
     plugins: [
         htmlConfig({
             metas: [
