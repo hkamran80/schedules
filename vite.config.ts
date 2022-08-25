@@ -124,6 +124,14 @@ export default defineConfig({
                 display: "standalone",
                 background_color: "#000000",
                 orientation: "natural",
+                prefer_related_applications: true,
+                related_applications: [
+                    {
+                        platform: "play",
+                        url: "https://play.google.com/store/apps/details?id=com.hkamran.schedules",
+                        id: "com.hkamran.schedules",
+                    },
+                ],
             },
             devOptions: {
                 enabled: true,
