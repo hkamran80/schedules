@@ -100,12 +100,12 @@ const pickTextColorBasedOnBgColorAdvanced = (
                     Help Center
                 </router-link>
 
-                <router-link
+                <!-- <router-link
                     to="/changelog"
                     class="w-full px-6 py-4 rounded-lg text-left ring-2 dark:ring-0 ring-gray-100 dark:bg-ut-grey dark:hover:bg-ut-grey-lighter transition-colors duration-300 ease-in-out"
                 >
                     Release Notes
-                </router-link>
+                </router-link> -->
             </div>
         </a>
     </div>
