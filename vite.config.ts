@@ -1,6 +1,6 @@
-import { defineConfig } from "vite";
-import vue from "@vitejs/plugin-vue";
 import htmlConfig from "vite-plugin-html-config";
+import vue from "@vitejs/plugin-vue";
+import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 
 const name = "Schedules";
@@ -51,6 +51,7 @@ export default defineConfig({
                     content: description,
                 },
                 { name: "robots", content: "index, follow" },
+                { name: "apple-mobile-web-app-capable", content: "yes" },
 
                 // Open Graph
                 { property: "og:title", content: name },
@@ -82,6 +83,10 @@ export default defineConfig({
                     type: "image/png",
                     href: "/assets/images/favicons/favicon-192.png",
                 },
+                {
+                    rel: "apple-touch-icon",
+                    href: "/assets/images/favicons/apple-icon-180.png",
+                },
                 { rel: "preconnect", href: "https://fonts.googleapis.com/" },
                 {
                     rel: "preconnect",
@@ -110,7 +115,7 @@ export default defineConfig({
             `,
         }),
         VitePWA({
-            mode: "development",
+            // mode: "development",
             base: "/",
             srcDir: "src",
             strategies: "injectManifest",
@@ -124,6 +129,32 @@ export default defineConfig({
                 display: "standalone",
                 background_color: "#000000",
                 orientation: "natural",
+                icons: [
+                    {
+                        src: "/assets/images/favicons/manifest-icon-192.maskable.png",
+                        sizes: "192x192",
+                        type: "image/png",
+                        purpose: "any",
+                    },
+                    {
+                        src: "/assets/images/favicons/manifest-icon-192.maskable.png",
+                        sizes: "192x192",
+                        type: "image/png",
+                        purpose: "maskable",
+                    },
+                    {
+                        src: "/assets/images/favicons/manifest-icon-512.maskable.png",
+                        sizes: "512x512",
+                        type: "image/png",
+                        purpose: "any",
+                    },
+                    {
+                        src: "/assets/images/favicons/manifest-icon-512.maskable.png",
+                        sizes: "512x512",
+                        type: "image/png",
+                        purpose: "maskable",
+                    },
+                ],
                 prefer_related_applications: true,
                 related_applications: [
                     {
