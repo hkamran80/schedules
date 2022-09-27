@@ -1,12 +1,11 @@
-import { padNumber } from "@hkamran/utility-strings";
-import { useDateFormat, useNow } from "@vueuse/core";
-import { computed, ref } from "vue";
+import { computed, ref } from 'vue';
+import { periodNames } from './storage';
+import { useDateFormat, useNow } from '@vueuse/core';
 import type { Period, PeriodTimes } from "../types/periods";
 import type {
     SchedulePeriodDetails,
     SchedulePeriodTimes,
 } from "../types/schedule";
-import { periodNames } from "./storage";
 
 const currentTime = useDateFormat(useNow(), "HHmmss");
 
@@ -90,32 +89,3 @@ export const generateSchedulePeriods = (schedulePeriods: SchedulePeriodTimes) =>
                     : (period as SchedulePeriodDetails).allowEditing,
         } as Period;
     });
-
-const getPreviousEndTime = (): string => {
-    if (currentPeriod.value && currentPeriod.value.times) {
-        const splitEndTime = currentPeriod.value.times.end.split("-");
-        const [endHours, endMinutes, endSeconds] = splitEndTime;
-
-        if (endSeconds !== "59") {
-            return (Number(splitEndTime.join("")) + 1).toString();
-        } else {
-            let hours = Number(endHours),
-                minutes = Number(endMinutes),
-                seconds = Number(endSeconds);
-
-            if (seconds >= 59) {
-                minutes += 1;
-                seconds = seconds >= 60 ? seconds - 60 : seconds - 59;
-            }
-
-            if (minutes >= 59) {
-                hours += 1;
-                minutes = minutes > 59 ? minutes - 60 : minutes - 59;
-            }
-
-            return padNumber(hours) + padNumber(minutes) + padNumber(seconds);
-        }
-    }
-
-    return "";
-};
