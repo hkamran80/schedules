@@ -57,8 +57,6 @@ export const nextPeriod = computed<Period | null>(() => {
         }
 
         return null;
-
-        // console.debug(index)
     }
 
     return null;
