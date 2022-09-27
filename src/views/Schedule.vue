@@ -305,6 +305,7 @@ onBeforeUnmount(() => {
                 </div>
             </div>
 
+            <!-- TODO: Add timeout -->
             <div
                 v-if="showTips"
                 class="mt-10 prose dark:prose-invert text-xs mx-auto space-y-1"

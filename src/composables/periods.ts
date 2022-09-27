@@ -60,22 +60,25 @@ export const nextPeriod = computed<Period | null>(() => {
     //     }
     // }
 
-    if (schedulePeriods.value) {
-        const nextPeriods = schedulePeriods.value.filter(({ times }) => {
-            return (
-                times && times.start.replace(/-/gm, "") === getPreviousEndTime()
-            );
-        });
+    // return null;
 
-        if (nextPeriods.length > 0) {
+    if (schedulePeriods.value && currentPeriod.value) {
+        const index = schedulePeriods.value.findIndex(
+            ({ name }) => name === currentPeriod.value?.originalName,
+        );
+
+        if (schedulePeriods.value.length - 1 !== index) {
+            const nextPeriod = schedulePeriods.value[index + 1];
             return {
-                ...nextPeriods[0],
-                name: getCustomPeriodName(nextPeriods[0].name),
-                originalName: nextPeriods[0].name,
+                ...nextPeriod,
+                name: getCustomPeriodName(nextPeriod.name),
+                originalName: nextPeriod.name,
             };
-        } else {
-            return null;
         }
+
+        return null;
+
+        // console.debug(index)
     }
 
     return null;
