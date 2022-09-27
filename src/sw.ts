@@ -1,10 +1,10 @@
+import { NavigationRoute, registerRoute } from 'workbox-routing';
+import { NetworkFirst } from 'workbox-strategies';
 import {
     precacheAndRoute,
     cleanupOutdatedCaches,
     createHandlerBoundToURL,
 } from "workbox-precaching";
-import { registerRoute, NavigationRoute } from "workbox-routing";
-import { NetworkFirst } from "workbox-strategies";
 
 declare let self: ServiceWorkerGlobalScope;
 

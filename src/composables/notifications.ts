@@ -1,3 +1,8 @@
+import ArrayKeyedMap from 'array-keyed-map';
+import { currentPeriod } from './periods';
+import { emptyAllowedNotifications } from './storage';
+import { offDay } from './overrides';
+import { scheduleId, scheduleShortName, timer } from './scheduleState';
 import {
     useNow,
     usePermission,
@@ -6,11 +11,6 @@ import {
     watchDebounced,
     type RemovableRef,
 } from "@vueuse/core";
-import { timer, scheduleShortName, scheduleId } from "./scheduleState";
-import ArrayKeyedMap from "array-keyed-map";
-import { currentPeriod } from "./periods";
-import { offDay } from "./overrides";
-import { emptyAllowedNotifications } from "./storage";
 
 const notificationPermission = usePermission("notifications");
 const currentDateTime = useNow();

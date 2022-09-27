@@ -1,10 +1,10 @@
-import { createWebHistory, createRouter } from "vue-router";
-
-import Home from "../views/Home.vue";
-import Schedule from "../views/Schedule.vue";
-import ReleaseNotes from "../views/ReleaseNotes.vue";
 import HelpCenter from "../views/HelpCenter.vue";
 import HelpCenterTopic from "../views/HelpCenterTopic.vue";
+import Home from "../views/Home.vue";
+import ReleaseNotes from "../views/ReleaseNotes.vue";
+import Schedule from "../views/Schedule.vue";
+
+import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
     {

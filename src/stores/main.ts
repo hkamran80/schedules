@@ -1,5 +1,5 @@
-import { defineStore } from "pinia";
-import { version } from "../../package.json";
+import { defineStore } from 'pinia';
+import { version } from '../../package.json';
 import type { Schedule } from "../types/schedule";
 import type { Release } from "../types/releaseNotes";
 
