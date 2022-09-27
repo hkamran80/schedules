@@ -1,5 +1,5 @@
-import { NavigationRoute, registerRoute } from 'workbox-routing';
-import { NetworkFirst } from 'workbox-strategies';
+import { NavigationRoute, registerRoute } from "workbox-routing";
+import { NetworkFirst } from "workbox-strategies";
 import {
     precacheAndRoute,
     cleanupOutdatedCaches,

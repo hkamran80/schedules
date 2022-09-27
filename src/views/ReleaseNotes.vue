@@ -22,9 +22,9 @@ useTitle("Release Notes | Schedules");
 <template>
     <NavigationBar />
 
-    <div class="mt-8 max-w-2xl mx-auto">
+    <div class="mx-auto mt-8 max-w-2xl">
         <header class="flex flex-col space-y-1">
-            <nav class="flex mb-2" aria-label="Breadcrumb">
+            <nav class="mb-2 flex" aria-label="Breadcrumb">
                 <ol class="flex items-center space-x-4">
                     <li>
                         <div>
@@ -77,8 +77,8 @@ useTitle("Release Notes | Schedules");
                 :key="release.version"
                 v-slot="{ open }"
             >
-                <DisclosureButton class="w-full flex items-center">
-                    <div class="flex-1 flex flex-col text-sm text-left">
+                <DisclosureButton class="flex w-full items-center">
+                    <div class="flex flex-1 flex-col text-left text-sm">
                         <span class="font-medium text-black dark:text-white">
                             Version {{ release.version }}
                         </span>
@@ -106,7 +106,7 @@ useTitle("Release Notes | Schedules");
                     leave-to-class="transform scale-95 opacity-0"
                 >
                     <DisclosurePanel
-                        class="mt-3 prose prose-sm dark:prose-invert prose-li:my-0.5"
+                        class="prose prose-sm mt-3 prose-li:my-0.5 dark:prose-invert"
                     >
                         <ul>
                             <li

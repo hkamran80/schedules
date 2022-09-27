@@ -10,7 +10,7 @@ const { name } = useRoute();
 </script>
 
 <template>
-    <h1 class="text-4xl font-bold flex items-center space-x-2 md:space-x-4">
+    <h1 class="flex items-center space-x-2 text-4xl font-bold md:space-x-4">
         <span
             v-if="name === 'Home'"
             class="flex-1 text-pink-700 dark:text-pink-500"
@@ -27,7 +27,7 @@ const { name } = useRoute();
         </router-link>
 
         <a
-            class="rounded-lg text-gray-700 dark:text-gray-300 hover:text-pink-700 dark:hover:text-pink-500 p-2"
+            class="rounded-lg p-2 text-gray-700 hover:text-pink-700 dark:text-gray-300 dark:hover:text-pink-500"
             href="https://form.typeform.com/to/g0MlHGXj"
             target="_blank"
             rel="noopener noreferrer"
@@ -36,7 +36,7 @@ const { name } = useRoute();
         />
         <button
             type="button"
-            class="rounded-lg text-gray-700 dark:text-gray-300 hover:text-pink-700 dark:hover:text-pink-500 p-2"
+            class="rounded-lg p-2 text-gray-700 hover:text-pink-700 dark:text-gray-300 dark:hover:text-pink-500"
             title="Toggle theme"
             @click="() => toggleDark()"
             v-html="feather.icons[isDark ? 'moon' : 'sun'].toSvg()"

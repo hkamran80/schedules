@@ -56,6 +56,5 @@
         "workbox-routing": "^6.5.2",
         "workbox-strategies": "^6.5.4",
         "workbox-window": "^6.5.2"
-    },
-    "prettier": "@hkamran/prettier-config"
+    }
 }

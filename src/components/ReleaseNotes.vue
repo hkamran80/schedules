@@ -63,13 +63,13 @@ onBeforeMount(async () => {
                         leave-to="opacity-0 scale-95"
                     >
                         <div
-                            class="inline-block w-full max-w-md max-h-256 p-6 my-8 overflow-none text-left align-middle transition-all transform bg-white dark:bg-black shadow-xl rounded-lg"
+                            class="overflow-none my-8 inline-block max-h-256 w-full max-w-md transform rounded-lg bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-black"
                         >
                             <DialogTitle
                                 as="h3"
-                                class="text-xl font-medium leading-6 text-gray-900 dark:text-gray-100 bg-white dark:bg-black flex space-x-3 items-center pb-2"
+                                class="flex items-center space-x-3 bg-white pb-2 text-xl font-medium leading-6 text-gray-900 dark:bg-black dark:text-gray-100"
                             >
-                                <div class="flex-1 flex flex-col space-y-1">
+                                <div class="flex flex-1 flex-col space-y-1">
                                     <span> Release Notes </span>
                                     <span class="text-sm">
                                         Version {{ store.version }}
@@ -85,7 +85,7 @@ onBeforeMount(async () => {
                             </DialogTitle>
 
                             <div
-                                class="mt-2 space-y-3 max-h-128 overflow-y-auto"
+                                class="mt-2 max-h-128 space-y-3 overflow-y-auto"
                             >
                                 <Disclosure
                                     v-for="release in store.releaseNotes.reverse()"
@@ -93,10 +93,10 @@ onBeforeMount(async () => {
                                     v-slot="{ open }"
                                 >
                                     <DisclosureButton
-                                        class="w-full flex items-center"
+                                        class="flex w-full items-center"
                                     >
                                         <div
-                                            class="flex-1 flex flex-col text-sm text-left"
+                                            class="flex flex-1 flex-col text-left text-sm"
                                         >
                                             <span
                                                 class="font-medium text-black dark:text-white"
@@ -129,7 +129,7 @@ onBeforeMount(async () => {
                                         leave-to-class="transform scale-95 opacity-0"
                                     >
                                         <DisclosurePanel
-                                            class="mt-3 prose prose-sm dark:prose-invert prose-li:my-0.5"
+                                            class="prose prose-sm mt-3 prose-li:my-0.5 dark:prose-invert"
                                         >
                                             <ul>
                                                 <li

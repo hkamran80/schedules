@@ -1,7 +1,7 @@
-import htmlConfig from 'vite-plugin-html-config';
-import vue from '@vitejs/plugin-vue';
-import { defineConfig } from 'vite';
-import { VitePWA } from 'vite-plugin-pwa';
+import htmlConfig from "vite-plugin-html-config";
+import vue from "@vitejs/plugin-vue";
+import { defineConfig } from "vite";
+import { VitePWA } from "vite-plugin-pwa";
 
 const name = "Schedules";
 const keywords = "schedule schedules auhsd twcp time";

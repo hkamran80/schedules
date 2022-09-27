@@ -202,18 +202,18 @@ watchEffect(() => {
                         leave-to="opacity-0 scale-95"
                     >
                         <div
-                            class="inline-block w-full max-w-md max-h-256 p-6 my-8 overflow-none text-left align-middle transition-all transform bg-white dark:bg-black shadow-xl rounded-lg"
+                            class="overflow-none my-8 inline-block max-h-256 w-full max-w-md transform rounded-lg bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-black"
                         >
                             <DialogTitle
                                 as="h3"
-                                class="text-xl font-medium leading-6 text-gray-900 dark:text-gray-100 bg-white dark:bg-black flex space-x-3 items-center pb-2"
+                                class="flex items-center space-x-3 bg-white pb-2 text-xl font-medium leading-6 text-gray-900 dark:bg-black dark:text-gray-100"
                             >
                                 <span class="flex-1"> Settings </span>
 
                                 <button
                                     v-if="clipboardSupported"
                                     type="button"
-                                    class="focus:outline-none transition-colors ease-in-out duration-200"
+                                    class="transition-colors duration-200 ease-in-out focus:outline-none"
                                     :class="{
                                         'text-green-600': settingsImported,
                                     }"
@@ -229,7 +229,7 @@ watchEffect(() => {
                                     "
                                     type="button"
                                     :class="{ 'text-green-600': copied }"
-                                    class="focus:outline-none transition-colors ease-in-out duration-200"
+                                    class="transition-colors duration-200 ease-in-out focus:outline-none"
                                     :disabled="copied"
                                     @click="copy(settingsExport)"
                                     v-html="feather.icons.upload.toSvg()"
@@ -244,7 +244,7 @@ watchEffect(() => {
                             </DialogTitle>
 
                             <div
-                                class="mt-4 max-h-128 overflow-y-auto space-y-4"
+                                class="mt-4 max-h-128 space-y-4 overflow-y-auto"
                             >
                                 <div
                                     v-if="fallbackClipboardRead"
@@ -260,7 +260,7 @@ watchEffect(() => {
                                     <textarea
                                         id="clipboard-read-fallback"
                                         v-model="fallbackClipboardContent"
-                                        class="rounded-lg w-full text-xs dark:text-white dark:bg-black ring-inset ring-2 ring-gray-200 dark:ring-gray-800 focus:outline-none focus:ring-pink-700 dark:focus:ring-pink-500 py-4 px-4 resize-y"
+                                        class="w-full resize-y rounded-lg py-4 px-4 text-xs ring-2 ring-inset ring-gray-200 focus:outline-none focus:ring-pink-700 dark:bg-black dark:text-white dark:ring-gray-800 dark:focus:ring-pink-500"
                                         placeholder="Settings"
                                         autocomplete="off"
                                         autocapitalize="none"
@@ -271,7 +271,7 @@ watchEffect(() => {
 
                                     <button
                                         type="button"
-                                        class="w-full text-left px-4 py-2 ring-2 ring-gray-200 dark:ring-gray-800 ring-inset hover:bg-gray-200 dark:hover:bg-gray-800 disabled:hover:bg-white disabled:dark:hover:bg-black transition rounded-lg text-black dark:text-white"
+                                        class="w-full rounded-lg px-4 py-2 text-left text-black ring-2 ring-inset ring-gray-200 transition hover:bg-gray-200 disabled:hover:bg-white dark:text-white dark:ring-gray-800 dark:hover:bg-gray-800 disabled:dark:hover:bg-black"
                                         :disabled="
                                             !fallbackClipboardContent.trim()
                                         "
@@ -281,7 +281,7 @@ watchEffect(() => {
                                     </button>
 
                                     <p
-                                        class="text-gray-500 text-xs leading-normal"
+                                        class="text-xs leading-normal text-gray-500"
                                     >
                                         Your browser doesn't support reading the
                                         clipboard, so you have to paste your
@@ -303,7 +303,7 @@ watchEffect(() => {
                                                     ? 'bg-pink-700 dark:bg-pink-500'
                                                     : 'bg-gray-200 dark:bg-ut-grey'
                                             "
-                                            class="relative inline-flex items-center h-6 transition-colors rounded-full w-11 focus:outline-none"
+                                            class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none"
                                         >
                                             <span
                                                 :class="
@@ -311,7 +311,7 @@ watchEffect(() => {
                                                         ? 'translate-x-6'
                                                         : 'translate-x-1'
                                                 "
-                                                class="inline-block w-4 h-4 transition-transform transform bg-white dark:bg-gray-200 rounded-full"
+                                                class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform dark:bg-gray-200"
                                             />
                                         </Switch>
                                     </div>
@@ -333,7 +333,7 @@ watchEffect(() => {
                                                     ? 'bg-pink-700 dark:bg-pink-500'
                                                     : 'bg-gray-200 dark:bg-ut-grey'
                                             "
-                                            class="relative inline-flex items-center h-6 transition-colors rounded-full w-11 focus:outline-none"
+                                            class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none"
                                         >
                                             <span
                                                 :class="
@@ -341,7 +341,7 @@ watchEffect(() => {
                                                         ? 'translate-x-6'
                                                         : 'translate-x-1'
                                                 "
-                                                class="inline-block w-4 h-4 transition-transform transform bg-white dark:bg-gray-200 rounded-full"
+                                                class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform dark:bg-gray-200"
                                             />
                                         </Switch>
                                     </div>
@@ -349,7 +349,7 @@ watchEffect(() => {
 
                                 <button
                                     type="button"
-                                    class="w-full text-left px-4 py-2 ring-2 ring-gray-200 dark:ring-gray-800 ring-inset hover:bg-gray-200 dark:hover:bg-gray-800 transition rounded-lg text-black dark:text-white"
+                                    class="w-full rounded-lg px-4 py-2 text-left text-black ring-2 ring-inset ring-gray-200 transition hover:bg-gray-200 dark:text-white dark:ring-gray-800 dark:hover:bg-gray-800"
                                     @click="emit('editNotifications')"
                                 >
                                     Edit Notifications
@@ -357,7 +357,7 @@ watchEffect(() => {
 
                                 <button
                                     type="button"
-                                    class="w-full text-left px-4 py-2 ring-2 ring-gray-200 dark:ring-gray-800 ring-inset hover:bg-gray-200 dark:hover:bg-gray-800 transition rounded-lg text-black dark:text-white"
+                                    class="w-full rounded-lg px-4 py-2 text-left text-black ring-2 ring-inset ring-gray-200 transition hover:bg-gray-200 dark:text-white dark:ring-gray-800 dark:hover:bg-gray-800"
                                     @click="emit('editPeriodNames')"
                                 >
                                     Edit Period Names

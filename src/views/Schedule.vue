@@ -196,6 +196,9 @@ const checkEmptyPeriodNames = computed(
             .filter((match) => !match).length === 0,
 );
 
+// Five minute delay to close tips
+setTimeout(() => (showTips.value = false), 1 * 60 * 1000);
+
 onBeforeMount(() => resume());
 onBeforeUnmount(() => {
     pause();
@@ -209,7 +212,7 @@ onBeforeUnmount(() => {
     <div class="mt-10 md:mt-16">
         <div v-if="schedule">
             <div class="flex items-center">
-                <header class="flex-1 flex flex-col space-y-2">
+                <header class="flex flex-1 flex-col space-y-2">
                     <span class="text-3xl" v-text="schedule?.name" />
                     <span
                         class="text-xl"
@@ -224,7 +227,7 @@ onBeforeUnmount(() => {
                 <div class="space-x-2 md:space-x-4">
                     <button
                         type="button"
-                        class="rounded-lg text-gray-700 dark:text-gray-300 hover:text-pink-700 dark:hover:text-pink-500 p-2"
+                        class="rounded-lg p-2 text-gray-700 hover:text-pink-700 dark:text-gray-300 dark:hover:text-pink-500"
                         title="Open timetable"
                         @click="showTips = !showTips"
                     >
@@ -233,7 +236,7 @@ onBeforeUnmount(() => {
 
                     <button
                         type="button"
-                        class="rounded-lg text-gray-700 dark:text-gray-300 hover:text-pink-700 dark:hover:text-pink-500 p-2"
+                        class="rounded-lg p-2 text-gray-700 hover:text-pink-700 dark:text-gray-300 dark:hover:text-pink-500"
                         title="Open timetable"
                         @click="timetableDialog = true"
                         v-html="feather.icons.calendar.toSvg()"
@@ -241,7 +244,7 @@ onBeforeUnmount(() => {
 
                     <button
                         type="button"
-                        class="rounded-lg text-gray-700 dark:text-gray-300 hover:text-pink-700 dark:hover:text-pink-500 p-2"
+                        class="rounded-lg p-2 text-gray-700 hover:text-pink-700 dark:text-gray-300 dark:hover:text-pink-500"
                         title="Open settings"
                         @click="settingsDialog = true"
                         v-html="feather.icons.settings.toSvg()"
@@ -273,7 +276,7 @@ onBeforeUnmount(() => {
 
                 <div
                     v-else-if="currentPeriod || nextPeriod"
-                    class="grid grid-cols-1 md:grid-cols-2 gap-6"
+                    class="grid grid-cols-1 gap-6 md:grid-cols-2"
                 >
                     <Card
                         v-if="currentPeriod"
@@ -308,7 +311,7 @@ onBeforeUnmount(() => {
             <!-- TODO: Add timeout -->
             <div
                 v-if="showTips"
-                class="mt-10 prose dark:prose-invert text-xs mx-auto space-y-1"
+                class="prose mx-auto mt-10 space-y-1 text-sm dark:prose-invert"
             >
                 <h2>Tips for using Schedules</h2>
                 <ul>
@@ -348,11 +351,11 @@ onBeforeUnmount(() => {
 
         <div
             v-else
-            class="w-full flex flex-col justify-center items-center space-y-4"
+            class="flex w-full flex-col items-center justify-center space-y-4"
         >
             <svg
                 role="status"
-                class="inline mr-2 w-10 h-10 text-gray-200 animate-spin dark:text-gray-600 fill-pink-700 dark:fill-pink-500"
+                class="mr-2 inline h-10 w-10 animate-spin fill-pink-700 text-gray-200 dark:fill-pink-500 dark:text-gray-600"
                 viewBox="0 0 100 101"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"

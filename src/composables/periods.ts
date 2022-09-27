@@ -1,6 +1,6 @@
-import { computed, ref } from 'vue';
-import { periodNames } from './storage';
-import { useDateFormat, useNow } from '@vueuse/core';
+import { computed, ref } from "vue";
+import { periodNames } from "./storage";
+import { useDateFormat, useNow } from "@vueuse/core";
 import type { Period, PeriodTimes } from "../types/periods";
 import type {
     SchedulePeriodDetails,

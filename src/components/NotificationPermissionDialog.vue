@@ -54,11 +54,11 @@ const emit = defineEmits<{
                         leave-to="opacity-0 scale-95"
                     >
                         <div
-                            class="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white dark:bg-black shadow-xl rounded-lg"
+                            class="my-8 inline-block w-full max-w-md transform overflow-hidden rounded-lg bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-black"
                         >
                             <DialogTitle
                                 as="h3"
-                                class="text-xl font-medium leading-6 text-gray-900 dark:text-gray-100 flex space-x-3 items-center"
+                                class="flex items-center space-x-3 text-xl font-medium leading-6 text-gray-900 dark:text-gray-100"
                             >
                                 <span class="flex-1"> Notifications </span>
 
@@ -80,14 +80,14 @@ const emit = defineEmits<{
                             <div class="mt-4 flex flex-col sm:flex-row-reverse">
                                 <button
                                     type="button"
-                                    class="w-full inline-flex justify-center rounded-lg shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm transition"
+                                    class="inline-flex w-full justify-center rounded-lg bg-green-600 px-4 py-2 text-base font-medium text-white shadow-sm transition hover:bg-green-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm"
                                     @click="emit('enable')"
                                 >
                                     Enable
                                 </button>
                                 <button
                                     type="button"
-                                    class="mt-3 w-full inline-flex justify-center border border-gray-100 dark:border-none rounded-lg shadow-sm px-4 py-2 bg-white dark:bg-ut-grey text-base font-medium text-black dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-ut-grey-lighter focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm transition"
+                                    class="mt-3 inline-flex w-full justify-center rounded-lg border border-gray-100 bg-white px-4 py-2 text-base font-medium text-black shadow-sm transition hover:bg-gray-100 focus:outline-none dark:border-none dark:bg-ut-grey dark:text-gray-300 dark:hover:bg-ut-grey-lighter sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                                     @click="emit('disable')"
                                 >
                                     Cancel

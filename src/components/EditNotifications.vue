@@ -95,11 +95,11 @@ watchEffect(() => {
                         leave-to="opacity-0 scale-95"
                     >
                         <div
-                            class="inline-block w-full max-w-md max-h-256 p-6 my-8 overflow-none text-left align-middle transition-all transform bg-white dark:bg-black shadow-xl rounded-lg"
+                            class="overflow-none my-8 inline-block max-h-256 w-full max-w-md transform rounded-lg bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-black"
                         >
                             <DialogTitle
                                 as="h3"
-                                class="text-xl font-medium leading-6 text-gray-900 dark:text-gray-100 bg-white dark:bg-black flex space-x-3 items-center pb-2"
+                                class="flex items-center space-x-3 bg-white pb-2 text-xl font-medium leading-6 text-gray-900 dark:bg-black dark:text-gray-100"
                             >
                                 <span class="flex-1"> Notifications </span>
 
@@ -116,7 +116,7 @@ watchEffect(() => {
                                     modelStorage &&
                                     typeof modelStorage !== 'string'
                                 "
-                                class="mt-2 max-h-128 overflow-y-auto space-y-4"
+                                class="mt-2 max-h-128 space-y-4 overflow-y-auto"
                             >
                                 <div
                                     v-if="modelStorage.intervals"
@@ -154,7 +154,7 @@ watchEffect(() => {
                                                         ? 'bg-pink-700 dark:bg-pink-500'
                                                         : 'bg-gray-200 dark:bg-ut-grey'
                                                 "
-                                                class="relative inline-flex items-center h-6 transition-colors rounded-full w-11 focus:outline-none"
+                                                class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none"
                                             >
                                                 <span
                                                     :class="
@@ -164,7 +164,7 @@ watchEffect(() => {
                                                             ? 'translate-x-6'
                                                             : 'translate-x-1'
                                                     "
-                                                    class="inline-block w-4 h-4 transition-transform transform bg-white dark:bg-gray-200 rounded-full"
+                                                    class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform dark:bg-gray-200"
                                                 />
                                             </Switch>
                                         </div>
@@ -196,7 +196,7 @@ watchEffect(() => {
                                                         ? 'bg-pink-700 dark:bg-pink-500'
                                                         : 'bg-gray-200 dark:bg-ut-grey'
                                                 "
-                                                class="relative inline-flex items-center h-6 transition-colors rounded-full w-11 focus:outline-none"
+                                                class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none"
                                             >
                                                 <span
                                                     :class="
@@ -204,7 +204,7 @@ watchEffect(() => {
                                                             ? 'translate-x-6'
                                                             : 'translate-x-1'
                                                     "
-                                                    class="inline-block w-4 h-4 transition-transform transform bg-white dark:bg-gray-200 rounded-full"
+                                                    class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform dark:bg-gray-200"
                                                 />
                                             </Switch>
                                         </div>
@@ -244,7 +244,7 @@ watchEffect(() => {
                                                         ? 'bg-pink-700 dark:bg-pink-500'
                                                         : 'bg-gray-200 dark:bg-ut-grey'
                                                 "
-                                                class="relative inline-flex items-center h-6 transition-colors rounded-full w-11 focus:outline-none"
+                                                class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none"
                                             >
                                                 <span
                                                     :class="
@@ -254,7 +254,7 @@ watchEffect(() => {
                                                             ? 'translate-x-6'
                                                             : 'translate-x-1'
                                                     "
-                                                    class="inline-block w-4 h-4 transition-transform transform bg-white dark:bg-gray-200 rounded-full"
+                                                    class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform dark:bg-gray-200"
                                                 />
                                             </Switch>
                                         </div>
@@ -264,11 +264,11 @@ watchEffect(() => {
 
                             <div
                                 v-else
-                                class="w-full flex flex-col justify-center items-center space-y-2"
+                                class="flex w-full flex-col items-center justify-center space-y-2"
                             >
                                 <svg
                                     role="status"
-                                    class="inline mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-pink-700 dark:fill-pink-500"
+                                    class="mr-2 inline h-8 w-8 animate-spin fill-pink-700 text-gray-200 dark:fill-pink-500 dark:text-gray-600"
                                     viewBox="0 0 100 101"
                                     fill="none"
                                     xmlns="http://www.w3.org/2000/svg"

@@ -11,12 +11,12 @@ const helpCenterStore = useHelpCenterStore();
     <div class="mt-10 md:mt-16">
         <span class="text-2xl"> Select a topic </span>
 
-        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
             <router-link
                 v-for="topic in helpCenterStore.topics"
                 :key="topic.id"
                 :to="`/help/${topic.id}`"
-                class="w-full px-6 py-4 rounded-lg text-left ring-2 dark:ring-0 ring-gray-100 dark:bg-ut-grey dark:hover:bg-ut-grey-lighter transition-colors duration-300 ease-in-out"
+                class="w-full rounded-lg px-6 py-4 text-left ring-2 ring-gray-100 transition-colors duration-300 ease-in-out dark:bg-ut-grey dark:ring-0 dark:hover:bg-ut-grey-lighter"
             >
                 <span class="block" v-text="topic.name" />
                 <span

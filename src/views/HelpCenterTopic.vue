@@ -57,9 +57,9 @@ const content = computed(() => {
 <template>
     <NavigationBar />
 
-    <div v-if="topic" class="mt-10 md:mt-12 max-w-2xl mx-auto">
-        <header class="flex-1 flex flex-col space-y-2">
-            <nav class="flex mb-6" aria-label="Breadcrumb">
+    <div v-if="topic" class="mx-auto mt-10 max-w-2xl md:mt-12">
+        <header class="flex flex-1 flex-col space-y-2">
+            <nav class="mb-6 flex" aria-label="Breadcrumb">
                 <ol class="flex items-center space-x-4">
                     <li>
                         <div>
@@ -126,7 +126,7 @@ const content = computed(() => {
         </header>
 
         <div
-            class="mt-6 prose dark:prose-invert max-w-none"
+            class="prose mt-6 max-w-none dark:prose-invert"
             v-html="content"
         ></div>
     </div>

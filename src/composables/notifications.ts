@@ -1,8 +1,8 @@
-import ArrayKeyedMap from 'array-keyed-map';
-import { currentPeriod } from './periods';
-import { emptyAllowedNotifications } from './storage';
-import { offDay } from './overrides';
-import { scheduleId, scheduleShortName, timer } from './scheduleState';
+import ArrayKeyedMap from "array-keyed-map";
+import { currentPeriod } from "./periods";
+import { emptyAllowedNotifications } from "./storage";
+import { offDay } from "./overrides";
+import { scheduleId, scheduleShortName, timer } from "./scheduleState";
 import {
     useNow,
     usePermission,

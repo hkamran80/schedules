@@ -53,7 +53,7 @@ const pickTextColorBasedOnBgColorAdvanced = (
                     v-for="(schedule, id) in store.schedules"
                     :key="id"
                     :to="`/schedule/${id}`"
-                    class="w-full px-6 py-4 rounded-lg text-left"
+                    class="w-full rounded-lg px-6 py-4 text-left"
                     :style="[
                         `background-color: ${schedule.color}`,
                         `color: ${pickTextColorBasedOnBgColorAdvanced(
@@ -70,10 +70,10 @@ const pickTextColorBasedOnBgColorAdvanced = (
                 href="https://play.google.com/store/apps/details?id=com.hkamran.schedules"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="my-5 w-full px-6 py-3 rounded-lg text-left bg-pink-700 hover:bg-pink-600 text-white transition-colors duration-300"
+                class="my-5 w-full rounded-lg bg-pink-700 px-6 py-3 text-left text-white transition-colors duration-300 hover:bg-pink-600"
             >
                 <span
-                    class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-blue-100 text-blue-800 float-right md:float-none md:mr-1"
+                    class="float-right inline-flex items-center rounded-full bg-blue-100 px-3 py-0.5 text-sm font-medium text-blue-800 md:float-none md:mr-1"
                 >
                     NEW
                 </span>
@@ -84,10 +84,10 @@ const pickTextColorBasedOnBgColorAdvanced = (
                 </span>
             </a>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <button
                     type="button"
-                    class="w-full px-6 py-4 rounded-lg text-left ring-2 dark:ring-0 ring-gray-100 dark:bg-ut-grey dark:hover:bg-ut-grey-lighter transition-colors duration-300 ease-in-out"
+                    class="w-full rounded-lg px-6 py-4 text-left ring-2 ring-gray-100 transition-colors duration-300 ease-in-out dark:bg-ut-grey dark:ring-0 dark:hover:bg-ut-grey-lighter"
                     @click="aboutDialog = true"
                 >
                     About
@@ -95,7 +95,7 @@ const pickTextColorBasedOnBgColorAdvanced = (
 
                 <router-link
                     to="/help"
-                    class="w-full px-6 py-4 rounded-lg text-left ring-2 dark:ring-0 ring-gray-100 dark:bg-ut-grey dark:hover:bg-ut-grey-lighter transition-colors duration-300 ease-in-out"
+                    class="w-full rounded-lg px-6 py-4 text-left ring-2 ring-gray-100 transition-colors duration-300 ease-in-out dark:bg-ut-grey dark:ring-0 dark:hover:bg-ut-grey-lighter"
                 >
                     Help Center
                 </router-link>
@@ -145,13 +145,13 @@ const pickTextColorBasedOnBgColorAdvanced = (
                         leave-to="opacity-0 scale-95"
                     >
                         <div
-                            class="inline-block w-full max-w-2xl p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white dark:bg-black shadow-xl rounded-lg"
+                            class="my-8 inline-block w-full max-w-2xl transform overflow-hidden rounded-lg bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-black"
                         >
                             <DialogTitle
                                 as="h3"
-                                class="text-xl font-medium leading-6 text-gray-900 dark:text-gray-100 flex"
+                                class="flex text-xl font-medium leading-6 text-gray-900 dark:text-gray-100"
                             >
-                                <div class="flex-1 flex flex-col space-y-1">
+                                <div class="flex flex-1 flex-col space-y-1">
                                     <span> About </span>
                                     <span class="text-sm">
                                         Version {{ store.version }}
@@ -166,7 +166,7 @@ const pickTextColorBasedOnBgColorAdvanced = (
                             </DialogTitle>
 
                             <div
-                                class="mt-6 prose dark:prose-invert max-w-none"
+                                class="prose mt-6 max-w-none dark:prose-invert"
                             >
                                 <p>
                                     Schedules is an app for schedules. It tells
@@ -177,7 +177,7 @@ const pickTextColorBasedOnBgColorAdvanced = (
 
                                 <h3>Credits</h3>
                                 <div
-                                    class="not-prose grid grid-cols-1 md:grid-cols-2 gap-6 items-center"
+                                    class="not-prose grid grid-cols-1 items-center gap-6 md:grid-cols-2"
                                 >
                                     <Card
                                         title="H. Kamran"

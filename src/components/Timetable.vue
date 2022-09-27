@@ -124,13 +124,13 @@ const validLongDays = computed(() => {
                         leave-to="opacity-0 scale-95"
                     >
                         <div
-                            class="inline-block w-full max-w-md max-h-256 p-6 my-8 overflow-none text-left align-middle transition-all transform bg-white dark:bg-black shadow-xl rounded-lg"
+                            class="overflow-none my-8 inline-block max-h-256 w-full max-w-md transform rounded-lg bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-black"
                         >
                             <DialogTitle
                                 as="h3"
-                                class="text-xl font-medium leading-6 text-gray-900 dark:text-gray-100 bg-white dark:bg-black flex space-x-3 items-center pb-2"
+                                class="flex items-center space-x-3 bg-white pb-2 text-xl font-medium leading-6 text-gray-900 dark:bg-black dark:text-gray-100"
                             >
-                                <div class="flex-1 flex flex-col space-y-1">
+                                <div class="flex flex-1 flex-col space-y-1">
                                     <span> Timetable </span>
                                     <span
                                         class="text-sm"
@@ -141,7 +141,7 @@ const validLongDays = computed(() => {
                                 <Listbox v-model="selectedDay">
                                     <div class="relative mt-1">
                                         <ListboxButton
-                                            class="relative w-full py-1 pl-4 pr-1 text-left ring-2 dark:ring-0 ring-gray-100 dark:bg-ut-grey rounded-lg cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 text-sm items-center"
+                                            class="relative w-full cursor-default items-center rounded-lg py-1 pl-4 pr-1 text-left text-sm ring-2 ring-gray-100 focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 dark:bg-ut-grey dark:ring-0"
                                         >
                                             <div
                                                 class="flex items-center"
@@ -153,11 +153,11 @@ const validLongDays = computed(() => {
                                                 }"
                                             >
                                                 <span
-                                                    class="flex-1 block truncate text-black dark:text-white"
+                                                    class="block flex-1 truncate text-black dark:text-white"
                                                     v-text="selectedDay"
                                                 />
                                                 <span
-                                                    class="inset-y-0 right-0 flex items-center pr-2 pointer-events-none w-8 h-8 text-gray-400"
+                                                    class="pointer-events-none inset-y-0 right-0 flex h-8 w-8 items-center pr-2 text-gray-400"
                                                     v-html="
                                                         feather.icons[
                                                             'chevron-down'
@@ -173,7 +173,7 @@ const validLongDays = computed(() => {
                                             leave-to-class="opacity-0"
                                         >
                                             <ListboxOptions
-                                                class="absolute w-full py-1 mt-1 overflow-auto text-base bg-white dark:bg-ut-grey rounded-lg shadow-lg max-h-60 ring-1 ring-black dark:ring-white ring-opacity-5 focus:outline-none sm:text-sm"
+                                                class="absolute mt-1 max-h-60 w-full overflow-auto rounded-lg bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-ut-grey dark:ring-white sm:text-sm"
                                             >
                                                 <ListboxOption
                                                     v-for="dayOption in validLongDays"
@@ -188,9 +188,9 @@ const validLongDays = computed(() => {
                                                     <li
                                                         :class="[
                                                             active
-                                                                ? 'text-pink-900 dark:text-gray-100 bg-pink-100 dark:bg-pink-900'
+                                                                ? 'bg-pink-100 text-pink-900 dark:bg-pink-900 dark:text-gray-100'
                                                                 : 'text-gray-900 dark:text-gray-100',
-                                                            'cursor-default select-none relative py-2 px-4 flex items-center',
+                                                            'relative flex cursor-default select-none items-center py-2 px-4',
                                                         ]"
                                                     >
                                                         <span
@@ -198,7 +198,7 @@ const validLongDays = computed(() => {
                                                                 selected
                                                                     ? 'font-medium'
                                                                     : 'font-normal',
-                                                                'block truncate flex-1',
+                                                                'block flex-1 truncate',
                                                             ]"
                                                             v-text="dayOption"
                                                         />
@@ -208,7 +208,7 @@ const validLongDays = computed(() => {
                                                                 dayOption ===
                                                                 props.day
                                                             "
-                                                            class="bg-pink-700 dark:bg-pink-500 flex-shrink-0 inline-block h-2 w-2 rounded-full"
+                                                            class="inline-block h-2 w-2 flex-shrink-0 rounded-full bg-pink-700 dark:bg-pink-500"
                                                             aria-hidden="true"
                                                         />
 
@@ -217,7 +217,7 @@ const validLongDays = computed(() => {
                                                                 dayOption ===
                                                                 selectedDay
                                                             "
-                                                            class="bg-green-600 flex-shrink-0 inline-block h-2 w-2 rounded-full"
+                                                            class="inline-block h-2 w-2 flex-shrink-0 rounded-full bg-green-600"
                                                             aria-hidden="true"
                                                         />
                                                     </li>

@@ -17,13 +17,13 @@ onBeforeMount(async () => {
     <ReloadPWA />
 
     <div
-        class="min-h-screen max-w-7xl mx-auto pt-16 md:pt-12 px-12 md:px-10 2xl:px-0 pb-20 text-black dark:text-white"
+        class="mx-auto min-h-screen max-w-7xl px-12 pt-16 pb-20 text-black dark:text-white md:px-10 md:pt-12 2xl:px-0"
     >
         <router-view />
     </div>
 
     <footer
-        class="text-gray-600 text-center text-xs md:text-sm pt-20 md:pt-8 -mt-32 md:-mt-24 px-6 sm:px-0 max-w-2xl mx-auto flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-5 pb-12 sm:pb-6 items-center"
+        class="mx-auto -mt-32 flex max-w-2xl flex-col items-center space-y-3 px-6 pt-20 pb-12 text-center text-xs text-gray-600 sm:flex-row sm:space-y-0 sm:space-x-5 sm:px-0 sm:pb-6 md:-mt-24 md:pt-8 md:text-sm"
     >
         <span class="flex-1 text-center sm:text-left">
             Copyright &copy; {{ new Date().getFullYear() }} UNISON Technologies
@@ -31,7 +31,7 @@ onBeforeMount(async () => {
         </span>
 
         <div
-            class="flex flex-col sm:flex-row space-y-1 sm:space-y-0 sm:space-x-6 items-center"
+            class="flex flex-col items-center space-y-1 sm:flex-row sm:space-y-0 sm:space-x-6"
         >
             <a
                 href="https://unisontech.org/legal/terms"

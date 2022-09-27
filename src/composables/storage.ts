@@ -1,7 +1,7 @@
-import { computed, ref, watchEffect } from 'vue';
-import { convertShortWeekdayToLong } from '@hkamran/utility-datetime';
-import { generateSchedulePeriods } from './periods';
-import { scheduleId } from './scheduleState';
+import { computed, ref, watchEffect } from "vue";
+import { convertShortWeekdayToLong } from "@hkamran/utility-datetime";
+import { generateSchedulePeriods } from "./periods";
+import { scheduleId } from "./scheduleState";
 import { type RemovableRef, useStorage } from "@vueuse/core";
 import type { ScheduleDays } from "../types/schedule";
 import type { PeriodNames } from "../types/periods";
