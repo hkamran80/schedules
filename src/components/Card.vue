@@ -4,6 +4,7 @@ const props = defineProps<{
     title: string;
     description?: string;
     centerText?: boolean;
+    largerDescription?: boolean;
 }>();
 </script>
 
@@ -15,19 +16,21 @@ const props = defineProps<{
             class="w-full flex items-center justify-between p-6"
             :class="{ 'text-center': props.centerText }"
         >
-            <div class="flex-1">
+            <div class="flex-1 space-y-1">
                 <span
                     v-if="props.header"
                     class="text-sm text-gray-500 dark:text-gray-400"
                     v-text="props.header"
                 />
                 <h3
-                    class="text-gray-900 dark:text-white text-lg font-medium"
+                    class="text-gray-900 dark:text-white font-medium"
+                    :class="{ 'text-lg': !props.largerDescription }"
                     v-text="props.title"
                 />
                 <p
                     v-if="props.description"
-                    class="mt-1 text-gray-700 dark:text-gray-300 whitespace-normal"
+                    class="text-gray-700 dark:text-gray-300 whitespace-normal"
+                    :class="{ 'text-lg': props.largerDescription }"
                     v-text="props.description"
                 />
             </div>

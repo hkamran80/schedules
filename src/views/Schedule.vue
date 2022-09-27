@@ -14,6 +14,7 @@ import feather from "feather-icons";
 import { setPeriods, currentPeriod, nextPeriod } from "../composables/periods";
 import { padNumber } from "@hkamran/utility-strings";
 import { convert24HourTo12Hour } from "@hkamran/utility-datetime";
+import { Lightbulb } from "lucide-vue-next";
 import {
     setOffDays,
     setScheduleOverrides,
@@ -27,7 +28,12 @@ import {
     scheduleShortName,
 } from "../composables/scheduleState";
 import "../composables/notifications";
-import { hour24, setDaySchedule } from "../composables/storage";
+import {
+    emptyPeriodNames,
+    hour24,
+    periodNames,
+    setDaySchedule,
+} from "../composables/storage";
 import type { SchedulePeriodTimes } from "../types/schedule";
 
 import NavigationBar from "../components/NavigationBar.vue";
@@ -38,7 +44,7 @@ import Settings from "../components/Settings.vue";
 import EditNotifications from "../components/EditNotifications.vue";
 import EditPeriodNames from "../components/EditPeriodNames.vue";
 
-useTitle("Schedule | Schedules");
+useTitle("Loading schedule... | Schedules");
 const { params } = useRoute();
 const { push } = useRouter();
 
@@ -62,6 +68,7 @@ store.$subscribe(() => {
     }
 });
 
+const showTips = ref<boolean>(true);
 const timetableDialog = ref<boolean>(false);
 const settingsDialog = ref<boolean>(false);
 const notificationsPermissionsDialog = ref<boolean>(false);
@@ -82,7 +89,17 @@ const demoNotification = () => {
 };
 
 const currentDateTime = useNow();
-const currentTime = useDateFormat(currentDateTime);
+const currentTimeFormat = computed(() => `${hour24.value ? "HH" : "h"}:mm:ss`);
+const currentTimeFormatted = useDateFormat(currentDateTime, currentTimeFormat);
+const currentTime = computed(() =>
+    `${currentTimeFormatted.value} ${
+        !hour24.value
+            ? currentDateTime.value.getHours() > 12
+                ? "PM"
+                : "AM"
+            : ""
+    }`.trim(),
+);
 const currentLongDay = computed(() =>
     currentDateTime.value.toLocaleDateString(undefined, { weekday: "long" }),
 );
@@ -167,6 +184,18 @@ const closeEditPeriodNamesDialog = () => {
     setTimeout(() => (settingsDialog.value = true), 250);
 };
 
+const checkEmptyPeriodNames = computed(
+    () =>
+        periodNames?.value &&
+        emptyPeriodNames.value &&
+        Object.keys(periodNames.value)
+            .map(
+                (key) =>
+                    periodNames?.value?.[key] === emptyPeriodNames.value[key],
+            )
+            .filter((match) => !match).length === 0,
+);
+
 onBeforeMount(() => resume());
 onBeforeUnmount(() => {
     pause();
@@ -193,6 +222,15 @@ onBeforeUnmount(() => {
                 </header>
 
                 <div class="space-x-2 md:space-x-4">
+                    <button
+                        type="button"
+                        class="rounded-lg text-gray-700 dark:text-gray-300 hover:text-pink-700 dark:hover:text-pink-500 p-2"
+                        title="Open timetable"
+                        @click="showTips = !showTips"
+                    >
+                        <Lightbulb />
+                    </button>
+
                     <button
                         type="button"
                         class="rounded-lg text-gray-700 dark:text-gray-300 hover:text-pink-700 dark:hover:text-pink-500 p-2"
@@ -246,6 +284,7 @@ onBeforeUnmount(() => {
                         )}:${padNumber(timer.minutes.value)}:${padNumber(
                             timer.seconds.value,
                         )}`"
+                        larger-description
                     />
 
                     <Card
@@ -253,6 +292,7 @@ onBeforeUnmount(() => {
                         header="Next"
                         :title="nextPeriod.name"
                         :description="nextPeriodTime"
+                        larger-description
                     />
                 </div>
 
@@ -263,6 +303,45 @@ onBeforeUnmount(() => {
                         description="There's no active period right now"
                     />
                 </div>
+            </div>
+
+            <div
+                v-if="showTips"
+                class="mt-10 prose dark:prose-invert text-xs mx-auto space-y-1"
+            >
+                <h2>Tips for using Schedules</h2>
+                <ul>
+                    <li class="space-y-2">
+                        <strong> Leave this tab open in the background </strong>
+                        <p>
+                            Schedules can send notifications alerting you when
+                            there are certain times left in the period (see the
+                            settings for more details), but this requires the
+                            tab staying open.
+                        </p>
+                        <p>
+                            One suggestion is to pin the tab (right-click on the
+                            tab, and click "Pin Tab").
+                        </p>
+                    </li>
+                    <li v-if="checkEmptyPeriodNames" class="space-y-2">
+                        <strong>Name the periods</strong>
+                        <p>
+                            To make Schedules more yours, open settings (the
+                            gear icon) and edit the period names.
+                        </p>
+                    </li>
+                    <li class="space-y-2">
+                        <strong>Import/export settings</strong>
+                        <p>
+                            Schedules cannot currently sync settings
+                            automatically (this is coming soon though, stay
+                            tuned!), but does have a way to manually sync them.
+                            Open settings, then click the download icon to
+                            export, and the upload icon to import.
+                        </p>
+                    </li>
+                </ul>
             </div>
         </div>
 
