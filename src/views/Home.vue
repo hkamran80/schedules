@@ -48,7 +48,7 @@ const pickTextColorBasedOnBgColorAdvanced = (
         <span class="text-2xl"> Select a schedule to begin! </span>
 
         <a class="mt-6 flex flex-col space-y-8">
-            <div class="flex flex-col space-y-4">
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <router-link
                     v-for="(schedule, id) in store.schedules"
                     :key="id"
