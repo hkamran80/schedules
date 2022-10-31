@@ -121,6 +121,15 @@ const daySchedule = computed(() => {
     }
 });
 
+const tabTitle = computed(
+    () =>
+        `${padNumber(timer.hours.value)}:${padNumber(
+            timer.minutes.value,
+        )}:${padNumber(timer.seconds.value)} | ${
+            schedule.value?.name
+        } | Schedules`,
+);
+
 // TODO: Figure out a way to load the current/next periods immediately
 const { pause, resume } = useIntervalFn(
     () => {
@@ -147,6 +156,13 @@ const { pause, resume } = useIntervalFn(
             timer.restart(
                 currentDateTime.value.setHours(hours, minutes, seconds),
             );
+
+            useTitle(tabTitle);
+        } else if (
+            (!currentPeriod.value || !currentPeriod.value.times) &&
+            (timer.isExpired.value || !timer.isRunning.value)
+        ) {
+            useTitle(`${schedule.value?.name} | Schedules`);
         }
     },
     1000,
