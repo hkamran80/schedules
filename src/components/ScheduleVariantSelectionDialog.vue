@@ -54,7 +54,7 @@ const emit = defineEmits<{
                         leave-to="opacity-0 scale-95"
                     >
                         <div
-                            class="my-8 inline-block w-full max-w-md transform overflow-hidden rounded-lg bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-black"
+                            class="my-8 inline-block w-full max-w-md transform overflow-hidden rounded-lg bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-ut-grey"
                         >
                             <DialogTitle
                                 as="h3"
