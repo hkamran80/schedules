@@ -1,40 +1,49 @@
 <script setup lang="ts">
 import { chooseContrastingColour } from "@hkamran/utility-web";
-import type { ScheduleDetails, ScheduleTypes } from "../types/schedule";
+import type {
+    ScheduleTypes,
+    ScheduleVariant,
+} from "../types/schedule";
 
 const props = defineProps<{
     scheduleId: string;
     schedule: ScheduleTypes;
 }>();
+
+const emit = defineEmits<{
+    (e: "select", variant: ScheduleVariant): void;
+}>();
 </script>
 
 <template>
     <router-link
-        v-if="Object.keys(props.schedule).indexOf('variantIds') === -1"
+        v-if="Object.keys(props.schedule).indexOf('variants') === -1"
         :to="`/schedule/${scheduleId}`"
         class="w-full rounded-lg px-6 py-4 text-left"
         :style="[
-            `background-color: ${(schedule as ScheduleDetails).color}`,
+            `background-color: ${schedule.color}`,
             `color: ${chooseContrastingColour(
-                (schedule as ScheduleDetails).color,
+                schedule.color,
                 '#FFFFFF',
                 '#000000',
             )}`,
         ]"
-        v-text="(schedule as ScheduleDetails).name"
+        v-text="schedule.name"
     />
 
-    <div
+    <button
         v-else
+        type="button"
         class="w-full rounded-lg px-6 py-4 text-left"
         :style="[
-            `background-color: ${(schedule as ScheduleDetails).color}`,
+            `background-color: ${schedule.color}`,
             `color: ${chooseContrastingColour(
-                (schedule as ScheduleDetails).color,
+                schedule.color,
                 '#FFFFFF',
                 '#000000',
             )}`,
         ]"
-        v-text="(schedule as ScheduleDetails).name"
+        @click="emit('select', schedule as ScheduleVariant)"
+        v-text="schedule.name"
     />
 </template>
