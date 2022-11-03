@@ -5,6 +5,7 @@ import { computed, ref } from "vue";
 import feather from "feather-icons";
 import NavigationBar from "../components/NavigationBar.vue";
 import ScheduleCard from "../components/ScheduleCard.vue";
+import ScheduleVariantSelectionDialog from "../components/ScheduleVariantSelectionDialog.vue";
 import Card from "../components/LinkableCard.vue";
 import {
     TransitionRoot,
@@ -13,7 +14,7 @@ import {
     DialogOverlay,
     DialogTitle,
 } from "@headlessui/vue";
-import type { ScheduleTypes } from "../types/schedule";
+import type { ScheduleTypes, ScheduleVariant } from "../types/schedule";
 
 useTitle("Schedules");
 
@@ -38,9 +39,9 @@ const variantSchedules = computed(() => {
 
 const schedulesList = computed(() => {
     const scheduleIds = Object.keys(store.schedules);
-    const variantIds = Object.values(variantSchedules.value).flat();
+    const variants = Object.values(variantSchedules.value).flat();
     const withoutVariants = scheduleIds.filter(
-        (id) => variantIds.indexOf(id) === -1,
+        (id) => variants.indexOf(id) === -1,
     );
     const variantEntries = Object.entries(variantSchedules.value);
 
@@ -77,12 +78,22 @@ const schedulesList = computed(() => {
                           color: store.getSchedule(
                               variantSchedules.value[id][0],
                           )?.color,
-                          variantIds: variantSchedules.value[id],
+                          variants: variantSchedules.value[id].map((id) => ({
+                              id,
+                              name: (store
+                                  .getSchedule(id)
+                                  ?.name.match(/\(.*\)/) ?? [
+                                  "Unknown",
+                              ])[0].replace(/\(|\)/g, ""),
+                          })),
                       },
         }),
         {},
     ) as { [id: string]: ScheduleTypes };
 });
+
+const variantSelectionDialog = ref<boolean>(false);
+const currentVariant = ref<ScheduleVariant | null>(null);
 </script>
 
 <template>
@@ -98,6 +109,12 @@ const schedulesList = computed(() => {
                     :key="id"
                     :schedule-id="(id as string)"
                     :schedule="schedule"
+                    @select="
+                        (scheduleVariant) => {
+                            currentVariant = scheduleVariant;
+                            variantSelectionDialog = true;
+                        }
+                    "
                 />
             </div>
 
@@ -144,6 +161,18 @@ const schedulesList = computed(() => {
             </div>
         </a>
     </div>
+
+    <ScheduleVariantSelectionDialog
+        v-if="currentVariant !== null"
+        :show="variantSelectionDialog"
+        :variant="currentVariant"
+        @hide="
+            () => {
+                variantSelectionDialog = false;
+                currentVariant = null;
+            }
+        "
+    />
 
     <TransitionRoot appear :show="aboutDialog" as="template">
         <Dialog as="div" @close="aboutDialog = false">
