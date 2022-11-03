@@ -20,19 +20,17 @@ const aboutDialog = ref<boolean>(false);
 
 const variantSchedules = computed(() => {
     const ids = Object.keys(store.schedules);
-    const rootIds: { [id: string]: string[] } = {};
-
-    ids.forEach((id) => {
-        const rootId = id.split("-").slice(0, 3).join("-");
-        if (rootIds[rootId] === undefined) {
-            rootIds[rootId] = [id];
-        } else {
-            rootIds[rootId] = [...rootIds[rootId], id];
-        }
-    });
 
     return Object.fromEntries(
-        Object.entries(rootIds).filter(([, ids]) => ids.length > 1),
+        Object.entries(
+            ids.reduce((previous, id) => {
+                const rootId = id.split("-").slice(0, 3).join("-");
+                return {
+                    ...previous,
+                    [rootId]: [...(previous[rootId] || []), id],
+                };
+            }, {} as { [id: string]: string[] }),
+        ).filter(([, ids]) => ids.length > 1),
     );
 });
 
