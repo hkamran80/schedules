@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { useTitle } from "@vueuse/core";
 import { useMainStore } from "../stores/main";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import feather from "feather-icons";
 import NavigationBar from "../components/NavigationBar.vue";
+import ScheduleCard from "../components/ScheduleCard.vue";
+import ScheduleVariantSelectionDialog from "../components/ScheduleVariantSelectionDialog.vue";
 import Card from "../components/LinkableCard.vue";
 import {
     TransitionRoot,
@@ -12,33 +14,86 @@ import {
     DialogOverlay,
     DialogTitle,
 } from "@headlessui/vue";
+import type { ScheduleTypes, ScheduleVariant } from "../types/schedule";
 
 useTitle("Schedules");
 
 const store = useMainStore();
 const aboutDialog = ref<boolean>(false);
 
-const pickTextColorBasedOnBgColorAdvanced = (
-    bgColor: string,
-    lightColor: string,
-    darkColor: string,
-): string => {
-    const color = bgColor.charAt(0) === "#" ? bgColor.substring(1, 7) : bgColor;
-    const r = parseInt(color.substring(0, 2), 16);
-    const g = parseInt(color.substring(2, 4), 16);
-    const b = parseInt(color.substring(4, 6), 16);
-    const uicolors = [r / 255, g / 255, b / 255];
-    const c = uicolors.map((col) => {
-        if (col <= 0.03928) {
-            return col / 12.92;
-        }
+const variantSchedules = computed(() => {
+    const ids = Object.keys(store.schedules);
 
-        return Math.pow((col + 0.055) / 1.055, 2.4);
-    });
-    const L = 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+    return Object.fromEntries(
+        Object.entries(
+            ids.reduce((previous, id) => {
+                const rootId = id.split("-").slice(0, 3).join("-");
+                return {
+                    ...previous,
+                    [rootId]: [...(previous[rootId] || []), id],
+                };
+            }, {} as { [id: string]: string[] }),
+        ).filter(([, ids]) => ids.length > 1),
+    );
+});
 
-    return L > 0.179 ? darkColor : lightColor;
-};
+const schedulesList = computed(() => {
+    const scheduleIds = Object.keys(store.schedules);
+    const variants = Object.values(variantSchedules.value).flat();
+    const withoutVariants = scheduleIds.filter(
+        (id) => variants.indexOf(id) === -1,
+    );
+    const variantEntries = Object.entries(variantSchedules.value);
+
+    const idList = variantEntries
+        .map(([variantId, ids], index) => ({
+            variantId,
+            index:
+                scheduleIds.indexOf(ids[0]) -
+                variantEntries
+                    .slice(0, index)
+                    .map(([, ids]) => ids.length)
+                    .reduce((partialSum, a) => partialSum + a, 0) +
+                variantEntries.slice(0, index).length,
+        }))
+        .reduce(
+            (previous, { variantId, index }) => [
+                ...previous.slice(0, index),
+                variantId,
+                ...previous.slice(index),
+            ],
+            withoutVariants,
+        );
+
+    return idList.reduce(
+        (previous, id) => ({
+            ...previous,
+            [id]:
+                withoutVariants.indexOf(id) !== -1
+                    ? store.getSchedule(id)
+                    : {
+                          name: store
+                              .getSchedule(variantSchedules.value[id][0])
+                              ?.name.replace(/\s\(.*\)/, ""),
+                          color: store.getSchedule(
+                              variantSchedules.value[id][0],
+                          )?.color,
+                          variants: variantSchedules.value[id].map((id) => ({
+                              id,
+                              name: (store
+                                  .getSchedule(id)
+                                  ?.name.match(/\(.*\)/) ?? [
+                                  "Unknown",
+                              ])[0].replace(/\(|\)/g, ""),
+                          })),
+                      },
+        }),
+        {},
+    ) as { [id: string]: ScheduleTypes };
+});
+
+const variantSelectionDialog = ref<boolean>(false);
+const currentVariant = ref<ScheduleVariant | null>(null);
 </script>
 
 <template>
@@ -49,20 +104,17 @@ const pickTextColorBasedOnBgColorAdvanced = (
 
         <a class="mt-6 flex flex-col space-y-8">
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <router-link
-                    v-for="(schedule, id) in store.schedules"
+                <ScheduleCard
+                    v-for="(schedule, id) in schedulesList"
                     :key="id"
-                    :to="`/schedule/${id}`"
-                    class="w-full rounded-lg px-6 py-4 text-left"
-                    :style="[
-                        `background-color: ${schedule.color}`,
-                        `color: ${pickTextColorBasedOnBgColorAdvanced(
-                            schedule.color,
-                            '#FFFFFF',
-                            '#000000',
-                        )}`,
-                    ]"
-                    v-text="schedule.name"
+                    :schedule-id="(id as string)"
+                    :schedule="schedule"
+                    @select="
+                        (scheduleVariant) => {
+                            currentVariant = scheduleVariant;
+                            variantSelectionDialog = true;
+                        }
+                    "
                 />
             </div>
 
@@ -109,6 +161,18 @@ const pickTextColorBasedOnBgColorAdvanced = (
             </div>
         </a>
     </div>
+
+    <ScheduleVariantSelectionDialog
+        v-if="currentVariant !== null"
+        :show="variantSelectionDialog"
+        :variant="currentVariant"
+        @hide="
+            () => {
+                variantSelectionDialog = false;
+                currentVariant = null;
+            }
+        "
+    />
 
     <TransitionRoot appear :show="aboutDialog" as="template">
         <Dialog as="div" @close="aboutDialog = false">

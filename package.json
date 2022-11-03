@@ -1,7 +1,7 @@
 {
     "name": "schedules",
     "private": true,
-    "version": "4.0.1",
+    "version": "4.0.2",
     "scripts": {
         "dev": "vite",
         "dev:https": "pnpm build; pnpx serve",
@@ -14,7 +14,7 @@
         "@headlessui/vue": "^1.5.0",
         "@hkamran/utility-datetime": "^1.0.3",
         "@hkamran/utility-strings": "^1.0.1",
-        "@hkamran/utility-web": "^1.0.0",
+        "@hkamran/utility-web": "^1.0.2",
         "@vueuse/core": "^9.3.0",
         "@vueuse/head": "^0.7.12",
         "array-keyed-map": "^2.1.2",

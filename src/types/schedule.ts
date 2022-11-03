@@ -31,3 +31,11 @@ export type TimetablePeriod = {
     end: string;
     color: string;
 };
+
+export type ScheduleTypes = ScheduleDetails | ScheduleVariant;
+
+export type ScheduleVariant = {
+    name: string;
+    color: string;
+    variants: { id: string; name: string }[];
+};
