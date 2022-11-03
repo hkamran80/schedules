@@ -4,6 +4,7 @@ import { useMainStore } from "../stores/main";
 import { computed, ref } from "vue";
 import feather from "feather-icons";
 import NavigationBar from "../components/NavigationBar.vue";
+import ScheduleCard from "../components/ScheduleCard.vue";
 import Card from "../components/LinkableCard.vue";
 import {
     TransitionRoot,
@@ -12,6 +13,7 @@ import {
     DialogOverlay,
     DialogTitle,
 } from "@headlessui/vue";
+import type { ScheduleTypes } from "../types/schedule";
 
 useTitle("Schedules");
 
@@ -68,33 +70,19 @@ const schedulesList = computed(() => {
             [id]:
                 withoutVariants.indexOf(id) !== -1
                     ? store.getSchedule(id)
-                    : { variantIds: variantSchedules.value[id] },
+                    : {
+                          name: store
+                              .getSchedule(variantSchedules.value[id][0])
+                              ?.name.replace(/\s\(.*\)/, ""),
+                          color: store.getSchedule(
+                              variantSchedules.value[id][0],
+                          )?.color,
+                          variantIds: variantSchedules.value[id],
+                      },
         }),
         {},
-    );
+    ) as { [id: string]: ScheduleTypes };
 });
-
-const pickTextColorBasedOnBgColorAdvanced = (
-    bgColor: string,
-    lightColor: string,
-    darkColor: string,
-): string => {
-    const color = bgColor.charAt(0) === "#" ? bgColor.substring(1, 7) : bgColor;
-    const r = parseInt(color.substring(0, 2), 16);
-    const g = parseInt(color.substring(2, 4), 16);
-    const b = parseInt(color.substring(4, 6), 16);
-    const uicolors = [r / 255, g / 255, b / 255];
-    const c = uicolors.map((col) => {
-        if (col <= 0.03928) {
-            return col / 12.92;
-        }
-
-        return Math.pow((col + 0.055) / 1.055, 2.4);
-    });
-    const L = 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
-
-    return L > 0.179 ? darkColor : lightColor;
-};
 </script>
 
 <template>
@@ -105,20 +93,11 @@ const pickTextColorBasedOnBgColorAdvanced = (
 
         <a class="mt-6 flex flex-col space-y-8">
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <router-link
-                    v-for="(schedule, id) in store.schedules"
+                <ScheduleCard
+                    v-for="(schedule, id) in schedulesList"
                     :key="id"
-                    :to="`/schedule/${id}`"
-                    class="w-full rounded-lg px-6 py-4 text-left"
-                    :style="[
-                        `background-color: ${schedule.color}`,
-                        `color: ${pickTextColorBasedOnBgColorAdvanced(
-                            schedule.color,
-                            '#FFFFFF',
-                            '#000000',
-                        )}`,
-                    ]"
-                    v-text="schedule.name"
+                    :schedule-id="(id as string)"
+                    :schedule="schedule"
                 />
             </div>
 

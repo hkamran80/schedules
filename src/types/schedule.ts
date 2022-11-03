@@ -32,8 +32,10 @@ export type TimetablePeriod = {
     color: string;
 };
 
-export type ScheduleTypes = (Schedule | ScheduleVariant)[];
+export type ScheduleTypes = ScheduleDetails | ScheduleVariant;
 
 export type ScheduleVariant = {
+    name: string;
+    color: string;
     variantIds: string[];
 };
