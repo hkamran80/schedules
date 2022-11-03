@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useTitle } from "@vueuse/core";
 import { useMainStore } from "../stores/main";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import feather from "feather-icons";
 import NavigationBar from "../components/NavigationBar.vue";
 import Card from "../components/LinkableCard.vue";
@@ -17,6 +17,64 @@ useTitle("Schedules");
 
 const store = useMainStore();
 const aboutDialog = ref<boolean>(false);
+
+const variantSchedules = computed(() => {
+    const ids = Object.keys(store.schedules);
+    const rootIds: { [id: string]: string[] } = {};
+
+    ids.forEach((id) => {
+        const rootId = id.split("-").slice(0, 3).join("-");
+        if (rootIds[rootId] === undefined) {
+            rootIds[rootId] = [id];
+        } else {
+            rootIds[rootId] = [...rootIds[rootId], id];
+        }
+    });
+
+    return Object.fromEntries(
+        Object.entries(rootIds).filter(([, ids]) => ids.length > 1),
+    );
+});
+
+const schedulesList = computed(() => {
+    const scheduleIds = Object.keys(store.schedules);
+    const variantIds = Object.values(variantSchedules.value).flat();
+    const withoutVariants = scheduleIds.filter(
+        (id) => variantIds.indexOf(id) === -1,
+    );
+    const variantEntries = Object.entries(variantSchedules.value);
+
+    const idList = variantEntries
+        .map(([variantId, ids], index) => ({
+            variantId,
+            index:
+                scheduleIds.indexOf(ids[0]) -
+                variantEntries
+                    .slice(0, index)
+                    .map(([, ids]) => ids.length)
+                    .reduce((partialSum, a) => partialSum + a, 0) +
+                variantEntries.slice(0, index).length,
+        }))
+        .reduce(
+            (previous, { variantId, index }) => [
+                ...previous.slice(0, index),
+                variantId,
+                ...previous.slice(index),
+            ],
+            withoutVariants,
+        );
+
+    return idList.reduce(
+        (previous, id) => ({
+            ...previous,
+            [id]:
+                withoutVariants.indexOf(id) !== -1
+                    ? store.getSchedule(id)
+                    : { variantIds: variantSchedules.value[id] },
+        }),
+        {},
+    );
+});
 
 const pickTextColorBasedOnBgColorAdvanced = (
     bgColor: string,
