@@ -6,7 +6,8 @@ import feather from "feather-icons";
 import NavigationBar from "../components/NavigationBar.vue";
 import ScheduleCard from "../components/ScheduleCard.vue";
 import ScheduleVariantSelectionDialog from "../components/ScheduleVariantSelectionDialog.vue";
-import Card from "../components/LinkableCard.vue";
+import Credit from "../components/Credit.vue";
+import { User ,Layers,Layout} from "lucide-vue-next";
 import {
     TransitionRoot,
     TransitionChild,
@@ -209,7 +210,7 @@ const currentVariant = ref<ScheduleVariant | null>(null);
                         leave-to="opacity-0 scale-95"
                     >
                         <div
-                            class="my-8 inline-block w-full max-w-2xl transform overflow-hidden rounded-lg bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-black"
+                            class="my-8 inline-block w-full max-w-lg transform overflow-hidden rounded-lg bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-black"
                         >
                             <DialogTitle
                                 as="h3"
@@ -240,27 +241,40 @@ const currentVariant = ref<ScheduleVariant | null>(null);
                                 </p>
 
                                 <h3>Credits</h3>
-                                <div
-                                    class="not-prose grid grid-cols-1 items-center gap-6 md:grid-cols-2"
-                                >
-                                    <Card
-                                        title="H. Kamran"
-                                        description="Developer"
-                                        link="https://hkamran.com"
-                                        center-text
-                                    />
-                                    <Card
-                                        title="J. Quam"
-                                        link="https://twitter.com/josephius3"
-                                        description="UI/UX Design and Logo Design"
-                                        center-text
-                                    />
-                                    <Card
-                                        title="Andrew Zheng"
-                                        link="https://getfind.app"
-                                        description="UI/UX Design"
-                                        center-text
-                                    />
+                                <div class="not-prose">
+                                    <ul class="space-y-3">
+                                        <li>
+                                            <Credit
+                                                name="H. Kamran"
+                                                credit="Developer"
+                                                :icon="User"
+                                                url="https://hkamran.com"
+                                            />
+                                        </li>
+                                        <li>
+                                            <Credit
+                                                name="J. Quam"
+                                                credit="UI/UX Design, Logo Design"
+                                                :icon="Layers"
+                                                url="https://unsplash.com/@jquam"
+                                            />
+                                        </li>
+                                        <li>
+                                            <Credit
+                                                name="Andrew Zheng"
+                                                credit="UI/UX Design"
+                                                :icon="Layout"
+                                                url="https://getfind.app"
+                                            />
+                                        </li>
+                                        <li>
+                                            <Credit
+                                                name="Krishna R."
+                                                credit="UX Design"
+                                                :icon="Layout"
+                                            />
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
