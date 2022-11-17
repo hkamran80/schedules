@@ -7,7 +7,7 @@ import NavigationBar from "../components/NavigationBar.vue";
 import ScheduleCard from "../components/ScheduleCard.vue";
 import ScheduleVariantSelectionDialog from "../components/ScheduleVariantSelectionDialog.vue";
 import Credit from "../components/Credit.vue";
-import { User ,Layers,Layout} from "lucide-vue-next";
+import { User, Layers, Layout } from "lucide-vue-next";
 import {
     TransitionRoot,
     TransitionChild,
@@ -119,23 +119,24 @@ const currentVariant = ref<ScheduleVariant | null>(null);
                 />
             </div>
 
-            <a
-                href="https://play.google.com/store/apps/details?id=com.hkamran.schedules"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="my-5 w-full rounded-lg bg-pink-700 px-6 py-3 text-left text-white transition-colors duration-300 hover:bg-pink-600"
-            >
-                <span
-                    class="float-right inline-flex items-center rounded-full bg-blue-100 px-3 py-0.5 text-sm font-medium text-blue-800 md:float-none md:mr-1"
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <a
+                    href="https://apps.apple.com/app/id6444194250"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="my-5 w-full rounded-lg bg-pink-700 px-6 py-3 text-left text-white transition-colors duration-300 hover:bg-pink-600"
                 >
-                    NEW
-                </span>
-
-                <span>
-                    Schedules now has an Android app! Click to open the Play
-                    Store!
-                </span>
-            </a>
+                    Download Schedules on the App Store!
+                </a>
+                <a
+                    href="https://play.google.com/store/apps/details?id=com.hkamran.schedules"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="my-5 w-full rounded-lg bg-pink-700 px-6 py-3 text-left text-white transition-colors duration-300 hover:bg-pink-600"
+                >
+                    Download Schedules on the Play Store!
+                </a>
+            </div>
 
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <button
