@@ -8,6 +8,8 @@ export type ScheduleDetails = {
     name: string;
     shortName: string;
     color: string;
+    timezone: string;
+    location: string;
     schedule: ScheduleDays;
     offDays: OffDays;
     overrides: ScheduleOverrides;
