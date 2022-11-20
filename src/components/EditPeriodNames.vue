@@ -78,11 +78,11 @@ watchEffect(() => {
                         leave-to="opacity-0 scale-95"
                     >
                         <div
-                            class="overflow-none my-8 inline-block max-h-256 w-full max-w-md transform rounded-lg bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-black"
+                            class="overflow-none my-8 inline-block max-h-256 w-full max-w-md transform rounded-lg bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-ut-grey"
                         >
                             <DialogTitle
                                 as="h3"
-                                class="flex items-center space-x-3 bg-white pb-2 text-xl font-medium leading-6 text-gray-900 dark:bg-black dark:text-gray-100"
+                                class="flex items-center space-x-3 pb-2 text-xl font-medium leading-6 text-gray-900 dark:text-gray-100"
                             >
                                 <span class="flex-1"> Period Names </span>
 
@@ -123,7 +123,7 @@ watchEffect(() => {
                                             .toLowerCase()}`"
                                         v-model="modelStorage[defaultName]"
                                         type="text"
-                                        class="mt-1 block w-full rounded-lg py-2 px-4 ring-2 ring-inset ring-gray-200 focus:outline-none focus:ring-pink-700 dark:bg-black dark:text-white dark:ring-gray-800 dark:focus:ring-pink-500 sm:text-sm"
+                                        class="mt-1 block w-full rounded-lg py-2 px-4 ring-2 ring-inset ring-gray-200 focus:outline-none focus:ring-pink-700 dark:bg-ut-grey dark:text-white dark:ring-ut-grey-lighter dark:focus:ring-pink-500 sm:text-sm"
                                         :placeholder="(defaultName as string)"
                                     />
                                 </div>

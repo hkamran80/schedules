@@ -124,11 +124,11 @@ const validLongDays = computed(() => {
                         leave-to="opacity-0 scale-95"
                     >
                         <div
-                            class="overflow-none my-8 inline-block max-h-256 w-full max-w-md transform rounded-lg bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-black"
+                            class="overflow-none my-8 inline-block max-h-256 w-full max-w-md transform rounded-lg bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-ut-grey"
                         >
                             <DialogTitle
                                 as="h3"
-                                class="flex items-center space-x-3 bg-white pb-2 text-xl font-medium leading-6 text-gray-900 dark:bg-black dark:text-gray-100"
+                                class="flex items-center space-x-3 pb-2 text-xl font-medium leading-6 text-gray-900 dark:text-gray-100"
                             >
                                 <div class="flex flex-1 flex-col space-y-1">
                                     <span> Timetable </span>
@@ -141,7 +141,7 @@ const validLongDays = computed(() => {
                                 <Listbox v-model="selectedDay">
                                     <div class="relative mt-1">
                                         <ListboxButton
-                                            class="relative w-full cursor-default items-center rounded-lg py-1 pl-4 pr-1 text-left text-sm ring-2 ring-gray-100 focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 dark:bg-ut-grey dark:ring-0"
+                                            class="relative w-full cursor-default items-center rounded-lg py-1 pl-4 pr-1 text-left text-sm ring-2 ring-gray-100 focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 dark:bg-ut-grey-lighter dark:ring-0"
                                         >
                                             <div
                                                 class="flex items-center"
@@ -173,7 +173,7 @@ const validLongDays = computed(() => {
                                             leave-to-class="opacity-0"
                                         >
                                             <ListboxOptions
-                                                class="absolute mt-1 max-h-60 w-full overflow-auto rounded-lg bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-ut-grey dark:ring-white sm:text-sm"
+                                                class="absolute mt-1 max-h-60 w-full overflow-auto rounded-lg bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-ut-grey-lighter text-sm"
                                             >
                                                 <ListboxOption
                                                     v-for="dayOption in validLongDays"
