@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { chooseContrastingColour } from "@hkamran/utility-web";
-import type {
-    ScheduleTypes,
-    ScheduleVariant,
-} from "../types/schedule";
+import type { ScheduleTypes, ScheduleVariant } from "../types/schedule";
 
 const props = defineProps<{
     scheduleId: string;
@@ -28,8 +25,10 @@ const emit = defineEmits<{
                 '#000000',
             )}`,
         ]"
-        v-text="schedule.name"
-    />
+    >
+        <p v-text="schedule.name" />
+        <p class="text-sm" v-text="schedule.location" />
+    </router-link>
 
     <button
         v-else
@@ -44,6 +43,8 @@ const emit = defineEmits<{
             )}`,
         ]"
         @click="emit('select', schedule as ScheduleVariant)"
-        v-text="schedule.name"
-    />
+    >
+        <p v-text="schedule.name" />
+        <p class="text-sm" v-text="schedule.location" />
+    </button>
 </template>
