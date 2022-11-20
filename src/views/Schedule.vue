@@ -43,6 +43,7 @@ import NotificationPermissionDialog from "../components/NotificationPermissionDi
 import Settings from "../components/Settings.vue";
 import EditNotifications from "../components/EditNotifications.vue";
 import EditPeriodNames from "../components/EditPeriodNames.vue";
+import Breadcrumbs from "../components/Breadcrumbs.vue";
 
 useTitle("Loading schedule... | Schedules");
 const { params } = useRoute();
@@ -225,8 +226,9 @@ onBeforeUnmount(() => {
 <template>
     <NavigationBar />
 
-    <div class="mt-10 md:mt-16">
+    <div class="mt-10">
         <div v-if="schedule">
+            <Breadcrumbs base-label="Schedule" :current-label="schedule?.name" />
             <div class="flex items-center">
                 <header class="flex flex-1 flex-col space-y-2">
                     <span class="text-3xl" v-text="schedule?.name" />
