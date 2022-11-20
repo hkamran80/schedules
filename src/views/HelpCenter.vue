@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Breadcrumbs from "../components/Breadcrumbs.vue";
 import NavigationBar from "../components/NavigationBar.vue";
 import { useHelpCenterStore } from "../stores/helpCenter";
 
@@ -9,6 +10,8 @@ const helpCenterStore = useHelpCenterStore();
     <NavigationBar />
 
     <div class="mt-10 md:mt-16">
+        <Breadcrumbs base-label="Help Center" />
+
         <span class="text-2xl"> Select a topic </span>
 
         <div class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
