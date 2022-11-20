@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { useToggle } from "@vueuse/core";
-import feather from "feather-icons";
 import { MessageSquare, Moon, Sun } from "lucide-vue-next";
-import { ref } from "vue";
 import { useRoute } from "vue-router";
 import { isDark } from "../composables/dark";
 
