@@ -79,6 +79,12 @@ const schedulesList = computed(() => {
                           color: store.getSchedule(
                               variantSchedules.value[id][0],
                           )?.color,
+                          timezone: store.getSchedule(
+                              variantSchedules.value[id][0],
+                          )?.timezone,
+                          location: store.getSchedule(
+                              variantSchedules.value[id][0],
+                          )?.location,
                           variants: variantSchedules.value[id].map((id) => ({
                               id,
                               name: (store
