@@ -39,5 +39,7 @@ export type ScheduleTypes = ScheduleDetails | ScheduleVariant;
 export type ScheduleVariant = {
     name: string;
     color: string;
+    timezone: string;
+    location: string;
     variants: { id: string; name: string }[];
 };
