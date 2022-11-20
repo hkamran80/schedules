@@ -119,26 +119,26 @@ const currentVariant = ref<ScheduleVariant | null>(null);
                 />
             </div>
 
-            <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <a
-                    href="https://apps.apple.com/app/apple-store/id6444194250?pt=125715921&ct=Schedules%20(Web)&mt=8"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="my-5 w-full rounded-lg bg-pink-700 px-6 py-3 text-left text-white transition-colors duration-300 hover:bg-pink-600"
-                >
-                    Download Schedules on the App Store!
-                </a>
-                <a
-                    href="https://play.google.com/store/apps/details?id=com.hkamran.schedules"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="my-5 w-full rounded-lg bg-pink-700 px-6 py-3 text-left text-white transition-colors duration-300 hover:bg-pink-600"
-                >
-                    Download Schedules on the Play Store!
-                </a>
-            </div>
-
             <div class="flex flex-col space-y-4">
+                <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    <a
+                        href="https://apps.apple.com/app/apple-store/id6444194250?pt=125715921&ct=Schedules%20(Web)&mt=8"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="w-full rounded-lg bg-pink-700 px-6 py-3 text-left text-white transition-colors duration-300 hover:bg-pink-600"
+                    >
+                        Download Schedules on the App Store!
+                    </a>
+                    <a
+                        href="https://play.google.com/store/apps/details?id=com.hkamran.schedules"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="w-full rounded-lg bg-pink-700 px-6 py-3 text-left text-white transition-colors duration-300 hover:bg-pink-600"
+                    >
+                        Download Schedules on the Play Store!
+                    </a>
+                </div>
+
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <button
                         type="button"
