@@ -87,6 +87,10 @@ export default defineConfig({
                     rel: "apple-touch-icon",
                     href: "/assets/images/favicons/apple-icon-180.png",
                 },
+                {
+                    rel: "preconnect",
+                    href: "https://cfg-schedules.unisontech.org",
+                },
                 { rel: "preconnect", href: "https://fonts.googleapis.com/" },
                 {
                     rel: "preconnect",

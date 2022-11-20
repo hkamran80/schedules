@@ -27,14 +27,14 @@ export const useHelpCenterStore = defineStore("helpCenter", {
         async loadTopics() {
             this.topics = (await (
                 await fetch(
-                    "https://raw.githubusercontent.com/hkamran80/schedules-helpcenter/main/topics.json",
+                    "https://cfg-schedules.unisontech.org/help/topics",
                 )
             ).json()) as HelpCenterTopic[];
         },
         async loadTopicContent(topicId: string) {
             const content = await (
                 await fetch(
-                    `https://raw.githubusercontent.com/hkamran80/schedules-helpcenter/main/topics/${topicId}.md`,
+                    `https://cfg-schedules.unisontech.org/help/topic/${topicId}`,
                 )
             ).text();
 

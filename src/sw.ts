@@ -21,14 +21,14 @@ cleanupOutdatedCaches();
 // Offline access
 registerRoute(new NavigationRoute(createHandlerBoundToURL("index.html")));
 registerRoute(
-    "https://raw.unisontech.org/schedules/latest",
+    "https://cfg-schedules.unisontech.org/schedules/latest",
     new NetworkFirst({ networkTimeoutSeconds: 60 }),
 );
 registerRoute(
-    "https://raw.unisontech.org/schedules/changelog",
+    "https://cfg-schedules.unisontech.org/schedules/changelog",
     new NetworkFirst({ networkTimeoutSeconds: 60 }),
 );
 registerRoute(
-    "https://raw.githubusercontent.com/hkamran80/schedules-helpcenter/main/topics.json",
+    "https://cfg-schedules.unisontech.org/help/topics",
     new NetworkFirst({ networkTimeoutSeconds: 60 }),
 );
