@@ -26,9 +26,7 @@ export const useHelpCenterStore = defineStore("helpCenter", {
     actions: {
         async loadTopics() {
             this.topics = (await (
-                await fetch(
-                    "https://cfg-schedules.unisontech.org/help/topics",
-                )
+                await fetch("https://cfg-schedules.unisontech.org/help/topics")
             ).json()) as HelpCenterTopic[];
         },
         async loadTopicContent(topicId: string) {

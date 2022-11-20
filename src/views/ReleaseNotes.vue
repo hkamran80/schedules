@@ -106,7 +106,7 @@ useTitle("Release Notes | Schedules");
                     leave-to-class="transform scale-95 opacity-0"
                 >
                     <DisclosurePanel
-                        class="prose prose-sm mt-3 prose-li:my-0.5 dark:prose-invert"
+                        class="prose-sm prose mt-3 prose-li:my-0.5 dark:prose-invert"
                     >
                         <ul>
                             <li
