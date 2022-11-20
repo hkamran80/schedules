@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import feather from "feather-icons";
-
 import {
     TransitionRoot,
     TransitionChild,
@@ -13,6 +11,7 @@ import {
 } from "@headlessui/vue";
 import { useMainStore } from "../stores/main";
 import { onBeforeMount } from "vue";
+import { X, ChevronUp, ChevronDown } from "lucide-vue-next";
 
 const props = defineProps<{
     show: boolean;
@@ -80,8 +79,9 @@ onBeforeMount(async () => {
                                     type="button"
                                     class="focus:outline-none"
                                     @click="emit('hide')"
-                                    v-html="feather.icons.x.toSvg()"
-                                />
+                                >
+                                    <X />
+                                </button>
                             </DialogTitle>
 
                             <div
@@ -110,14 +110,10 @@ onBeforeMount(async () => {
                                         </div>
                                         <span
                                             class="text-sm text-gray-500 dark:text-gray-400"
-                                            v-html="
-                                                feather.icons[
-                                                    open
-                                                        ? 'chevron-up'
-                                                        : 'chevron-down'
-                                                ].toSvg()
-                                            "
-                                        />
+                                        >
+                                            <ChevronUp v-if="open" />
+                                            <ChevronDown v-else />
+                                        </span>
                                     </DisclosureButton>
 
                                     <transition

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import feather from "feather-icons";
-
 import {
     TransitionRoot,
     TransitionChild,
@@ -21,6 +19,7 @@ import {
 import { AllowedNotifications } from "../types/notifications";
 import { notificationMap } from "../composables/notifications";
 import { capitalizeFirstLetter } from "@hkamran/utility-strings";
+import { X } from "lucide-vue-next";
 
 const props = defineProps<{
     show: boolean;
@@ -107,8 +106,9 @@ watchEffect(() => {
                                     type="button"
                                     class="focus:outline-none"
                                     @click="emit('hide')"
-                                    v-html="feather.icons.x.toSvg()"
-                                />
+                                >
+                                    <X />
+                                </button>
                             </DialogTitle>
 
                             <div

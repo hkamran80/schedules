@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useToggle } from "@vueuse/core";
-import feather from "feather-icons";
-import { ref } from "vue";
+import { MessageSquare, Moon, Sun } from "lucide-vue-next";
 import { useRoute } from "vue-router";
 import { isDark } from "../composables/dark";
 
@@ -26,20 +25,24 @@ const { name } = useRoute();
             Schedules
         </router-link>
 
+        <!-- eslint-disable-next-line vuejs-accessibility/anchor-has-content -->
         <a
             class="rounded-lg p-2 text-gray-700 hover:text-pink-700 dark:text-gray-300 dark:hover:text-pink-500"
             href="https://form.typeform.com/to/g0MlHGXj"
             target="_blank"
             rel="noopener noreferrer"
             title="Feedback"
-            v-html="feather.icons['message-square'].toSvg()"
-        />
+        >
+            <MessageSquare />
+        </a>
         <button
             type="button"
             class="rounded-lg p-2 text-gray-700 hover:text-pink-700 dark:text-gray-300 dark:hover:text-pink-500"
             title="Toggle theme"
             @click="() => toggleDark()"
-            v-html="feather.icons[isDark ? 'moon' : 'sun'].toSvg()"
-        />
+        >
+            <Moon v-if="isDark" />
+            <Sun v-else />
+        </button>
     </h1>
 </template>

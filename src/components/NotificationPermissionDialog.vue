@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import feather from "feather-icons";
 import {
     TransitionRoot,
     TransitionChild,
@@ -7,6 +6,7 @@ import {
     DialogOverlay,
     DialogTitle,
 } from "@headlessui/vue";
+import { X } from "lucide-vue-next";
 
 const props = defineProps<{
     show: boolean;
@@ -62,11 +62,9 @@ const emit = defineEmits<{
                             >
                                 <span class="flex-1"> Notifications </span>
 
-                                <button
-                                    type="button"
-                                    @click="emit('hide')"
-                                    v-html="feather.icons.x.toSvg()"
-                                />
+                                <button type="button" @click="emit('hide')">
+                                    <X />
+                                </button>
                             </DialogTitle>
 
                             <div class="mt-4">

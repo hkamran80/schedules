@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import feather from "feather-icons";
 import { computed, ref } from "vue";
 import { generateSchedulePeriods } from "../composables/periods";
 import {
@@ -8,6 +7,7 @@ import {
     convert24HourTo12Hour,
 } from "@hkamran/utility-datetime";
 import { hour24 } from "../composables/storage";
+import { ChevronDown, X } from "lucide-vue-next";
 import type { ScheduleDays, SchedulePeriodTimes } from "../types/schedule";
 import type { LongDay } from "../types/datetime";
 import type { Period } from "../types/periods";
@@ -158,12 +158,9 @@ const validLongDays = computed(() => {
                                                 />
                                                 <span
                                                     class="pointer-events-none inset-y-0 right-0 flex h-8 w-8 items-center pr-2 text-gray-400"
-                                                    v-html="
-                                                        feather.icons[
-                                                            'chevron-down'
-                                                        ].toSvg()
-                                                    "
-                                                />
+                                                >
+                                                    <ChevronDown />
+                                                </span>
                                             </div>
                                         </ListboxButton>
 
@@ -173,7 +170,7 @@ const validLongDays = computed(() => {
                                             leave-to-class="opacity-0"
                                         >
                                             <ListboxOptions
-                                                class="absolute mt-1 max-h-60 w-full overflow-auto rounded-lg bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-ut-grey-lighter text-sm"
+                                                class="absolute mt-1 max-h-60 w-full overflow-auto rounded-lg bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-ut-grey-lighter sm:text-sm"
                                             >
                                                 <ListboxOption
                                                     v-for="dayOption in validLongDays"
@@ -227,11 +224,9 @@ const validLongDays = computed(() => {
                                     </div>
                                 </Listbox>
 
-                                <button
-                                    type="button"
-                                    @click="emit('hide')"
-                                    v-html="feather.icons.x.toSvg()"
-                                />
+                                <button type="button" @click="emit('hide')">
+                                    <X />
+                                </button>
                             </DialogTitle>
 
                             <div class="mt-2 max-h-128 overflow-y-auto">
