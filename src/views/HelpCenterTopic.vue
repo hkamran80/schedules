@@ -8,6 +8,7 @@ import feather from "feather-icons";
 import { resizeIcon } from "@hkamran/utility-web";
 
 import NavigationBar from "../components/NavigationBar.vue";
+import Breadcrumbs from "../components/Breadcrumbs.vue";
 
 useTitle("Help Center | Schedules");
 const { params } = useRoute();
@@ -59,67 +60,7 @@ const content = computed(() => {
 
     <div v-if="topic" class="mx-auto mt-10 max-w-2xl md:mt-12">
         <header class="flex flex-1 flex-col space-y-2">
-            <nav class="mb-6 flex" aria-label="Breadcrumb">
-                <ol class="flex items-center space-x-4">
-                    <li>
-                        <div>
-                            <router-link
-                                to="/"
-                                class="text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400"
-                            >
-                                <span class="sr-only">Home</span>
-                                <span
-                                    aria-hidden="true"
-                                    v-html="
-                                        resizeIcon(
-                                            feather.icons.home.toSvg(),
-                                            18,
-                                        )
-                                    "
-                                />
-                            </router-link>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="flex items-center">
-                            <span
-                                aria-hidden="true"
-                                v-html="
-                                    resizeIcon(
-                                        feather.icons['chevron-right'].toSvg(),
-                                        18,
-                                    )
-                                "
-                            />
-
-                            <router-link
-                                to="/help"
-                                class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300"
-                            >
-                                Help Center
-                            </router-link>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="flex items-center">
-                            <span
-                                aria-hidden="true"
-                                v-html="
-                                    resizeIcon(
-                                        feather.icons['chevron-right'].toSvg(),
-                                        18,
-                                    )
-                                "
-                            />
-
-                            <span
-                                class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300"
-                                v-text="topic.name"
-                            />
-                        </div>
-                    </li>
-                </ol>
-            </nav>
+            <Breadcrumbs base-path="/help" base-label="Help Center" :current-label="topic.name" />
 
             <span class="text-3xl" v-text="topic.name" />
             <span class="text-xl" v-text="topic.description" />
