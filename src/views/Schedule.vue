@@ -228,7 +228,7 @@ onBeforeUnmount(() => {
 
     <div class="mt-10">
         <div v-if="schedule">
-            <Breadcrumbs base-label="Schedule" :current-label="schedule?.name" />
+            <Breadcrumbs :base-label="schedule?.name" />
             <div class="flex items-center">
                 <header class="flex flex-1 flex-col space-y-2">
                     <span class="text-3xl" v-text="schedule?.name" />
