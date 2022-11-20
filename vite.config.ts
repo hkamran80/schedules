@@ -4,11 +4,11 @@ import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 
 const name = "Schedules";
-const keywords = "schedule schedules auhsd twcp time";
+const keywords = "schedule, schedules, auhsd, twcp, time, school, bell schedule, bell schedules, countdown, school period, block schedule, bells, ca, nj, ny, tx";
 const description =
-    "The app for all your schedules. Select a schedule and keep track of how much time there is remaining in a period.";
+    "All your schedules in one app. Schedules gives you handy information about your bell schedules, such as the current period, the countdown to the next period, and the starting time of the next period. For each school, Schedules sends handy notifications at predefined intervals and features a full bell schedule for each day of the week.";
 const faviconUrl =
-    "https://next-schedules.unisontech.org/assets/images/favicons/favicon-192.png";
+    "https://schedules.unisontech.org/assets/images/favicons/favicon-192.png";
 const twitterUsername = "@unisontechorg";
 
 // https://vitejs.dev/config/
