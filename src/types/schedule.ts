@@ -4,12 +4,15 @@ export type Schedule = {
     [id: string]: ScheduleDetails;
 };
 
-export type ScheduleDetails = {
+type BaseSchedule = {
     name: string;
-    shortName: string;
     color: string;
     timezone: string;
     location: string;
+};
+
+export type ScheduleDetails = BaseSchedule & {
+    shortName: string;
     schedule: ScheduleDays;
     offDays: OffDays;
     overrides: ScheduleOverrides;
@@ -36,10 +39,6 @@ export type TimetablePeriod = {
 
 export type ScheduleTypes = ScheduleDetails | ScheduleVariant;
 
-export type ScheduleVariant = {
-    name: string;
-    color: string;
-    timezone: string;
-    location: string;
+export type ScheduleVariant = BaseSchedule & {
     variants: { id: string; name: string }[];
 };
