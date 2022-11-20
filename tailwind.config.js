@@ -7,7 +7,7 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                sans: ["Barlow", ...defaultTheme.fontFamily.sans],
+                sans: ["'Nunito Sans'", ...defaultTheme.fontFamily.sans],
                 serif: [...defaultTheme.fontFamily.serif],
                 mono: [...defaultTheme.fontFamily.mono],
             },

@@ -76,7 +76,7 @@ const emit = defineEmits<{
                             </DialogTitle>
 
                             <div
-                                class="mt-4 max-h-128 grid grid-cols-1 gap-2 overflow-y-auto"
+                                class="mt-4 grid max-h-128 grid-cols-1 gap-2 overflow-y-auto"
                             >
                                 <router-link
                                     v-for="localVariant in props.variant

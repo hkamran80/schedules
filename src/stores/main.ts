@@ -25,7 +25,9 @@ export const useMainStore = defineStore("main", {
     actions: {
         async loadSchedules() {
             this.schedules = (await (
-                await fetch("https://cfg-schedules.unisontech.org/schedules/latest")
+                await fetch(
+                    "https://cfg-schedules.unisontech.org/schedules/latest",
+                )
             ).json()) as Schedule;
         },
         async loadReleaseNotes() {
