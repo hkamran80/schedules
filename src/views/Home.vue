@@ -65,7 +65,7 @@ const schedulesList = computed(() => {
             withoutVariants,
         );
 
-    return idList.reduce(
+    const finalVariants = idList.reduce(
         (previous, id) => ({
             ...previous,
             [id]:
@@ -96,6 +96,15 @@ const schedulesList = computed(() => {
         }),
         {},
     ) as { [id: string]: ScheduleTypes };
+
+    return Object.keys(finalVariants)
+        .sort((a, b) => finalVariants[a].name.localeCompare(finalVariants[b].name))
+        .reduce((previous, key) => {
+            (previous as { [id: string]: ScheduleTypes })[key] =
+                finalVariants[key];
+
+            return previous;
+        }, {});
 });
 
 const variantSelectionDialog = ref<boolean>(false);
@@ -108,7 +117,7 @@ const currentVariant = ref<ScheduleVariant | null>(null);
     <div class="mt-10 md:mt-16">
         <span class="text-2xl"> Select a schedule to begin! </span>
 
-        <a class="mt-6 flex flex-col space-y-8">
+        <a class="mt-6 flex flex-col space-y-12">
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <ScheduleCard
                     v-for="(schedule, id) in schedulesList"
