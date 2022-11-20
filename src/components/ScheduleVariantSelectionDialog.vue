@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import feather from "feather-icons";
 import {
     TransitionRoot,
     TransitionChild,
@@ -7,6 +6,7 @@ import {
     DialogOverlay,
     DialogTitle,
 } from "@headlessui/vue";
+import { X } from "lucide-vue-next";
 import type { ScheduleVariant } from "../types/schedule";
 
 const props = defineProps<{
@@ -71,8 +71,9 @@ const emit = defineEmits<{
                                 <button
                                     type="button"
                                     @click="emit('hide')"
-                                    v-html="feather.icons.x.toSvg()"
-                                />
+                                >
+                                    <X />
+                                </button>
                             </DialogTitle>
 
                             <div

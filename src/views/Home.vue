@@ -2,12 +2,11 @@
 import { useTitle } from "@vueuse/core";
 import { useMainStore } from "../stores/main";
 import { computed, ref } from "vue";
-import feather from "feather-icons";
 import NavigationBar from "../components/NavigationBar.vue";
 import ScheduleCard from "../components/ScheduleCard.vue";
 import ScheduleVariantSelectionDialog from "../components/ScheduleVariantSelectionDialog.vue";
 import Credit from "../components/Credit.vue";
-import { User, Layers, Layout } from "lucide-vue-next";
+import { User, Layers, Layout, X } from "lucide-vue-next";
 import {
     TransitionRoot,
     TransitionChild,
@@ -244,8 +243,9 @@ const currentVariant = ref<ScheduleVariant | null>(null);
                                 <button
                                     type="button"
                                     @click="aboutDialog = false"
-                                    v-html="feather.icons.x.toSvg()"
-                                />
+                                >
+                                    <X />
+                                </button>
                             </DialogTitle>
 
                             <div

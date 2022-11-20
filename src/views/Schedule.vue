@@ -10,11 +10,10 @@ import {
 import { useMainStore } from "../stores/main";
 import { computed, onBeforeMount, onBeforeUnmount, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import feather from "feather-icons";
 import { setPeriods, currentPeriod, nextPeriod } from "../composables/periods";
 import { padNumber } from "@hkamran/utility-strings";
 import { convert24HourTo12Hour } from "@hkamran/utility-datetime";
-import { Lightbulb } from "lucide-vue-next";
+import { Lightbulb, Calendar,Settings as SettingsIcon } from "lucide-vue-next";
 import {
     setOffDays,
     setScheduleOverrides,
@@ -255,16 +254,18 @@ onBeforeUnmount(() => {
                         class="rounded-lg p-2 text-gray-700 hover:text-pink-700 dark:text-gray-300 dark:hover:text-pink-500"
                         title="Open timetable"
                         @click="timetableDialog = true"
-                        v-html="feather.icons.calendar.toSvg()"
-                    />
+                    >
+                        <Calendar />
+                    </button>
 
                     <button
                         type="button"
                         class="rounded-lg p-2 text-gray-700 hover:text-pink-700 dark:text-gray-300 dark:hover:text-pink-500"
                         title="Open settings"
                         @click="settingsDialog = true"
-                        v-html="feather.icons.settings.toSvg()"
-                    />
+                    >
+                        <SettingsIcon />
+                    </button>
                 </div>
             </div>
 

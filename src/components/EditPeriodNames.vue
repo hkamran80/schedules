@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import feather from "feather-icons";
-
 import {
     TransitionRoot,
     TransitionChild,
@@ -13,6 +11,7 @@ import { watchOnce } from "@vueuse/core";
 import { scheduleId } from "../composables/scheduleState";
 import { emptyPeriodNames, periodNames } from "../composables/storage";
 import type { PeriodNames } from "../types/periods";
+import { X } from "lucide-vue-next";
 
 const props = defineProps<{
     show: boolean;
@@ -90,8 +89,9 @@ watchEffect(() => {
                                     type="button"
                                     class="focus:outline-none"
                                     @click="emit('hide')"
-                                    v-html="feather.icons.x.toSvg()"
-                                />
+                                >
+                                    <X />
+                                </button>
                             </DialogTitle>
 
                             <div

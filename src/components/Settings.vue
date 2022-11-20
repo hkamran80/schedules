@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import feather from "feather-icons";
 import {
     allowedNotifications,
     hour24,
@@ -27,6 +26,7 @@ import {
 } from "@vueuse/core";
 import { scheduleId } from "../composables/scheduleState";
 import { generateSchedulePeriods } from "../composables/periods";
+import { X, Download, Upload } from "lucide-vue-next";
 import { ScheduleDays } from "../types/schedule";
 
 const props = defineProps<{
@@ -219,8 +219,9 @@ watchEffect(() => {
                                     }"
                                     :disabled="settingsImported"
                                     @click="settingsImport"
-                                    v-html="feather.icons.download.toSvg()"
-                                />
+                                >
+                                    <Download />
+                                </button>
 
                                 <button
                                     v-if="
@@ -232,15 +233,17 @@ watchEffect(() => {
                                     class="transition-colors duration-200 ease-in-out focus:outline-none"
                                     :disabled="copied"
                                     @click="copy(settingsExport)"
-                                    v-html="feather.icons.upload.toSvg()"
-                                />
+                                >
+                                    <Upload />
+                                </button>
 
                                 <button
                                     type="button"
                                     class="focus:outline-none"
                                     @click="emit('hide')"
-                                    v-html="feather.icons.x.toSvg()"
-                                />
+                                >
+                                    <X />
+                                </button>
                             </DialogTitle>
 
                             <div
@@ -260,7 +263,7 @@ watchEffect(() => {
                                     <textarea
                                         id="clipboard-read-fallback"
                                         v-model="fallbackClipboardContent"
-                                        class="w-full resize-y rounded-lg py-4 px-4 text-xs ring-2 ring-inset ring-gray-200 focus:outline-none focus:ring-pink-700 dark:bg-black dark:text-white dark:ring-gray-800 dark:focus:ring-pink-500"
+                                        class="w-full resize-y rounded-lg py-4 px-4 text-xs ring-2 ring-inset ring-gray-200 focus:outline-none focus:ring-pink-700 dark:bg-ut-grey dark:text-white dark:ring-gray-800 dark:focus:ring-pink-500"
                                         placeholder="Settings"
                                         autocomplete="off"
                                         autocapitalize="none"
