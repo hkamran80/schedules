@@ -95,11 +95,11 @@ watchEffect(() => {
                         leave-to="opacity-0 scale-95"
                     >
                         <div
-                            class="overflow-none my-8 inline-block max-h-256 w-full max-w-md transform rounded-lg bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-black"
+                            class="overflow-none my-8 inline-block max-h-256 w-full max-w-md transform rounded-lg bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-ut-grey"
                         >
                             <DialogTitle
                                 as="h3"
-                                class="flex items-center space-x-3 bg-white pb-2 text-xl font-medium leading-6 text-gray-900 dark:bg-black dark:text-gray-100"
+                                class="flex items-center space-x-3 pb-2 text-xl font-medium leading-6 text-gray-900 dark:text-gray-100"
                             >
                                 <span class="flex-1"> Notifications </span>
 
@@ -152,7 +152,7 @@ watchEffect(() => {
                                                         interval
                                                     ]
                                                         ? 'bg-pink-700 dark:bg-pink-500'
-                                                        : 'bg-gray-200 dark:bg-ut-grey'
+                                                        : 'bg-gray-200 dark:bg-ut-grey-lighter'
                                                 "
                                                 class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none"
                                             >
@@ -194,7 +194,7 @@ watchEffect(() => {
                                                 :class="
                                                     modelStorage.days[day]
                                                         ? 'bg-pink-700 dark:bg-pink-500'
-                                                        : 'bg-gray-200 dark:bg-ut-grey'
+                                                        : 'bg-gray-200 dark:bg-ut-grey-lighter'
                                                 "
                                                 class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none"
                                             >
@@ -242,7 +242,7 @@ watchEffect(() => {
                                                 :class="
                                                     modelStorage.periods[period]
                                                         ? 'bg-pink-700 dark:bg-pink-500'
-                                                        : 'bg-gray-200 dark:bg-ut-grey'
+                                                        : 'bg-gray-200 dark:bg-ut-grey-lighter'
                                                 "
                                                 class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none"
                                             >

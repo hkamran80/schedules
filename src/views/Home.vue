@@ -228,7 +228,7 @@ const currentVariant = ref<ScheduleVariant | null>(null);
                         leave-to="opacity-0 scale-95"
                     >
                         <div
-                            class="my-8 inline-block w-full max-w-lg transform overflow-hidden rounded-lg bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-black"
+                            class="my-8 inline-block w-full max-w-lg transform overflow-hidden rounded-lg bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-ut-grey"
                         >
                             <DialogTitle
                                 as="h3"
@@ -252,10 +252,26 @@ const currentVariant = ref<ScheduleVariant | null>(null);
                                 class="prose mt-6 max-w-none dark:prose-invert"
                             >
                                 <p>
-                                    Schedules is an app for schedules. It tells
-                                    you exactly what the current period is and
-                                    how much time is remaining in a period, as
-                                    well as the next period and starting time.
+                                    Schedules gives you handy information about
+                                    your bell schedules, such as the current
+                                    period, the countdown to the next period,
+                                    and the starting time of the next period.
+                                    For each school, Schedules sends handy
+                                    notifications at predefined intervals and
+                                    features a full bell schedule for each day
+                                    of the week.
+                                </p>
+
+                                <p>
+                                    Schedules is open-source, and entirely free
+                                    with no ads, subscriptions, or in-app
+                                    purchases. The source code is available on
+                                    <a
+                                        href="https://github.com/hkamran80/schedules-flutter"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        >GitHub</a
+                                    >.
                                 </p>
 
                                 <h3>Credits</h3>
