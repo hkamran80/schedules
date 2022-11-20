@@ -29,6 +29,6 @@ registerRoute(
     new NetworkFirst({ networkTimeoutSeconds: 60 }),
 );
 registerRoute(
-    "https://raw.githubusercontent.com/hkamran80/schedules-helpcenter/main/topics.json",
+    "https://cfg-schedules.unisontech.org/help/topics",
     new NetworkFirst({ networkTimeoutSeconds: 60 }),
 );
