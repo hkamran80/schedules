@@ -1,14 +1,12 @@
 import { defineStore } from "pinia";
 import { version } from "../../package.json";
 import type { Schedule } from "../types/schedule";
-import type { Release } from "../types/releaseNotes";
 
 export const useMainStore = defineStore("main", {
     state: () => {
         return {
             version,
             schedules: {} as Schedule,
-            releaseNotes: [] as Release[],
         };
     },
     getters: {
@@ -29,28 +27,6 @@ export const useMainStore = defineStore("main", {
                     "https://cfg-schedules.unisontech.org/schedules/latest",
                 )
             ).json()) as Schedule;
-        },
-        async loadReleaseNotes() {
-            this.releaseNotes = (
-                (await (
-                    await fetch(
-                        "https://cfg-schedules.unisontech.org/schedules/changelog",
-                    )
-                ).json()) as Release[]
-            ).map(({ version, date, changelog }) => {
-                return {
-                    version,
-                    date: new Date(`${date}T20:00:00`).toLocaleDateString(
-                        undefined,
-                        {
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric",
-                        },
-                    ),
-                    changelog,
-                };
-            });
         },
     },
 });

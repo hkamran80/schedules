@@ -21,10 +21,6 @@ export default defineConfig({
                         "./src/views/HelpCenter.vue",
                         "./src/views/HelpCenterTopic.vue",
                     ],
-                    releaseNotes: [
-                        "./src/views/ReleaseNotes.vue",
-                        "./src/components/ReleaseNotes.vue",
-                    ],
                     scheduleSettings: [
                         "./src/components/Settings.vue",
                         "./src/components/EditNotifications.vue",
