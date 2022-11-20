@@ -119,6 +119,15 @@ const currentVariant = ref<ScheduleVariant | null>(null);
                 />
             </div>
 
+            <a
+                href="https://go.unisontech.org/schreq"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="w-full rounded-lg bg-pink-700 px-6 py-3 text-left text-white transition-colors duration-300 hover:bg-pink-600"
+            >
+                Missing your schedule?
+            </a>
+
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <a
                     href="https://apps.apple.com/app/apple-store/id6444194250?pt=125715921&ct=Schedules%20(Web)&mt=8"
