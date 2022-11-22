@@ -1,0 +1,12 @@
+[
+    {
+        "relation": ["delegate_permission/common.handle_all_urls"],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "com.hkamran.schedules",
+            "sha256_cert_fingerprints": [
+                "CF:4E:05:3B:DE:7A:00:A7:A3:96:95:20:26:80:49:29:25:A5:F9:35:97:3F:07:3F:24:47:C2:05:6D:5F:74:5A"
+            ]
+        }
+    }
+]
