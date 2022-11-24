@@ -251,6 +251,10 @@ export default defineConfig({
                         url: "https://play.google.com/store/apps/details?id=com.hkamran.schedules",
                         id: "com.hkamran.schedules",
                     },
+                    {
+                        platform: "itunes",
+                        url: "https://apps.apple.com/app/id6444194250",
+                    },
                 ],
             },
             devOptions: {
