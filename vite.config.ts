@@ -210,7 +210,7 @@ export default defineConfig({
             strategies: "injectManifest",
             filename: "sw.ts",
             manifest: {
-                id: "https://next-schedules.unisontech.org",
+                id: "https://schedules.unisontech.org",
                 name: "Schedules",
                 short_name: "Schedules",
                 theme_color: "#BE185D",
