@@ -22,8 +22,8 @@ export const currentPeriod = computed<Period | null>(() => {
         const currentPeriods = schedulePeriods.value.filter(
             ({ times }) =>
                 times &&
-                times.start.replace(/-/gm, "") <= currentTime.value &&
-                currentTime.value <= times.end.replace(/-/gm, ""),
+                times.start.replace(/:/gm, "") <= currentTime.value &&
+                currentTime.value <= times.end.replace(/:/gm, ""),
         );
 
         if (currentPeriods.length > 0) {
