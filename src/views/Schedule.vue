@@ -322,7 +322,7 @@ onBeforeUnmount(() => {
                     <!-- TODO: Replace description with countdown to next period -->
                     <Card
                         title="No Active Period"
-                        description="There's no active period right now"
+                        description="This schedule does not have any periods listed for the current time"
                     />
                 </div>
             </div>
