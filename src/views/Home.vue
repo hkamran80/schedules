@@ -97,14 +97,30 @@ const schedulesList = computed(() => {
         {},
     ) as { [id: string]: ScheduleTypes };
 
-    return Object.keys(finalVariants)
-        .sort((a, b) => finalVariants[a].name.localeCompare(finalVariants[b].name))
-        .reduce((previous, key) => {
-            (previous as { [id: string]: ScheduleTypes })[key] =
-                finalVariants[key];
+    return (
+        Object.keys(finalVariants)
+            // .sort((a, b) => finalVariants[a].name.localeCompare(finalVariants[b].name))
+            .sort((a, b) =>
+                finalVariants[a].name
+                    .toLowerCase()
+                    .replace("a ", "")
+                    .replace("the ", "")
+                    .trim()
+                    .localeCompare(
+                        finalVariants[b].name
+                            .toLowerCase()
+                            .replace("a ", "")
+                            .replace("the ", "")
+                            .trim(),
+                    ),
+            )
+            .reduce((previous, key) => {
+                (previous as { [id: string]: ScheduleTypes })[key] =
+                    finalVariants[key];
 
-            return previous;
-        }, {});
+                return previous;
+            }, {})
+    );
 });
 
 const variantSelectionDialog = ref<boolean>(false);
