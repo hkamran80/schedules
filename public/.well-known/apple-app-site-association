@@ -1,0 +1,17 @@
+{
+    "applinks": {
+        "details": [
+            {
+                "appIDs": [
+                    "DYJ355N6M8.com.13willow.schedules"
+                ],
+                "components": [
+                    {
+                        "/": "/schedule/*",
+                        "comment": "Matches any URL with a path that starts with /schedule/."
+                    }
+                ]
+            }
+        ]
+    }
+}
