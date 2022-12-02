@@ -4,7 +4,8 @@ import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 
 const name = "Schedules";
-const keywords = "schedule, schedules, auhsd, twcp, time, school, bell schedule, bell schedules, countdown, school period, block schedule, bells, ca, nj, ny, tx";
+const keywords =
+    "schedule, schedules, auhsd, twcp, time, school, bell schedule, bell schedules, countdown, school period, block schedule, bells, ca, nj, ny, tx";
 const description =
     "All your schedules in one app. Schedules gives you handy information about your bell schedules, such as the current period, the countdown to the next period, and the starting time of the next period. For each school, Schedules sends handy notifications at predefined intervals and features a full bell schedule for each day of the week.";
 const faviconUrl =
@@ -48,6 +49,9 @@ export default defineConfig({
                 },
                 { name: "robots", content: "index, follow" },
                 { name: "apple-mobile-web-app-capable", content: "yes" },
+
+                // Mobile App
+                { name: "apple-itunes-app", content: "app-id=6444194250" },
 
                 // Open Graph
                 { property: "og:title", content: name },
