@@ -24,7 +24,7 @@ export const useMainStore = defineStore("main", {
         async loadSchedules() {
             this.schedules = (await (
                 await fetch(
-                    "https://cfg-schedules.unisontech.org/schedules/latest",
+                    "https://cfg-schedules.unisontech.org/schedules/schema-3",
                 )
             ).json()) as Schedule;
         },

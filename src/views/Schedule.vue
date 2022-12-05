@@ -150,7 +150,7 @@ const { pause, resume } = useIntervalFn(
             (timer.isExpired.value || !timer.isRunning.value)
         ) {
             let [hours, minutes, seconds] = currentPeriod.value.times.end
-                .split("-")
+                .split(":")
                 .map((time) => Number(time));
 
             timer.restart(
@@ -171,7 +171,7 @@ const { pause, resume } = useIntervalFn(
 
 const nextPeriodTime = computed(() => {
     if (nextPeriod.value && nextPeriod.value.times) {
-        const baseTime = nextPeriod.value.times.start.split("-").slice(0, 2);
+        const baseTime = nextPeriod.value.times.start.split(":").slice(0, 2);
         if (hour24.value) {
             return baseTime.join(":");
         } else {
