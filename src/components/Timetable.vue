@@ -52,20 +52,16 @@ const periods = computed(() => {
                         times: {
                             start: hour24.value
                                 ? period.times.start
-                                      .split("-")
+                                      .split(":")
                                       .slice(0, 2)
                                       .join(":")
-                                : convert24HourTo12Hour(
-                                      period.times.start.replace(/-/g, ":"),
-                                  ),
+                                : convert24HourTo12Hour(period.times.start),
                             end: hour24.value
                                 ? period.times.end
-                                      .split("-")
+                                      .split(":")
                                       .slice(0, 2)
                                       .join(":")
-                                : convert24HourTo12Hour(
-                                      period.times.end.replace(/-/g, ":"),
-                                  ),
+                                : convert24HourTo12Hour(period.times.end),
                         },
                     };
                 }
