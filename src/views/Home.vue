@@ -285,7 +285,7 @@ const currentVariant = ref<ScheduleVariant | null>(null);
                                     with no ads, subscriptions, or in-app
                                     purchases. The source code is available on
                                     <a
-                                        href="https://github.com/hkamran80/schedules-flutter"
+                                        href="https://github.com/hkamran80/schedules"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         >GitHub</a
