@@ -102,7 +102,9 @@ const currentTime = computed(() =>
     }`.trim(),
 );
 const currentLongDay = computed(() =>
-    currentDateTime.value.toLocaleDateString(undefined, { weekday: "long" }),
+    currentDateTime.value.toLocaleDateString(undefined, {
+        weekday: "long",
+    }),
 );
 
 const currentDay = computed(() =>
@@ -241,9 +243,19 @@ onBeforeUnmount(() => {
                     <span
                         class="text-xl"
                         v-text="
-                            `${currentDateTime.toLocaleDateString(undefined, {
-                                weekday: 'long',
-                            })} - ${currentTime}`
+                            scheduleOverride
+                                ? `${currentDateTime.toLocaleDateString(
+                                      undefined,
+                                      {
+                                          weekday: 'long',
+                                      },
+                                  )} (${scheduleOverride}) - ${currentTime}`
+                                : `${currentDateTime.toLocaleDateString(
+                                      undefined,
+                                      {
+                                          weekday: 'long',
+                                      },
+                                  )} - ${currentTime}`
                         "
                     />
                 </header>
@@ -403,7 +415,7 @@ onBeforeUnmount(() => {
     <Timetable
         v-if="schedule && schedule.schedule"
         :show="timetableDialog"
-        :day="currentLongDay"
+        :day="scheduleOverride ? scheduleOverride : currentLongDay"
         :schedule="schedule.schedule"
         :current-period-name="currentPeriod?.name"
         :next-period-name="nextPeriod?.name"
