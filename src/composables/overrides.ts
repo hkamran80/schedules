@@ -43,6 +43,12 @@ export const offDay = computed(() =>
         .filter(({ dates }) => dates.indexOf(date.value) !== -1),
 );
 
+export const scheduleOverride = computed(() =>
+    Object.keys(scheduleOverrides.value).includes(date.value)
+        ? scheduleOverrides.value[date.value]
+        : false,
+);
+
 export const lastOffDay = computed(() => {
     if (offDay.value) {
         const lastDay = offDay.value[0].dates[offDay.value[0].dates.length - 1];

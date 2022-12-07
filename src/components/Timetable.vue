@@ -33,17 +33,18 @@ const props = defineProps<{
 }>();
 const emit = defineEmits<{ (e: "hide"): void }>();
 
-const selectedDay = ref<LongDay>(props.day as LongDay);
+const selectedDay = ref<string>(props.day);
 const periods = computed(() => {
-    let shortWeekday = convertLongWeekdayToShort(selectedDay.value);
+    let dayKeyName =
+        convertLongWeekdayToShort(selectedDay.value) ?? selectedDay.value;
 
     if (
         props.schedule &&
-        shortWeekday &&
-        Object.keys(props.schedule).indexOf(shortWeekday) !== -1
+        dayKeyName &&
+        Object.keys(props.schedule).indexOf(dayKeyName) !== -1
     ) {
         return generateSchedulePeriods(
-            props.schedule[shortWeekday] as SchedulePeriodTimes,
+            props.schedule[dayKeyName] as SchedulePeriodTimes,
         )
             .map((period) => {
                 if (period.times) {
@@ -74,15 +75,13 @@ const periods = computed(() => {
     }
 });
 
-const validLongDays = computed(() => {
-    if (props.schedule) {
-        return Object.keys(props.schedule)
-            .map((shortDay) => convertShortWeekdayToLong(shortDay))
-            .filter((longDay) => longDay !== null) as LongDay[];
-    } else {
-        return null;
-    }
-});
+const validLongDays = computed(() =>
+    props.schedule
+        ? Object.keys(props.schedule).map(
+              (shortDay) => convertShortWeekdayToLong(shortDay) ?? shortDay,
+          )
+        : null,
+);
 </script>
 
 <template>

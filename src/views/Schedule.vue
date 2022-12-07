@@ -13,12 +13,13 @@ import { useRoute, useRouter } from "vue-router";
 import { setPeriods, currentPeriod, nextPeriod } from "../composables/periods";
 import { padNumber } from "@hkamran/utility-strings";
 import { convert24HourTo12Hour } from "@hkamran/utility-datetime";
-import { Lightbulb, Calendar,Settings as SettingsIcon } from "lucide-vue-next";
+import { Lightbulb, Calendar, Settings as SettingsIcon } from "lucide-vue-next";
 import {
     setOffDays,
     setScheduleOverrides,
     offDay,
     lastOffDay,
+    scheduleOverride,
     timezoneOffset,
 } from "../composables/overrides";
 import {
@@ -101,7 +102,9 @@ const currentTime = computed(() =>
     }`.trim(),
 );
 const currentLongDay = computed(() =>
-    currentDateTime.value.toLocaleDateString(undefined, { weekday: "long" }),
+    currentDateTime.value.toLocaleDateString(undefined, {
+        weekday: "long",
+    }),
 );
 
 const currentDay = computed(() =>
@@ -140,7 +143,13 @@ const { pause, resume } = useIntervalFn(
             setScheduleOverrides(schedule.value.overrides);
         }
 
-        if (daySchedule.value) {
+        if (schedule.value && scheduleOverride.value) {
+            setPeriods(
+                schedule.value.schedule[
+                    scheduleOverride.value
+                ] as SchedulePeriodTimes,
+            );
+        } else if (daySchedule.value) {
             setPeriods(daySchedule.value);
         }
 
@@ -234,9 +243,19 @@ onBeforeUnmount(() => {
                     <span
                         class="text-xl"
                         v-text="
-                            `${currentDateTime.toLocaleDateString(undefined, {
-                                weekday: 'long',
-                            })} - ${currentTime}`
+                            scheduleOverride
+                                ? `${currentDateTime.toLocaleDateString(
+                                      undefined,
+                                      {
+                                          weekday: 'long',
+                                      },
+                                  )} (${scheduleOverride}) - ${currentTime}`
+                                : `${currentDateTime.toLocaleDateString(
+                                      undefined,
+                                      {
+                                          weekday: 'long',
+                                      },
+                                  )} - ${currentTime}`
                         "
                     />
                 </header>
@@ -245,7 +264,7 @@ onBeforeUnmount(() => {
                     <button
                         type="button"
                         class="rounded-lg p-2 text-gray-700 hover:text-pink-700 dark:text-gray-300 dark:hover:text-pink-500"
-                        title="Open timetable"
+                        :title="`${showTips ? 'Hide' : 'Show'} tips`"
                         @click="showTips = !showTips"
                     >
                         <Lightbulb />
@@ -396,7 +415,7 @@ onBeforeUnmount(() => {
     <Timetable
         v-if="schedule && schedule.schedule"
         :show="timetableDialog"
-        :day="currentLongDay"
+        :day="scheduleOverride ? scheduleOverride : currentLongDay"
         :schedule="schedule.schedule"
         :current-period-name="currentPeriod?.name"
         :next-period-name="nextPeriod?.name"
