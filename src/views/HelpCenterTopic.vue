@@ -60,7 +60,11 @@ const content = computed(() => {
 
     <div v-if="topic" class="mx-auto mt-10 max-w-2xl md:mt-12">
         <header class="flex flex-1 flex-col space-y-2">
-            <Breadcrumbs base-path="/help" base-label="Help Center" :current-label="topic.name" />
+            <Breadcrumbs
+                base-path="/help"
+                base-label="Help Center"
+                :current-label="topic.name"
+            />
 
             <span class="text-3xl" v-text="topic.name" />
             <span class="text-xl" v-text="topic.description" />

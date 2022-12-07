@@ -68,10 +68,7 @@ const emit = defineEmits<{
                                     />
                                 </div>
 
-                                <button
-                                    type="button"
-                                    @click="emit('hide')"
-                                >
+                                <button type="button" @click="emit('hide')">
                                     <X />
                                 </button>
                             </DialogTitle>
