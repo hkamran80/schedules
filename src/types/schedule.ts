@@ -9,6 +9,14 @@ type BaseSchedule = {
     color: string;
     timezone: string;
     location: string;
+    type:
+        | "elementary"
+        | "middle"
+        | "high"
+        | "college"
+        | "primary"
+        | "secondary"
+        | "unknown";
 };
 
 export type ScheduleDetails = BaseSchedule & {
