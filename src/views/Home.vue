@@ -65,25 +65,23 @@ const schedulesList = computed(() => {
             withoutVariants,
         );
 
-    const finalVariants = idList.reduce(
-        (previous, id) => ({
+    const finalVariants = idList.reduce((previous, id) => {
+        const firstVariant =
+            withoutVariants.indexOf(id) === -1
+                ? store.getSchedule(variantSchedules.value[id][0])
+                : null;
+
+        return {
             ...previous,
             [id]:
                 withoutVariants.indexOf(id) !== -1
                     ? store.getSchedule(id)
                     : {
-                          name: store
-                              .getSchedule(variantSchedules.value[id][0])
-                              ?.name.replace(/\s\(.*\)/, ""),
-                          color: store.getSchedule(
-                              variantSchedules.value[id][0],
-                          )?.color,
-                          timezone: store.getSchedule(
-                              variantSchedules.value[id][0],
-                          )?.timezone,
-                          location: store.getSchedule(
-                              variantSchedules.value[id][0],
-                          )?.location,
+                          name: firstVariant?.name.replace(/\s\(.*\)/, ""),
+                          color: firstVariant?.color,
+                          timezone: firstVariant?.timezone,
+                          location: firstVariant?.location,
+                          type: firstVariant?.type,
                           variants: variantSchedules.value[id].map((id) => ({
                               id,
                               name: (store
@@ -93,9 +91,8 @@ const schedulesList = computed(() => {
                               ])[0].replace(/\(|\)/g, ""),
                           })),
                       },
-        }),
-        {},
-    ) as { [id: string]: ScheduleTypes };
+        };
+    }, {}) as { [id: string]: ScheduleTypes };
 
     return (
         Object.keys(finalVariants)
