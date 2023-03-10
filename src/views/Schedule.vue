@@ -345,7 +345,7 @@ onBeforeUnmount(() => {
                     />
                 </div>
             </div>
-            
+
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <a
                     href="https://apps.apple.com/app/apple-store/id6444194250?pt=125715921&ct=Schedules%20(Web)&mt=8"
