@@ -133,7 +133,7 @@ const currentVariant = ref<ScheduleVariant | null>(null);
     <div class="mt-10 md:mt-16">
         <span class="text-2xl"> Select a schedule to begin! </span>
 
-        <a class="mt-6 flex flex-col space-y-12">
+        <section class="mt-6 flex flex-col space-y-12">
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <ScheduleCard
                     v-for="(schedule, id) in schedulesList"
@@ -195,7 +195,7 @@ const currentVariant = ref<ScheduleVariant | null>(null);
                     Missing your schedule?
                 </a>
             </div>
-        </a>
+        </section>
     </div>
 
     <ScheduleVariantSelectionDialog
