@@ -345,6 +345,25 @@ onBeforeUnmount(() => {
                     />
                 </div>
             </div>
+            
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <a
+                    href="https://apps.apple.com/app/apple-store/id6444194250?pt=125715921&ct=Schedules%20(Web)&mt=8"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="w-full rounded-lg bg-white px-6 py-3 text-left text-white shadow ring-2 ring-gray-100 transition-colors duration-300 hover:bg-ut-grey-lighter dark:bg-ut-grey dark:shadow-none dark:ring-0"
+                >
+                    Download Schedules on the App Store!
+                </a>
+                <a
+                    href="https://play.google.com/store/apps/details?id=com.hkamran.schedules"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="w-full rounded-lg bg-white px-6 py-3 text-left text-white shadow ring-2 ring-gray-100 transition-colors duration-300 hover:bg-ut-grey-lighter dark:bg-ut-grey dark:shadow-none dark:ring-0"
+                >
+                    Download Schedules on the Play Store!
+                </a>
+            </div>
 
             <!-- TODO: Add timeout -->
             <div
