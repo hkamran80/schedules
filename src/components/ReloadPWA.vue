@@ -1,13 +1,9 @@
 <script setup lang="ts">
 /// <reference types="vite-plugin-pwa/client" />
 import { useRegisterSW } from "virtual:pwa-register/vue";
-import { RefreshCw, X } from "lucide-vue-next";
+import { RefreshCw } from "lucide-vue-next";
 
-const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW();
-const close = async () => {
-    offlineReady.value = false;
-    needRefresh.value = false;
-};
+const { needRefresh, updateServiceWorker } = useRegisterSW();
 </script>
 
 <template>
@@ -31,16 +27,6 @@ const close = async () => {
                             @click="updateServiceWorker()"
                         >
                             Update
-                        </button>
-                    </div>
-                    <div class="order-2 flex-shrink-0 sm:order-3 sm:ml-2">
-                        <button
-                            type="button"
-                            class="-mr-1 flex rounded-md p-2 transition-colors duration-300 hover:bg-pink-900 focus:outline-none focus:ring-2 focus:ring-white"
-                            @click="close"
-                        >
-                            <span class="sr-only">Close</span>
-                            <X class="h-6 w-6 text-white" />
                         </button>
                     </div>
                 </div>
