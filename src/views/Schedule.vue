@@ -235,7 +235,7 @@ onBeforeUnmount(() => {
     <NavigationBar />
 
     <div class="mt-10">
-        <div v-if="schedule">
+        <div v-if="schedule" class="space-y-10">
             <Breadcrumbs :base-label="schedule?.name" />
             <div class="flex items-center">
                 <header class="flex flex-1 flex-col space-y-2">
@@ -349,7 +349,7 @@ onBeforeUnmount(() => {
             <!-- TODO: Add timeout -->
             <div
                 v-if="showTips"
-                class="prose mx-auto mt-10 space-y-1 text-sm dark:prose-invert"
+                class="prose mx-auto space-y-1 text-sm dark:prose-invert"
             >
                 <h2>Tips for using Schedules</h2>
                 <ul>
