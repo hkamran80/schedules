@@ -25,10 +25,6 @@ registerRoute(
     new NetworkFirst({ networkTimeoutSeconds: 60 }),
 );
 registerRoute(
-    "https://cfg-schedules.unisontech.org/schedules/changelog",
-    new NetworkFirst({ networkTimeoutSeconds: 60 }),
-);
-registerRoute(
     "https://cfg-schedules.unisontech.org/help/topics",
     new NetworkFirst({ networkTimeoutSeconds: 60 }),
 );
