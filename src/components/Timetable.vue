@@ -9,7 +9,6 @@ import {
 import { hour24 } from "../composables/storage";
 import { ChevronDown, X } from "lucide-vue-next";
 import type { ScheduleDays, SchedulePeriodTimes } from "../types/schedule";
-import type { LongDay } from "../types/datetime";
 import type { Period } from "../types/periods";
 
 import {
