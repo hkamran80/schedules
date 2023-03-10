@@ -23,7 +23,7 @@ onBeforeMount(async () => {
     </div>
 
     <footer
-        class="mx-auto -mt-32 flex max-w-sm md:max-w-2xl flex-col items-center space-y-3 px-6 pt-20 pb-12 text-center text-xs text-gray-600 sm:flex-row sm:space-y-0 sm:space-x-5 sm:px-0 sm:pb-6 md:-mt-24 md:pt-8 md:text-sm"
+        class="mx-auto -mt-32 flex max-w-sm flex-col items-center space-y-3 px-6 pt-20 pb-12 text-center text-xs text-gray-600 sm:flex-row sm:space-y-0 sm:space-x-5 sm:px-0 sm:pb-6 md:-mt-24 md:max-w-2xl md:pt-8 md:text-sm"
     >
         <span class="flex-1 text-center sm:text-left">
             Copyright &copy; {{ new Date().getFullYear() }} UNISON Technologies
@@ -37,7 +37,7 @@ onBeforeMount(async () => {
                 href="https://unisontech.org/legal/terms"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="hover:underline p-1 md:p-0"
+                class="p-1 hover:underline md:p-0"
             >
                 Terms of Service
             </a>
@@ -46,7 +46,7 @@ onBeforeMount(async () => {
                 href="https://unisontech.org/legal/privacy"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="hover:underline p-1 md:p-0"
+                class="p-1 hover:underline md:p-0"
             >
                 Privacy Policy
             </a>
