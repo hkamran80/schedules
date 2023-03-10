@@ -237,8 +237,10 @@ onBeforeUnmount(() => {
     <div class="mt-10">
         <div v-if="schedule" class="space-y-10">
             <Breadcrumbs :base-label="schedule?.name" />
-            <div class="flex items-center">
-                <header class="flex flex-1 flex-col space-y-2">
+            <div
+                class="items-center space-y-2 text-center md:flex md:space-y-0 md:text-left"
+            >
+                <header class="flex flex-col space-y-2 md:flex-1">
                     <span class="text-3xl" v-text="schedule?.name" />
                     <span
                         class="text-xl"
@@ -260,7 +262,7 @@ onBeforeUnmount(() => {
                     />
                 </header>
 
-                <div class="space-x-2 md:space-x-4">
+                <div class="space-x-2 text-center md:space-x-4 md:text-left">
                     <button
                         type="button"
                         class="rounded-lg p-2 text-gray-700 hover:text-pink-700 dark:text-gray-300 dark:hover:text-pink-500"

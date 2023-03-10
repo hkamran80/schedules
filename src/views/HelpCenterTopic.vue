@@ -4,8 +4,6 @@ import { useRoute, useRouter } from "vue-router";
 import { useHelpCenterStore } from "../stores/helpCenter";
 import { computed } from "vue";
 import MarkdownIt from "markdown-it";
-import feather from "feather-icons";
-import { resizeIcon } from "@hkamran/utility-web";
 
 import NavigationBar from "../components/NavigationBar.vue";
 import Breadcrumbs from "../components/Breadcrumbs.vue";
@@ -66,8 +64,10 @@ const content = computed(() => {
                 :current-label="topic.name"
             />
 
-            <span class="text-3xl" v-text="topic.name" />
-            <span class="text-xl" v-text="topic.description" />
+            <div class="text-center md:text-left">
+                <p class="text-3xl" v-text="topic.name" />
+                <p class="text-xl" v-text="topic.description" />
+            </div>
         </header>
 
         <div
