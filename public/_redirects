@@ -1,3 +1,4 @@
-/robots.txt         /robots.txt             200
-/.well-known/*      /.well-known/:splat     200
-/*                  /index.html             200
+/robots.txt             /robots.txt             200
+/.well-known/*          /.well-known/:splat     200
+/manifest.webmanifest   /manifest.webmanifest   200
+/*                      /index.html             200
