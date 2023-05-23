@@ -22,6 +22,7 @@ import {
     scheduleOverride,
     timezoneOffset,
 } from "../composables/overrides";
+import { fixOffsetTime } from "../lib/datetime";
 import {
     timer,
     scheduleId,
@@ -180,11 +181,12 @@ const { pause, resume } = useIntervalFn(
 
 const nextPeriodTime = computed(() => {
     if (nextPeriod.value && nextPeriod.value.times) {
-        const baseTime = nextPeriod.value.times.start.split(":").slice(0, 2);
+        const baseTime = fixOffsetTime(nextPeriod.value.times.start);
+
         if (hour24.value) {
-            return baseTime.join(":");
+            return baseTime;
         } else {
-            return convert24HourTo12Hour(baseTime.join(":"));
+            return convert24HourTo12Hour(baseTime);
         }
     }
 
