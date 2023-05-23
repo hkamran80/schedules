@@ -3,7 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@headlessui/vue': ^1.7.4
   '@hkamran/prettier-config': ^1.1.1
-  '@hkamran/utility-datetime': ^1.0.3
+  '@hkamran/utility-datetime': ^1.0.4
   '@hkamran/utility-strings': ^1.0.2
   '@hkamran/utility-web': ^1.0.2
   '@tailwindcss/typography': ^0.5.8
@@ -47,7 +47,7 @@ specifiers:
 
 dependencies:
   '@headlessui/vue': 1.7.4_vue@3.2.45
-  '@hkamran/utility-datetime': 1.0.3
+  '@hkamran/utility-datetime': 1.0.4
   '@hkamran/utility-strings': 1.0.2
   '@hkamran/utility-web': 1.0.2
   '@vueuse/core': 9.6.0_vue@3.2.45
@@ -1311,8 +1311,10 @@ packages:
     resolution: {integrity: sha512-VLAWG2W19Wonwl+uEz1qNgQINxCd5igOH1gUb+OsW46WEZlDOcFapTQyI/Mi/mB4NvTz2hd2hxUiAPAztH/xuA==}
     dev: true
 
-  /@hkamran/utility-datetime/1.0.3:
-    resolution: {integrity: sha512-QibjKNEuTnCJ78zwP/j24PnI7Juqbxo3lr0VKIU4VD616j5rpDy5boPTiJ3ZRIZPZlZtNVvp5DwrFke7au0V5w==}
+  /@hkamran/utility-datetime/1.0.4:
+    resolution: {integrity: sha512-yqkPXZU2CfwkTtiMkbTR4n27AuSyEI/fLCH+3rxMqlE98Eqji6ZnxJib3oow5eSwlAhc1bfoXaHV4gCt4RW+ZQ==}
+    dependencies:
+      '@hkamran/utility-strings': 1.0.2
     dev: false
 
   /@hkamran/utility-strings/1.0.2:

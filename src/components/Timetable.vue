@@ -10,6 +10,7 @@ import { hour24 } from "../composables/storage";
 import { ChevronDown, X } from "lucide-vue-next";
 import type { ScheduleDays, SchedulePeriodTimes } from "../types/schedule";
 import type { Period } from "../types/periods";
+import { fixOffsetTime } from "../lib/datetime";
 
 import {
     TransitionRoot,
@@ -47,21 +48,21 @@ const periods = computed(() => {
         )
             .map((period) => {
                 if (period.times) {
+                    const correctedStart = fixOffsetTime(period.times.start);
+                    const correctedEnd = fixOffsetTime(period.times.end);
+
                     return {
                         ...period,
                         times: {
                             start: hour24.value
-                                ? period.times.start
+                                ? correctedStart
                                       .split(":")
                                       .slice(0, 2)
                                       .join(":")
-                                : convert24HourTo12Hour(period.times.start),
+                                : convert24HourTo12Hour(correctedStart),
                             end: hour24.value
-                                ? period.times.end
-                                      .split(":")
-                                      .slice(0, 2)
-                                      .join(":")
-                                : convert24HourTo12Hour(period.times.end),
+                                ? correctedEnd.split(":").slice(0, 2).join(":")
+                                : convert24HourTo12Hour(correctedEnd),
                         },
                     };
                 }
