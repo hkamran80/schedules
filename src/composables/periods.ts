@@ -7,7 +7,7 @@ import type {
     SchedulePeriodTimes,
 } from "../types/schedule";
 
-const currentTime = useDateFormat(useNow(), "HHmmss");
+export const currentTime = useDateFormat(useNow(), "HHmmss");
 
 const getCustomPeriodName = (originalName: string): string => {
     if (periodNames && periodNames.value && periodNames.value[originalName]) {
