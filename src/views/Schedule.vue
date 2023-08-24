@@ -11,6 +11,7 @@ import { useMainStore } from "../stores/main";
 import { computed, onBeforeMount, onBeforeUnmount, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { setPeriods, currentPeriod, nextPeriod } from "../composables/periods";
+import { timeToNextPeriod, nextPeriodTimer } from "../composables/nextPeriod";
 import { padNumber } from "@hkamran/utility-strings";
 import { convert24HourTo12Hour } from "@hkamran/utility-datetime";
 import { Lightbulb, Calendar, Settings as SettingsIcon } from "lucide-vue-next";
@@ -341,11 +342,23 @@ onBeforeUnmount(() => {
                     />
                 </div>
 
-                <div v-else>
-                    <!-- TODO: Replace description with countdown to next period -->
+                <div v-else-if="timeToNextPeriod !== null">
                     <Card
-                        title="No Active Period"
-                        description="This schedule does not have any periods listed for the current time"
+                        header="Next Period"
+                        :title="timeToNextPeriod.period.name"
+                        :description="`${timeToNextPeriod.start} — ${padNumber(
+                            nextPeriodTimer.hours.value,
+                        )}:${padNumber(
+                            nextPeriodTimer.minutes.value,
+                        )}:${padNumber(nextPeriodTimer.seconds.value)}`"
+                        larger-description
+                    />
+                </div>
+
+                <div v-else>
+                    <Card
+                        title="No Remaining Periods"
+                        description="There are no periods for the rest of the day"
                     />
                 </div>
             </div>
@@ -451,6 +464,7 @@ onBeforeUnmount(() => {
         @hide="notificationsPermissionsDialog = false"
         @enable="
             notificationsPermissionsDialog = false;
+            // @ts-ignore
             notificationsSupported && notificationPermission === 'granted'
                 ? demoNotification()
                 : null;

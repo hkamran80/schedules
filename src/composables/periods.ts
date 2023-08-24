@@ -6,8 +6,9 @@ import type {
     SchedulePeriodDetails,
     SchedulePeriodTimes,
 } from "../types/schedule";
+import { nextPeriodTimer } from "./nextPeriod";
 
-const currentTime = useDateFormat(useNow(), "HHmmss");
+export const currentTime = useDateFormat(useNow(), "HHmmss");
 
 const getCustomPeriodName = (originalName: string): string => {
     if (periodNames && periodNames.value && periodNames.value[originalName]) {
@@ -27,6 +28,7 @@ export const currentPeriod = computed<Period | null>(() => {
         );
 
         if (currentPeriods.length > 0) {
+            nextPeriodTimer.pause();
             return {
                 ...currentPeriods[0],
                 name: getCustomPeriodName(currentPeriods[0].name),
