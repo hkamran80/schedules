@@ -2,7 +2,7 @@ import { convert24HourTo12Hour } from "@hkamran/utility-datetime";
 import { computed } from "vue";
 import { fixOffsetTime } from "../lib/datetime";
 import type { Period } from "../types/periods";
-import { currentTime, schedulePeriods } from "./periods";
+import { currentPeriod, currentTime, schedulePeriods } from "./periods";
 import { hour24 } from "./storage";
 import { useTimer } from "vue-timer-hook";
 
@@ -12,7 +12,6 @@ type TimeToNextPeriod = {
     timeUntil: string;
 } | null;
 
-// TODO: Stop timer when period starts
 export const nextPeriodTimer = useTimer();
 
 const getStartTimeForTimer = (periodTime: string) => {
@@ -26,7 +25,7 @@ const getStartTimeForTimer = (periodTime: string) => {
 };
 
 export const timeToNextPeriod = computed((): TimeToNextPeriod => {
-    if (schedulePeriods.value) {
+    if (schedulePeriods.value && !currentPeriod.value) {
         const nextPeriods = schedulePeriods.value.filter(
             ({ times }) =>
                 times && times.start.replace(/:/gm, "") >= currentTime.value,
@@ -38,7 +37,9 @@ export const timeToNextPeriod = computed((): TimeToNextPeriod => {
                 start = convert24HourTo12Hour(start);
             }
 
-            nextPeriodTimer.restart(+getStartTimeForTimer(nextPeriods[0].times.start));
+            nextPeriodTimer.restart(
+                +getStartTimeForTimer(nextPeriods[0].times.start),
+            );
 
             if (nextPeriods.length !== 0) {
                 return {
