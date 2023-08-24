@@ -1,7 +1,7 @@
 {
     "name": "schedules",
     "private": true,
-    "version": "4.0.5",
+    "version": "4.1.0-beta.1",
     "scripts": {
         "dev": "vite",
         "dev:host": "vite --host",
