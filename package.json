@@ -1,9 +1,10 @@
 {
     "name": "schedules",
     "private": true,
-    "version": "4.0.5",
+    "version": "4.0.6",
     "scripts": {
         "dev": "vite",
+        "dev:host": "vite --host",
         "dev:https": "pnpm build; pnpx serve",
         "build": "rimraf ./dist; cross-env DEBUG=vite-plugin-pwa:* vite build",
         "preview": "vite preview",
