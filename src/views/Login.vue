@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
-import { supabaseSession, supabase } from "../composables/auth";
+import { ref, watch } from "vue";
+import { supabase, getSupabaseSession } from "../composables/auth";
 import Login from "./login/Login.vue";
 import MFA from "./login/MFA.vue";
 import Loading from "./login/Loading.vue";
 import { useRouter } from "vue-router";
 import { useMainStore } from "../stores/main";
+import { Session } from "@supabase/supabase-js";
 
 const { push } = useRouter();
 const store = useMainStore();
@@ -13,6 +14,7 @@ const store = useMainStore();
 const loginComplete = ref(false);
 const ready = ref(false);
 const showMFA = ref(false);
+const session = ref<Session>()
 
 const checkAALStatus = async () => {
     const { data, error } =
@@ -27,6 +29,7 @@ const checkAALStatus = async () => {
 
     showMFA.value = mfaStatus;
     console.debug("MFA status:", mfaStatus);
+    console.debug("Session status:", session.value);
     console.debug("Ready status:", ready.value);
     if (ready.value && !mfaStatus) {
         store.loadCustomSchedules();
@@ -34,9 +37,9 @@ const checkAALStatus = async () => {
     }
 };
 
-const setComplete = () => {
-    console.debug("Setting complete login variable");
+const setComplete = async () => {
     loginComplete.value = true;
+    session.value = await getSupabaseSession();
 };
 
 watch(loginComplete, async () => {
@@ -75,15 +78,10 @@ watch(loginComplete, async () => {
             </div>
 
             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-                <Login
-                    v-if="!loginComplete && !supabaseSession"
-                    @complete="setComplete"
-                />
-
-                <div v-else-if="loginComplete && supabaseSession">
+                <div v-if="loginComplete && session">
                     <MFA
                         v-if="ready && showMFA"
-                        :session="supabaseSession"
+                        :session="session"
                         @recheck="checkAALStatus"
                     />
                     <Loading v-else />

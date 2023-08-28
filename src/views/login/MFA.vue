@@ -3,9 +3,12 @@ import { Session } from "@supabase/supabase-js";
 import { computed, ref } from "vue";
 import { supabase } from "../../composables/auth";
 import InputField from "../../components/InputField.vue";
+import { useRouter } from "vue-router";
 
 const props = defineProps<{ session: Session }>();
 const emit = defineEmits(["recheck"]);
+
+const { push } = useRouter();
 
 const otp = ref("");
 const otpErrorText = ref();
@@ -26,6 +29,11 @@ const verifyMFA = async () => {
     } else {
         emit("recheck");
     }
+};
+
+const logout = async () => {
+    await supabase.auth.signOut();
+    push("/");
 };
 </script>
 
@@ -56,9 +64,12 @@ const verifyMFA = async () => {
         <div class="space-y-4">
             <button
                 type="button"
-                class="[
-                'group duration-300',
-                preventProceed ? 'bg-gray-500' : 'bg-pink-700 dark:focus:ring-pink-400', 'relative dark:bg-pink-400 flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white transition hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-pink-700 focus:ring-offset-2']"
+                :class="[
+                    'group relative flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white transition duration-300',
+                    preventProceed
+                        ? 'bg-gray-500'
+                        : 'bg-pink-700 hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-pink-700 focus:ring-offset-2 dark:bg-pink-400 dark:focus:ring-pink-400',
+                ]"
                 :disabled="preventProceed"
                 @click="verifyMFA"
             >
@@ -68,7 +79,7 @@ const verifyMFA = async () => {
             <button
                 type="button"
                 class="w-full text-center text-sm text-red-500"
-                @click="supabase.auth.signOut"
+                @click="logout"
             >
                 Sign out
             </button>

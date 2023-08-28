@@ -50,6 +50,7 @@ const login = async () => {
             label="Password"
             :error="error"
             required
+            @keyup.enter="login"
         />
 
         <div>
