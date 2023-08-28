@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { version } from "../../package.json";
 import type { Schedule } from "../types/schedule";
+import { supabase, supabaseSession } from "../composables/auth";
 
 export const useMainStore = defineStore("main", {
     state: () => {
@@ -27,6 +28,20 @@ export const useMainStore = defineStore("main", {
                     "https://cfg-schedules.unisontech.org/schedules/schema-3",
                 )
             ).json()) as Schedule;
+        },
+        async loadCustomSchedules() {
+            if (supabaseSession.value) {
+                const userId = supabaseSession.value.user.id;
+
+                const { data } = await supabase.storage
+                    .from("schedules")
+                    .download(`${userId}/schedules.json`);
+
+                if (data) {
+                    const customSchedules = JSON.parse(await data.text());
+                    this.schedules = { ...this.schedules, ...customSchedules };
+                }
+            }
         },
     },
 });
