@@ -136,7 +136,7 @@ const validLongDays = computed(() =>
                                 <Listbox v-model="selectedDay">
                                     <div class="relative mt-1">
                                         <ListboxButton
-                                            class="relative w-full cursor-default items-center rounded-lg py-1 pl-4 pr-1 text-left text-sm ring-2 ring-gray-100 focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 dark:bg-ut-grey-lighter dark:ring-0"
+                                            class="relative w-full cursor-default items-center rounded-lg py-1 pl-4 pr-1 text-left text-sm ring-2 ring-gray-100 focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 dark:bg-ut-grey-light dark:ring-0"
                                         >
                                             <div
                                                 class="flex items-center"
@@ -165,7 +165,7 @@ const validLongDays = computed(() =>
                                             leave-to-class="opacity-0"
                                         >
                                             <ListboxOptions
-                                                class="absolute mt-1 max-h-60 w-full overflow-auto rounded-lg bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-ut-grey-lighter sm:text-sm"
+                                                class="absolute mt-1 max-h-60 w-full overflow-auto rounded-lg bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-ut-grey-light sm:text-sm"
                                             >
                                                 <ListboxOption
                                                     v-for="dayOption in validLongDays"

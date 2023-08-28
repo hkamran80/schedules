@@ -84,6 +84,9 @@ const schedulesList = computed(() => {
                           location: store.getSchedule(
                               variantSchedules.value[id][0],
                           )?.location,
+                          custom:
+                              store.getSchedule(variantSchedules.value[id][0])
+                                  ?.custom ?? undefined,
                           variants: variantSchedules.value[id].map((id) => ({
                               id,
                               name: (store
@@ -97,30 +100,47 @@ const schedulesList = computed(() => {
         {},
     ) as { [id: string]: ScheduleTypes };
 
-    return (
-        Object.keys(finalVariants)
-            // .sort((a, b) => finalVariants[a].name.localeCompare(finalVariants[b].name))
-            .sort((a, b) =>
-                finalVariants[a].name
-                    .toLowerCase()
-                    .replace("a ", "")
-                    .replace("the ", "")
-                    .trim()
-                    .localeCompare(
-                        finalVariants[b].name
-                            .toLowerCase()
-                            .replace("a ", "")
-                            .replace("the ", "")
-                            .trim(),
-                    ),
-            )
-            .reduce((previous, key) => {
-                (previous as { [id: string]: ScheduleTypes })[key] =
-                    finalVariants[key];
+    const schedulesList: { [id: string]: ScheduleTypes } = Object.keys(
+        finalVariants,
+    )
+        // .sort((a, b) => finalVariants[a].name.localeCompare(finalVariants[b].name))
+        .sort((a, b) =>
+            finalVariants[a].name
+                .toLowerCase()
+                .replace("a ", "")
+                .replace("the ", "")
+                .trim()
+                .localeCompare(
+                    finalVariants[b].name
+                        .toLowerCase()
+                        .replace("a ", "")
+                        .replace("the ", "")
+                        .trim(),
+                ),
+        )
+        .reduce((previous, key) => {
+            (previous as { [id: string]: ScheduleTypes })[key] =
+                finalVariants[key];
 
-                return previous;
-            }, {})
+            return previous;
+        }, {});
+
+    const schedules = Object.fromEntries(
+        Object.entries(schedulesList).filter(
+            ([, schedule]) =>
+                !Object.keys(schedule).includes("custom") ||
+                schedule.custom !== true,
+        ),
     );
+    const custom = Object.fromEntries(
+            Object.entries(schedulesList).filter(([id]) => !(id in schedules)),
+        )
+
+    return {
+        schedules,
+        custom,
+        customSchedules: Object.keys(custom).length > 0
+    };
 });
 
 const variantSelectionDialog = ref<boolean>(false);
@@ -130,13 +150,15 @@ const currentVariant = ref<ScheduleVariant | null>(null);
 <template>
     <NavigationBar />
 
-    <div class="mt-10 md:mt-16">
+    <div class="mt-10 space-y-8 md:mt-16">
         <span class="text-2xl"> Select a schedule to begin! </span>
 
-        <section class="mt-6 flex flex-col space-y-12">
+        <section v-if="schedulesList.customSchedules">
+            <h2 class="text-lg mb-2">Your Schedules</h2>
+
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <ScheduleCard
-                    v-for="(schedule, id) in schedulesList"
+                    v-for="(schedule, id) in schedulesList.custom"
                     :key="id"
                     :schedule-id="(id as string)"
                     :schedule="schedule"
@@ -148,7 +170,28 @@ const currentVariant = ref<ScheduleVariant | null>(null);
                     "
                 />
             </div>
+        </section>
 
+        <section class="flex flex-col">
+            <h2 v-if="schedulesList.customSchedules" class="text-lg mb-2">Schedules</h2>
+
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <ScheduleCard
+                    v-for="(schedule, id) in schedulesList.schedules"
+                    :key="id"
+                    :schedule-id="(id as string)"
+                    :schedule="schedule"
+                    @select="
+                        (scheduleVariant) => {
+                            currentVariant = scheduleVariant;
+                            variantSelectionDialog = true;
+                        }
+                    "
+                />
+            </div>
+        </section>
+
+        <section>
             <div class="flex flex-col space-y-4">
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <a
@@ -172,7 +215,7 @@ const currentVariant = ref<ScheduleVariant | null>(null);
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <button
                         type="button"
-                        class="w-full rounded-lg px-6 py-4 text-left ring-2 ring-gray-100 transition-colors duration-300 ease-in-out dark:bg-ut-grey dark:ring-0 dark:hover:bg-ut-grey-lighter"
+                        class="w-full rounded-lg px-6 py-4 text-left ring-2 ring-gray-100 transition-colors duration-300 ease-in-out dark:bg-ut-grey dark:ring-0 dark:hover:bg-ut-grey-light"
                         @click="aboutDialog = true"
                     >
                         About
@@ -180,7 +223,7 @@ const currentVariant = ref<ScheduleVariant | null>(null);
 
                     <router-link
                         to="/help"
-                        class="w-full rounded-lg px-6 py-4 text-left ring-2 ring-gray-100 transition-colors duration-300 ease-in-out dark:bg-ut-grey dark:ring-0 dark:hover:bg-ut-grey-lighter"
+                        class="w-full rounded-lg px-6 py-4 text-left ring-2 ring-gray-100 transition-colors duration-300 ease-in-out dark:bg-ut-grey dark:ring-0 dark:hover:bg-ut-grey-light"
                     >
                         Help Center
                     </router-link>
@@ -190,7 +233,7 @@ const currentVariant = ref<ScheduleVariant | null>(null);
                     href="https://go.unisontech.org/schreq"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="w-full rounded-lg px-6 py-4 text-left ring-2 ring-gray-100 transition-colors duration-300 ease-in-out dark:bg-ut-grey dark:ring-0 dark:hover:bg-ut-grey-lighter"
+                    class="w-full rounded-lg px-6 py-4 text-left ring-2 ring-gray-100 transition-colors duration-300 ease-in-out dark:bg-ut-grey dark:ring-0 dark:hover:bg-ut-grey-light"
                 >
                     Missing your schedule?
                 </a>

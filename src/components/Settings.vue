@@ -304,7 +304,7 @@ watchEffect(() => {
                                             :class="
                                                 hour24
                                                     ? 'bg-pink-700 dark:bg-pink-500'
-                                                    : 'bg-gray-200 dark:bg-ut-grey-lighter'
+                                                    : 'bg-gray-200 dark:bg-ut-grey-light'
                                             "
                                             class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none"
                                         >
@@ -334,7 +334,7 @@ watchEffect(() => {
                                             :class="
                                                 notificationsEnabledModel
                                                     ? 'bg-pink-700 dark:bg-pink-500'
-                                                    : 'bg-gray-200 dark:bg-ut-grey-lighter'
+                                                    : 'bg-gray-200 dark:bg-ut-grey-light'
                                             "
                                             class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none"
                                         >

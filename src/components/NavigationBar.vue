@@ -3,9 +3,16 @@ import { useToggle } from "@vueuse/core";
 import { MessageSquare, Moon, Sun } from "lucide-vue-next";
 import { useRoute } from "vue-router";
 import { isDark } from "../composables/dark";
+import { LogIn, LogOut } from "lucide-vue-next";
+import { supabase, supabaseSession } from "../composables/auth";
 
 const toggleDark = useToggle(isDark);
 const { name } = useRoute();
+
+const logout = async () => {
+    await supabase.auth.signOut();
+    window.location.reload();
+};
 </script>
 
 <template>
@@ -24,6 +31,24 @@ const { name } = useRoute();
         >
             Schedules
         </router-link>
+
+        <router-link
+            v-if="!supabaseSession"
+            to="/login"
+            class="rounded-lg p-2 text-gray-700 hover:text-pink-700 dark:text-gray-300 dark:hover:text-pink-500"
+            title="Login"
+        >
+            <LogIn />
+        </router-link>
+        <button
+            v-else
+            type="button"
+            class="rounded-lg p-2 text-gray-700 hover:text-pink-700 dark:text-gray-300 dark:hover:text-pink-500"
+            title="Log out"
+            @click="logout"
+        >
+            <LogOut />
+        </button>
 
         <!-- eslint-disable-next-line vuejs-accessibility/anchor-has-content -->
         <a
