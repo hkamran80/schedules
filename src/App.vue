@@ -9,6 +9,7 @@ const helpCenterStore = useHelpCenterStore();
 
 onBeforeMount(async () => {
     await store.loadSchedules();
+    await store.loadCustomSchedules();
     await helpCenterStore.loadTopics();
 });
 </script>

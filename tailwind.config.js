@@ -14,7 +14,8 @@ module.exports = {
             },
             colors: {
                 "ut-grey": "#151515",
-                "ut-grey-lighter": "#1e1e1e",
+                "ut-grey-hover": "#1e1e1e",
+                "ut-grey-light": "#313131",
             },
             spacing: {
                 256: "48rem",

@@ -19,7 +19,7 @@ const helpCenterStore = useHelpCenterStore();
                 v-for="topic in helpCenterStore.topics"
                 :key="topic.id"
                 :to="`/help/${topic.id}`"
-                class="w-full rounded-lg px-6 py-4 text-left ring-2 ring-gray-100 transition-colors duration-300 ease-in-out dark:bg-ut-grey dark:ring-0 dark:hover:bg-ut-grey-lighter"
+                class="w-full rounded-lg px-6 py-4 text-left ring-2 ring-gray-100 transition-colors duration-300 ease-in-out dark:bg-ut-grey dark:ring-0 dark:hover:bg-ut-grey-light"
             >
                 <span class="block" v-text="topic.name" />
                 <span

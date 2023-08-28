@@ -123,7 +123,7 @@ watchEffect(() => {
                                             .toLowerCase()}`"
                                         v-model="modelStorage[defaultName]"
                                         type="text"
-                                        class="mt-1 block w-full rounded-lg py-2 px-4 ring-2 ring-inset ring-gray-200 focus:outline-none focus:ring-pink-700 dark:bg-ut-grey dark:text-white dark:ring-ut-grey-lighter dark:focus:ring-pink-500 sm:text-sm"
+                                        class="mt-1 block w-full rounded-lg py-2 px-4 ring-2 ring-inset ring-gray-200 focus:outline-none focus:ring-pink-700 dark:bg-ut-grey dark:text-white dark:ring-ut-grey-light dark:focus:ring-pink-500 sm:text-sm"
                                         :placeholder="(defaultName as string)"
                                     />
                                 </div>

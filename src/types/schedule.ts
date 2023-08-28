@@ -9,6 +9,7 @@ type BaseSchedule = {
     color: string;
     timezone: string;
     location: string;
+    custom?: boolean;
 };
 
 export type ScheduleDetails = BaseSchedule & {

@@ -85,7 +85,7 @@ const emit = defineEmits<{
                                 </button>
                                 <button
                                     type="button"
-                                    class="mt-3 inline-flex w-full justify-center rounded-lg border border-gray-100 bg-white px-4 py-2 text-base font-medium text-black shadow-sm transition hover:bg-gray-100 focus:outline-none dark:border-none dark:bg-ut-grey dark:text-gray-300 dark:hover:bg-ut-grey-lighter sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                                    class="mt-3 inline-flex w-full justify-center rounded-lg border border-gray-100 bg-white px-4 py-2 text-base font-medium text-black shadow-sm transition hover:bg-gray-100 focus:outline-none dark:border-none dark:bg-ut-grey dark:text-gray-300 dark:hover:bg-ut-grey-light sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                                     @click="emit('disable')"
                                 >
                                     Cancel
