@@ -31,7 +31,7 @@ export const timeToNextPeriod = computed((): TimeToNextPeriod => {
                 times && times.start.replace(/:/gm, "") >= currentTime.value,
         );
 
-        if (nextPeriods[0].times) {
+        if (nextPeriods.length > 0 && nextPeriods[0] && nextPeriods[0].times) {
             let start = fixOffsetTime(nextPeriods[0].times.start);
             if (!hour24.value) {
                 start = convert24HourTo12Hour(start);
